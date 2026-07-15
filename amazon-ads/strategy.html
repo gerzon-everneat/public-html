@@ -1,0 +1,830 @@
+<title>Everneat Amazon Ads Strategy</title>
+<style>
+  :root {
+    --bg: #F7F4EE;
+    --surface: #FFFFFF;
+    --surface-2: #F0EDE6;
+    --text: #0D1B2A;
+    --text-2: #4A5568;
+    --text-3: #718096;
+    --accent: #D4820A;
+    --accent-dim: #F5DFB0;
+    --phase: #4A7FA5;
+    --phase-dim: #D6E8F4;
+    --gate: #5C8A6A;
+    --gate-dim: #D4EAD9;
+    --risk: #C05621;
+    --risk-dim: #FDECD8;
+    --border: #E2DDD6;
+    --spine: #C8C2B8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D1B2A;
+      --surface: #162436;
+      --surface-2: #1E3045;
+      --text: #F0EDE6;
+      --text-2: #A8B8C8;
+      --text-3: #6E8299;
+      --accent: #E8960F;
+      --accent-dim: #3D2A05;
+      --phase: #5A9AC0;
+      --phase-dim: #1A3A52;
+      --gate: #6EA87E;
+      --gate-dim: #1A3D24;
+      --risk: #E07A40;
+      --risk-dim: #3D1A08;
+      --border: #1E3248;
+      --spine: #2A4060;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F7F4EE;
+    --surface: #FFFFFF;
+    --surface-2: #F0EDE6;
+    --text: #0D1B2A;
+    --text-2: #4A5568;
+    --text-3: #718096;
+    --accent: #D4820A;
+    --accent-dim: #F5DFB0;
+    --phase: #4A7FA5;
+    --phase-dim: #D6E8F4;
+    --gate: #5C8A6A;
+    --gate-dim: #D4EAD9;
+    --risk: #C05621;
+    --risk-dim: #FDECD8;
+    --border: #E2DDD6;
+    --spine: #C8C2B8;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0D1B2A;
+    --surface: #162436;
+    --surface-2: #1E3045;
+    --text: #F0EDE6;
+    --text-2: #A8B8C8;
+    --text-3: #6E8299;
+    --accent: #E8960F;
+    --accent-dim: #3D2A05;
+    --phase: #5A9AC0;
+    --phase-dim: #1A3A52;
+    --gate: #6EA87E;
+    --gate-dim: #1A3D24;
+    --risk: #E07A40;
+    --risk-dim: #3D1A08;
+    --border: #1E3248;
+    --spine: #2A4060;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0 0 80px;
+  }
+
+  /* Header */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 36px 48px 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .header-left {}
+  .brand {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 28px;
+    font-weight: normal;
+    color: var(--text);
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .header-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .meta-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 4px;
+  }
+  .meta-value {
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .approved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gate-dim);
+    color: var(--gate);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+  .approved-badge::before { content: "✓"; }
+
+  /* Summary strip */
+  .summary-strip {
+    background: var(--accent-dim);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 48px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .summary-strip .label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .summary-strip .value {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .strip-item { flex: 0 0 auto; }
+
+  /* Main layout */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* Prerequisites */
+  .prereq-section {
+    margin-top: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .prereq-header {
+    padding: 14px 20px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    font-weight: 600;
+  }
+  .prereq-list {
+    list-style: none;
+    padding: 0;
+  }
+  .prereq-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .prereq-list li:last-child { border-bottom: none; }
+  .prereq-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--phase-dim);
+    color: var(--phase);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Phase timeline */
+  .phases {
+    margin-top: 40px;
+    position: relative;
+  }
+  .phases-title {
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  /* Spine */
+  .phase-entry {
+    display: flex;
+    gap: 0;
+    position: relative;
+  }
+  .spine-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 56px;
+  }
+  .phase-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--phase);
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .phase-dot.special { background: var(--accent); }
+  .phase-dot.followon { background: var(--text-3); }
+  .spine-line {
+    width: 2px;
+    background: var(--spine);
+    flex: 1;
+    min-height: 24px;
+  }
+  .phase-body {
+    flex: 1;
+    padding-bottom: 36px;
+    padding-top: 6px;
+  }
+
+  /* Phase card */
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-left: 8px;
+  }
+  .phase-card-header {
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .phase-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--phase);
+    font-weight: 600;
+  }
+  .phase-label.special { color: var(--accent); }
+  .phase-label.followon { color: var(--text-3); }
+  .phase-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 17px;
+    font-weight: normal;
+    color: var(--text);
+  }
+  .phase-card-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Step list */
+  .step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .step-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .step-list li::before {
+    content: "→";
+    color: var(--phase);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Output tag */
+  .output-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .output-tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--text-3);
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .output-text { color: var(--text-2); }
+
+  /* Gate box */
+  .gate-box {
+    background: var(--gate-dim);
+    border: 1px solid var(--gate);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .gate-box-label {
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--gate);
+    margin-bottom: 6px;
+  }
+  .gate-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .gate-box ul li {
+    font-size: 13px;
+    color: var(--text-2);
+    display: flex;
+    gap: 8px;
+  }
+  .gate-box ul li::before {
+    content: "✓";
+    color: var(--gate);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Kill box */
+  .kill-box {
+    background: var(--risk-dim);
+    border: 1px solid var(--risk);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .kill-box-label {
+    font-size: 10px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--risk);
+    margin-bottom: 6px;
+  }
+  .kill-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .kill-box ul li {
+    font-size: 13px;
+    color: var(--text-2);
+    display: flex;
+    gap: 8px;
+  }
+  .kill-box ul li::before {
+    content: "✕";
+    color: var(--risk);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Threshold pill */
+  .threshold {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Two-col layout inside card */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .header { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+    .header-meta { text-align: left; }
+    .summary-strip { padding: 12px 20px; }
+    .main { padding: 0 20px; }
+  }
+
+  /* Risks section */
+  .risks-section {
+    margin-top: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .risks-header {
+    padding: 14px 20px;
+    background: var(--risk-dim);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--risk);
+    font-weight: 600;
+  }
+  .risks-list {
+    list-style: none;
+    padding: 0;
+  }
+  .risks-list li {
+    display: flex;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .risks-list li:last-child { border-bottom: none; }
+  .risk-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--risk);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  /* Out of scope */
+  .oos-section {
+    margin-top: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .oos-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    font-weight: 600;
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+  .oos-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .oos-tag {
+    font-size: 12px;
+    color: var(--text-3);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-decoration: line-through;
+    text-decoration-color: var(--border);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 56px;
+    border-top: 1px solid var(--border);
+    padding: 20px 0 0;
+    font-size: 12px;
+    color: var(--text-3);
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer a { color: var(--phase); text-decoration: none; }
+
+  /* Section divider label */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    font-weight: 600;
+    margin: 40px 0 16px;
+  }
+</style>
+
+<div class="header">
+  <div class="header-left">
+    <div class="brand">Everneat · Amazon Ads</div>
+    <h1>Full-Funnel Ads Strategy<br>SP → SD → AMC → DSP</h1>
+  </div>
+  <div class="header-meta">
+    <div class="meta-label">Status</div>
+    <div class="approved-badge">Codex Approved · 4 rounds</div>
+    <div class="meta-value" style="margin-top:10px;">July 2026</div>
+  </div>
+</div>
+
+<div class="summary-strip">
+  <div class="strip-item">
+    <div class="label">Current phase</div>
+    <div class="value">Phase 1 — SP Data Mining</div>
+  </div>
+  <div class="strip-item">
+    <div class="label">Product</div>
+    <div class="value">Laundry / Stain Remover</div>
+  </div>
+  <div class="strip-item">
+    <div class="label">Market</div>
+    <div class="value">US · amzn1.ads-account…8ayuh</div>
+  </div>
+  <div class="strip-item">
+    <div class="label">DSP Threshold</div>
+    <div class="value">~$10k/mo · Phase 5 only</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Prerequisites -->
+  <div class="section-label">Prerequisites · Check before Phase 1</div>
+  <div class="prereq-section">
+    <div class="prereq-header">Confirm all three before proceeding</div>
+    <ul class="prereq-list">
+      <li>
+        <div class="prereq-icon">A</div>
+        <span><strong>Brand Registry status</strong> — Confirm via Seller Central. Sponsored Brands is out of scope until confirmed active (separate plan).</span>
+      </li>
+      <li>
+        <div class="prereq-icon">B</div>
+        <span><strong>SP CVR baseline per SKU</strong> — Pull conversion rate. If CVR &lt; 5%, fix the product detail page before adding SD traffic.</span>
+      </li>
+      <li>
+        <div class="prereq-icon">C</div>
+        <span><strong>SD reporting</strong> — Implement SD metrics (impressions, clicks, orders, ACOS) via Ads API with weekly review cadence before SD launch. Extends current SP daily report.</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Phases -->
+  <div class="section-label">Execution Phases</div>
+  <div class="phases">
+
+    <!-- Phase 1 -->
+    <div class="phase-entry">
+      <div class="spine-col">
+        <div class="phase-dot">1</div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <span class="phase-label">Phase 1 · Now</span>
+            <span class="phase-title">Mine SP Data for Intent Signals</span>
+          </div>
+          <div class="phase-card-body">
+            <ul class="step-list">
+              <li>Pull search term reports (last 30–60 days)</li>
+              <li>Identify top converting <em>intent clusters</em> — query signals, not demographics</li>
+              <li>Identify high-click / no-convert terms → add as negatives at originating campaign/ad-group level by match type (auto, broad, phrase, product-targeting)</li>
+              <li>Identify conquest ASINs: competitor ASINs with <span class="threshold">≥10 clicks AND ≥1 order</span> (both required — not OR)</li>
+            </ul>
+            <div class="output-row">
+              <span class="output-tag">Output</span>
+              <span class="output-text">Intent cluster map · Negative keyword list · Qualifying conquest ASIN list</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1.5 -->
+    <div class="phase-entry">
+      <div class="spine-col">
+        <div class="phase-dot special">1½</div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <span class="phase-label special">Phase 1.5 · Before SD</span>
+            <span class="phase-title">Tighten SP — Per-SKU Exact Audit</span>
+          </div>
+          <div class="phase-card-body">
+            <ul class="step-list">
+              <li>Check ads-change-log for existing exact campaigns per SKU</li>
+              <li>Audit current exact targets vs Phase 1 intent clusters — fill gaps only, no duplicates</li>
+              <li>Add anti-cannibalization negatives (exact negatives on auto, phrase negatives on broad)</li>
+            </ul>
+            <div class="gate-box">
+              <div class="gate-box-label">SD Launch Gate · All must pass</div>
+              <ul>
+                <li>Primary SP discovery/harvest campaigns show ACOS within target range</li>
+                <li>2 consecutive weekly check-ins at min <span class="threshold">$50/week</span> aggregate spend</li>
+                <li>SP CVR baseline established per SKU</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-entry">
+      <div class="spine-col">
+        <div class="phase-dot">2</div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <span class="phase-label">Phase 2</span>
+            <span class="phase-title">Build SD Targeting Brief</span>
+          </div>
+          <div class="phase-card-body">
+            <ul class="step-list">
+              <li>Map qualifying intent clusters → SD keyword context targeting</li>
+              <li>Map qualifying conquest ASINs (threshold met in Phase 1) → SD product targeting</li>
+              <li>Define remarketing audience: product page viewers, 30-day window, no conversion</li>
+            </ul>
+            <div class="output-row">
+              <span class="output-tag">Output</span>
+              <span class="output-text">SD campaign configuration document with pre-validated targets</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-entry">
+      <div class="spine-col">
+        <div class="phase-dot">3</div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <span class="phase-label">Phase 3</span>
+            <span class="phase-title">Launch Sponsored Display</span>
+          </div>
+          <div class="phase-card-body">
+            <div class="two-col">
+              <div>
+                <div class="gate-box-label" style="color:var(--phase);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:8px;">3 Campaigns</div>
+                <ul class="step-list">
+                  <li><strong>A — Views remarketing</strong> (product page visitors)</li>
+                  <li><strong>B — Keyword context</strong> (top SP intent clusters)</li>
+                  <li><strong>C — Conquest ASIN</strong> (threshold-qualified only)</li>
+                </ul>
+                <div style="margin-top:10px;font-size:13px;color:var(--text-2);">Budget: <span class="threshold">$20–30/day</span> per campaign</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div class="kill-box">
+                  <div class="kill-box-label">Early Kill Rules · Check First</div>
+                  <ul>
+                    <li>0 orders after <span class="threshold">$100 spend</span> → pause</li>
+                    <li>ACOS &gt; <span class="threshold">60%</span> after $50 spend → pause</li>
+                  </ul>
+                </div>
+                <div class="gate-box">
+                  <div class="gate-box-label">Optimization Review Gate</div>
+                  <ul>
+                    <li>Min <span class="threshold">50 clicks</span></li>
+                    <li>Min <span class="threshold">$50 spend</span></li>
+                    <li>Min <span class="threshold">1 order</span></li>
+                    <li>If SD ACOS &gt; 2× SP ACOS → flag &amp; reassess</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-entry">
+      <div class="spine-col">
+        <div class="phase-dot">4</div>
+        <div class="spine-line"></div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <span class="phase-label">Phase 4 · After 30 days SP + SD</span>
+            <span class="phase-title">AMC Descriptive Analysis</span>
+          </div>
+          <div class="phase-card-body">
+            <ul class="step-list">
+              <li>Query AMC: % of converters with SD exposure vs SP-only</li>
+              <li><strong>Strictly descriptive</strong> — correlation only, not causal lift (SD-exposed shoppers self-select)</li>
+              <li>No pseudo-holdout — geography/time comparisons are confounded by seasonality</li>
+              <li>Cadence: bi-weekly runs, not ad-hoc</li>
+            </ul>
+            <div class="gate-box">
+              <div class="gate-box-label">DSP Planning Gate · Phase 5 trigger</div>
+              <ul>
+                <li>Same directional relationship across <span class="threshold">2 consecutive bi-weekly runs</span></li>
+                <li>Minimum <span class="threshold">30 converters</span> per run</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase-entry">
+      <div class="spine-col">
+        <div class="phase-dot followon">5</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-card">
+          <div class="phase-card-header">
+            <span class="phase-label followon">Phase 5 · Follow-on plan</span>
+            <span class="phase-title">DSP — If AMC Justifies It</span>
+          </div>
+          <div class="phase-card-body">
+            <ul class="step-list">
+              <li>Retarget off-Amazon using Amazon's shopper data</li>
+              <li>Requires Phase 4 gate to pass — separate entry criteria document</li>
+              <li>Budget minimum: <span class="threshold">~$10k/mo</span> — separate budget approval required</li>
+              <li>Not detailed here</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end phases -->
+
+  <!-- Risks -->
+  <div class="section-label">Known Risks</div>
+  <div class="risks-section">
+    <div class="risks-header">Monitor throughout execution</div>
+    <ul class="risks-list">
+      <li><div class="risk-dot"></div>SP data volume may be too thin for reliable intent clusters — if &lt;200 clicks in 30 days, Phase 1 output will be limited</li>
+      <li><div class="risk-dot"></div>SD keyword context targeting is broad — monitor for impression share from irrelevant categories</li>
+      <li><div class="risk-dot"></div>Price gap ($55.08 vs $8–15 competitors) is structural — SD cannot fix a broken offer; CVR baseline must pass before SD launch</li>
+      <li><div class="risk-dot"></div>AMC signal may be inconclusive if SD runs below ~1,000 impressions/day</li>
+      <li><div class="risk-dot"></div>SD reporting extension to daily report script must be built before launch — not optional</li>
+    </ul>
+  </div>
+
+  <!-- Out of scope -->
+  <div class="section-label">Out of Scope · This Plan</div>
+  <div class="oos-section">
+    <div class="oos-label">Excluded</div>
+    <div class="oos-tags">
+      <span class="oos-tag">Sponsored Brands</span>
+      <span class="oos-tag">DSP (own plan)</span>
+      <span class="oos-tag">AMC audience uploads</span>
+      <span class="oos-tag">Video creative</span>
+      <span class="oos-tag">Off-Amazon traffic</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Everneat · Ads Strategy · July 2026</span>
+    <span>Approved after 4-round Codex adversarial review</span>
+  </div>
+
+</div>
