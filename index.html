@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everneat · Public Pages</title>
+<style>
+  :root {
+    --bg:#f5f6f8; --surface:#fff; --surface-2:#eef0f3; --text:#12161c; --text-2:#46505c; --text-3:#78828e;
+    --border:#e2e5ea; --spine:#cfd4db; --accent:#3b6ea8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0c1016; --surface:#141a22; --surface-2:#1b232e; --text:#eef1f5; --text-2:#a6b1be; --text-3:#6d7885;
+      --border:#232d3a; --spine:#2c3644; --accent:#5b93d0;
+    }
+  }
+  :root[data-theme="light"] { --bg:#f5f6f8; --surface:#fff; --surface-2:#eef0f3; --text:#12161c; --text-2:#46505c; --text-3:#78828e; --border:#e2e5ea; --spine:#cfd4db; --accent:#3b6ea8; }
+  :root[data-theme="dark"]  { --bg:#0c1016; --surface:#141a22; --surface-2:#1b232e; --text:#eef1f5; --text-2:#a6b1be; --text-3:#6d7885; --border:#232d3a; --spine:#2c3644; --accent:#5b93d0; }
+
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font:15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; letter-spacing:.1px; }
+  .wrap { max-width:760px; margin:0 auto; padding:64px 20px 96px; }
+  .head { display:flex; align-items:baseline; gap:12px; }
+  h1 { font-size:26px; margin:0; letter-spacing:-.3px; }
+  h1 .dot { color:var(--accent); }
+  .toggle { margin-left:auto; border:1px solid var(--border); background:var(--surface); color:var(--text-2);
+    border-radius:7px; padding:5px 10px; font-size:12.5px; cursor:pointer; }
+  .toggle:hover { border-color:var(--spine); }
+  .lead { color:var(--text-3); font-size:13.5px; margin:8px 0 26px; }
+
+  ul.list { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  a.row { display:grid; grid-template-columns:1fr auto; gap:4px 16px; text-decoration:none; color:inherit;
+    background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px 17px; transition:border-color .12s ease; }
+  a.row:hover { border-color:var(--spine); }
+  a.row .title { font-weight:650; font-size:16px; }
+  a.row:hover .title { color:var(--accent); }
+  a.row .date { color:var(--text-3); font-size:12.5px; font-variant-numeric:tabular-nums; white-space:nowrap; align-self:center; }
+  a.row .desc { color:var(--text-2); font-size:13.5px; grid-column:1 / -1; }
+
+  .foot { margin-top:34px; color:var(--text-3); font-size:12px; }
+  .foot a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>Everneat <span class="dot">/</span> Public Pages</h1>
+    <button class="toggle" id="tg">◐ theme</button>
+  </div>
+  <p class="lead">Standalone pages hosted from this repo — sorted by creation date, newest first.</p>
+  <ul class="list" id="list"></ul>
+  <p class="foot">Source: <a href="https://github.com/gerzon-everneat/public-html">gerzon-everneat/public-html</a></p>
+</div>
+
+<script>
+  // Add a page here (any order — the list self-sorts by date, newest first).
+  var pages = [
+    { href: "neatr-reality-check/",     date: "2026-07-17",
+      title: "Neatr — RealityCheck",
+      desc:  "Code-grounded strategic audit of the booking-fe platform: AI OS, or an FSM with AI features?" },
+    { href: "amazon-ads/strategy.html", date: "2026-07-15",
+      title: "Everneat — Amazon Ads Strategy",
+      desc:  "Phased Amazon advertising strategy and rollout plan." },
+  ];
+
+  var listEl = document.getElementById("list");
+  pages.slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; })
+    .forEach(function (p) {
+      var a = document.createElement("a");
+      a.className = "row"; a.href = p.href;
+      a.innerHTML =
+        '<span class="title"></span><span class="date"></span><span class="desc"></span>';
+      a.querySelector(".title").textContent = p.title;
+      a.querySelector(".date").textContent = p.date;
+      a.querySelector(".desc").textContent = p.desc;
+      listEl.appendChild(a);
+    });
+
+  var root = document.documentElement, btn = document.getElementById("tg");
+  btn.addEventListener("click", function () {
+    var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+  });
+</script>
+</body>
+</html>
