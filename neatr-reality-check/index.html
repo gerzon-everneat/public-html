@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neatr — RealityCheck</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --surface-2: #eef0f3;
+    --text: #12161c;
+    --text-2: #46505c;
+    --text-3: #78828e;
+    --border: #e2e5ea;
+    --spine: #cfd4db;
+    --accent: #3b6ea8;
+    --accent-dim: #dbe7f4;
+    --deep: #2f855a;      --deep-dim: #d8efe1;
+    --thin: #b7791f;      --thin-dim: #f7eccf;
+    --miss: #c53030;      --miss-dim: #fadcdc;
+    --neutral: #4a5568;   --neutral-dim: #e3e6ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c1016;
+      --surface: #141a22;
+      --surface-2: #1b232e;
+      --text: #eef1f5;
+      --text-2: #a6b1be;
+      --text-3: #6d7885;
+      --border: #232d3a;
+      --spine: #2c3644;
+      --accent: #5b93d0;
+      --accent-dim: #16283d;
+      --deep: #4fb27f;      --deep-dim: #123425;
+      --thin: #d6a13c;      --thin-dim: #33280d;
+      --miss: #e26a6a;      --miss-dim: #37160f;
+      --neutral: #93a0af;   --neutral-dim: #202834;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#f5f6f8;--surface:#fff;--surface-2:#eef0f3;--text:#12161c;--text-2:#46505c;--text-3:#78828e;
+    --border:#e2e5ea;--spine:#cfd4db;--accent:#3b6ea8;--accent-dim:#dbe7f4;
+    --deep:#2f855a;--deep-dim:#d8efe1;--thin:#b7791f;--thin-dim:#f7eccf;--miss:#c53030;--miss-dim:#fadcdc;--neutral:#4a5568;--neutral-dim:#e3e6ea;
+  }
+  :root[data-theme="dark"] {
+    --bg:#0c1016;--surface:#141a22;--surface-2:#1b232e;--text:#eef1f5;--text-2:#a6b1be;--text-3:#6d7885;
+    --border:#232d3a;--spine:#2c3644;--accent:#5b93d0;--accent-dim:#16283d;
+    --deep:#4fb27f;--deep-dim:#123425;--thin:#d6a13c;--thin-dim:#33280d;--miss:#e26a6a;--miss-dim:#37160f;--neutral:#93a0af;--neutral-dim:#202834;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: .1px;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px 96px; }
+  a { color: var(--accent); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .86em;
+    background: var(--surface-2); padding: 1px 5px; border-radius: 4px; color: var(--text); }
+
+  /* ---- top bar ---- */
+  header.top {
+    position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+  }
+  .top-inner { max-width: 1120px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 14px; }
+  .brand { font-weight: 700; letter-spacing: .3px; }
+  .brand .dot { color: var(--accent); }
+  .top-meta { color: var(--text-3); font-size: 12.5px; margin-left: auto; }
+  .toggle { border: 1px solid var(--border); background: var(--surface); color: var(--text-2);
+    border-radius: 7px; padding: 5px 10px; font-size: 12.5px; cursor: pointer; }
+  .toggle:hover { border-color: var(--spine); }
+
+  /* ---- hero ---- */
+  .hero { padding: 54px 0 30px; }
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: 12.5px; letter-spacing: 1.4px; text-transform: uppercase; }
+  h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.06; margin: 12px 0 10px; letter-spacing: -.6px; }
+  .sub { color: var(--text-2); font-size: 17px; max-width: 720px; }
+  .stamp { margin-top: 18px; color: var(--text-3); font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .stamp b { color: var(--text-2); font-weight: 600; }
+
+  /* ---- verdict banner ---- */
+  .verdict {
+    margin: 26px 0 8px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface);
+  }
+  .verdict-head { padding: 22px 24px 8px; }
+  .verdict-head .q { color: var(--text-3); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .8px; }
+  .verdict-head .a { font-size: clamp(20px, 3.2vw, 27px); font-weight: 700; margin-top: 6px; letter-spacing: -.3px; }
+  .verdict-head .a .hl { color: var(--miss); }
+  .gauge { padding: 8px 24px 24px; }
+  .gauge-track { position: relative; height: 44px; border-radius: 10px; overflow: hidden;
+    background: linear-gradient(90deg, var(--miss-dim), var(--surface-2) 55%, var(--deep-dim)); border: 1px solid var(--border); }
+  .gauge-labels { display: flex; justify-content: space-between; margin-top: 8px; color: var(--text-3); font-size: 12px; }
+  .gauge-labels b { color: var(--text-2); }
+  .marker { position: absolute; top: -2px; bottom: -2px; width: 3px; background: var(--text); left: 15%; }
+  .marker::after { content: "85% confidence"; position: absolute; top: 50%; left: 10px; transform: translateY(-50%);
+    background: var(--text); color: var(--bg); font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+
+  /* ---- sections ---- */
+  section { margin-top: 52px; scroll-margin-top: 70px; }
+  .sec-num { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 1px; }
+  h2 { font-size: 24px; margin: 6px 0 4px; letter-spacing: -.3px; }
+  .sec-lead { color: var(--text-2); max-width: 760px; margin: 0 0 20px; }
+
+  /* ---- badges ---- */
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .b-deep { color: var(--deep); background: var(--deep-dim); }
+  .b-thin { color: var(--thin); background: var(--thin-dim); }
+  .b-miss { color: var(--miss); background: var(--miss-dim); }
+  .b-neu  { color: var(--neutral); background: var(--neutral-dim); }
+
+  /* ---- feature cards ---- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 16px 17px; }
+  .card h3 { margin: 0; font-size: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card .ev { color: var(--text-2); font-size: 13.5px; margin: 9px 0 0; }
+  .card .rep { color: var(--text-3); font-size: 12.5px; margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--border); }
+  .card .rep b { color: var(--text-2); font-weight: 600; }
+
+  /* ---- AI strip ---- */
+  .aibar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .aicell { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 13px; }
+  .aicell .n { color: var(--accent); font-weight: 700; font-size: 12px; }
+  .aicell .m { font-family: ui-monospace, monospace; font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  .aicell .w { font-size: 13px; color: var(--text-2); margin-top: 7px; }
+  .callout { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kv { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 14px 16px; }
+  .kv .lbl { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: .6px; font-weight: 600; }
+  .kv .val { font-size: 15px; margin-top: 5px; color: var(--text); }
+  .kv .val.no { color: var(--miss); font-weight: 700; }
+  .kv .val.yes { color: var(--deep); font-weight: 700; }
+
+  /* ---- three lens ---- */
+  .lenses { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .lens { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 17px; }
+  .lens h3 { margin: 0 0 3px; font-size: 15px; color: var(--lc, var(--accent)); }
+  .lens .role { color: var(--text-3); font-size: 12px; }
+  .lens ul { margin: 12px 0 0; padding-left: 17px; color: var(--text-2); font-size: 13.5px; }
+  .lens li { margin-bottom: 7px; }
+  .lens .verd { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); font-size: 13px; color: var(--text); }
+  .lens .verd b { color: var(--lc); }
+  .disagree { margin-top: 16px; background: var(--accent-dim); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .disagree .t { font-weight: 700; margin-bottom: 6px; }
+  .disagree p { margin: 4px 0; font-size: 13.5px; color: var(--text-2); }
+  .disagree b { color: var(--text); }
+
+  /* ---- kill-risk ---- */
+  .risks { display: grid; gap: 11px; }
+  .risk { display: grid; grid-template-columns: 34px 1fr; gap: 14px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .risk .idx { font-size: 22px; font-weight: 800; color: var(--miss); opacity: .85; text-align: center; }
+  .risk .as { font-weight: 650; }
+  .risk .why { color: var(--text-3); font-size: 12.5px; margin-top: 3px; }
+  .risk .test { margin-top: 9px; font-size: 13px; color: var(--text-2); background: var(--surface-2);
+    border-radius: 8px; padding: 8px 11px; }
+  .risk .test b { color: var(--deep); font-weight: 700; }
+
+  /* ---- gap quadrant ---- */
+  .quad-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: start; }
+  .quad { position: relative; aspect-ratio: 1 / 0.82; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; }
+  .quad .axis-y, .quad .axis-x { position: absolute; color: var(--text-3); font-size: 11px; font-weight: 600; letter-spacing: .4px; }
+  .quad .axis-y { top: 50%; left: 8px; transform: rotate(-90deg) translateX(50%); transform-origin: left; white-space: nowrap; }
+  .quad .axis-x { bottom: 7px; left: 50%; transform: translateX(-50%); }
+  .quad .midv { position: absolute; top: 6%; bottom: 12%; left: 50%; width: 1px; background: var(--border); }
+  .quad .midh { position: absolute; left: 8%; right: 6%; top: 50%; height: 1px; background: var(--border); }
+  .quad .zone { position: absolute; font-size: 10.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: .5px; opacity: .8; }
+  .quad .z-tl { top: 9%; left: 10%; }
+  .quad .z-tr { top: 9%; right: 8%; }
+  .quad .z-bl { bottom: 15%; left: 10%; }
+  .quad .z-br { bottom: 15%; right: 8%; }
+  .pt { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; width: max-content; max-width: 120px; }
+  .pt .d { width: 15px; height: 15px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--dotc); background: var(--dotc); }
+  .pt .lb { font-size: 10.5px; margin-top: 4px; text-align: center; color: var(--text-2); line-height: 1.25; }
+  .glist { display: grid; gap: 9px; }
+  .grow { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: 13px; }
+  .grow .gn { font-weight: 600; }
+  .tag { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; letter-spacing: .4px; }
+  .t-build { color: var(--deep); background: var(--deep-dim); }
+  .t-defer { color: var(--thin); background: var(--thin-dim); }
+  .t-stop  { color: var(--miss); background: var(--miss-dim); }
+
+  /* ---- stop / double ---- */
+  .sd { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .sd .box { border: 1px solid var(--border); border-radius: 13px; padding: 18px; background: var(--surface); }
+  .sd .box .h { font-weight: 800; text-transform: uppercase; letter-spacing: .8px; font-size: 12.5px; }
+  .sd .box.stop .h { color: var(--miss); }
+  .sd .box.go .h { color: var(--deep); }
+  .sd .box p { color: var(--text-2); font-size: 13.5px; margin: 8px 0 0; }
+  .neat { margin-top: 16px; border: 1px solid var(--border); border-radius: 13px; padding: 18px; background: var(--surface); }
+  .neat .h { font-weight: 700; margin-bottom: 8px; }
+  .verdrow { display: flex; gap: 10px; align-items: baseline; margin: 7px 0; font-size: 13.5px; color: var(--text-2); }
+  .verdrow .k { font-weight: 700; min-width: 168px; }
+  .verdrow .k.sup { color: var(--deep); }
+  .verdrow .k.und { color: var(--miss); }
+
+  /* kill-criteria list */
+  .kc { display: grid; gap: 9px; }
+  .kc .item { display: grid; grid-template-columns: 20px 1fr; gap: 11px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; font-size: 13.5px; color: var(--text-2); }
+  .kc .item .x { color: var(--miss); font-weight: 800; }
+  .kc .item b { color: var(--text); }
+
+  .foot { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-3); font-size: 12.5px; }
+  .cite { color: var(--text-3); font-family: ui-monospace, monospace; font-size: 11.5px; }
+
+  @media (max-width: 860px) {
+    .aibar { grid-template-columns: 1fr 1fr; }
+    .callout, .lenses, .sd, .quad-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .aibar { grid-template-columns: 1fr; }
+    .verdrow { flex-direction: column; gap: 2px; }
+    .verdrow .k { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <span class="brand">Neatr <span class="dot">/</span> RealityCheck</span>
+    <span class="top-meta">Code-grounded strategic audit &middot; 2026-07-17</span>
+    <button class="toggle" id="tg">◐ theme</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Ground truth from the code</div>
+    <h1>Is Neatr an AI OS,<br>or an FSM with AI features?</h1>
+    <p class="sub">Four parallel investigators read the booking-fe codebase (also the mobile backend). Every claim below traces to a file&nbsp;citation or a founder answer. No vibes.</p>
+    <div class="stamp">
+      <span><b>Scope:</b> 7 capabilities · 5 AI call sites · data-moat · vertical coupling</span>
+      <span><b>Founder inputs:</b> 8 questions answered</span>
+      <span><b>Method:</b> DEEP / THIN / MISSING, cited</span>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict">
+    <div class="verdict-head">
+      <div class="q">The verdict</div>
+      <div class="a">It's an <span class="hl">FSM with AI features</span>, not an AI OS.</div>
+    </div>
+    <div class="gauge">
+      <div class="gauge-track"><div class="marker"></div></div>
+      <div class="gauge-labels">
+        <span><b>FSM + AI features</b><br>manual decisions, static config</span>
+        <span style="text-align:right"><b>AI OS</b><br>software makes the operational decisions</span>
+      </div>
+    </div>
+  </div>
+  <p class="sec-lead" style="margin-top:14px">The software makes <b>no operational decisions</b>: assignment is manual, job duration is a static default (120&nbsp;min), scheduling is deterministic, and no captured actual ever changes a future decision. An OS decides; this one presents options and records what humans chose.</p>
+
+  <!-- 1. FEATURE REALITY -->
+  <section id="features">
+    <div class="sec-num">Reality</div>
+    <h2>Feature reality check</h2>
+    <p class="sec-lead">Seven claimed capabilities, classified by how hard they'd be to replicate.
+      <span class="badge b-deep">Deep</span> <span class="badge b-thin">Thin</span> <span class="badge b-miss">Missing</span></p>
+    <div class="grid">
+
+      <div class="card lft" style="--edge:var(--deep)">
+        <h3>AI Scheduling <span class="badge b-neu">Deep · but no AI</span></h3>
+        <p class="ev">A real four-stage availability engine: eligibility filters → window fit → <b>sweep-line</b> conflict subtraction → anchor/cadence slot enumeration. Zero ML; the "AI agent" just calls it.</p>
+        <p class="rep"><span class="cite">availabilityLogic.ts · slotGeneration.ts</span><br><b>Replicate:</b> non-trivial (interval math, TZ-as-UTC, caching)</p>
+      </div>
+
+      <div class="card lft" style="--edge:var(--miss)">
+        <h3>Auto Assignment <span class="badge b-miss">Missing</span></h3>
+        <p class="ev">No algorithm picks a provider. Admin supplies <code>providerId</code>; the gate only checks a weekday availability row. The closest thing to "auto" is a reminder email.</p>
+        <p class="rep"><span class="cite">booking.ts:2387 · workers/scheduler.ts:121</span><br><b>Replicate:</b> trivial</p>
+      </div>
+
+      <div class="card lft" style="--edge:var(--thin)">
+        <h3>Rules Engine <span class="badge b-thin">Split</span></h3>
+        <p class="ev"><b>Pricing engine DEEP</b> — 817-line <code>computePricing()</code> + own config model. Booking-window validators THIN. Form-builder <b>conditional-rule engine MISSING</b> (versioned config store only, zero logic).</p>
+        <p class="rep"><span class="cite">pricing.service.ts:195 · rules-settings.model.ts</span><br><b>Replicate:</b> pricing hard; rest easy / unbuilt</p>
+      </div>
+
+      <div class="card lft" style="--edge:var(--deep)">
+        <h3>Messaging <span class="badge b-deep">Deep</span></h3>
+        <p class="ev">Real multi-party conversations (booking + team threads, participant invariants), a ~320-line notifications-v2 governance orchestrator, SES + Twilio with consent/suppression/caps. Twilio/SES are the thin bottom layer.</p>
+        <p class="rep"><span class="cite">conversation.service.ts:56 · notification.service.ts:131</span><br><b>Replicate:</b> hard — weeks of bespoke logic</p>
+      </div>
+
+      <div class="card lft" style="--edge:var(--deep)">
+        <h3>Booking Widget <span class="badge b-deep">Deep</span></h3>
+        <p class="ev">A genuine <code>&lt;booking-widget&gt;</code> web component over a <b>full anonymous</b> catalog / pricing / availability / payment API. Shares the production pricing + availability engines; you own your funnel.</p>
+        <p class="rep"><span class="cite">public/embed.js:15 · catalog.ts:476,862,1171</span><br><b>Replicate:</b> hard — deep public API</p>
+      </div>
+
+      <div class="card lft" style="--edge:var(--thin)">
+        <h3>Reports <span class="badge b-thin">Thin</span></h3>
+        <p class="ev">Two honest aggregation endpoints (status summary + financial summary). No CSV/export, no scheduled reports, no report builder, fixed date-range only.</p>
+        <p class="rep"><span class="cite">reports.ts:11,89</span><br><b>Replicate:</b> easy — ~a day of Mongo aggregation</p>
+      </div>
+
+      <div class="card lft" style="--edge:var(--thin)">
+        <h3>Webhooks <span class="badge b-thin">In: thin</span> <span class="badge b-deep">Out: deep</span></h3>
+        <p class="ev">Inbound Stripe/SES receivers are boilerplate. Outbound is a real tenant-subscribable <b>durable outbox state machine</b>: DLQ, idempotent insert, drop-by-stage reporting.</p>
+        <p class="rep"><span class="cite">stripe-webhook.ts:31 · webhook-outbox.service.ts</span><br><b>Replicate:</b> inbound easy; outbound hard</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. AI AUDIT -->
+  <section id="ai">
+    <div class="sec-num">The AI</div>
+    <h2>The "AI", audited</h2>
+    <p class="sec-lead">Every AI call is a stateless one-shot or tool-loop against Anthropic's API. <b>No ML model, no training, no embeddings, no feedback loop.</b> Five call sites, all Claude.</p>
+    <div class="aibar">
+      <div class="aicell"><div class="n">1 · Intent</div><div class="m">booking-intent.ts:142</div><div class="w">NL → structured booking fields, then deterministic pricing.</div></div>
+      <div class="aicell"><div class="n">2 · Setup agent</div><div class="m">admin-agent.svc:319</div><div class="w">Interviews owner, stages catalog into a <b>draft only</b>.</div></div>
+      <div class="aicell"><div class="n">3 · Booking bot</div><div class="m">customer-booking:201</div><div class="w">Sandbox chatbot; tools call the same pricing/availability engines.</div></div>
+      <div class="aicell"><div class="n">4 · Price sheet</div><div class="m">ai-propose.ts:157</div><div class="w">Spreadsheet → pricing-rules JSON (one-shot, regex-scraped).</div></div>
+      <div class="aicell"><div class="n">5 · Note tag</div><div class="m">property-guides:421</div><div class="w">Classifies a homeowner note → {title, icon, priority}.</div></div>
+    </div>
+    <div class="callout">
+      <div class="kv"><div class="lbl">AI in scheduling / assignment</div><div class="val no">NONE — it's a deterministic sweep-line algorithm</div></div>
+      <div class="kv"><div class="lbl">Learns from your bookings?</div><div class="val no">NO — job duration is a static default (120 min)</div></div>
+    </div>
+    <p class="sec-lead" style="margin-top:14px">Honest label: <b>LLM-assisted data entry + a booking chatbot, bolted onto a conventional rules engine.</b> Sellable, but not an intelligence moat. Tenant agents use a BYO encrypted key; two one-shots use the platform key.</p>
+  </section>
+
+  <!-- 3. DATA MOAT -->
+  <section id="moat">
+    <div class="sec-num">Data moat</div>
+    <h2>The data moat — ingredients present, refinery absent</h2>
+    <p class="sec-lead">Rich proprietary telemetry <b>is</b> captured on every booking. It's just never fed back into a decision.</p>
+    <div class="callout" style="grid-template-columns:1fr 1fr">
+      <div class="kv">
+        <div class="lbl">Captured (per tenant)</div>
+        <div class="val" style="font-size:13.5px;color:var(--text-2)">Arrivals + frozen on-time baselines · full status history · travel/lunch time logs · early-clockout reasons · per-space protocol + before/after photos · 1–5 ratings, tips · price breakdown + shadow price-audit</div>
+      </div>
+      <div class="kv">
+        <div class="lbl">Fed back into decisions</div>
+        <div class="val no">FEEDBACK LOOP: NO</div>
+        <div class="val" style="font-size:13px;color:var(--text-2)"><code>computePricing</code> reads only static config; <code>availabilityLogic</code> has zero references to booking history or ratings. Estimated-vs-actual is recorded and thrown to a display-only readout.</div>
+      </div>
+    </div>
+    <p class="sec-lead" style="margin-top:14px">It's a <b>write-only data lake with a display-only readout</b>. That's the single biggest gap between the code and an "AI OS" story.</p>
+  </section>
+
+  <!-- 4. COUPLING -->
+  <section id="coupling">
+    <div class="sec-num">Coupling</div>
+    <h2>Vertical coupling: <span style="color:var(--miss)">HIGH</span></h2>
+    <p class="sec-lead">The primary pricing path is square-footage-and-rooms shaped: <code>productionRate</code> = sqft/hour, <code>tier</code> = sqft brackets, plus sqft surcharges/overflow. Many first-class models hard-code cleaning: <code>protocol</code>, before/after images, <code>ChecklistSpaceType</code>, <code>property-inventory</code>, <code>airbnb*</code>, <code>cleanApprovals</code>.</p>
+    <div class="callout">
+      <div class="kv"><div class="lbl">Escape hatch</div><div class="val" style="font-size:13.5px;color:var(--text-2)">Generic time-based core (services/categories/attributes with <code>additionalMinutes</code>, skills, scheduling) is vertical-agnostic. A lawn business could bend <code>sqft</code> to lot size.</div></div>
+      <div class="kv"><div class="lbl">Hard wall</div><div class="val" style="font-size:13.5px;color:var(--text-2)">Plumbing/HVAC are per-task, not area-priced — they can't onboard today without code changes to the sizing/pricing model. TAM today = <b>cleaning</b>, not "home services".</div></div>
+    </div>
+  </section>
+
+  <!-- 5. THREE LENS -->
+  <section id="lenses">
+    <div class="sec-num">Three lenses</div>
+    <h2>Three lenses</h2>
+    <p class="sec-lead">An operator who churned off two FSM platforms, an investor deciding whether to fund, a builder estimating replication cost. They're built to disagree.</p>
+    <div class="lenses">
+      <div class="lens" style="--lc:var(--deep)">
+        <h3>Operator</h3><div class="role">Runs a fully-booked 15-crew shop</div>
+        <ul>
+          <li>The <b>booking widget is real</b> — I own my funnel instead of renting BookingKoala's.</li>
+          <li><b>Messaging governance</b> lets me control customer comms — usually a black box elsewhere.</li>
+          <li>I don't care it's an "AI OS." I care 15 crews stay booked.</li>
+          <li><b>No auto-assign</b> = I hand-assign every job. A daily tax, not a nicety.</li>
+        </ul>
+        <div class="verd"><b>Verdict:</b> a better-owned FSM for my own shop. "Platform-ness" is irrelevant to me.</div>
+      </div>
+      <div class="lens" style="--lc:var(--thin)">
+        <h3>Investor</h3><div class="role">Deciding whether to fund</div>
+        <ul>
+          <li><b>0 external tenants</b>; the only user is the founder's own business = pre-PMF.</li>
+          <li>Flat SaaS pricing ⇒ a <b>logo-count business</b>. With 0 logos, ARR is $0.</li>
+          <li>"AI OS" over 5 stateless wrappers is a <b>diligence landmine</b>.</li>
+          <li>But the infra depth signals a team that ships hard things.</li>
+        </ul>
+        <div class="verd"><b>Verdict:</b> fundable on team + infra, not on the AI-OS story or traction.</div>
+      </div>
+      <div class="lens" style="--lc:var(--accent)">
+        <h3>Builder</h3><div class="role">Estimating replication cost</div>
+        <ul>
+          <li>Cheap / not a moat: auto-assign, reports, inbound webhooks, the 5 AI wrappers.</li>
+          <li>Expensive / real: availability engine, messaging governance, public widget, outbound outbox.</li>
+          <li>The AI-OS delta is <b>small in effort, large in narrative</b> — and the telemetry already exists.</li>
+        </ul>
+        <div class="verd"><b>Verdict:</b> ~6–8 months to rebuild the shipped surface. The AI adds weeks, not defensibility.</div>
+      </div>
+    </div>
+    <div class="disagree">
+      <div class="t">↯ Where they materially disagree: is single-tenant dogfooding a strength or a liability?</div>
+      <p><b>Operator:</b> strength — running your own payroll on it is the only honest way to harden an FSM.</p>
+      <p><b>Investor:</b> liability — a captive user masks whether anyone else will pay.</p>
+      <p><b>Builder:</b> neutral — the multi-tenant substrate is already wired; it costs nothing architecturally.</p>
+    </div>
+  </section>
+
+  <!-- 6. KILL RISKS -->
+  <section id="risks">
+    <div class="sec-num">Kill risks</div>
+    <h2>Top 5 kill-risk assumptions</h2>
+    <p class="sec-lead">Each with a 30-day test that would prove or break it.</p>
+    <div class="risks">
+      <div class="risk"><div class="idx">1</div><div>
+        <div class="as">Other cleaning shops will pay for this.</div>
+        <div class="why">0 external tenants — the only user is you.</div>
+        <div class="test"><b>Test:</b> get 3 non-you cleaning shops to run one live booking-week each. Payment optional; live usage mandatory.</div>
+      </div></div>
+      <div class="risk"><div class="idx">2</div><div>
+        <div class="as">The AI is a reason to switch.</div>
+        <div class="why">It's data entry, not intelligence.</div>
+        <div class="test"><b>Test:</b> demo the bulk-booking agent to 5 prospects; count how many name it as <i>the</i> switch reason vs. a nice extra.</div>
+      </div></div>
+      <div class="risk"><div class="idx">3</div><div>
+        <div class="as">This generalizes to "home services".</div>
+        <div class="why">Coupling is HIGH — sqft/room-locked pricing.</div>
+        <div class="test"><b>Test:</b> onboard one lawn/landscaping tenant end-to-end with zero code changes; time it. Touch code → TAM = cleaning.</div>
+      </div></div>
+      <div class="risk"><div class="idx">4</div><div>
+        <div class="as">We can fully leave BookingKoala.</div>
+        <div class="why">You're mid-migration; your own shop is the test.</div>
+        <div class="test"><b>Test:</b> run your real 15-crew shop 100% on Neatr for 30 days, no BK fallback; log every dispatch error.</div>
+      </div></div>
+      <div class="risk"><div class="idx">5</div><div>
+        <div class="as">The supply layer is worth building.</div>
+        <div class="why">Rationale is parity ("BK has it"), not demand.</div>
+        <div class="test"><b>Test:</b> before any code, produce one real booking you couldn't fulfill with your own crew that supply would've saved. Can't → don't build it.</div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 7. GAP MAP -->
+  <section id="gaps">
+    <div class="sec-num">Gap map</div>
+    <h2>Gap map — code vs. the OS story</h2>
+    <p class="sec-lead">The delta between what the code shows and what "AI OS" requires, plotted by strategic value against build cost. The highest-value gaps are cheap because the data and substrate already exist.</p>
+    <div class="quad-wrap">
+      <div class="quad">
+        <span class="axis-y">STRATEGIC VALUE →</span>
+        <span class="axis-x">BUILD COST →</span>
+        <div class="midv"></div><div class="midh"></div>
+        <span class="zone z-tl">build now</span>
+        <span class="zone z-tr">big bets</span>
+        <span class="zone z-bl">cheap polish</span>
+        <span class="zone z-br">defer / stop</span>
+        <!-- positions: left=low cost, up=high value -->
+        <div class="pt" style="left:30%; top:22%; --dotc:var(--deep)"><span class="d"></span><span class="lb">Auto-assign engine</span></div>
+        <div class="pt" style="left:52%; top:16%; --dotc:var(--deep)"><span class="d"></span><span class="lb">Learned duration (feedback loop)</span></div>
+        <div class="pt" style="left:60%; top:30%; --dotc:var(--deep)"><span class="d"></span><span class="lb">Provider scoring</span></div>
+        <div class="pt" style="left:78%; top:52%; --dotc:var(--thin)"><span class="d"></span><span class="lb">Vertical decoupling</span></div>
+        <div class="pt" style="left:24%; top:76%; --dotc:var(--neutral)"><span class="d"></span><span class="lb">Reports / export</span></div>
+        <div class="pt" style="left:80%; top:80%; --dotc:var(--miss)"><span class="d"></span><span class="lb">Marketplace / supply</span></div>
+      </div>
+      <div class="glist">
+        <div class="grow"><span class="gn">Learned duration</span><span class="cite">med cost</span><span class="tag t-build">build</span></div>
+        <div class="grow"><span class="gn">Auto-assignment</span><span class="cite">low–med</span><span class="tag t-build">build</span></div>
+        <div class="grow"><span class="gn">Provider scoring</span><span class="cite">med</span><span class="tag t-build">build after loop</span></div>
+        <div class="grow"><span class="gn">Vertical decoupling</span><span class="cite">high</span><span class="tag t-defer">defer</span></div>
+        <div class="grow"><span class="gn">Reports / export</span><span class="cite">low</span><span class="tag t-defer">polish</span></div>
+        <div class="grow"><span class="gn">Marketplace / supply</span><span class="cite">high</span><span class="tag t-stop">defer / stop</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KILL CRITERIA -->
+  <section id="killcriteria">
+    <div class="sec-num">Kill criteria</div>
+    <h2>Kill criteria for the "OS" framing — next 2 quarters</h2>
+    <div class="kc">
+      <div class="item"><span class="x">✕</span><div>No <b>shipped feedback loop</b> (actuals → decisions) by end of Q2 → it's "AI-assisted FSM", full stop.</div></div>
+      <div class="item"><span class="x">✕</span><div><b>&lt;3 external tenants</b> running live bookings → it's an internal tool; kill the platform narrative.</div></div>
+      <div class="item"><span class="x">✕</span><div>No <b>second vertical</b> onboarded without a code change → a "cleaning ops tool", not a "home-services OS".</div></div>
+      <div class="item"><span class="x">✕</span><div>No tenant <b>cites the AI</b> as their reason to choose you → the AI isn't load-bearing; stop leading with it.</div></div>
+    </div>
+  </section>
+
+  <!-- 8. STOP / DOUBLE -->
+  <section id="decision">
+    <div class="sec-num">Decision</div>
+    <h2>Stop one thing. Double down on one thing.</h2>
+    <div class="sd">
+      <div class="box stop">
+        <div class="h">✕ Stop</div>
+        <p><b>Building the neatlist marketplace / supply layer.</b> The rationale is parity ("BookingKoala has it") — the exact reasoning that manufactures feature bloat. 0 tenants, no two-sided liquidity, all supply is your own crew, and you can't even auto-assign within one crew yet.</p>
+      </div>
+      <div class="box go">
+        <div class="h">✓ Double down</div>
+        <p><b>Traction before moat.</b> Win your own BK migration cleanly and land the first 3 external cleaning tenants. With 0 tenants, no feedback-loop engineering matters — proof a <i>second</i> shop runs live bookings is worth more than any model. The feedback loop is your <i>next</i> double-down.</p>
+      </div>
+    </div>
+    <div class="neat">
+      <div class="h">Does the code support folding neatlist into neatr as the supply layer &amp; freezing the marketplace?</div>
+      <div class="verdrow"><span class="k sup">Freeze — SUPPORTED</span><span>Can't serve non-cleaning, no liquidity either side, parity motive, no single-tenant auto-assign. Keep it frozen until liquidity pressure forces it.</span></div>
+      <div class="verdrow"><span class="k sup">Fold-in as architecture — SUPPORTED</span><span>If you ever build supply, it reuses primitives that already live in neatr (tenant scoping, skills, availability). Folding in &gt; a separate product.</span></div>
+      <div class="verdrow"><span class="k und">The stated reason — WRONG</span><span>"BookingKoala has it" is the wrong reason. Freeze it for no-demand / no-liquidity — and let a real unfulfillable booking, not competitor envy, be what unfreezes it.</span></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    Every classification above traces to a file citation (Phase 0) or a founder answer (Phase 1). Confidence on the headline verdict: <b style="color:var(--text-2)">HIGH (~85%)</b>. Flip condition: a shipped loop where actuals mutate future estimates/assignments <i>and</i> ≥1 external tenant relying on those decisions.
+  </div>
+
+</div>
+
+<script>
+  // theme toggle — defaults to OS preference, click cycles light/dark
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('tg');
+    btn.addEventListener('click', function () {
+      var cur = root.getAttribute('data-theme');
+      if (!cur) cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>
