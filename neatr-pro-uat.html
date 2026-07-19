@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neatr Pro — Provider App Test Run</title>
+<style>
+  :root {
+    --bg: #F4F4F0;
+    --surface: #FFFFFF;
+    --surface-2: #F0F0EC;
+    --black: #0D0D0D;
+    --text-1: #111827;
+    --text-2: #4B5563;
+    --text-3: #9CA3AF;
+    --border: #E5E7EB;
+    --border-strong: #D1D5DB;
+    --lime: #C8FF00;
+    --lime-dark: #A8D800;
+    --lime-muted: rgba(200,255,0,0.12);
+    --pass: #10B981;
+    --pass-bg: #ECFDF5;
+    --fail: #EF4444;
+    --fail-bg: #FEF2F2;
+    --skip: #9CA3AF;
+    --skip-bg: #F9FAFB;
+    --warn: #F59E0B;
+    --warn-bg: #FFFBEB;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D0D0D;
+      --surface: #1A1A1A;
+      --surface-2: #222222;
+      --black: #F4F4F0;
+      --text-1: #F9FAFB;
+      --text-2: #9CA3AF;
+      --text-3: #6B7280;
+      --border: #2A2A2A;
+      --border-strong: #3A3A3A;
+      --lime: #C8FF00;
+      --lime-muted: rgba(200,255,0,0.10);
+      --pass-bg: #052e16;
+      --fail-bg: #1f0a0a;
+      --skip-bg: #1A1A1A;
+      --warn-bg: #1c1407;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: var(--black);
+    color: var(--bg);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  .topbar-logo {
+    background: var(--lime);
+    color: #0D0D0D;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .topbar-title { font-weight: 600; font-size: 14px; opacity: 0.9; }
+  .topbar-right { display: flex; align-items: center; gap: 8px; }
+
+  .stat-pill {
+    display: flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: var(--radius-pill);
+    font-size: 11px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-pill.pass { background: rgba(16,185,129,0.18); color: #34d399; }
+  .stat-pill.fail { background: rgba(239,68,68,0.18); color: #f87171; }
+  .stat-pill.pending { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+  .stat-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .stat-pill.pass .dot { background: #34d399; }
+  .stat-pill.fail .dot { background: #f87171; }
+  .stat-pill.pending .dot { background: rgba(255,255,255,0.4); }
+
+  .filterbar {
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  /* 3-tier type scale: 11px labels · 14px body · 16px section heads */
+  .filter-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); margin-right: 4px; }
+  .filter-btn {
+    padding: 5px 12px; border-radius: var(--radius-pill);
+    border: 1px solid var(--border-strong);
+    background: transparent; color: var(--text-2);
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--black); color: var(--text-1); }
+  .filter-btn.active { background: var(--black); color: var(--lime); border-color: var(--black); }
+  .reset-btn {
+    margin-left: auto; padding: 5px 12px; border-radius: var(--radius-pill);
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-3); font-size: 11px; cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .reset-btn:hover { color: var(--fail); border-color: var(--fail); }
+
+  .progress-wrap { padding: 0 24px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .progress-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--lime); border-radius: 2px; width: 100%; transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 24px 24px 80px; }
+
+  .module { margin-bottom: 20px; }
+  .module-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  .module.collapsed .module-header { border-radius: var(--radius-md); }
+  .module-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .module-name { font-weight: 700; font-size: 16px; flex: 1; }
+  .module-meta { display: flex; align-items: center; gap: 6px; }
+  .module-count { font-size: 11px; font-weight: 600; color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .module-chevron { font-size: 11px; color: var(--text-3); transition: transform 0.2s; }
+  .module.collapsed .module-chevron { transform: rotate(-90deg); }
+
+  .module-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 2px 7px;
+    border-radius: var(--radius-pill);
+  }
+  .module-badge.fixes { background: var(--lime-muted); color: var(--lime-dark); }
+
+  .story-list { border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--radius-md) var(--radius-md); overflow: hidden; }
+  .module.collapsed .story-list { display: none; }
+
+  .story-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .story-row:last-child { border-bottom: none; }
+  .story-row:hover { background: var(--surface-2); }
+  .story-row.state-pass { background: var(--pass-bg); }
+  .story-row.state-fail { background: var(--fail-bg); }
+  .story-row.state-skip { opacity: 0.5; }
+  .story-row[data-hidden] { display: none; }
+
+  .story-id {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+    color: var(--text-3); flex-shrink: 0; padding-top: 2px;
+    width: 62px; font-variant-numeric: tabular-nums;
+  }
+  .story-row.state-pass .story-id { color: var(--pass); }
+  .story-row.state-fail .story-id { color: var(--fail); }
+
+  .story-text { flex: 1; font-size: 14px; color: var(--text-1); }
+  .story-note { display: block; font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  .story-note.fix { color: var(--lime-dark); font-weight: 600; }
+
+  .toggle-group { display: flex; gap: 4px; flex-shrink: 0; }
+  .tog {
+    width: 28px; height: 28px; border-radius: 6px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface); cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.12s, color 0.12s, border-color 0.12s; color: var(--text-3);
+  }
+  .tog:hover { border-color: var(--text-2); color: var(--text-1); }
+  .tog.pass.active { background: var(--pass); border-color: var(--pass); color: #fff; }
+  .tog.fail.active { background: var(--fail); border-color: var(--fail); color: #fff; }
+  .tog.skip.active { background: var(--border-strong); border-color: var(--border-strong); color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-logo">Neatr Pro</span>
+    <span class="topbar-title">Provider App — Full UX Test Run</span>
+  </div>
+  <div class="topbar-right">
+    <span class="stat-pill pass"><span class="dot"></span><span id="cnt-pass">0</span> pass</span>
+    <span class="stat-pill fail"><span class="dot"></span><span id="cnt-fail">0</span> fail</span>
+    <span class="stat-pill pending"><span class="dot"></span><span id="cnt-pending">0</span> pending</span>
+  </div>
+</div>
+
+<div class="filterbar">
+  <span class="filter-label">Show</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="fail">Failing</button>
+  <button class="filter-btn" data-filter="pending">Pending</button>
+  <button class="filter-btn" data-filter="pass">Passing</button>
+  <button class="reset-btn" id="reset-all">Reset all</button>
+</div>
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<div class="content" id="content"></div>
+
+<script>
+const MODULES = [
+  {
+    id: "AUTH", name: "Authentication", icon: "🔐", color: "#6366F1",
+    stories: [
+      { id: "AUTH-01", text: "Launch app cold → login screen appears" },
+      { id: "AUTH-02", text: "Enter valid email + password → lands on Home tab" },
+      { id: "AUTH-03", text: "Enter wrong password → shows inline error, no crash" },
+      { id: "AUTH-04", text: "Session persists after force-close + reopen" },
+    ]
+  },
+  {
+    id: "HOME", name: "Home Dashboard", icon: "🏠", color: "#0D0D0D",
+    stories: [
+      { id: "HOME-01", text: "Header shows correct jobs-today count and estimated earnings" },
+      { id: "HOME-02", text: "Today's job cards appear in time order under TODAY" },
+      { id: "HOME-03", text: "Upcoming jobs appear under TOMORROW / weekday labels" },
+      { id: "HOME-04", text: "Pull to refresh → spinner appears → data reloads" },
+      { id: "HOME-05", text: "No jobs today → empty / zero stats state (no active banner)" },
+      { id: "HOME-06", text: "Assigned/confirmed job today → shows 'On my way' CTA button" },
+      { id: "HOME-07", text: "En route job with NO recorded arrival → shows 'Check in' CTA", note: "bug fix", noteText: "Fix: routes to arrived.tsx, not map" },
+      { id: "HOME-08", text: "En route job WITH recorded arrival → shows 'Start work' CTA" },
+      { id: "HOME-09", text: "In-progress job → shows 'Continue work' CTA (not 'Start work')", note: "bug fix", noteText: "Fix: arrived.tsx alreadyStarted check" },
+      { id: "HOME-10", text: "In-progress job checklist incomplete → 'Mark complete' blocked with alert" },
+      { id: "HOME-11", text: "Swipe left on screen → switches to calendar view" },
+      { id: "HOME-12", text: "Swipe right from calendar → returns to list view" },
+      { id: "HOME-13", text: "Notification bell shows red dot when unread notifications exist" },
+      { id: "HOME-14", text: "Tap job card body → navigates to job detail screen" },
+      { id: "HOME-15", text: "Tap 'View job' secondary button → navigates to job detail" },
+    ]
+  },
+  {
+    id: "OMW", name: "On My Way", icon: "🚗", color: "#3B82F6",
+    stories: [
+      { id: "OMW-01", text: "Tap 'On my way' too early → time-gate alert appears, no navigation" },
+      { id: "OMW-02", text: "Tap 'On my way' at correct time → status → on_the_way → GPS map opens" },
+      { id: "OMW-03", text: "GPS map screen shows route to customer address" },
+      { id: "OMW-04", text: "Google Maps pill shows address label and external-link arrow" },
+      { id: "OMW-05", text: "Travel time counter starts and increments in job detail sticky bar" },
+      { id: "OMW-06", text: "Tap 'Pause' → travel timer pauses" },
+      { id: "OMW-07", text: "Tap 'I've arrived' → arrival recorded → navigate to arrived screen with timestamp" },
+    ]
+  },
+  {
+    id: "ARR", name: "Arrived / Check-in", icon: "📍", color: "#10B981",
+    stories: [
+      { id: "ARR-01", text: "Arrived screen (via ?at=) shows green 'Arrived' badge with correct time" },
+      { id: "ARR-02", text: "Punctuality label correct: early / On time / X min late" },
+      { id: "ARR-03", text: "Navigate to arrived screen WITHOUT ?at= → green badge still shows", note: "bug fix", noteText: "Fix: falls back to booking arrivals[]" },
+      { id: "ARR-04", text: "Arrive screen with no recorded arrival → 'haven't checked in' state + 'Open check-in →' link" },
+      { id: "ARR-05", text: "Customer address shown inside the arrived badge card" },
+      { id: "ARR-06", text: "'Access info' card visible if property guide has entry instructions" },
+      { id: "ARR-07", text: "'Before you go in' amber card visible if property guide has notes" },
+      { id: "ARR-08", text: "Header title reads 'You're here' when arrival is recorded, 'Check in' when not" },
+      { id: "ARR-09", text: "Button reads 'Start work' when job is on_the_way", note: "bug fix" },
+      { id: "ARR-10", text: "Button reads 'Continue work' when job is already in_progress", note: "bug fix", noteText: "Fix: alreadyStarted check" },
+      { id: "ARR-11", text: "Tap 'Start work' → job transitions to in_progress → first space opens" },
+      { id: "ARR-12", text: "Tap 'Continue work' → skips status call → first space opens directly" },
+    ]
+  },
+  {
+    id: "CHK", name: "Spaces & Checklist", icon: "✅", color: "#8B5CF6",
+    stories: [
+      { id: "CHK-01", text: "Space list shows all spaces with task progress counts (e.g. 0/7)" },
+      { id: "CHK-02", text: "Tap a space → opens space detail with all tasks listed" },
+      { id: "CHK-03", text: "Tap a task checkbox → task marked done, progress count updates" },
+      { id: "CHK-04", text: "Unchecking a done task → reverts progress" },
+      { id: "CHK-05", text: "Add photo to a task → photo preview appears in task row" },
+      { id: "CHK-06", text: "All tasks in a space done → space row shows fully complete state" },
+      { id: "CHK-07", text: "Navigate back to space list → correct per-space progress reflected" },
+      { id: "CHK-08", text: "All spaces complete → 'Review & Submit' becomes accessible" },
+    ]
+  },
+  {
+    id: "SUB", name: "Review & Submit", icon: "📋", color: "#F59E0B",
+    stories: [
+      { id: "SUB-01", text: "Review screen shows summary of all spaces and task counts" },
+      { id: "SUB-02", text: "Tap Submit → job marked completed, confirmation modal appears" },
+      { id: "SUB-03", text: "Modal shows earnings info and next-steps copy" },
+      { id: "SUB-04", text: "Tap 'Done' → modal dismisses → back to dashboard" },
+      { id: "SUB-05", text: "Tap 'View in Earnings' → dismisses modal AND navigates to Earnings tab", note: "bug fix", noteText: "Fix: was calling dismissAll only" },
+      { id: "SUB-06", text: "Completed job on dashboard shows no action CTA (or 'Done' state)" },
+    ]
+  },
+  {
+    id: "JOB", name: "Job Detail", icon: "📄", color: "#6B7280",
+    stories: [
+      { id: "JOB-01", text: "Job detail shows service name, client, date/time, duration, address" },
+      { id: "JOB-02", text: "Google Maps pill opens Maps app to customer address" },
+      { id: "JOB-03", text: "Job detail shows estimated earnings for this provider" },
+      { id: "JOB-04", text: "'HOW TO GET IN' section shows entry instructions or 'Ask the office' fallback" },
+      { id: "JOB-05", text: "Space list shows all spaces with task counts" },
+      { id: "JOB-06", text: "En route job → sticky bar shows 'Travel time' timer + Pause + Clock In" },
+      { id: "JOB-07", text: "In-progress job → sticky bar shows 'Clock Out' or 'Mark complete'" },
+      { id: "JOB-08", text: "Completed job → customer address is hidden (privacy redaction)" },
+    ]
+  },
+  {
+    id: "SCH", name: "Schedule Tab", icon: "📅", color: "#0EA5E9",
+    stories: [
+      { id: "SCH-01", text: "Schedule tab shows all jobs grouped and labelled by day" },
+      { id: "SCH-02", text: "List/calendar toggle pill switches views" },
+      { id: "SCH-03", text: "Calendar view shows colored dots: amber=today, blue=upcoming, green=done" },
+      { id: "SCH-04", text: "Tap a calendar date → job list below updates to that day" },
+      { id: "SCH-05", text: "Day earnings summary (earned of expected) shown above job list" },
+      { id: "SCH-06", text: "Tap a job card in schedule → navigates to job detail" },
+      { id: "SCH-07", text: "Today's jobs show action CTAs (same logic as Home tab)" },
+    ]
+  },
+  {
+    id: "EARN", name: "Earnings Tab", icon: "💰", color: "#10B981",
+    stories: [
+      { id: "EARN-01", text: "Earnings tab loads and shows total earned for selected period" },
+      { id: "EARN-02", text: "Period selector: tapping Week / Month / Year updates all values" },
+      { id: "EARN-03", text: "Bar chart renders with correct data, no blank bars" },
+      { id: "EARN-04", text: "Completed job count and scheduled count both shown" },
+      { id: "EARN-05", text: "Provider without hourly rate → zero-state copy shown, no crash" },
+      { id: "EARN-06", text: "Gusto payout info section visible" },
+    ]
+  },
+  {
+    id: "MSG", name: "Messages Tab", icon: "💬", color: "#8B5CF6",
+    stories: [
+      { id: "MSG-01", text: "Messages tab shows list of conversations" },
+      { id: "MSG-02", text: "Unread conversations have a visual unread indicator" },
+      { id: "MSG-03", text: "Tap conversation → thread opens with message history" },
+      { id: "MSG-04", text: "Type and send a message → message appears in thread" },
+      { id: "MSG-05", text: "Empty conversations state → no crash, shows empty state copy" },
+    ]
+  },
+  {
+    id: "PRO", name: "Profile Tab", icon: "👤", color: "#6366F1",
+    stories: [
+      { id: "PRO-01", text: "Profile tab shows provider name and account info" },
+      { id: "PRO-02", text: "Tap 'Time off' → time-off request flow opens" },
+      { id: "PRO-03", text: "Time off calendar shows already-blocked dates" },
+      { id: "PRO-04", text: "Request new time off with conflicting bookings → shows at-risk earnings alert" },
+      { id: "PRO-05", text: "Log out → session cleared → redirected to login screen" },
+    ]
+  },
+  {
+    id: "NOTIF", name: "Notifications", icon: "🔔", color: "#F59E0B",
+    stories: [
+      { id: "NOTIF-01", text: "Bell icon on Home shows red dot when unread notifications exist" },
+      { id: "NOTIF-02", text: "Tap bell → notification list opens" },
+      { id: "NOTIF-03", text: "Tap a booking notification → navigates to relevant job" },
+      { id: "NOTIF-04", text: "After viewing, notifications are marked read (dot clears)" },
+    ]
+  },
+  {
+    id: "XC", name: "Cross-Cutting", icon: "⚙️", color: "#6B7280",
+    stories: [
+      { id: "XC-01", text: "No network → error state shown on affected screens, no crash" },
+      { id: "XC-02", text: "Loading → skeleton placeholders shown, not blank screens" },
+      { id: "XC-03", text: "Pull to refresh works on Home, Schedule, Earnings" },
+      { id: "XC-04", text: "Background → foreground → data refreshes automatically" },
+      { id: "XC-05", text: "Back navigation from any screen returns to correct parent" },
+      { id: "XC-06", text: "Job status updated by another device → this device reflects it within seconds (socket)" },
+      { id: "XC-07", text: "Multi-provider job → all assigned providers see the booking" },
+    ]
+  },
+];
+
+const stateMap = {};
+let filter = "all";
+
+function getStats() {
+  let pass = 0, fail = 0, total = 0;
+  MODULES.forEach(m => m.stories.forEach(s => {
+    total++;
+    const st = stateMap[s.id];
+    if (st === "pass") pass++;
+    else if (st === "fail") fail++;
+  }));
+  return { pass, fail, pending: total - pass - fail, total };
+}
+
+function updateHeader() {
+  const { pass, fail, pending, total } = getStats();
+  document.getElementById("cnt-pass").textContent = pass;
+  document.getElementById("cnt-fail").textContent = fail;
+  document.getElementById("cnt-pending").textContent = pending;
+  const pct = total ? Math.round((pass / total) * 100) : 0;
+  document.getElementById("progress-fill").style.transform = `scaleX(${pct / 100})`;
+}
+
+function applyFilter() {
+  document.querySelectorAll(".story-row").forEach(row => {
+    const st = stateMap[row.dataset.id] || "pending";
+    const show = filter === "all" || filter === st;
+    row.toggleAttribute("data-hidden", !show);
+  });
+  document.querySelectorAll(".module").forEach(mod => {
+    const rows = mod.querySelectorAll(".story-row:not([data-hidden])");
+    mod.style.display = rows.length === 0 && filter !== "all" ? "none" : "";
+  });
+}
+
+function setStoryState(id, state) {
+  const curr = stateMap[id];
+  stateMap[id] = curr === state ? undefined : state;
+  renderStoryRow(id);
+  updateHeader();
+  applyFilter();
+}
+
+function renderStoryRow(id) {
+  const row = document.querySelector(`.story-row[data-id="${id}"]`);
+  if (!row) return;
+  const st = stateMap[id];
+  row.className = "story-row" + (st ? ` state-${st}` : "");
+  row.querySelectorAll(".tog").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.state === st);
+  });
+}
+
+function build() {
+  const content = document.getElementById("content");
+  MODULES.forEach(m => {
+    const hasFixes = m.stories.some(s => s.note === "fix" || s.note === "bug fix");
+    const section = document.createElement("div");
+    section.className = "module";
+    section.dataset.module = m.id;
+
+    const hdr = document.createElement("div");
+    hdr.className = "module-header";
+    hdr.innerHTML = `
+      <div class="module-icon" style="background:${m.color}22">${m.icon}</div>
+      <span class="module-name">${m.name}</span>
+      ${hasFixes ? '<span class="module-badge fixes">has fixes</span>' : ''}
+      <span class="module-meta">
+        <span class="module-count">${m.stories.length} stories</span>
+        <span class="module-chevron">▾</span>
+      </span>
+    `;
+    hdr.onclick = () => section.classList.toggle("collapsed");
+
+    const list = document.createElement("div");
+    list.className = "story-list";
+
+    m.stories.forEach(s => {
+      const row = document.createElement("div");
+      row.className = "story-row";
+      row.dataset.id = s.id;
+      row.innerHTML = `
+        <span class="story-id">${s.id}</span>
+        <span class="story-text">
+          ${s.text}
+          ${s.note ? `<span class="story-note ${s.note === 'bug fix' || s.note === 'fix' ? 'fix' : ''}">${s.noteText || '★ bug fix'}</span>` : ''}
+        </span>
+        <div class="toggle-group">
+          <button class="tog pass" data-state="pass" title="Pass">✓</button>
+          <button class="tog fail" data-state="fail" title="Fail">✗</button>
+          <button class="tog skip" data-state="skip" title="Skip">–</button>
+        </div>
+      `;
+      row.querySelectorAll(".tog").forEach(btn => {
+        btn.onclick = (e) => { e.stopPropagation(); setStoryState(s.id, btn.dataset.state); };
+      });
+      list.appendChild(row);
+    });
+
+    section.appendChild(hdr);
+    section.appendChild(list);
+    content.appendChild(section);
+  });
+
+  updateHeader();
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.onclick = () => {
+    filter = btn.dataset.filter;
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+    applyFilter();
+  };
+});
+
+document.getElementById("reset-all").onclick = () => {
+  Object.keys(stateMap).forEach(k => delete stateMap[k]);
+  document.querySelectorAll(".story-row").forEach(row => {
+    row.className = "story-row";
+    row.querySelectorAll(".tog").forEach(b => b.classList.remove("active"));
+  });
+  updateHeader();
+  applyFilter();
+};
+
+build();
+</script>
+
+</body>
+</html>
