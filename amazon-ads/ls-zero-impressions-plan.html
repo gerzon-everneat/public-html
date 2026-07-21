@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everneat LS — Zero-Impressions Diagnosis &amp; Plan</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5f6368; --line:#e3e3df;
+    --accent:#2d6a4f; --accent-soft:#e6f0eb; --warn:#b45309; --warn-soft:#fdf1e0;
+    --bad:#b91c1c; --bad-soft:#fbe9e9; --good:#15803d; --good-soft:#e7f4ec;
+    --code:#f0f0ec;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#161615; --card:#1f1f1e; --ink:#ececea; --muted:#a1a1a0; --line:#333331;
+      --accent:#6fbf9a; --accent-soft:#1c2b25; --warn:#e0a154; --warn-soft:#2c2415;
+      --bad:#e57373; --bad-soft:#2c1a1a; --good:#7bc48d; --good-soft:#17241b;
+      --code:#28282a;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px}
+  header h1{font-size:1.7rem;line-height:1.25;margin:0 0 6px}
+  header .sub{color:var(--muted);font-size:.95rem;margin:0 0 4px}
+  header .meta{color:var(--muted);font-size:.8rem;margin-top:10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:18px 0}
+  h2{font-size:1.15rem;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  h3{font-size:1rem;margin:18px 0 8px}
+  p{margin:.5em 0}
+  .tag{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.03em;
+    text-transform:uppercase;padding:3px 9px;border-radius:20px;vertical-align:middle}
+  .tag.bad{background:var(--bad-soft);color:var(--bad)}
+  .tag.good{background:var(--good-soft);color:var(--good)}
+  .tag.warn{background:var(--warn-soft);color:var(--warn)}
+  .tag.accent{background:var(--accent-soft);color:var(--accent)}
+  .banner{border-left:4px solid var(--accent);background:var(--accent-soft);
+    border-radius:8px;padding:14px 16px}
+  .banner.warn{border-color:var(--warn);background:var(--warn-soft)}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:6px 0}
+  .scroll{overflow-x:auto}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:600;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.02em}
+  td code,p code,li code{background:var(--code);padding:1px 5px;border-radius:4px;
+    font:.85em ui-monospace,SFMono-Regular,Menlo,monospace}
+  ul,ol{margin:.4em 0;padding-left:1.3em}
+  li{margin:.3em 0}
+  .step{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0;background:var(--card)}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+    font-size:.85rem;font-weight:700;margin-right:8px;flex:none}
+  .step .h{font-weight:600;display:flex;align-items:center}
+  .muted{color:var(--muted)}
+  .divider{height:1px;background:var(--line);border:0;margin:26px 0}
+  .rounds{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .round{flex:1;min-width:180px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--card)}
+  .round .r{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase}
+  .kicker{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .foot{color:var(--muted);font-size:.8rem;text-align:center;margin-top:34px}
+  strong{font-weight:650}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Everneat · Amazon Ads</div>
+  <h1>Laundry Soap (LS) — Zero Impressions: Diagnosis &amp; Plan</h1>
+  <p class="sub">Why all 6 LS Sponsored Products campaigns serve ~0 impressions, and what to actually do about it — without raising bids or budget.</p>
+  <p class="meta">Prepared 2026-07-22 · Diagnosis via Amazon Ads MCP + public listing check + Seller Central confirmation · Plan hardened through 3 rounds of adversarial review with OpenAI Codex (gpt-5.4).</p>
+</header>
+
+<div class="card banner">
+  <strong>Bottom line:</strong> Nothing is "broken" in the obvious sense — buy box is held, listing is live and in stock, everything is enabled. But a <strong>total zero across every campaign type</strong> (auto, broad, phrase, exact, product) is <em>not</em> what low bids look like. That pattern points to a possible <strong>config / negative-keyword / exclusion defect — which would be a near-free fix.</strong> So the plan leads with cheap diagnosis, not spending.
+</div>
+
+<div class="card">
+  <h2>What we confirmed <span class="tag good">verified</span></h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Check</th><th>Result</th></tr>
+    <tr><td>Buy box / featured offer</td><td><strong>Held</strong> (you confirmed in Seller Central)</td></tr>
+    <tr><td>Stock &amp; listing</td><td>Live, in stock, 4 scent variants, ~$25, 5.0★ (5 reviews)</td></tr>
+    <tr><td>Ad eligibility (both ASINs)</td><td><code>ELIGIBLE</code>, no flags — B0C8JXB2WL, B0G1HZZ5BB</td></tr>
+    <tr><td>Campaigns &amp; ad groups (all 6)</td><td>ENABLED, <code>DELIVERING</code>, zero block reasons, not in a portfolio</td></tr>
+    <tr><td>30-day impressions</td><td><strong>~0 across all types</strong> — even $2.00 broad terms &amp; $0.50 auto</td></tr>
+    <tr><td>Sibling lines (same account, similar setup)</td><td>Serve fine: OS-SP-AUTO 5,805 impr @ 6% ACOS · SR-SP-AUTO 74,689 impr</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="card">
+  <h2>The diagnosis pivot <span class="tag warn">reframed</span></h2>
+  <p>The earlier working theory was "bids too low for the laundry category" ($1.50–3.00 winning CPC vs your $0.35–0.85). That's real for the <em>head keyword terms</em> — but it <strong>cannot explain a literal zero everywhere</strong>:</p>
+  <ul>
+    <li>Low bids produce <em>few</em> impressions, not <em>zero</em>.</li>
+    <li>Auto &amp; product-targeting clear cheaply on every other Everneat line — but are also dark for LS.</li>
+    <li>Manually bumping ~10 broad terms to $1.20–2.00 still got nothing.</li>
+  </ul>
+  <p>A universal zero, while sibling ASINs serve on similar structure, fits a <strong>specific failure</strong> — a stray negative keyword/product exclusion, a routing conflict, a stale/zero target bid, or a structural mismatch we haven't literally diffed. The adversarial review flagged that our own change log has flip-flopped on this ("listing" → "bid floors" → "bids"), so no prior conclusion is trusted.</p>
+</div>
+
+<div class="card">
+  <h2>The plan — diagnose first (free), then decide</h2>
+  <p class="muted">Phase 0 runs entirely through the Ads API: no budget change, no bid change, no UI. It's the cheapest and highest-information action available.</p>
+
+  <div class="step">
+    <div class="h"><span class="n">1</span> Structure diff — per campaign type <span class="tag accent" style="margin-left:8px">mandatory</span></div>
+    <p style="margin:8px 0 0">Field-by-field compare each LS campaign to a <em>serving sibling of the same type</em> (auto↔auto, keyword↔keyword, product↔product): bid strategy, placement multipliers, dates, budgets, ad-group &amp; target bids, negatives, promoted ASINs, product-ad state, profile, portfolio. "Identical structure" must be proven, not assumed.</p>
+  </div>
+  <div class="step">
+    <div class="h"><span class="n">2</span> Negative-conflict audit <span class="tag accent" style="margin-left:8px">mandatory</span></div>
+    <p style="margin:8px 0 0">Check every keyword &amp; product-target negative — at campaign and ad-group scope — plus cross-campaign routing negatives, for anything silently wiping LS traffic.</p>
+  </div>
+  <div class="step">
+    <div class="h"><span class="n">3</span> Bid-source audit <span class="tag accent" style="margin-left:8px">mandatory</span></div>
+    <p style="margin:8px 0 0">Confirm campaign vs ad-group default vs target-level bids interact as expected — no stale or zeroed target bids hidden behind the campaign summary.</p>
+  </div>
+  <div class="step">
+    <div class="h"><span class="n">4</span> Placement + impression-share reports <span class="tag" style="margin-left:8px;background:var(--code);color:var(--muted)">supporting only</span></div>
+    <p style="margin:8px 0 0">Corroboration only — we do <em>not</em> draw a root cause from missing report data.</p>
+  </div>
+  <div class="step">
+    <div class="h"><span class="n">5</span> Fixed-bid isolate test — the decider</div>
+    <p style="margin:8px 0 0">If steps 1–3 come back clean: pause all but <strong>one</strong> highly-relevant exact keyword, set <strong>fixed</strong> bidding (removes the dynamic-down confounder), run a ladder <strong>$2.00 → $2.50–3.00</strong> for 48–72h each, same $7/day cap. Then repeat on one product target only if the keyword stays zero. This proves whether the ASIN can enter <em>any</em> auction at all.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Decision — only after Phase 0</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Finding in Phase 0</th><th>Then do</th></tr>
+    <tr><td>A config / negative / bid-source defect</td><td><strong>Fix it</strong> (near-free) → re-enable original campaigns → confirm impressions return in 24–48h</td></tr>
+    <tr><td>Isolate test <em>gets</em> impressions</td><td><span class="tag accent">A</span> contained bid test (long-tail, keep $7 cap) or <span class="tag accent">E</span> cheaper-auction targeting</td></tr>
+    <tr><td>Isolate stays zero after the full ladder</td><td><span class="tag accent">B</span> fix relevance/velocity or <span class="tag accent">K</span> rebuild targets around the ASIN's real claims (after a PDP audit)</td></tr>
+    <tr><td>Clean audits <em>and</em> both isolates zero at above-range bids</td><td><span class="tag accent">C</span> stop LS paid search — now defensible (that's the kill threshold)</td></tr>
+  </table>
+  </div>
+  <p class="muted" style="margin-top:10px">Full option set: A bid test · B relevance · C stop · D placement re-weighting (low priority) · E cheaper auctions · H negative audit · I fixed-bid test · J isolate · K listing-query rebuild.</p>
+</div>
+
+<div class="card">
+  <h2>How the plan was stress-tested <span class="tag good">Codex · 3 rounds</span></h2>
+  <p>Claude drafted the plan; OpenAI Codex (gpt-5.4) reviewed it as a read-only adversarial critic until it converged.</p>
+  <div class="rounds">
+    <div class="round"><div class="r">Round 1 — Revise</div>Killed the "bids too low" conclusion; a universal zero implies a specific config/exclusion defect. Added the diagnostic gate + options H/I/J/K.</div>
+    <div class="round"><div class="r">Round 2 — Revise</div>Per-type comparators, expanded negative/routing audit, sequential isolates, $2→$3 bid ladder, explicit kill threshold for stopping.</div>
+    <div class="round"><div class="r">Round 3 — Approved ✓</div>Converged.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="card banner" style="border-color:var(--good);background:var(--good-soft)">
+  <strong>Next action:</strong> Run Phase 0 steps 1–3 live through the Ads API right now — no budget, no bids, no UI. If there's a config or negative-keyword bug strangling LS, that's the answer, and the fix is free.
+</div>
+
+<p class="foot">Everneat · Amazon Ads · US marketplace<br>Internal working document</p>
+
+</div>
+</body>
+</html>
