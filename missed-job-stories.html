@@ -16,6 +16,7 @@
     --amber-bd:  rgba(245,158,11,0.25);
     --red:       #EF4444;
     --red-bg:    #FEF2F2;
+    --red-bd:    rgba(239,68,68,0.2);
     --green:     #10B981;
     --green-bg:  #ECFDF5;
   }
@@ -32,6 +33,7 @@
       --amber-bg: #1C1708;
       --amber-bd: rgba(245,158,11,0.2);
       --red-bg:   #1C0808;
+      --red-bd:   rgba(239,68,68,0.15);
       --green-bg: #081C10;
     }
   }
@@ -47,6 +49,7 @@
     --amber-bg: #1C1708;
     --amber-bd: rgba(245,158,11,0.2);
     --red-bg:   #1C0808;
+    --red-bd:   rgba(239,68,68,0.15);
     --green-bg: #081C10;
   }
   :root[data-theme="light"] {
@@ -61,6 +64,7 @@
     --amber-bg:  #FFFBEB;
     --amber-bd:  rgba(245,158,11,0.25);
     --red-bg:    #FEF2F2;
+    --red-bd:    rgba(239,68,68,0.2);
     --green-bg:  #ECFDF5;
   }
 
@@ -273,8 +277,9 @@
   }
   .tag.amber { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-bd); }
   .tag.green { background: var(--green-bg); color: var(--green); border-color: rgba(16,185,129,0.2); }
-  .tag.red   { background: var(--red-bg);   color: var(--red);   border-color: rgba(239,68,68,0.2); }
+  .tag.red   { background: var(--red-bg);   color: var(--red);   border-color: var(--red-bd); }
   .tag.lime  { background: var(--lime-bg);  color: #5a7a00; border-color: rgba(200,255,0,0.3); }
+  .tag.warn  { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-bd); }
 
   /* ── Divider ── */
   .section-divider {
@@ -304,13 +309,21 @@
     color: #92400E;
     line-height: 1.5;
   }
-  :root[data-theme="dark"] .future-note-text,
-  @media (prefers-color-scheme: dark) { .future-note-text { color: var(--amber); } }
-
   @media (prefers-color-scheme: dark) {
     .future-note-text { color: var(--amber); }
   }
   :root[data-theme="dark"] .future-note-text { color: var(--amber); }
+
+  /* ── Sub-group label ── */
+  .story-group-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin: 28px 0 10px;
+    padding-left: 2px;
+  }
 
   /* ── Footer ── */
   .doc-footer {
@@ -333,6 +346,7 @@
   .status-pills {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
   }
   .status-pill {
     font-size: 11px;
@@ -355,10 +369,11 @@
   <header class="doc-header">
     <p class="doc-eyebrow">Neatr Pro · Feature Spec</p>
     <h1 class="doc-title">Missed Job Resolution</h1>
-    <p class="doc-subtitle">User stories for the flow that handles jobs that were never started — covering what the provider sees and does on mobile, and how the admin responds in the dashboard.</p>
+    <p class="doc-subtitle">User stories for handling jobs that were never started — including pre-start reminders, same-day late signals, overdue timer escalation, and the post-hoc resolution flow for both the provider on mobile and the admin in the dashboard.</p>
     <div class="doc-meta">
       <div class="doc-meta-item"><span class="doc-meta-dot"></span> Mobile shipped — PR #23</div>
-      <div class="doc-meta-item"><span class="doc-meta-dot"></span> Backend endpoint live</div>
+      <div class="doc-meta-item"><span class="doc-meta-dot"></span> Backend API live</div>
+      <div class="doc-meta-item"><span class="doc-meta-dot"></span> Pre-start SMS + escalation live</div>
       <div class="doc-meta-item"><span class="doc-meta-dot amber"></span> Admin review UI pending</div>
     </div>
   </header>
@@ -371,28 +386,33 @@
       <span class="role-desc">What the assigned provider experiences before, during, and after a missed job</span>
     </div>
 
+    <p class="story-group-label">Before the job starts</p>
+
     <!-- P-1 -->
     <div class="story">
       <div class="story-top">
         <span class="story-num">P–1</span>
         <div class="story-body">
-          <p class="story-title">See that a past job needs attention</p>
+          <p class="story-title">Get a reminder 10 minutes before the job starts</p>
           <p class="story-statement">
-            As a <em>provider</em>, I want to see a clear flag on any job whose date has passed without me clocking in, so I know I need to take action rather than just ignoring it.
+            As a <em>provider</em>, I want an alert when my job is about to start so I can confirm I'm heading out — or let the office know right away if I can't make it.
           </p>
           <div class="tags">
-            <span class="tag amber">Missed badge</span>
-            <span class="tag amber">Amber banner</span>
+            <span class="tag green">Shipped</span>
+            <span class="tag">T–10 in-app alert</span>
+            <span class="tag">SMS notification</span>
           </div>
         </div>
       </div>
       <div class="criteria">
         <p class="criteria-label">Acceptance criteria</p>
         <ul class="criteria-list">
-          <li class="pass">Job detail header shows a red <strong>Missed</strong> status pill (replaces Upcoming / Confirmed)</li>
-          <li class="pass">Amber banner reads "This job was never started" with a <strong>Resolve</strong> button</li>
-          <li class="pass">Banner only appears for past-day jobs in committed statuses (assigned, confirmed, in_progress, on_the_way) that are not completed or cancelled</li>
-          <li class="pass">Completed and cancelled jobs never show the banner</li>
+          <li class="pass">When the job detail screen is open and the job is still <code>assigned</code> with ≤10 min until <code>scheduledAt</code>, a native Alert fires once: "Your job starts in X minutes. Are you heading out?"</li>
+          <li class="pass">Alert has two buttons: <strong>I'm on my way</strong> (default) and <strong>Can't make it</strong> (destructive)</li>
+          <li class="pass">Tapping <strong>I'm on my way</strong> triggers the On My Way status transition — same as the action bar button</li>
+          <li class="pass">Tapping <strong>Can't make it</strong> opens the no-show reason sheet directly (P–4)</li>
+          <li class="pass">Alert fires at most once per screen mount — no repeat on re-opens after the window has passed</li>
+          <li class="pass">Backend sends an SMS via <code>booking.pre_start</code> notify event in the same T±10 min window (scheduler sweep every 5 min, deduped by <code>preStartAlertSentAt</code>)</li>
         </ul>
       </div>
     </div>
@@ -402,11 +422,128 @@
       <div class="story-top">
         <span class="story-num">P–2</span>
         <div class="story-body">
+          <p class="story-title">See that I'm running late on the same day</p>
+          <p class="story-statement">
+            As a <em>provider</em>, I want the job detail to surface a clear warning when the scheduled start time has already passed and I'm still not on the way, so I know I need to act immediately.
+          </p>
+          <div class="tags">
+            <span class="tag green">Shipped</span>
+            <span class="tag amber">Late banner</span>
+            <span class="tag">Same-day only</span>
+          </div>
+        </div>
+      </div>
+      <div class="criteria">
+        <p class="criteria-label">Acceptance criteria</p>
+        <ul class="criteria-list">
+          <li class="pass">When <code>status === "assigned"</code> and <code>Date.now() > scheduledAt</code> (same calendar day), an amber banner appears at the top of the job detail</li>
+          <li class="pass">Banner headline shows live minutes late: "You're 12m late" — or "1h 5m late" when past 60 min</li>
+          <li class="pass">Banner body reads: "Not heading out? Let the office know."</li>
+          <li class="pass">Banner has a <strong>Can't make it</strong> button that opens the no-show reason sheet (P–4)</li>
+          <li class="pass">Banner is mutually exclusive with the Missed banner — the Missed banner only appears the next calendar day</li>
+          <li class="pass">Banner disappears automatically once the provider taps <strong>On My Way</strong> and the status transitions</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="story-group-label">While working</p>
+
+    <!-- P-3 -->
+    <div class="story">
+      <div class="story-top">
+        <span class="story-num">P–3</span>
+        <div class="story-body">
+          <p class="story-title">Clock out from the overdue alert</p>
+          <p class="story-statement">
+            As a <em>provider</em> who is still working past the scheduled end time, I want to clock out directly from the "Still working?" alert so I don't have to dismiss it and navigate back to the action bar.
+          </p>
+          <div class="tags">
+            <span class="tag green">Shipped</span>
+            <span class="tag">Overdue timer</span>
+            <span class="tag">30-min cadence</span>
+          </div>
+        </div>
+      </div>
+      <div class="criteria">
+        <p class="criteria-label">Acceptance criteria</p>
+        <ul class="criteria-list">
+          <li class="pass">"Still working?" alert fires every 30 min past the scheduled end time while the job is <code>in_progress</code></li>
+          <li class="pass">Alert has two buttons: <strong>Still going</strong> (default) and <strong>Clock out</strong> (destructive)</li>
+          <li class="pass">Tapping <strong>Clock out</strong> triggers the same flow as the action bar button — including the checklist-incomplete guard and the early-clockout reason picker if applicable</li>
+          <li class="pass">Tapping <strong>Still going</strong> dismisses the alert and resets the 1-hour escalation window (see P–5)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P-4 — was P-4 before, now renumbered -->
+    <div class="story">
+      <div class="story-top">
+        <span class="story-num">P–4</span>
+        <div class="story-body">
+          <p class="story-title">Office is notified when I stop responding to the overdue alert</p>
+          <p class="story-statement">
+            As a <em>provider</em>, I want the app to automatically alert the office if I haven't responded to the overdue prompt for an hour, so someone can check in without me having to reach out manually.
+          </p>
+          <div class="tags">
+            <span class="tag green">Shipped</span>
+            <span class="tag red">Escalation</span>
+            <span class="tag">1-hour window</span>
+          </div>
+        </div>
+      </div>
+      <div class="criteria">
+        <p class="criteria-label">Acceptance criteria</p>
+        <ul class="criteria-list">
+          <li class="pass">If 1 hour passes in extra-time without the provider tapping <strong>Still going</strong>, the timer stops automatically</li>
+          <li class="pass">The extra-time amber card is replaced by a red banner: "Timer stopped — office notified" / "No response received. The office has been notified to follow up."</li>
+          <li class="pass">No further "Still working?" alerts fire after escalation</li>
+          <li class="pass">App sends <code>PATCH /bookings/:id/flag-clockout</code> — stamps <code>clockoutFlaggedAt</code> and notifies admin (see A–2)</li>
+          <li class="pass">The endpoint is idempotent — a second call (e.g. on reconnect) returns 200 with no extra side effects</li>
+          <li class="pass">Tapping <strong>Still going</strong> at any point resets the 1-hour window from that tap</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="story-group-label">After the job — resolution flow</p>
+
+    <!-- P-5 -->
+    <div class="story">
+      <div class="story-top">
+        <span class="story-num">P–5</span>
+        <div class="story-body">
+          <p class="story-title">See that a past job needs attention</p>
+          <p class="story-statement">
+            As a <em>provider</em>, I want a clear flag on any job whose date has passed without me clocking in, so I know I need to resolve it rather than just ignoring it.
+          </p>
+          <div class="tags">
+            <span class="tag green">Shipped</span>
+            <span class="tag amber">Missed badge</span>
+            <span class="tag amber">Amber banner</span>
+          </div>
+        </div>
+      </div>
+      <div class="criteria">
+        <p class="criteria-label">Acceptance criteria</p>
+        <ul class="criteria-list">
+          <li class="pass">Job detail header shows a <strong>Missed</strong> status pill when the job is past-day and unresolved</li>
+          <li class="pass">Amber banner reads "This job was never started" with a <strong>Resolve</strong> button</li>
+          <li class="pass">Banner only appears for past-calendar-day jobs in committed statuses (assigned, confirmed, in_progress, on_the_way) that are not completed or cancelled</li>
+          <li class="pass">Completed and cancelled jobs never show the banner</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- P-6 -->
+    <div class="story">
+      <div class="story-top">
+        <span class="story-num">P–6</span>
+        <div class="story-body">
           <p class="story-title">Report that I actually worked the job</p>
           <p class="story-statement">
             As a <em>provider</em>, I want to log my actual start and end times when I worked a job but forgot to clock in or out, so the office can verify my hours and I still get paid.
           </p>
           <div class="tags">
+            <span class="tag green">Shipped</span>
             <span class="tag">Resolve sheet</span>
             <span class="tag">Time steppers</span>
             <span class="tag">Note field</span>
@@ -429,16 +566,17 @@
       </div>
     </div>
 
-    <!-- P-3 -->
+    <!-- P-7 -->
     <div class="story">
       <div class="story-top">
-        <span class="story-num">P–3</span>
+        <span class="story-num">P–7</span>
         <div class="story-body">
           <p class="story-title">Report that I couldn't make it</p>
           <p class="story-statement">
-            As a <em>provider</em>, I want to quickly tell the office why I didn't show up so they can handle the customer, without requiring me to make a phone call.
+            As a <em>provider</em>, I want to quickly tell the office why I didn't show up — whether from a same-day banner, the pre-start alert, or the next-day missed banner — so they can handle the customer without me making a phone call.
           </p>
           <div class="tags">
+            <span class="tag green">Shipped</span>
             <span class="tag">No-show reasons</span>
             <span class="tag red">Reason required</span>
           </div>
@@ -447,38 +585,12 @@
       <div class="criteria">
         <p class="criteria-label">Acceptance criteria</p>
         <ul class="criteria-list">
-          <li class="pass">Selecting "I didn't make it" in the resolve sheet reveals a reason picker inline</li>
+          <li class="pass">The no-show sheet is reachable from three entry points: <strong>Resolve → I didn't make it</strong> (past-day missed), <strong>Can't make it</strong> on the late banner (same-day), and <strong>Can't make it</strong> on the T–10 pre-start alert</li>
           <li class="pass">Reasons: Sick or emergency · Vehicle / transport issue · Wrong location or locked out · Scheduling conflict · Other</li>
           <li class="pass">Submit is disabled until a reason is selected</li>
           <li class="pass">Tapping Submit sends <code>PATCH /bookings/:id/resolve-missed</code> with <code>resolution: "no_show"</code> and the selected reason</li>
           <li class="pass">Success alert: "Reported — The office has been notified. They'll follow up if needed."</li>
-          <li class="err">If the job was already resolved, server returns 409 and app shows an error toast — no crash</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- P-4 -->
-    <div class="story">
-      <div class="story-top">
-        <span class="story-num">P–4</span>
-        <div class="story-body">
-          <p class="story-title">Clock out from an overdue job alert</p>
-          <p class="story-statement">
-            As a <em>provider</em> who is still working past the scheduled end time, I want to clock out directly from the "Still working?" alert so I don't have to dismiss it and navigate back to the action bar.
-          </p>
-          <div class="tags">
-            <span class="tag">Overdue timer</span>
-            <span class="tag">Clock out</span>
-          </div>
-        </div>
-      </div>
-      <div class="criteria">
-        <p class="criteria-label">Acceptance criteria</p>
-        <ul class="criteria-list">
-          <li class="pass">"Still working?" alert fires every 30 min past the scheduled end time while the job is <code>in_progress</code></li>
-          <li class="pass">Alert has two buttons: <strong>Still going</strong> (default) and <strong>Clock out</strong> (destructive)</li>
-          <li class="pass">Tapping Clock out triggers the same flow as the Clock Out button in the action bar — including the checklist-incomplete guard and the early-clockout reason picker if applicable</li>
-          <li class="pass">Tapping Still going dismisses the alert; it will fire again after the next 30-minute mark</li>
+          <li class="err">If the job was already resolved, server returns 409 and app shows an error — no crash</li>
         </ul>
       </div>
     </div>
@@ -492,13 +604,13 @@
     <div class="role-header">
       <span class="role-badge admin">Admin</span>
       <span class="role-label">Dashboard</span>
-      <span class="role-desc">What the office sees after a provider submits a resolution</span>
+      <span class="role-desc">What the office sees and does after provider signals or resolutions come in</span>
     </div>
 
     <div class="future-note">
       <span class="future-note-icon">⚠</span>
       <p class="future-note-text">
-        The backend stores all resolution data and fires an in-app notification today. The dedicated admin review UI (stories A–2 through A–4) is not yet built — these stories define the intended experience for the next sprint.
+        The backend stores all resolution and escalation data and fires in-app notifications today. The dedicated admin review UI (stories A–3 through A–5) is not yet built — these stories define the intended experience for the next sprint.
       </p>
     </div>
 
@@ -509,19 +621,19 @@
         <div class="story-body">
           <p class="story-title">Get notified when a provider resolves a missed job</p>
           <p class="story-statement">
-            As an <em>admin</em>, I want to receive an in-app notification the moment a provider submits a resolution so nothing falls through the cracks after the fact.
+            As an <em>admin</em>, I want an in-app notification the moment a provider submits a resolution so nothing falls through the cracks after the fact.
           </p>
           <div class="tags">
             <span class="tag green">Shipped</span>
-            <span class="tag">In-app notification</span>
+            <span class="tag">booking.missed_resolution</span>
           </div>
         </div>
       </div>
       <div class="criteria">
         <p class="criteria-label">Acceptance criteria</p>
         <ul class="criteria-list">
-          <li class="pass">On successful <code>PATCH /bookings/:id/resolve-missed</code>, the backend fires a <code>booking.missed_resolution</code> admin notification</li>
-          <li class="pass">Notification message: "Provider logged worked hours for booking #XXXX" or "Provider reported no-show for booking #XXXX"</li>
+          <li class="pass">On successful <code>PATCH /bookings/:id/resolve-missed</code>, backend fires a <code>booking.missed_resolution</code> admin notification</li>
+          <li class="pass">Notification message names the provider and booking reference</li>
           <li class="pass">Notification links to the booking detail page</li>
           <li class="pass">Notification appears in the admin notifications panel without a page reload</li>
         </ul>
@@ -532,6 +644,34 @@
     <div class="story">
       <div class="story-top">
         <span class="story-num">A–2</span>
+        <div class="story-body">
+          <p class="story-title">Get notified when a provider's timer auto-escalates</p>
+          <p class="story-statement">
+            As an <em>admin</em>, I want to know when the app has automatically stopped a provider's overdue timer because they weren't responding, so I can call or message them to find out what's happening.
+          </p>
+          <div class="tags">
+            <span class="tag green">Shipped</span>
+            <span class="tag">booking.clockout_flag</span>
+            <span class="tag red">Escalation</span>
+          </div>
+        </div>
+      </div>
+      <div class="criteria">
+        <p class="criteria-label">Acceptance criteria</p>
+        <ul class="criteria-list">
+          <li class="pass">When the provider's timer escalates, app calls <code>PATCH /bookings/:id/flag-clockout</code></li>
+          <li class="pass">Backend stamps <code>clockoutFlaggedAt</code> on the booking and fires a <code>booking.clockout_flag</code> admin notification</li>
+          <li class="pass">Notification message: "Provider did not respond to the overdue alert — booking #XXXX timer stopped automatically."</li>
+          <li class="pass">Notification links to the booking detail</li>
+          <li class="pass">Second call is idempotent — no duplicate notification if the provider reconnects</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- A-3 -->
+    <div class="story">
+      <div class="story-top">
+        <span class="story-num">A–3</span>
         <div class="story-body">
           <p class="story-title">Review a "worked" claim and approve or reject it</p>
           <p class="story-statement">
@@ -548,17 +688,17 @@
         <ul class="criteria-list">
           <li class="warn">Booking detail shows a "Missed — resolved by provider" section when <code>missedResolution</code> is present</li>
           <li class="warn">Section displays: resolution type, submitted date/time, provider's claimed start and end times, and the note</li>
-          <li class="warn">Admin can tap <strong>Mark complete</strong> to transition the booking to <code>completed</code> and trigger the normal post-completion flow (receipt, review request)</li>
+          <li class="warn">Admin can tap <strong>Mark complete</strong> to transition the booking to <code>completed</code></li>
           <li class="warn">Admin can tap <strong>Dispute</strong> to flag the claim for follow-up (sends a message to the provider thread)</li>
           <li class="warn">Once actioned, the section shows who reviewed it and when</li>
         </ul>
       </div>
     </div>
 
-    <!-- A-3 -->
+    <!-- A-4 -->
     <div class="story">
       <div class="story-top">
-        <span class="story-num">A–3</span>
+        <span class="story-num">A–4</span>
         <div class="story-body">
           <p class="story-title">Handle a no-show and decide next steps</p>
           <p class="story-statement">
@@ -574,17 +714,17 @@
         <p class="criteria-label">Acceptance criteria</p>
         <ul class="criteria-list">
           <li class="warn">No-show resolution displays the provider's selected reason prominently on the booking detail</li>
-          <li class="warn">Quick-action buttons on the card: <strong>Reassign</strong> (opens provider assignment flow) · <strong>Cancel booking</strong> · <strong>Contact customer</strong></li>
+          <li class="warn">Quick-action buttons: <strong>Reassign</strong> · <strong>Cancel booking</strong> · <strong>Contact customer</strong></li>
           <li class="warn">Actioning any button marks the resolution as handled</li>
           <li class="warn">Customer is not automatically notified — admin confirms before any outbound message is sent</li>
         </ul>
       </div>
     </div>
 
-    <!-- A-4 -->
+    <!-- A-5 -->
     <div class="story">
       <div class="story-top">
-        <span class="story-num">A–4</span>
+        <span class="story-num">A–5</span>
         <div class="story-body">
           <p class="story-title">See all unresolved missed jobs in one place</p>
           <p class="story-statement">
@@ -601,7 +741,8 @@
         <ul class="criteria-list">
           <li class="warn">Bookings list supports a <strong>Missed</strong> filter tab (past-day, committed status, no <code>missedResolution</code>, not completed/cancelled)</li>
           <li class="warn">Each row shows: booking date, customer, assigned provider, and how many days overdue</li>
-          <li class="warn">Rows where the provider has submitted a resolution are visually differentiated from rows with no submission at all</li>
+          <li class="warn">Rows where the provider has submitted a resolution are visually differentiated from rows with no submission</li>
+          <li class="warn">Escalated jobs (<code>clockoutFlaggedAt</code> set) shown with a red indicator</li>
           <li class="warn">Count badge on the Missed tab updates in real time as providers submit resolutions or admins action them</li>
         </ul>
       </div>
@@ -615,6 +756,7 @@
     <div class="status-pills">
       <span class="status-pill shipped">Mobile shipped</span>
       <span class="status-pill shipped">API live</span>
+      <span class="status-pill shipped">Escalation live</span>
       <span class="status-pill pending">Admin UI pending</span>
     </div>
   </footer>
