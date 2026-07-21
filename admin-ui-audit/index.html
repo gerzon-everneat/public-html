@@ -194,6 +194,8 @@ tr:hover td{background:var(--sf2)}
   <a href="#documentation"><span class="dot d-br"></span>Documentation</a>
   <a href="#messages"><span class="dot d-nc"></span>Messages</a>
   <div class="toc-sep"></div>
+  <a href="#ach"><span class="dot d-br"></span>ACH / Payments</a>
+  <div class="toc-sep"></div>
   <a href="#summary">Summary Table</a>
 </nav>
 
@@ -678,6 +680,127 @@ tr:hover td{background:var(--sf2)}
   </div>
 </section>
 
+<!-- ACH SECTION -->
+<section class="sec" id="ach">
+  <div class="sec-hd"><h2>ACH &amp; Bank Transfer: Payment Step Audit</h2><span class="sec-ct">spec verified 2026-07-21</span></div>
+
+  <p style="color:var(--t2);font-size:13.5px;max-width:72ch;margin-bottom:20px">The admin booking wizard has a payment step for both residential and office/commercial bookings. This section audits the gap between what the UI implies and what is actually implemented in the codebase.</p>
+
+  <!-- TWO MODEL EXPLAINER -->
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">The two models (conflated in the UI)</h4>
+  <div class="tw" style="margin-bottom:24px">
+    <table>
+      <thead><tr><th></th><th>Bank Transfer (push)</th><th>ACH Debit (pull)</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">Direction</td><td>Customer sends money to tenant</td><td>Tenant takes money from customer</td></tr>
+        <tr><td style="font-weight:600">Processor needed</td><td>None</td><td>Stripe + Connect</td></tr>
+        <tr><td style="font-weight:600">Mandate required</td><td>No</td><td>Yes (Nacha WEB debit)</td></tr>
+        <tr><td style="font-weight:600">Return liability</td><td>None</td><td>Up to 60 calendar days, no appeal</td></tr>
+        <tr><td style="font-weight:600">Current status</td><td class="tu">UI shows it, reconciled manually out-of-band</td><td class="tu">Not built. Phase B is blocked on a business decision</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CURRENT STATE FINDINGS -->
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">Verified codebase gaps</h4>
+  <div class="ilist" style="margin-bottom:24px">
+    <div class="irow"><span class="isev sc">Critical</span><span class="itxt"><strong>No tenant receiving account is stored anywhere.</strong> The UI lets admins select "Bank transfer" as a payment method, but there is no <code>remittanceInstructions</code> field in any settings model. Customers receive no account or routing details; payment is reconciled by hand via a 4-digit memo out-of-band.</span></div>
+    <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Office booking payment method list ignores tenant toggles.</strong> <code>OfficePaymentStep.tsx:28</code> renders a hardcoded <code>PAYMENT_METHODS</code> const with no <code>showForTenant</code> filter. Disabling ACH in Operations rules hides it from residential bookings but has no effect on office ones.</span></div>
+    <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong><code>profile.achPaymentMethodId</code> is a dead field.</strong> Defined at <code>profile.model.ts:72</code>, read in 3 places, written in 0. The field is reserved for a Stripe Financial Connections integration that has not been built.</span></div>
+    <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Payment state enum is missing a "returned" state.</strong> <code>paymentStatus</code> supports <code>none | pending | succeeded | failed | refunded</code>. An ACH return (R10) arrives <em>after</em> <code>succeeded</code> and stays silently marked paid; there is no enum value to express "was paid, then clawed back".</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong>Labels are misleading.</strong> The "ACH" option in the office wizard has never been a Stripe debit (it is a push/bank-transfer); calling it ACH sets incorrect expectations for admins and customers, and will conflict with the name once real ACH debit is built.</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong>No backend guard on the office payment path.</strong> The two server-side card guards in <code>booking.ts</code> key off <code>selectedPaymentOption</code> / <code>preferredPaymentMethod</code>, both of which office bookings force to <code>"invoice"</code>. A direct API call can confirm an office card booking with no card on file; the wizard is the only gate.</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong><code>paymentStepGate.ts</code> is implemented but not yet landed.</strong> Validation logic with 18 tests exists uncommitted. Card requires <code>paymentMethodId</code>; ACH requires bank name and 4-digit last4; direct deposit requires nothing. This should be committed.</span></div>
+    <div class="irow"><span class="isev sl">Low</span><span class="itxt"><strong>Mercury integration is unused.</strong> <code>mercury.service.ts</code> exists in the codebase but is never called (confirmed unused by product owner 2026-07-21). Dead code that adds surface area for confusion.</span></div>
+  </div>
+
+  <!-- USER STORIES BY FLOW -->
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">User stories: what the payment step should support</h4>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px">
+
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ac);margin-bottom:8px">Office / Commercial</div>
+      <ul class="us">
+        <li><strong>PAY-O1</strong> As an admin, I can set a billing cycle (Per Clean or Monthly) and settlement method so that AR knows when to invoice and how payment arrives</li>
+        <li><strong>PAY-O2</strong> As an admin, I can attach a saved card for post-service collection so that the invoice can be collected after the job</li>
+        <li><strong>PAY-O3</strong> As an admin, I can record the client's bank name and last 4 digits for bank-transfer reconciliation so that finance can match incoming transfers to the invoice</li>
+        <li><strong>PAY-O4</strong> As an admin, I can select Direct Deposit with no further input so that wire-paying clients are not blocked by data entry</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ac);margin-bottom:8px">Residential / Airbnb</div>
+      <ul class="us">
+        <li><strong>PAY-R1</strong> As an admin, I can select a saved card for a returning customer so that I do not re-key details they already provided</li>
+        <li><strong>PAY-R2</strong> As an admin, I can capture a new card inline so that I can book without leaving the wizard</li>
+        <li><strong>PAY-R3</strong> As an admin, I can record bank transfer details (same rule as PAY-O3) so that reconciliation works identically across categories</li>
+        <li><strong>PAY-R4</strong> As an admin, I can select Invoice and move on with no payment instrument so that invoice-terms customers are not blocked</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- VALIDATION RULES TABLE -->
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">Validation rules (from paymentStepGate.ts, uncommitted)</h4>
+  <div class="tw" style="margin-bottom:24px">
+    <table>
+      <thead><tr><th>Flow</th><th>Method</th><th>Blocks until</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600" rowspan="4">Office</td><td><em>any</em></td><td>Billing cycle <strong>and</strong> method chosen</td></tr>
+        <tr><td>Credit Card</td><td><code>paymentMethodId</code> set</td></tr>
+        <tr><td>ACH / Bank Transfer</td><td>Bank name + 4-digit last4</td></tr>
+        <tr><td>Direct Deposit</td><td>Nothing further</td></tr>
+        <tr><td style="font-weight:600" rowspan="4">Residential</td><td>Existing card</td><td><code>cardLast4</code> and <code>paymentMethodId</code></td></tr>
+        <tr><td>New card</td><td>Card saved (option flips to existing)</td></tr>
+        <tr><td>ACH / Bank Transfer</td><td>Bank name + 4-digit last4</td></tr>
+        <tr><td>Invoice</td><td>Nothing further</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHASE ROADMAP -->
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">Implementation roadmap (proposed)</h4>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Phase 0: Cleanup</span><span class="sp sp-nc">No dependencies</span></div>
+      <ul class="us">
+        <li>Filter office <code>PAYMENT_METHODS</code> through <code>showForTenant</code> predicate (same as residential)</li>
+        <li>Rename "ACH" option to "Bank Transfer": it has never been a Stripe debit</li>
+        <li>Land <code>paymentStepGate.ts</code> + 18 tests (already written, uncommitted)</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-wa"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Phase A: Manual bank transfer</span><span class="sp sp-wa">No Stripe required</span></div>
+      <ul class="us">
+        <li>Add <code>remittanceInstructions</code> to business settings, encrypted, tenant-scoped, Owner/Admin only</li>
+        <li>Render remittance details on invoices and booking confirmation emails</li>
+        <li>Surface a booking/invoice reference number in the UI as the transfer memo key</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Note</span> Exit criteria: admin books an office job on bank-transfer terms; customer receives an invoice with everything needed to send payment; finance matches the incoming transfer without asking anyone</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-br"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Phase B: Stripe ACH debit (pull)</span><span class="sp sp-br">Blocked</span></div>
+      <ul class="us">
+        <li>Blocked on a business decision: Connect direct charges vs. accepting platform-level ACH return liability (up to 60 days, no appeal)</li>
+        <li>Requires Stripe Financial Connections for mandate capture; admin cannot enroll a customer's bank account on their behalf</li>
+        <li>Nacha fraud monitoring Phase 1 (Mar 2026) and Phase 2 (Jun 2026) are already in force</li>
+        <li>Economics: 0.8% capped at $5 vs. card at 2.9% + 30¢; the cap only pays off on commercial invoice-terms accounts above ~$625</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tc">Critical</span> Do not start Phase B until the Connect liability decision is made in writing</div>
+      </div>
+    </div></div>
+
+  </div>
+
+</section>
+
 <!-- SUMMARY TABLE -->
 <section class="sec" id="summary">
   <div class="sec-hd"><h2>All Pages: Summary</h2><span class="sec-ct">34 pages · booking lifecycle excluded</span></div>
@@ -747,5 +870,6 @@ tr:hover td{background:var(--sf2)}
 </script>
 </body>
 </html>
+
 
 
