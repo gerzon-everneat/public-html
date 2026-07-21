@@ -715,17 +715,21 @@ tr:hover td{background:var(--sf2)}
   </div>
 
   <!-- USER STORIES BY FLOW -->
-  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">User stories: what the payment step should support</h4>
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">User stories: admin booking payment step (current, push/manual only)</h4>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px">
+  <p style="color:var(--br);font-size:12.5px;background:var(--br-b);border:1px solid var(--br-e);border-radius:var(--r);padding:9px 12px;margin-bottom:12px">
+    <strong>Important:</strong> PAY-O3 and PAY-R3 below do <em>not</em> collect payment. The bank name and last 4 digits are a reconciliation memo only; the customer sends the money themselves. Nothing is debited. The admin is jotting down a note, not setting up collection.
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
 
     <div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px">
       <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ac);margin-bottom:8px">Office / Commercial</div>
       <ul class="us">
-        <li><strong>PAY-O1</strong> As an admin, I can set a billing cycle (Per Clean or Monthly) and settlement method so that AR knows when to invoice and how payment arrives</li>
-        <li><strong>PAY-O2</strong> As an admin, I can attach a saved card for post-service collection so that the invoice can be collected after the job</li>
-        <li><strong>PAY-O3</strong> As an admin, I can record the client's bank name and last 4 digits for bank-transfer reconciliation so that finance can match incoming transfers to the invoice</li>
-        <li><strong>PAY-O4</strong> As an admin, I can select Direct Deposit with no further input so that wire-paying clients are not blocked by data entry</li>
+        <li><strong>PAY-O1</strong> As an admin, I can set a billing cycle (Per Clean or Monthly) and settlement method so that AR knows when to invoice and how payment will arrive</li>
+        <li><strong>PAY-O2</strong> As an admin, I can attach a saved card for post-service collection so that the invoice can be collected after the job completes</li>
+        <li><strong>PAY-O3 <span style="color:var(--wa);font-weight:700">(reconciliation only, no collection)</span></strong> As an admin, I can note the client's bank name and last 4 account digits so that finance has a matching key when the manual transfer arrives; no payment is initiated</li>
+        <li><strong>PAY-O4</strong> As an admin, I can select Wire Transfer with no further input so that wire-paying clients are not blocked by data entry</li>
       </ul>
     </div>
 
@@ -733,30 +737,62 @@ tr:hover td{background:var(--sf2)}
       <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ac);margin-bottom:8px">Residential / Airbnb</div>
       <ul class="us">
         <li><strong>PAY-R1</strong> As an admin, I can select a saved card for a returning customer so that I do not re-key details they already provided</li>
-        <li><strong>PAY-R2</strong> As an admin, I can capture a new card inline so that I can book without leaving the wizard</li>
-        <li><strong>PAY-R3</strong> As an admin, I can record bank transfer details (same rule as PAY-O3) so that reconciliation works identically across categories</li>
-        <li><strong>PAY-R4</strong> As an admin, I can select Invoice and move on with no payment instrument so that invoice-terms customers are not blocked</li>
+        <li><strong>PAY-R2</strong> As an admin, I can capture a new card inline so that I can complete the booking without leaving the wizard</li>
+        <li><strong>PAY-R3 <span style="color:var(--wa);font-weight:700">(reconciliation only, no collection)</span></strong> As an admin, I can note the customer's bank name and last 4 digits so that finance can match the incoming manual transfer (same constraint as PAY-O3; no debit is initiated)</li>
+        <li><strong>PAY-R4</strong> As an admin, I can select Invoice and move on so that invoice-terms customers are not asked for a payment instrument</li>
       </ul>
     </div>
 
   </div>
 
   <!-- VALIDATION RULES TABLE -->
-  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">Validation rules (from paymentStepGate.ts, uncommitted)</h4>
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin:20px 0 10px">Validation rules (from paymentStepGate.ts, uncommitted)</h4>
   <div class="tw" style="margin-bottom:24px">
     <table>
-      <thead><tr><th>Flow</th><th>Method</th><th>Blocks until</th></tr></thead>
+      <thead><tr><th>Flow</th><th>Method</th><th>Blocks until</th><th>Collects payment?</th></tr></thead>
       <tbody>
-        <tr><td style="font-weight:600" rowspan="4">Office</td><td><em>any</em></td><td>Billing cycle <strong>and</strong> method chosen</td></tr>
-        <tr><td>Credit Card</td><td><code>paymentMethodId</code> set</td></tr>
-        <tr><td>ACH / Bank Transfer</td><td>Bank name + 4-digit last4</td></tr>
-        <tr><td>Direct Deposit</td><td>Nothing further</td></tr>
-        <tr><td style="font-weight:600" rowspan="4">Residential</td><td>Existing card</td><td><code>cardLast4</code> and <code>paymentMethodId</code></td></tr>
-        <tr><td>New card</td><td>Card saved (option flips to existing)</td></tr>
-        <tr><td>ACH / Bank Transfer</td><td>Bank name + 4-digit last4</td></tr>
-        <tr><td>Invoice</td><td>Nothing further</td></tr>
+        <tr><td style="font-weight:600" rowspan="4">Office</td><td><em>any</em></td><td>Billing cycle <strong>and</strong> method chosen</td><td></td></tr>
+        <tr><td>Credit Card</td><td><code>paymentMethodId</code> set</td><td style="color:var(--ok);font-weight:600">Yes</td></tr>
+        <tr><td>Bank Transfer</td><td>Bank name + 4-digit last4</td><td style="color:var(--wa);font-weight:600">No: memo only</td></tr>
+        <tr><td>Wire / Direct Deposit</td><td>Nothing further</td><td style="color:var(--wa);font-weight:600">No: memo only</td></tr>
+        <tr><td style="font-weight:600" rowspan="4">Residential</td><td>Existing card</td><td><code>cardLast4</code> and <code>paymentMethodId</code></td><td style="color:var(--ok);font-weight:600">Yes</td></tr>
+        <tr><td>New card</td><td>Card saved (option flips to existing)</td><td style="color:var(--ok);font-weight:600">Yes</td></tr>
+        <tr><td>Bank Transfer</td><td>Bank name + 4-digit last4</td><td style="color:var(--wa);font-weight:600">No: memo only</td></tr>
+        <tr><td>Invoice</td><td>Nothing further</td><td style="color:var(--wa);font-weight:600">No: billed later</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- PHASE B USER STORIES -->
+  <h4 style="font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--t3);margin-bottom:10px">User stories: real ACH debit collection (Phase B, not built)</h4>
+
+  <p style="color:var(--t2);font-size:13px;margin-bottom:12px">Real ACH debit (pull) requires Stripe Financial Connections. The admin <strong>cannot</strong> enter a customer's bank account on their behalf; full routing and account numbers must be collected directly from the customer via their own online banking login. The admin's role shifts to initiating the setup, not completing it.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
+
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:8px">Admin actions</div>
+      <ul class="us">
+        <li><strong>PAY-B1</strong> As an admin, I can send a bank enrollment link to the customer so that they connect their account securely through their own bank login; I never see their account details</li>
+        <li><strong>PAY-B2</strong> As an admin, I can see whether a customer's bank account is enrolled, pending verification, or not set up so that I know if ACH collection is available for their booking</li>
+        <li><strong>PAY-B3</strong> As an admin, I can select ACH debit for a customer who has a verified bank on file so that the invoice is collected automatically after the job completes</li>
+        <li><strong>PAY-B4</strong> As an admin booking an office job, I can still proceed while enrollment is pending so that the booking is not blocked; collection triggers after service, not at booking time</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px">
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:8px">Customer actions (self-serve)</div>
+      <ul class="us">
+        <li><strong>PAY-B5</strong> As a customer, I can receive a setup link and connect my bank account via my online banking login so that the business can debit me automatically after each job</li>
+        <li><strong>PAY-B6</strong> As a customer, I can see confirmation that my bank account is verified and active so that I know future invoices will be collected automatically</li>
+        <li><strong>PAY-B7</strong> As a customer, I receive a Stripe-managed mandate at enrollment time so that I have a record of what I authorized and Stripe handles any bank inquiry on my behalf</li>
+      </ul>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--br);margin-bottom:5px">Prerequisite decision</div>
+        <p style="font-size:12.5px;color:var(--t2);margin:0">Stripe Connect direct charges must be adopted before Phase B starts. Without it, ACH return liability (R10, up to 60 days, no appeal) lands on the platform balance, not the tenant.</p>
+      </div>
+    </div>
+
   </div>
 
   <!-- PHASE ROADMAP -->
@@ -870,6 +906,7 @@ tr:hover td{background:var(--sf2)}
 </script>
 </body>
 </html>
+
 
 
 
