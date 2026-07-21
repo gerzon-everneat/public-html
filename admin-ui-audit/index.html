@@ -110,6 +110,9 @@ main{padding:30px 0 100px;min-width:0}
 .sh{background:var(--wa-b);color:var(--wa);border:1px solid var(--wa-e)}
 .sm{background:var(--em-b);color:var(--em);border:1px solid var(--em-e)}
 .sl{background:var(--sf2);color:var(--t3);border:1px solid var(--bd)}
+.sfx{background:var(--ok-b);color:var(--ok);border:1px solid var(--ok-e)}
+.irow-fixed{opacity:.6;position:relative}
+.irow-fixed::after{content:"FIXED";position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--ok);background:var(--ok-b);border:1px solid var(--ok-e);border-radius:var(--rp);padding:2px 7px}
 .itxt{font-size:13.5px;color:var(--t2)}
 .itxt strong{color:var(--t1);font-weight:650}
 
@@ -219,9 +222,9 @@ tr:hover td{background:var(--sf2)}
 
 <!-- PRIORITY ISSUES -->
 <section class="sec" id="issues">
-  <div class="sec-hd"><h2>Priority Issues</h2><span class="sec-ct">10 total</span></div>
+  <div class="sec-hd"><h2>Priority Issues</h2><span class="sec-ct">10 total · 1 fixed</span></div>
   <div class="ilist">
-    <div class="irow"><span class="isev sc">Critical</span><span class="itxt"><strong>Admin root is blank.</strong> <code>/admin</code> and <code>/admin/overview</code> render an empty content area. All real pages use <code>/home/*</code>, <code>/schedule/*</code>, etc. Any bookmarked admin URL shows nothing.</span></div>
+    <div class="irow irow-fixed"><span class="isev sfx">Fixed</span><span class="itxt"><strong>Admin root was blank.</strong> <code>/admin</code> and <code>/admin/overview</code> rendered an empty content area. Fixed: both now redirect to <code>/home/overview</code>; Overview is the default <code>/home</code> landing page and is visible in the sidebar nav. Shipped in commit <code>dcee8d95</code>.</span></div>
     <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Zero payments collected.</strong> All 18 payments show "Uninitiated." Financial Reports show $0 revenue across all periods. No payment collection action is visible in the admin.</span></div>
     <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Terms &amp; Conditions page is blank.</strong> <code>/documentation/terms-conditions</code> loads but renders no content. If linked from the booking flow, customers see an empty page, a legal and trust risk.</span></div>
     <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Business branding not configured.</strong> Business name and logo on the Branding page are both empty. All automated emails are currently unbranded (logo shows "?" placeholder).</span></div>
