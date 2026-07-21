@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neatr · Admin UI Audit: July 2026</title>
+<style>
+:root{
+  --bg:#F5F5F0;--bg2:#EDEEE8;--sf:#FFFFFF;--sf2:#F0F0E9;
+  --t1:#14151A;--t2:#585C6E;--t3:#969AAA;
+  --bd:#E0E0D8;--bd2:#C8C8BE;
+  --ac:#E8622A;--ac-d:rgba(232,98,42,.10);
+  --ok:#16A34A;--ok-b:#F0FDF4;--ok-e:#BBF7D0;
+  --br:#DC2626;--br-b:#FEF2F2;--br-e:#FECACA;
+  --wa:#D97706;--wa-b:#FFFBEB;--wa-e:#FDE68A;
+  --em:#6366F1;--em-b:#EEF2FF;--em-e:#C7D2FE;
+  --nc:#64748B;--nc-b:#F8FAFC;--nc-e:#CBD5E1;
+  --r:6px;--rp:999px;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0E0F12;--bg2:#161820;--sf:#1A1C22;--sf2:#22242C;
+  --t1:#E4E6F0;--t2:#8B91A8;--t3:#5A5F72;
+  --bd:#2A2C38;--bd2:#3A3D4E;
+  --ac:#FF7A42;--ac-d:rgba(255,122,66,.12);
+  --ok:#22C55E;--ok-b:#052E16;--ok-e:#14532D;
+  --br:#F87171;--br-b:#1F0A0A;--br-e:#7F1D1D;
+  --wa:#FBBF24;--wa-b:#1C1407;--wa-e:#78350F;
+  --em:#818CF8;--em-b:#1E1B4B;--em-e:#312E81;
+  --nc:#94A3B8;--nc-b:#0F172A;--nc-e:#1E293B;
+}}
+:root[data-theme="light"]{
+  --bg:#F5F5F0;--bg2:#EDEEE8;--sf:#FFFFFF;--sf2:#F0F0E9;
+  --t1:#14151A;--t2:#585C6E;--t3:#969AAA;--bd:#E0E0D8;--bd2:#C8C8BE;
+  --ac:#E8622A;--ac-d:rgba(232,98,42,.10);
+  --ok:#16A34A;--ok-b:#F0FDF4;--ok-e:#BBF7D0;
+  --br:#DC2626;--br-b:#FEF2F2;--br-e:#FECACA;
+  --wa:#D97706;--wa-b:#FFFBEB;--wa-e:#FDE68A;
+  --em:#6366F1;--em-b:#EEF2FF;--em-e:#C7D2FE;
+  --nc:#64748B;--nc-b:#F8FAFC;--nc-e:#CBD5E1;
+}
+:root[data-theme="dark"]{
+  --bg:#0E0F12;--bg2:#161820;--sf:#1A1C22;--sf2:#22242C;
+  --t1:#E4E6F0;--t2:#8B91A8;--t3:#5A5F72;--bd:#2A2C38;--bd2:#3A3D4E;
+  --ac:#FF7A42;--ac-d:rgba(255,122,66,.12);
+  --ok:#22C55E;--ok-b:#052E16;--ok-e:#14532D;
+  --br:#F87171;--br-b:#1F0A0A;--br-e:#7F1D1D;
+  --wa:#FBBF24;--wa-b:#1C1407;--wa-e:#78350F;
+  --em:#818CF8;--em-b:#1E1B4B;--em-e:#312E81;
+  --nc:#94A3B8;--nc-b:#0F172A;--nc-e:#1E293B;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:14.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--ac);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 5px;border-radius:3px;color:var(--t2)}
+
+/* TOPBAR */
+.bar{background:var(--t1);color:var(--sf);display:flex;align-items:center;gap:14px;padding:11px 24px;position:sticky;top:0;z-index:100}
+.logo{background:var(--ac);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:var(--rp)}
+.bar-title{font-size:13px;font-weight:500;opacity:.85}
+.bar-date{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.4);margin-left:auto}
+.tgbtn{border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);border-radius:var(--rp);padding:4px 11px;font-size:11px;cursor:pointer;font-family:inherit}
+.tgbtn:hover{border-color:var(--ac);color:#fff}
+
+/* SHELL */
+.shell{max-width:1140px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:210px 1fr;gap:44px;align-items:start}
+
+/* TOC */
+nav.toc{position:sticky;top:48px;padding:26px 0 60px;max-height:calc(100vh - 48px);overflow-y:auto}
+.toc-lbl{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);padding:0 8px;margin-bottom:6px}
+.toc a{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--t2);font-size:12.5px;padding:4px 8px;border-radius:var(--r)}
+.toc a:hover{color:var(--t1);background:var(--sf2)}
+.toc a.on{color:var(--t1);background:var(--sf2);font-weight:600}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.d-ok{background:var(--ok)}.d-br{background:var(--br)}.d-wa{background:var(--wa)}.d-nc{background:var(--nc)}.d-em{background:var(--em)}
+.toc-sep{height:1px;background:var(--bd);margin:12px 8px}
+
+/* MAIN */
+main{padding:30px 0 100px;min-width:0}
+
+/* HERO */
+.hero{border-bottom:1px solid var(--bd);padding-bottom:24px;margin-bottom:32px}
+.eyebrow{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ac);margin-bottom:9px}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.2;text-wrap:balance;margin-bottom:9px}
+.hero p{color:var(--t2);font-size:14px;max-width:60ch}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.pill{font-family:var(--mono);font-size:11px;color:var(--t2);background:var(--sf);border:1px solid var(--bd);border-radius:var(--rp);padding:3px 10px}
+
+/* STAT GRID */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:36px}
+.scard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:13px 15px}
+.scard-n{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1}
+.n-ok{color:var(--ok)}.n-br{color:var(--br)}.n-wa{color:var(--wa)}.n-nc{color:var(--nc)}
+.scard-lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-top:3px}
+
+/* SECTION */
+.sec{margin-bottom:48px;scroll-margin-top:56px}
+.sec-hd{display:flex;align-items:baseline;gap:10px;margin-bottom:18px;padding-bottom:9px;border-bottom:1px solid var(--bd)}
+.sec-hd h2{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.sec-ct{font-family:var(--mono);font-size:11px;color:var(--t3)}
+
+/* ISSUE ROWS */
+.ilist{display:flex;flex-direction:column;gap:9px}
+.irow{display:flex;gap:12px;align-items:flex-start;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:11px 13px}
+.isev{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:var(--rp);white-space:nowrap;flex-shrink:0;margin-top:1px}
+.sc{background:var(--br-b);color:var(--br);border:1px solid var(--br-e)}
+.sh{background:var(--wa-b);color:var(--wa);border:1px solid var(--wa-e)}
+.sm{background:var(--em-b);color:var(--em);border:1px solid var(--em-e)}
+.sl{background:var(--sf2);color:var(--t3);border:1px solid var(--bd)}
+.itxt{font-size:13.5px;color:var(--t2)}
+.itxt strong{color:var(--t1);font-weight:650}
+
+/* MODULE HDR */
+.mod-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--ac-d)}
+.mod-ey{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ac)}
+.mod-nm{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.mod-tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.mtag{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:var(--rp)}
+.mt-ok{background:var(--ok-b);color:var(--ok)}.mt-br{background:var(--br-b);color:var(--br)}
+.mt-wa{background:var(--wa-b);color:var(--wa)}.mt-nc{background:var(--nc-b);color:var(--nc)}
+
+/* PAGE CARDS */
+.pages{display:flex;flex-direction:column;gap:8px}
+.pc{display:flex;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.stripe{width:4px;flex-shrink:0}
+.s-ok{background:var(--ok)}.s-br{background:var(--br)}.s-wa{background:var(--wa)}.s-nc{background:var(--nc)}.s-em{background:var(--em)}
+.pb{padding:12px 14px;flex:1;min-width:0}
+.phd{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ptitle{font-size:13.5px;font-weight:650;color:var(--t1)}
+.purl{font-family:var(--mono);font-size:11px;color:var(--t3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.sp{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:var(--rp);white-space:nowrap;flex-shrink:0}
+.sp-ok{background:var(--ok-b);color:var(--ok);border:1px solid var(--ok-e)}
+.sp-br{background:var(--br-b);color:var(--br);border:1px solid var(--br-e)}
+.sp-wa{background:var(--wa-b);color:var(--wa);border:1px solid var(--wa-e)}
+.sp-em{background:var(--em-b);color:var(--em);border:1px solid var(--em-e)}
+.sp-nc{background:var(--nc-b);color:var(--nc);border:1px solid var(--nc-e)}
+
+.us{list-style:none;margin-bottom:2px}
+.us li{font-size:13px;color:var(--t2);padding:1px 0 1px 13px;position:relative}
+.us li::before{content:"·";position:absolute;left:3px;color:var(--t3)}
+.us strong{color:var(--t1);font-weight:600}
+
+.piss{display:flex;flex-direction:column;gap:3px;margin-top:7px;padding-top:7px;border-top:1px solid var(--bd)}
+.pi{display:flex;gap:7px;font-size:12.5px;align-items:flex-start;color:var(--t2)}
+.pt{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 5px;border-radius:2px;flex-shrink:0;margin-top:2px}
+.tc{background:var(--br-b);color:var(--br)}.th{background:var(--wa-b);color:var(--wa)}.tm{background:var(--em-b);color:var(--em)}.tl{background:var(--sf2);color:var(--t3)}
+
+/* TABLE */
+.tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--bd)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);font-weight:700;padding:8px 12px;text-align:left;background:var(--bg2);border-bottom:1px solid var(--bd)}
+td{padding:8px 12px;border-bottom:1px solid var(--bd)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--sf2)}
+.tu{font-family:var(--mono);font-size:11px;color:var(--t3)}
+.tm2{font-weight:600}
+
+@media(max-width:860px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 14px}
+  nav.toc{position:static;max-height:none;padding:16px 0;border-bottom:1px solid var(--bd);display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+  .toc-lbl,.toc-sep{display:none}
+  .toc a{background:var(--sf);border:1px solid var(--bd);padding:4px 10px;font-size:12px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  main{padding-top:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="logo">NEATR</span>
+  <span class="bar-title">Admin UI Audit</span>
+  <span class="bar-date">2026-07-21</span>
+  <button class="tgbtn" onclick="(function(){var h=document.documentElement,c=h.getAttribute('data-theme');h.setAttribute('data-theme',c==='dark'?'light':c==='light'?'':'dark')})()">Toggle theme</button>
+</div>
+
+<div class="shell">
+<nav class="toc">
+  <div class="toc-lbl">Jump to</div>
+  <a href="#issues">Priority Issues</a>
+  <div class="toc-sep"></div>
+  <div class="toc-lbl">Modules</div>
+  <a href="#home"><span class="dot d-ok"></span>Home</a>
+  <a href="#schedule"><span class="dot d-br"></span>Schedule</a>
+  <a href="#people"><span class="dot d-ok"></span>People</a>
+  <a href="#operations"><span class="dot d-wa"></span>Operations</a>
+  <a href="#finances"><span class="dot d-wa"></span>Finances</a>
+  <a href="#documentation"><span class="dot d-br"></span>Documentation</a>
+  <a href="#messages"><span class="dot d-nc"></span>Messages</a>
+  <div class="toc-sep"></div>
+  <a href="#summary">Summary Table</a>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">QA Audit · Admin Interface</div>
+  <h1>Everneat Admin: Full UI Coverage Report</h1>
+  <p>Systematic review of all admin pages across 7 modules. <strong>Booking Lifecycle is excluded</strong> (covered in a <a href="../admin-booking-lifecycle/">separate report</a>).</p>
+  <div class="pills">
+    <span class="pill">7 modules</span>
+    <span class="pill">34 pages audited</span>
+    <span class="pill">everneat.neatr.ai/admin</span>
+    <span class="pill">July 21, 2026</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="scard"><div class="scard-n n-ok">19</div><div class="scard-lbl">Working</div></div>
+  <div class="scard"><div class="scard-n n-br">5</div><div class="scard-lbl">Broken / Blank</div></div>
+  <div class="scard"><div class="scard-n n-wa">5</div><div class="scard-lbl">Data / Config Issues</div></div>
+  <div class="scard"><div class="scard-n n-nc">5</div><div class="scard-lbl">Empty / Not Configured</div></div>
+</div>
+
+<!-- PRIORITY ISSUES -->
+<section class="sec" id="issues">
+  <div class="sec-hd"><h2>Priority Issues</h2><span class="sec-ct">10 total</span></div>
+  <div class="ilist">
+    <div class="irow"><span class="isev sc">Critical</span><span class="itxt"><strong>Admin root is blank.</strong> <code>/admin</code> and <code>/admin/overview</code> render an empty content area. All real pages use <code>/home/*</code>, <code>/schedule/*</code>, etc. Any bookmarked admin URL shows nothing.</span></div>
+    <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Zero payments collected.</strong> All 18 payments show "Uninitiated." Financial Reports show $0 revenue across all periods. No payment collection action is visible in the admin.</span></div>
+    <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Terms &amp; Conditions page is blank.</strong> <code>/documentation/terms-conditions</code> loads but renders no content. If linked from the booking flow, customers see an empty page, a legal and trust risk.</span></div>
+    <div class="irow"><span class="isev sh">High</span><span class="itxt"><strong>Business branding not configured.</strong> Business name and logo on the Branding page are both empty. All automated emails are currently unbranded (logo shows "?" placeholder).</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong>AI Scheduling and Auto-Assign Rules are blank stubs.</strong> Both Schedule sub-pages render nothing but remain accessible in the sidebar, highlighted red. Should be hidden or show a "coming soon" state.</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong>Knowledge Base has placeholder content.</strong> All 3 help articles contain generic Terms of Service boilerplate, duplicate titles, and "label1/label2" taxonomy. Not usable by customers.</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong>Booking Forms mostly disabled.</strong> Only 2 of 9+ wizard steps are enabled (Property, Protocol). Customer, Schedule, Location, and Payment steps are OFF; the booking flow collects minimal information.</span></div>
+    <div class="irow"><span class="isev sm">Medium</span><span class="itxt"><strong>Email and SMS channels not configured with no setup path.</strong> Both <code>/messages/email</code> and <code>/messages/sms</code> show "not set up" messages with no actionable setup link or button.</span></div>
+    <div class="irow"><span class="isev sl">Low</span><span class="itxt"><strong>Sidebar action buttons produce no visible feedback.</strong> Clicking Booking Link, Feedback, More, and Support produces no toast, modal, or navigation; actions appear silent.</span></div>
+    <div class="irow"><span class="isev sl">Low</span><span class="itxt"><strong>Test data visible in production.</strong> Customers "Test Sched," "Claudia's House (testing)"; providers "Gerz Blah," "Gerz Provider Doe"; and a URL-encoded "UAT%20test%20message" in chat inbox.</span></div>
+  </div>
+</section>
+
+<!-- HOME -->
+<section class="sec" id="home">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 1</div><div class="mod-nm">Home</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">2 working</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Overview</span><span class="purl">/home/overview</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can see <strong>8 real-time KPI cards</strong> (Bookings, Today's Jobs, Completion Rate, Active Providers, Customers, Revenue) so that I assess daily workload at a glance</li>
+        <li>As an admin, I can see the <strong>full booking status breakdown</strong> (Draft → Cancelled, 10 stages) so that I know how many jobs are at each funnel stage</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt th">High</span> Revenue card shows "--" with "Coming soon": payment processing is not connected to the dashboard</div>
+        <div class="pi"><span class="pt tl">Low</span> 19% completion rate (18/95) may reflect stale or test data inflating the denominator</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Reports</span><span class="purl">/home/reports</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>select a date</strong> to view booking counts for that period so that I track historical volume</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Page defaults with no date selected, showing 0 with no guidance; a default range (e.g., "This Week") would improve the empty state</div>
+        <div class="pi"><span class="pt tm">Medium</span> Only a single booking count KPI, with no breakdown by by status, provider, or service category</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="sec" id="schedule">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 2</div><div class="mod-nm">Schedule</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">1 working</span><span class="mtag mt-br">2 broken</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Calendar</span><span class="purl">/schedule/calendar</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can view all jobs on a <strong>Day / Week / Month calendar</strong> so that I can spot scheduling conflicts</li>
+        <li>As an admin, I can <strong>filter by provider</strong> ("All Pros" dropdown) so that I see any individual cleaner's schedule</li>
+        <li>As an admin, I can <strong>add custom events and sync US holidays</strong> so that I manage non-booking dates alongside jobs</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-br"></div><div class="pb">
+      <div class="phd"><span class="ptitle">AI Scheduling</span><span class="purl">/schedule/ai-scheduling</span><span class="sp sp-br">Broken</span></div>
+      <ul class="us">
+        <li>As an admin, I can use AI to <strong>suggest optimal job scheduling</strong> so that bookings are assigned efficiently <em>(intended; not yet implemented)</em></li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Renders completely blank. Sidebar item highlighted red. Should be hidden or show a "coming soon" placeholder until implemented</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-br"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Auto-Assign Rules</span><span class="purl">/schedule/auto-assign-rules</span><span class="sp sp-br">Broken</span></div>
+      <ul class="us">
+        <li>As an admin, I can define <strong>rules for automatically assigning providers</strong> to bookings so that manual dispatch is reduced <em>(intended; not yet implemented)</em></li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Blank page, same issue as AI Scheduling. Both stubs should be gated behind a feature flag or removed from nav</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- PEOPLE -->
+<section class="sec" id="people">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 3</div><div class="mod-nm">People</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">3 working</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Teams</span><span class="purl">/people/teams</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view all staff members and their roles</strong> (Admin, Owner) so that I know who has platform access</li>
+        <li>As an admin, I can <strong>invite new staff or co-owners</strong> so that I onboard team members with appropriate permissions</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> Same owner (GERZON UDANG) appears twice with two different emails, suggesting a potential duplicate account</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Customers</span><span class="purl">/people/customers</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>search and browse all customers</strong> so that I find and manage any account</li>
+        <li>As an admin, I can <strong>add customers manually</strong> so that I create bookings on their behalf</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> Test accounts ("Test Sched," "Test User," "Claudia's House (testing)") visible in the production customer list</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Providers</span><span class="purl">/people/providers</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view all 8 providers with their hourly rate, status, and color assignment</strong> so that I manage staffing effectively</li>
+        <li>As an admin, I can see <strong>Active vs. Expired providers</strong> (5 active, 3 expired) so that I know who needs reactivation</li>
+        <li>As an admin, I can <strong>add new providers</strong> to the roster</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> "Gerz Blah" and "Gerz Provider Doe" appear to be test providers in the production roster</div>
+        <div class="pi"><span class="pt tl">Low</span> Last/Next booking columns show "--" for all providers; booking-to-provider associations may not be surfaced in this view</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- OPERATIONS -->
+<section class="sec" id="operations">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 4</div><div class="mod-nm">Operations</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">13 working</span><span class="mtag mt-wa">2 data issues</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Service Categories</span><span class="purl">/operations/service/categories</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>define the 4 service categories</strong> (Residential, Airbnb, Commercial, Office) with their service types and extras so that customers select the right booking type</li>
+        <li>As an admin, I can <strong>toggle recurring availability per category</strong> so that I control which services offer subscription pricing</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Service Extras &amp; Spaces</span><span class="purl">/operations/service/categories → Extras, Spaces tabs</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>manage add-on extras</strong> available to customers during booking so that revenue per job increases</li>
+        <li>As an admin, I can <strong>define space types</strong> so that quotes correctly account for property layout</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Location / Service Areas</span><span class="purl">/operations/location</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>manage 990 zip codes across 326 groups</strong> so that only customers in my service area can book</li>
+        <li>As an admin, I can <strong>import/export via CSV</strong> so that I bulk-manage service areas</li>
+        <li>As an admin, I can <strong>group zip codes by city</strong> to organize and simplify location management</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> "Auto-group by city?" banner has been present and unacted on; 326 ungrouped entries suggest messy location data worth cleaning</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Pricing Rules</span><span class="purl">/operations/rules/categories</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>set per-category production rates and minimums</strong> (sqft/hr, $/hr, base minutes, min price) so that quotes are accurate</li>
+        <li>As an admin, I can <strong>define 4 property size tiers</strong> with multipliers (Small 1×, Medium 1.25×, Large 1.5×, Estate 2×) so that larger homes are priced correctly</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Dynamic Pricing / Extras / Booking Rules</span><span class="purl">/operations/rules → Dynamic Pricing, Extras, Booking tabs</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can configure <strong>dynamic pricing rules</strong> so that demand-based pricing is applied automatically</li>
+        <li>As an admin, I can set <strong>booking rules and constraints</strong> so that the scheduling flow enforces business policies</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Checklists</span><span class="purl">/operations/checklist/space-types</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>create and manage 73 checklist types</strong> so that providers know exactly what to clean in each room type</li>
+        <li>As an admin, I can <strong>search, copy, and edit checklists</strong> to manage content quickly</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> "Bathroom" checklist has 0 tasks, making it selectable but unusable</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Tax Rules</span><span class="purl">/operations/service/tax</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>add state-specific tax rules</strong> (CT 6.35%, NY 8.88%) so that quotes automatically include the correct sales tax</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Discounts &amp; Frequency Plans</span><span class="purl">/operations/service/frequency</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>set recurring frequency discounts</strong> (Weekly 20%, Bi-Weekly 15%, Monthly 10%) so that customers save by committing to regular service</li>
+        <li>As an admin, I can <strong>enable automatic visit-based discounts</strong> so that loyal pay-as-you-go customers are rewarded automatically</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> Automatic Visit-Based Discounts is currently disabled; confirm this is intentional</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-wa"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Booking Forms</span><span class="purl">/settings/booking-forms (redirect from Operations)</span><span class="sp sp-wa">Data Issue</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>toggle which booking wizard steps are visible</strong> so that the customer flow matches my business needs</li>
+        <li>As an admin, I can <strong>preview the form before publishing</strong> so that I verify changes before customers see them</li>
+        <li>As an admin, I can <strong>view version history</strong> and roll back changes if needed</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Only 2 of 9+ wizard steps are enabled (Property, Protocol). Customer, Schedule, Location, and Payment are OFF, leaving the booking wizard minimally configured</div>
+        <div class="pi"><span class="pt tl">Low</span> Links from Operations sidebar but renders inside Settings context (confusing UX mismatch)</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-wa"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Branding</span><span class="purl">/operations/branding</span><span class="sp sp-wa">Data Issue</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>set my business name, logo, and brand color</strong> so that automated emails are properly branded</li>
+        <li>As an admin, I can <strong>preview email appearance</strong> before saving so that I verify how it looks to customers</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt th">High</span> Business name and logo are both empty, so all automated emails are currently unbranded (logo renders as "?" placeholder)</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Embed Widget</span><span class="purl">/operations/embed</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>copy the booking widget snippet</strong> so that I embed the booking flow on my own website</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Notifications v1</span><span class="purl">/operations/notification-settings</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>enable/disable Email and SMS notifications per event</strong> (10 events) so that customers and providers get the right alerts</li>
+        <li>As an admin, I can <strong>configure the AI booking assistant</strong> with an Anthropic API key so that customers can book via natural language</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> ALL 10 notification event checkboxes are unchecked; no notifications fire from the v1 interface</div>
+        <div class="pi"><span class="pt tm">Medium</span> v1 and v2 notification pages coexist, creating risk of conflicting configuration state</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Notifications v2</span><span class="purl">/operations/notification-settings-v2</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>control notification channels per event per audience</strong> (Admin, Customer, Provider) with Email / In-app / Webhook / SMS toggles</li>
+        <li>As an admin, I can <strong>edit notification content</strong> per event so that messaging is on-brand</li>
+        <li>As an admin, I can <strong>see at-a-glance coverage status</strong> (9 Live, 3 Partial) so that I know which events lack full channel coverage</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> 3 events are "Partial": New Booking, Booking Modified, and Booking Cancelled are not fully configured across all channels</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Webhooks</span><span class="purl">/operations/webhooks</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>register webhook endpoints</strong> for 10 booking events so that external systems receive real-time updates</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> No webhooks configured; no external integrations are currently active</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Webhook DLQ Monitor</span><span class="purl">/operations/webhook-dlq</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>monitor webhook delivery health</strong> and inspect dead-letter queue so that I know if integrations are failing</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Attributes</span><span class="purl">/operations/attributes</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>define custom property attributes</strong> (Type, Layout, Spaces, People/Headcount, Amenities, Restricted Areas) so that customers describe their property during booking</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> "Type" and "Layout" attributes have no options defined; these required fields may render as empty dropdowns in the booking form</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- FINANCES -->
+<section class="sec" id="finances">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 5</div><div class="mod-nm">Finances</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">2 working</span><span class="mtag mt-wa">2 data issues</span><span class="mtag" style="background:var(--em-b);color:var(--em);">1 empty</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-wa"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Payments</span><span class="purl">/finances/payments</span><span class="sp sp-wa">Data Issue</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view all payments</strong> with customer, booking ID, date, provider, method, status, and amount so that I track revenue collection</li>
+        <li>As an admin, I can <strong>filter by customer, date, or status</strong> so that I find specific transactions quickly</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt th">High</span> All 18 payments show "Uninitiated": zero payments have been processed. No "Collect" or "Charge" action is visible on this screen</div>
+        <div class="pi"><span class="pt tm">Medium</span> Several rows show no amount ("--") and no payment method, indicating incomplete booking-to-payment data</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-em"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Payrolls</span><span class="purl">/finances/payrolls</span><span class="sp sp-em">Empty</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view provider payroll by date period</strong> so that I know what I owe each cleaner</li>
+        <li>As an admin, I can <strong>integrate with Gusto</strong> for automated payroll, taxes, and direct deposit</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Shows "no completed bookings with assigned providers" despite Overview showing 18 completions; booking-to-provider assignment may not be wired to the payroll view</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Invoices</span><span class="purl">/finances/invoices</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>send invoices to customers</strong> so that they pay for services outside the standard booking flow</li>
+        <li>As an admin, I can <strong>create invoices manually</strong> so that I handle ad-hoc billing</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-wa"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Financial Reports</span><span class="purl">/finances/reports</span><span class="sp sp-wa">Data Issue</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view revenue, payroll expense, and net profit</strong> by period (This Week, Month, Quarter, YTD) so that I understand business performance</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt th">High</span> All KPIs show $0 across all periods; financial reporting is entirely blocked by the payment collection gap upstream</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- DOCUMENTATION -->
+<section class="sec" id="documentation">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 6</div><div class="mod-nm">Documentation</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">2 working</span><span class="mtag mt-br">2 broken</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-wa"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Knowledge Base</span><span class="purl">/documentation/knowledge-base</span><span class="sp sp-wa">Data Issue</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>create and organize help articles</strong> by category so that customers can self-serve common questions</li>
+        <li>As an admin, I can <strong>search and filter articles by product</strong> so that I manage content at scale</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> All 3 articles contain generic Terms of Service boilerplate with duplicate titles ("Article 2" twice): not real help content, not ready for customers</div>
+        <div class="pi"><span class="pt tl">Low</span> Label taxonomy uses "label1" / "label2" with no real content organization defined</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-br"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Knowledge Base: AI Agent Config</span><span class="purl">/documentation/knowledge-base/ai-agent</span><span class="sp sp-br">Broken</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>configure what the AI booking assistant knows</strong> so that it answers customer questions accurately <em>(intended)</em></li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Tab renders completely blank; AI agent knowledge configuration is non-functional</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Privacy Policy</span><span class="purl">/documentation/privacy-policy</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view the full Privacy Policy</strong> covering CTDPA and NJDPA compliance (updated 2026-07-01) so that customers can review data handling terms</li>
+      </ul>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-br"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Terms &amp; Conditions</span><span class="purl">/documentation/terms-conditions</span><span class="sp sp-br">Broken</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>view the Terms &amp; Conditions</strong> so that customers can review legal terms during or after booking <em>(intended)</em></li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt th">High</span> Page loads but renders no content. If linked from the booking flow, customers see a blank page, a legal and trust risk</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- MESSAGES -->
+<section class="sec" id="messages">
+  <div class="mod-hd">
+    <div><div class="mod-ey">Module 7</div><div class="mod-nm">Messages</div></div>
+    <div class="mod-tags"><span class="mtag mt-ok">2 working</span><span class="mtag mt-nc">2 not configured</span></div>
+  </div>
+  <div class="pages">
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Chat: Your Inbox</span><span class="purl">/messages/chat</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>read and reply to customer chat messages</strong> so that I provide real-time support</li>
+        <li>As an admin, I can <strong>archive or delete conversations</strong> so that I keep the inbox organized</li>
+        <li>As an admin, I can <strong>switch between Inbox, Archived, and Deleted views</strong> so that I manage conversation history</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> URL-encoded "UAT%20test%20message" visible in conversation preview; test data in production inbox that should be cleaned up</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-nc"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Email</span><span class="purl">/messages/email</span><span class="sp sp-nc">Not Configured</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>send and receive email from within the platform</strong> so that all customer communication is centralized <em>(intended)</em></li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Shows "Email is not set up. Configure an outbound sender address." No setup button or link is present on the screen</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-nc"></div><div class="pb">
+      <div class="phd"><span class="ptitle">SMS</span><span class="purl">/messages/sms</span><span class="sp sp-nc">Not Configured</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>send and receive SMS through the platform</strong> so that I reach customers via text <em>(intended)</em></li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tm">Medium</span> Shows "Connect a Twilio account to start sending and receiving text messages." No setup button or link is present, same dead-end UX as Email</div>
+      </div>
+    </div></div>
+
+    <div class="pc"><div class="stripe s-ok"></div><div class="pb">
+      <div class="phd"><span class="ptitle">Groups</span><span class="purl">/messages/groups</span><span class="sp sp-ok">Working</span></div>
+      <ul class="us">
+        <li>As an admin, I can <strong>monitor team group conversations in read-only mode</strong> so that I observe provider communication without intervening</li>
+      </ul>
+      <div class="piss">
+        <div class="pi"><span class="pt tl">Low</span> No conversations present; either no provider groups exist or the feature hasn't been used yet</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- SUMMARY TABLE -->
+<section class="sec" id="summary">
+  <div class="sec-hd"><h2>All Pages: Summary</h2><span class="sec-ct">34 pages · booking lifecycle excluded</span></div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Module</th><th>Page</th><th>URL</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="tm2">Home</td><td>Overview</td><td class="tu">/home/overview</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Home</td><td>Reports</td><td class="tu">/home/reports</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Schedule</td><td>Calendar</td><td class="tu">/schedule/calendar</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Schedule</td><td>AI Scheduling</td><td class="tu">/schedule/ai-scheduling</td><td><span class="sp sp-br">Broken</span></td></tr>
+        <tr><td class="tm2">Schedule</td><td>Auto-Assign Rules</td><td class="tu">/schedule/auto-assign-rules</td><td><span class="sp sp-br">Broken</span></td></tr>
+        <tr><td class="tm2">People</td><td>Teams</td><td class="tu">/people/teams</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">People</td><td>Customers</td><td class="tu">/people/customers</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">People</td><td>Providers</td><td class="tu">/people/providers</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Service Categories</td><td class="tu">/operations/service/categories</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Extras &amp; Spaces</td><td class="tu">/operations/service/categories → tabs</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Location / Service Areas</td><td class="tu">/operations/location</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Pricing Rules</td><td class="tu">/operations/rules/categories</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Dynamic Pricing &amp; Booking Rules</td><td class="tu">/operations/rules → tabs</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Checklists</td><td class="tu">/operations/checklist/space-types</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Tax Rules</td><td class="tu">/operations/service/tax</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Discounts &amp; Frequency</td><td class="tu">/operations/service/frequency</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Booking Forms</td><td class="tu">/settings/booking-forms</td><td><span class="sp sp-wa">Data Issue</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Branding</td><td class="tu">/operations/branding</td><td><span class="sp sp-wa">Data Issue</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Embed Widget</td><td class="tu">/operations/embed</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Notifications v1</td><td class="tu">/operations/notification-settings</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Notifications v2</td><td class="tu">/operations/notification-settings-v2</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Webhooks</td><td class="tu">/operations/webhooks</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Webhook DLQ Monitor</td><td class="tu">/operations/webhook-dlq</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Operations</td><td>Attributes</td><td class="tu">/operations/attributes</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Finances</td><td>Payments</td><td class="tu">/finances/payments</td><td><span class="sp sp-wa">Data Issue</span></td></tr>
+        <tr><td class="tm2">Finances</td><td>Payrolls</td><td class="tu">/finances/payrolls</td><td><span class="sp sp-em">Empty</span></td></tr>
+        <tr><td class="tm2">Finances</td><td>Invoices</td><td class="tu">/finances/invoices</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Finances</td><td>Financial Reports</td><td class="tu">/finances/reports</td><td><span class="sp sp-wa">Data Issue</span></td></tr>
+        <tr><td class="tm2">Documentation</td><td>Knowledge Base</td><td class="tu">/documentation/knowledge-base</td><td><span class="sp sp-wa">Data Issue</span></td></tr>
+        <tr><td class="tm2">Documentation</td><td>KB: AI Agent Config</td><td class="tu">/documentation/knowledge-base/ai-agent</td><td><span class="sp sp-br">Broken</span></td></tr>
+        <tr><td class="tm2">Documentation</td><td>Privacy Policy</td><td class="tu">/documentation/privacy-policy</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Documentation</td><td>Terms &amp; Conditions</td><td class="tu">/documentation/terms-conditions</td><td><span class="sp sp-br">Broken</span></td></tr>
+        <tr><td class="tm2">Messages</td><td>Chat: Inbox</td><td class="tu">/messages/chat</td><td><span class="sp sp-ok">Working</span></td></tr>
+        <tr><td class="tm2">Messages</td><td>Email</td><td class="tu">/messages/email</td><td><span class="sp sp-nc">Not Configured</span></td></tr>
+        <tr><td class="tm2">Messages</td><td>SMS</td><td class="tu">/messages/sms</td><td><span class="sp sp-nc">Not Configured</span></td></tr>
+        <tr><td class="tm2">Messages</td><td>Groups</td><td class="tu">/messages/groups</td><td><span class="sp sp-ok">Working</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var links=document.querySelectorAll('nav.toc a[href^="#"]');
+  var sections=[];
+  links.forEach(function(l){var id=l.getAttribute('href').slice(1);var el=document.getElementById(id);if(el)sections.push({el:el,link:l});});
+  function upd(){
+    var top=window.scrollY+72;
+    var act=null;
+    sections.forEach(function(s){if(s.el.offsetTop<=top)act=s;});
+    links.forEach(function(l){l.classList.remove('on');});
+    if(act)act.link.classList.add('on');
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  upd();
+})();
+</script>
+</body>
+</html>
+
+
