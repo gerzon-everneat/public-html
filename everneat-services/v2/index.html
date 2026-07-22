@@ -324,6 +324,29 @@
     .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
     .cta-word-inner{display:inline-block;transform:translateY(110%)}
     .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
+
+    /* Nova chat sequence */
+    @keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+    .nova-t1,.nova-t2{
+      display:grid;grid-template-rows:0fr;
+      opacity:0;transition:grid-template-rows .25s ease,opacity .2s ease
+    }
+    .nova-t1>div,.nova-t2>div{
+      overflow:hidden;display:flex;align-items:center;gap:5px;
+      padding:10px 14px;background:#ece7db;
+      border-radius:15px 15px 15px 5px;margin-bottom:12px
+    }
+    .nova-t1 span,.nova-t2 span{
+      width:5px;height:5px;border-radius:50%;background:#9a9080;flex:none;
+      animation:typingDot .9s ease infinite
+    }
+    .nova-t1 span:nth-child(2),.nova-t2 span:nth-child(2){animation-delay:.15s}
+    .nova-t1 span:nth-child(3),.nova-t2 span:nth-child(3){animation-delay:.3s}
+    .nova-t1.show,.nova-t2.show{grid-template-rows:1fr;opacity:1}
+    .mock--nova .nova-b1,.mock--nova .nova-b2,
+    .mock--nova .nova-chips,.mock--nova .nova-by,
+    .mock--nova .nova-foot{opacity:0;transform:translateY(6px);transition:opacity .3s ease,transform .3s ease}
+    .mock--nova .nova-in{opacity:1;transform:translateY(0)}
   }
 
   /* ---------- responsive ---------- */
@@ -561,18 +584,20 @@
   <div class="wrap">
     <!-- Step 01 -->
     <div class="step">
-      <div class="mock">
+      <div class="mock mock--nova">
         <div class="mock-head"><span class="mock-title">Chat with Nova</span><span class="mock-tag">Live · 4 min</span></div>
         <hr class="mock-div">
-        <div class="bubble bot">Hi! I'm Nova. What size is your home?</div>
-        <div class="chips">
+        <div class="nova-t1"><div><span></span><span></span><span></span></div></div>
+        <div class="bubble bot nova-b1">Hi! I'm Nova. What size is your home?</div>
+        <div class="chips nova-chips">
           <span class="chip">Studio</span>
           <span class="chip on">2 bed · 1 bath</span>
           <span class="chip">3 bed +</span>
         </div>
-        <div class="bubble bot">Great. How often should we come?</div>
-        <div class="bubble you">Every 2 weeks</div>
-        <div class="mock-foot">
+        <div class="nova-t2"><div><span></span><span></span><span></span></div></div>
+        <div class="bubble bot nova-b2">Great. How often should we come?</div>
+        <div class="bubble you nova-by">Every 2 weeks</div>
+        <div class="mock-foot nova-foot">
           <span class="q-label">Your quote · 2–4 hrs</span>
           <span class="price">$104<small>/ visit</small></span>
         </div>
@@ -861,6 +886,28 @@
     io.observe(ctaTitle);
   }
   anim('.cta-copy,.cta-actions','av-fadeUp');
+
+  // Nova chat sequence
+  var nova=document.querySelector('.mock--nova');
+  if(nova){
+    var novaObs=new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      novaObs.disconnect();
+      var t1=nova.querySelector('.nova-t1');
+      var t2=nova.querySelector('.nova-t2');
+      var seq=[
+        [600,  function(){ t1.classList.add('show'); }],
+        [1200, function(){ t1.classList.remove('show'); nova.querySelector('.nova-b1').classList.add('nova-in'); }],
+        [1700, function(){ nova.querySelector('.nova-chips').classList.add('nova-in'); }],
+        [2200, function(){ t2.classList.add('show'); }],
+        [2800, function(){ t2.classList.remove('show'); nova.querySelector('.nova-b2').classList.add('nova-in'); }],
+        [3500, function(){ nova.querySelector('.nova-by').classList.add('nova-in'); }],
+        [4100, function(){ nova.querySelector('.nova-foot').classList.add('nova-in'); }],
+      ];
+      seq.forEach(function(s){ setTimeout(s[1], s[0]); });
+    },{threshold:0.4});
+    novaObs.observe(nova);
+  }
 
   // #12 — testimonial stat counters
   var statsIO=new IntersectionObserver(function(entries){
