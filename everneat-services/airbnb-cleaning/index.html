@@ -1,12 +1,1362 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
-<title>Airbnb & Short-Term Rental Cleaning · Everneat</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>body{margin:0;font-family:Inter,sans-serif;background:#f4f1ea;color:#2b2925;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
-h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(34px,6vw,56px);margin:0 0 10px}
-p{color:#6f6a5f;margin:0 0 28px;max-width:44ch}
-a{display:inline-block;background:#1c1b18;color:#fff;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:14px}
-small{display:block;margin-top:40px;color:#a09a8c;letter-spacing:.08em;text-transform:uppercase;font-size:11px}</style></head>
-<body><div><h1>Airbnb & Short-Term Rental Cleaning</h1><p>This page is being built from the Figma design. The internal-link architecture already works.</p>
-<a href="../v2/">Back to homepage</a><small>everneat · placeholder</small></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everneat · Airbnb &amp; Short-Term Rental Cleaning</title>
+<meta name="description" content="Probiotic-grade turnovers for Airbnb & short-term rentals across NYC · NJ · CT. Linens staged, photos delivered, issues flagged before your next guest walks in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea; --cream:#eae6db; --panel:#edeae2; --card:#ffffff;
+    --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
+    --line:#e5e1d5; --line2:#d9d4c7;
+    --taupe:#d5cfbf; --butter:#f6f3d9;
+    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --dark:#181611;
+    --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --edge:clamp(20px,5vw,64px);
+    --pad:clamp(72px,9vw,120px);
+    --shadow:0 1px 2px rgba(30,28,22,.04), 0 26px 50px -30px rgba(30,28,22,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--edge)}
+  .caps{text-transform:uppercase;letter-spacing:.12em}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+    font-weight:500;font-size:15px;padding:14px 26px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;white-space:nowrap;font-family:var(--sans)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--dark{background:var(--ink);color:#f4f1ea}
+  .btn--dark:hover{background:#000}
+  .btn--lime{background:var(--lime);color:#24230f}
+  .btn--lime:hover{background:var(--lime-deep)}
+  .btn--ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
+  .btn--ghost:hover{background:var(--ink);color:#f4f1ea}
+  .tlink{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .tlink:hover{border-color:var(--ink)}
+
+  /* ---------- section heading ---------- */
+  .sec-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(28px,3.4vw,42px);letter-spacing:.008em;line-height:1.04;margin:0;color:var(--ink)}
+  .sec-intro{font-size:clamp(17px,1.35vw,20px);color:var(--ink2);max-width:1000px;margin:20px 0 0;line-height:1.5}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,.05)}
+  .nav-in{display:flex;align-items:center;gap:24px;height:80px}
+  .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{text-decoration:none;color:var(--ink);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+  .nav-links a:hover{opacity:1}
+  .nav .btn{margin-left:8px;padding:11px 22px;font-size:13px;letter-spacing:.06em}
+  .nav-menu{display:none;position:relative;margin-left:6px}
+  .nav-menu>summary{list-style:none;cursor:pointer;width:42px;height:42px;border:1px solid var(--line2);
+    border-radius:11px;display:grid;place-items:center;color:var(--ink);background:var(--card)}
+  .nav-menu>summary::-webkit-details-marker{display:none}
+  .nav-menu>summary::before{content:"\2630";font-size:18px}
+  .nav-menu[open]>summary::before{content:"\2715";font-size:15px}
+  .nav-drop{position:absolute;right:0;top:calc(100% + 12px);width:min(80vw,300px);background:var(--card);
+    border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
+  .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop .btn{margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;display:flex;align-items:center;
+    min-height:min(90vh,880px);padding-bottom:56px;background:#cbc8c0}
+  .hero-media{position:absolute;inset:0;background:url(../assets/airbnb-hero.jpg) center 55%/cover no-repeat}
+  .hero-media::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.22) 50%,rgba(0,0,0,.32))}
+  .hero-inner{position:relative;z-index:2;width:100%;color:#fff;padding-block:clamp(32px,7vh,72px);text-align:center}
+  .hero-cap{font-size:clamp(12px,1.2vw,16px);letter-spacing:.12em;text-transform:uppercase;
+    opacity:.94;margin:0 0 24px;text-shadow:0 1px 14px rgba(0,0,0,.45)}
+  .hero-head{font-weight:400;font-size:clamp(27px,3.4vw,44px);line-height:1.3;margin:0 auto;max-width:1200px;
+    letter-spacing:-.02em;text-shadow:0 2px 22px rgba(0,0,0,.4)}
+  .hero-head .fill{color:var(--lime);border-bottom:2px solid rgba(255,255,255,.85);padding:0 6px 3px;white-space:nowrap}
+  .hero-head .fill i{font-style:normal;font-size:.4em;color:#fff;vertical-align:middle;margin-left:6px}
+  .hero-go{display:inline-grid;place-items:center;width:clamp(38px,4vw,50px);height:clamp(38px,4vw,50px);
+    border-radius:50%;border:1.5px solid rgba(255,255,255,.8);color:#fff;text-decoration:none;
+    margin-left:14px;vertical-align:middle;font-size:.55em;transition:background .15s,color .15s}
+  .hero-go:hover{background:#fff;color:var(--ink)}
+  .hero-ticker{position:absolute;left:0;right:0;bottom:0;z-index:2;overflow:hidden;
+    background:rgba(20,18,14,.5);backdrop-filter:blur(4px);border-top:1px solid rgba(255,255,255,.14);padding:13px 0}
+  .ticker-track{display:inline-flex;align-items:center;white-space:nowrap;animation:ticker 34s linear infinite;will-change:transform}
+  .ticker-track span{color:rgba(255,255,255,.85);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:0 20px}
+  .ticker-track span.hl{color:var(--lime)}
+  .ticker-track i{color:var(--lime);font-style:normal}
+  @keyframes ticker{to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+
+  /* ---------- hero-sub + collage ---------- */
+  .herosub{padding:var(--pad) 0 0}
+  .herosub-lead{font-size:clamp(24px,2.6vw,34px);font-weight:400;line-height:1.32;text-align:center;
+    max-width:1120px;margin:0 auto;color:var(--ink);letter-spacing:-.01em}
+  .proof{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:22px 46px;margin:38px auto 0}
+  .rate{display:flex;align-items:center;gap:12px}
+  .stars{color:var(--ink);letter-spacing:2px;font-size:17px}
+  .rate b{font-weight:500;font-size:16px}
+  .seen{display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px}
+  .seen .lbl{font-size:14px;color:var(--ink2)}
+  .press{font-size:19px;color:var(--ink);opacity:.9}
+  .press.epi{font-family:var(--serif);font-style:italic;font-weight:600}
+  .press.at{font-size:14px;line-height:1.05;font-weight:500}
+  .press.ms{font-family:var(--serif);font-size:15px;line-height:1;text-align:center}
+  .press.dom{font-family:var(--serif);font-weight:600;font-size:21px}
+  .press.rs{font-weight:700;letter-spacing:.02em;font-size:16px}
+
+  .collage{position:relative;border-radius:16px;overflow:hidden;margin-top:56px;aspect-ratio:1311/640;
+    box-shadow:var(--shadow)}
+  .collage img{width:100%;height:100%;object-fit:cover}
+  .collage .pill{position:absolute;background:var(--cream);color:#292929;border-radius:20px;
+    padding:8px 16px;font-weight:700;text-transform:uppercase;font-size:clamp(10px,1.25vw,18px);
+    line-height:1.35;letter-spacing:.02em;white-space:nowrap}
+
+  /* ---------- compare ---------- */
+  .compare{padding:var(--pad) 0}
+  .cmp-grid{display:grid;grid-template-columns:502px 1fr;gap:48px;margin-top:52px;align-items:start}
+  .cmp-photo{border-radius:20px;overflow:hidden;aspect-ratio:502/786}
+  .cmp-photo img{width:100%;height:100%;object-fit:cover}
+  .cmp{border:1px solid var(--line2);border-radius:18px;overflow:hidden;background:var(--card)}
+  .cmp-row{display:grid;grid-template-columns:1fr 120px 152px}
+  .cmp-row+.cmp-row{border-top:1px solid var(--line)}
+  .cmp-crit{padding:22px 26px;font-size:15px;line-height:1.4;align-self:center}
+  .cmp-ev{display:flex;align-items:center;justify-content:center;background:var(--butter)}
+  .cmp-alt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;padding:18px 14px}
+  .cmp-head{background:var(--taupe)}
+  .cmp-head .cmp-crit{padding:0}
+  .cmp-head .cmp-ev{background:transparent}
+  .cmp-head>div{min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:11.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);padding:14px}
+  .cmp-head .cmp-alt{color:#6f6a5f;font-weight:600}
+  .tick,.xmark{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:none}
+  .tick{background:var(--lime-deep);color:#20200f}
+  .xmark{border:1px solid var(--line2);color:var(--muted);font-size:11px}
+  .cmp-note{font-size:12.5px;color:var(--muted);line-height:1.35}
+
+  /* ---------- plans (select your clean) ---------- */
+  .plans{background:var(--cream);padding:clamp(64px,7vw,88px) 0}
+  .plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;align-items:stretch}
+  .plan{position:relative;background:var(--card);border:1px solid var(--line2);border-radius:18px;
+    display:flex;flex-direction:column}
+  .plan--pop{border:1.5px solid var(--ink)}
+  .plan-badge{position:absolute;top:-13px;left:20px;background:var(--lime);color:var(--ink);
+    border-radius:999px;padding:6px 14px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .plan-top{padding:32px 24px 20px}
+  .plan-name{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(28px,2.6vw,36px);line-height:1;margin:0 0 12px;color:var(--ink)}
+  .plan-tag{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .plan-desc{font-size:14px;line-height:1.5;color:var(--ink2);margin:0}
+  .plan-hi{border-top:1px solid var(--line2);padding:16px 24px 4px}
+  .plan-hi .cap{font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  .plan-li{display:flex;gap:9px;align-items:flex-start;padding:4px 0;font-size:14px;line-height:1.35;color:var(--ink2)}
+  .plan-li .chk{margin-top:2px}
+  .plan-foot{padding:20px 24px 24px;margin-top:auto;display:grid;gap:12px}
+  .plan-price{display:flex;gap:6px;align-items:baseline}
+  .plan-price .p{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-size:22px;color:var(--ink)}
+  .plan-price small{font-size:14px;color:var(--muted)}
+  .plan .btn{justify-content:center;width:100%;text-transform:uppercase;letter-spacing:.07em;font-size:14px;font-weight:600}
+  .plan-proto{background:none;border:none;cursor:pointer;font-family:var(--sans);
+    font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);
+    text-decoration:underline;text-underline-offset:4px;padding:2px}
+  .plan-proto:hover{color:var(--ink)}
+  .chk{width:20px;height:20px;border-radius:50%;background:var(--lime-deep);color:#20200f;display:grid;place-items:center;font-size:11px;flex:none}
+
+  /* ---------- pricing matrix ---------- */
+  .matrix{padding:var(--pad) 0}
+  .mtable-scroll{overflow-x:auto;margin-top:52px}
+  .mtable{width:100%;min-width:820px;border:1px solid var(--line2);border-radius:16px;overflow:hidden;
+    background:var(--card);border-collapse:separate;border-spacing:0}
+  .mtable th,.mtable td{padding:18px 22px;text-align:center;font-weight:500}
+  .mtable thead th{background:#f5f4f2;border-bottom:1px solid var(--line2);vertical-align:top}
+  .mtable thead .h-name{display:block;font-size:16px;font-weight:700;color:var(--ink)}
+  .mtable thead .h-sub{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:3px}
+  .mtable thead .h-rate{display:block;margin-top:7px;font-family:var(--serif);font-style:italic;font-size:21px;font-weight:400;color:var(--ink)}
+  .mtable thead .h-rate small{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted)}
+  .mtable th.c-solo,.mtable td.c-solo{background:rgba(201,196,43,.10)}
+  .mtable thead th.c-solo{background:#eeeadb}
+  .mtable td{font-size:16px;color:var(--ink)}
+  .mtable tbody tr+tr td,.mtable tbody tr+tr th{border-top:1px solid var(--line)}
+  .mtable tbody th{text-align:left;font-size:16px;font-weight:600;color:var(--ink)}
+  .mtable tbody th small{font-size:12px;font-weight:400;color:var(--muted);margin-left:8px}
+  .m-note{font-size:14px;color:var(--muted);margin:20px 0 0}
+
+  /* ---------- tailor strip ---------- */
+  .tailor{padding:0 0 var(--pad)}
+  .tailor-strip{display:flex;gap:18px;margin-top:48px;overflow-x:auto;padding-bottom:12px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .x-item{flex:0 0 236px;scroll-snap-align:start}
+  .x-photo{height:300px;border-radius:8px;overflow:hidden;background:#e9ebe6}
+  .x-photo img{width:100%;height:100%;object-fit:cover}
+  .x-photo.ph{display:grid;place-items:center;color:var(--muted);font-size:14px;opacity:.85}
+  .x-cap{display:flex;gap:8px;align-items:baseline;margin-top:13px}
+  .x-cap .n{font-size:17px;color:var(--ink)}
+  .x-cap .t{font-size:13.5px;font-weight:600;color:var(--ink2)}
+  .x-add{display:flex;gap:7px;align-items:center;margin-top:12px;font-size:14px;color:var(--ink);letter-spacing:.02em}
+  .x-add .plus{width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-size:15px}
+
+  /* ---------- testimonial ---------- */
+  .testi{position:relative;overflow:hidden;color:#fff}
+  .testi-media{position:absolute;inset:0;background:url(../assets/airbnb-testi-bg.jpg) center 42%/cover no-repeat}
+  .testi-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,14,.5),rgba(20,18,14,.62))}
+  .testi-inner{position:relative;z-index:2;padding-block:clamp(64px,10vw,120px)}
+  .testi-quote{font-weight:400;font-size:clamp(23px,3.3vw,44px);line-height:1.3;margin:0;max-width:1120px;letter-spacing:-.01em}
+  .testi-by{display:flex;align-items:center;gap:14px;margin:26px 0 0;font-family:var(--serif);font-style:italic;
+    font-size:clamp(13px,1.3vw,16px);letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+  .testi-av{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
+  .testi-stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:26px 60px;margin-top:clamp(40px,6vw,64px)}
+  .testi-stats b{display:block;font-size:clamp(26px,3vw,40px);font-weight:500;line-height:1;margin-bottom:6px}
+  .testi-stats span{font-size:13px;color:rgba(255,255,255,.8)}
+
+  /* ---------- how it works — sticky stack ---------- */
+  .how{padding:var(--pad) 0 0}
+  .how-hd{text-align:center;margin-bottom:clamp(40px,5vw,64px)}
+  .stack-wrap{padding-bottom:var(--pad)}
+  .stack-card{position:sticky;top:calc(88px + var(--si)*14px);background:var(--panel);
+    border-radius:28px;padding:clamp(24px,4vw,56px);margin-bottom:70vh;
+    box-shadow:0 -4px 12px rgba(0,0,0,0.07);
+    transform-origin:top center;transition:transform .5s ease,filter .5s ease}
+  .stack-card:last-child{margin-bottom:0}
+  .sc-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px);align-items:center}
+  .sc-n{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,28px);line-height:1;color:var(--ink);margin-bottom:6px}
+  .sc-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(26px,3vw,40px);line-height:1.02;margin:0 0 20px}
+  .sc-copy{font-size:16px;color:var(--ink2);line-height:1.58;margin:0 0 28px}
+
+  .mock{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .mock-head{display:flex;justify-content:space-between;align-items:center}
+  .mock-title{font-weight:500;font-size:16px}
+  .mock-tag{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  .mock-div{border:none;border-top:1px solid var(--line);margin:16px 0}
+
+  .bubble{max-width:80%;padding:11px 15px;border-radius:15px;font-size:14px;line-height:1.35;margin-bottom:12px}
+  .bubble.bot{background:#ece7db;border-bottom-left-radius:5px}
+  .bubble.you{background:#26241d;color:#f2efe7;margin-left:auto;max-width:62%;border-bottom-right-radius:5px}
+  .chips{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line2);border-radius:999px;padding:7px 14px;font-size:13px}
+  .chip.on{background:var(--ink);color:#f2efe7;border-color:var(--ink)}
+  .mock-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:8px;padding-top:16px}
+  .q-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .price{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1;color:var(--ink)}
+  .price small{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-left:5px}
+
+  .id{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .avatar{width:52px;height:52px;border-radius:50%;flex:none;background:linear-gradient(135deg,#dcc8ad,#b79aa0)}
+  .id .n{font-weight:500;font-size:16px}
+  .id .s{font-size:13px;color:var(--muted)}
+  .brow{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;font-size:14px}
+  .brow+.brow{border-top:1px solid var(--line)}
+  .stat{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+  .track{height:8px;border-radius:999px;background:#e6e2d6;overflow:hidden;margin:4px 0 18px}
+  .track>i{display:block;height:100%;width:52%;border-radius:999px;background:linear-gradient(90deg,#c0cd3a,#dbe27a)}
+  .ticks{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:6px;margin-bottom:20px}
+  .tk b{display:block;font-size:13px;font-weight:500}
+  .tk span{font-size:11px;color:var(--muted)}
+  .prow{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:center;padding:11px 0;font-size:14px}
+  .prow+.prow{border-top:1px solid var(--line)}
+  .prow .num{font-size:12px;color:var(--muted);letter-spacing:.1em}
+
+  .photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+  .pho{position:relative;aspect-ratio:250/195;border-radius:11px}
+  .pho.before{background:linear-gradient(150deg,#b9b4a6,#a49f90)}
+  .pho.after{background:linear-gradient(150deg,#e8e3d5,#d6d0c1)}
+  .pho .t{position:absolute;top:10px;left:10px;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+    background:rgba(24,22,17,.78);color:#fff;padding:4px 9px;border-radius:7px}
+  .approve{display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:14px}
+  .approve .ok{display:flex;align-items:center;gap:10px}
+  .refill{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:4px;padding-top:16px;font-size:13.5px;color:var(--ink2)}
+
+  .prod{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 0}
+  .prod+.prod{border-top:1px solid var(--line)}
+  .thumb{width:52px;height:52px;border-radius:11px;flex:none;background:linear-gradient(135deg,#efeadd,#d3cdbe)}
+  .pn{font-weight:500;font-size:15px}
+  .ps{font-size:12px;color:var(--muted);margin-top:2px}
+  .stocked{display:flex;align-items:center;gap:6px}
+  .stocked .chk{width:18px;height:18px;font-size:10px}
+  .toggle{width:40px;height:22px;border-radius:999px;background:var(--lime-deep);position:relative;flex:none}
+  .toggle::after{content:"";position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+
+  /* ---------- FAQ ---------- */
+  .faq{padding:var(--pad) 0}
+  .faq-grid{display:grid;grid-template-columns:502px 1fr;gap:64px;align-items:start}
+  .faq-img{border-radius:20px;overflow:hidden;aspect-ratio:502/724}
+  .faq-img img{width:100%;height:100%;object-fit:cover}
+  .faq-item{border:1px solid var(--line2);border-radius:14px;background:var(--card);margin-bottom:12px;overflow:hidden}
+  .faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:24px 26px;font-size:18px;font-weight:500;color:var(--ink)}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+";font-size:26px;font-weight:400;color:var(--muted);line-height:1}
+  .faq-item[open] summary::after{content:"\2013"}
+  .faq-a{padding:0 26px 26px;color:var(--ink2);font-size:15px;line-height:1.62;max-width:720px}
+
+  /* ---------- CTA + footer (dark) ---------- */
+  .dark{background:var(--dark);color:#e8e5dd}
+  .cta{padding-block:var(--pad) clamp(48px,6vw,72px)}
+  .cta-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(34px,4.6vw,56px);line-height:1.02;color:#fff;margin:0}
+  .cta-copy{color:#a8a49a;max-width:700px;font-size:17px;line-height:1.55;margin:22px 0 34px}
+  .cta-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .cta-actions .tlink{color:#fff}
+  .cta-actions .tlink:hover{border-color:#fff}
+  .foot-div{border:none;border-top:1px solid rgba(255,255,255,.09);margin:0}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-block:clamp(48px,6vw,72px)}
+  .f-col h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8c887d;margin:0 0 20px;font-weight:600}
+  .f-col a{display:block;color:#bdb9ae;text-decoration:none;font-size:15px;margin-bottom:13px}
+  .f-col a:hover{color:#fff}
+  .foot-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px 40px}
+  .foot-bar .logo{color:#fff}
+  .foot-legal{display:flex;gap:22px;flex-wrap:wrap;margin:0 auto}
+  .foot-legal a{color:#9c988e;text-decoration:none;font-size:14px}
+  .foot-legal a:hover{color:#fff}
+  .foot-social{display:flex;gap:26px}
+  .foot-social a{color:#cbc7bd;text-decoration:none;font-size:15px}
+  .foot-social a:hover{color:#fff}
+
+  /* ---------- protocol drawer ---------- */
+  .dr-overlay{position:fixed;inset:0;background:rgba(21,23,26,.45);z-index:90;
+    opacity:0;pointer-events:none;transition:opacity .3s ease}
+  .dr-overlay.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;bottom:0;z-index:95;width:min(560px,94vw);
+    background:var(--card);box-shadow:-30px 0 40px rgba(21,23,26,.35);
+    display:flex;flex-direction:column;transform:translateX(102%);transition:transform .38s cubic-bezier(.22,1,.36,1)}
+  .drawer.open{transform:translateX(0)}
+  @media(prefers-reduced-motion:reduce){.drawer{transition:none}.dr-overlay{transition:none}}
+  .dr-tabs{padding:22px 70px 12px 28px;font-size:10.5px;font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink2)}
+  .dr-x{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;
+    background:var(--card);border:1px solid var(--line2);display:grid;place-items:center;
+    font-size:14px;color:var(--ink);cursor:pointer;font-family:var(--sans)}
+  .dr-x:hover{background:var(--panel)}
+  .dr-hero{padding:6px 28px 20px;border-bottom:1px solid var(--line2)}
+  .dr-hero .top{display:flex;gap:16px;align-items:flex-start}
+  .dr-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(26px,4vw,34px);line-height:1;margin:0 0 8px;color:var(--ink)}
+  .dr-sub{font-size:13px;line-height:1.5;color:var(--ink2);margin:0;max-width:380px}
+  .dr-84{margin-left:auto;text-align:right;flex:none}
+  .dr-84 .n{font-family:var(--serif);font-style:italic;font-size:40px;line-height:.85;color:var(--ink)}
+  .dr-84 .l{font-size:9px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);line-height:1.2;margin-top:4px}
+  .dr-legend{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:16px}
+  .dr-legend>span{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--ink2)}
+  .cellg{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;
+    font-size:12px;font-weight:700;color:var(--ink);flex:none}
+  .cellg.inc{background:#e5e8e3}
+  .cellg.add{background:var(--lime-deep)}
+  .dr-scroll{flex:1;overflow-y:auto;overscroll-behavior:contain}
+  .acc-room{border-bottom:1px solid var(--line2)}
+  .acc-room summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;
+    padding:15px 28px;font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+  .acc-room summary::-webkit-details-marker{display:none}
+  .acc-room summary .cnt{margin-left:auto;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0;text-transform:none}
+  .acc-room summary .pm{font-size:18px;font-weight:400}
+  .acc-room summary .pm::before{content:"+"}
+  .acc-room[open] summary .pm::before{content:"\2013"}
+  .acc-task{display:flex;gap:12px;align-items:center;padding:9px 28px;border-top:1px solid var(--line2);
+    font-size:12.5px;line-height:1.3;color:var(--ink2)}
+  .acc-task .cellg{width:24px;height:24px}
+  .dr-addhead{background:#eff1ee;padding:16px 28px 4px;font-size:10.5px;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink2)}
+  .dr-foot{border-top:1px solid var(--ink);background:var(--card);padding:18px 28px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .dr-price{display:flex;gap:6px;align-items:baseline}
+  .dr-price .p{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-size:24px;color:var(--ink)}
+  .dr-price small{font-size:12px;color:var(--muted)}
+  .dr-foot .btn{padding:12px 26px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+  body.dr-lock{overflow:hidden}
+
+  /* ====== animations (v2 patterns) ====== */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideLeft{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes slideRight{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes scaleUp{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  @keyframes goPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+  @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+  @media(prefers-reduced-motion:no-preference){
+    .hero-cap{opacity:0;animation:fadeUp .6s ease forwards .25s}
+    .hero-head .fill{display:inline-block;opacity:0}
+    .hero-head .fill:nth-of-type(1){animation:fadeUp .5s ease forwards .55s}
+    .hero-head .fill:nth-of-type(2){animation:fadeUp .5s ease forwards .72s}
+    .hero-head .fill:nth-of-type(3){animation:fadeUp .5s ease forwards .89s}
+    .hero-go{animation:goPulse 2.4s ease-in-out infinite 1.6s}
+    .av-fadeUp,.av-fadeIn,.av-slideLeft,.av-slideRight,.av-scaleUp{opacity:0}
+    .av-fadeUp.in{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-fadeIn.in{animation:fadeIn .6s ease forwards}
+    .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-slideRight.in{animation:slideRight .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
+    .collage .pill{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .55s cubic-bezier(.22,1,.36,1)}
+    .collage.in .pill{opacity:1;transform:none}
+    .collage.in .pill:nth-child(3){transition-delay:.1s}
+    .collage.in .pill:nth-child(4){transition-delay:.2s}
+    .collage.in .pill:nth-child(5){transition-delay:.3s}
+    .collage.in .pill:nth-child(6){transition-delay:.4s}
+    .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
+    .cta-word-inner{display:inline-block;transform:translateY(110%)}
+    .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
+
+    /* Nova chat sequence */
+    @keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+    .nova-t1,.nova-t2{
+      display:grid;grid-template-rows:0fr;
+      opacity:0;transition:grid-template-rows .25s ease,opacity .2s ease
+    }
+    .nova-t1>div,.nova-t2>div{
+      overflow:hidden;display:flex;align-items:center;gap:5px;
+      padding:10px 14px;background:#ece7db;
+      border-radius:15px 15px 15px 5px;margin-bottom:12px
+    }
+    .nova-t1 span,.nova-t2 span{
+      width:5px;height:5px;border-radius:50%;background:#9a9080;flex:none;
+      animation:typingDot .9s ease infinite
+    }
+    .nova-t1 span:nth-child(2),.nova-t2 span:nth-child(2){animation-delay:.15s}
+    .nova-t1 span:nth-child(3),.nova-t2 span:nth-child(3){animation-delay:.3s}
+    .nova-t1.show,.nova-t2.show{grid-template-rows:1fr;opacity:1}
+    .mock--nova .nova-b1,.mock--nova .nova-b2,
+    .mock--nova .nova-chips,.mock--nova .nova-by,
+    .mock--nova .nova-foot{opacity:0;transform:translateY(6px);transition:opacity .3s ease,transform .3s ease}
+    .mock--nova .nova-in{opacity:1;transform:translateY(0)}
+    /* Step 02 checkbox rows */
+    @keyframes rowSlide{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes checkPop{0%{transform:scale(0)}65%{transform:scale(1.22)}100%{transform:scale(1)}}
+    .mock--chk .chk{transform:scale(0)}
+    .mock--chk .brow{opacity:0}
+    .mock--chk .brow.in{animation:rowSlide .45s cubic-bezier(.22,1,.36,1) forwards}
+    .mock--chk .brow.in .chk{animation:checkPop .38s cubic-bezier(.34,1.56,.64,1) forwards .22s}
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:1080px){
+    .cmp-grid,.faq-grid{grid-template-columns:1fr;gap:36px}
+    .cmp-photo,.faq-img{max-width:560px}
+    .plan-grid{grid-template-columns:1fr;max-width:560px}
+    .sc-inner{grid-template-columns:1fr;gap:28px}
+    .foot-cols{grid-template-columns:repeat(2,1fr);gap:36px}
+  }
+  @media(max-width:900px){
+    .nav-links,.nav-book{display:none}
+    .nav-menu{display:block;margin-left:auto}
+    .hero{min-height:82vh}
+    .hero-go{width:40px;height:40px}
+    .hero-head{font-size:clamp(24px,6vw,34px)}
+    .collage{aspect-ratio:4/3}
+    .collage .pill{font-size:10px;padding:5px 10px}
+    .testi-stats{grid-template-columns:1fr 1fr;gap:24px 32px}
+    .cmp-row{grid-template-columns:1fr 48px 1fr}
+    .cmp-crit{padding:14px 12px;font-size:13.5px}
+    .cmp-ev{min-width:48px}
+    .cmp-alt{padding:14px 8px}
+    .cmp-note{font-size:11.5px}
+    .foot-cols{grid-template-columns:1fr 1fr}
+    .foot-legal{margin:8px 0;order:3;width:100%}
+    .dr-hero .top{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="../v2/">everneat</a>
+    <nav class="nav-links">
+      <a href="../home-cleaning/">Home</a>
+      <a href="../office-cleaning/">Office</a>
+      <a href="../airbnb-cleaning/">Airbnb</a>
+      <a href="../commercial-cleaning/">Commercial</a>
+      <a href="../event-cleaning/">Event</a>
+      <a href="../products/">Shop Products</a>
+      <a href="../login/">Login</a>
+    </nav>
+    <a class="btn btn--dark nav-book" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+    <details class="nav-menu">
+      <summary aria-label="Open menu"></summary>
+      <div class="nav-drop">
+        <a href="../home-cleaning/">Home</a>
+        <a href="../office-cleaning/">Office</a>
+        <a href="../airbnb-cleaning/">Airbnb</a>
+        <a href="../commercial-cleaning/">Commercial</a>
+        <a href="../event-cleaning/">Event</a>
+        <a href="../products/">Shop Products</a>
+        <a href="../login/">Login</a>
+        <a class="btn btn--dark" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-media" role="img" aria-label="A calm, sunlit short-term rental living room"></div>
+  <div class="hero-inner wrap">
+    <p class="hero-cap">A home that feels new every week</p>
+    <h1 class="hero-head">My <span class="fill">1&nbsp;BR<i>&#9662;</i></span> <span class="fill">1&nbsp;BA<i>&#9662;</i></span> property needs a turnover before <span class="fill">Sep&nbsp;2<i>&#9662;</i></span><a class="hero-go" href="../book/" aria-label="Get started">&rarr;</a></h1>
+  </div>
+  <div class="hero-ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Happiness guaranteed</span><i>·</i><span>10,000+ turnovers completed</span><i>·</i><span class="hl">Probiotics cleaning that stays guest-ready for days</span><i>·</i><span>$2M insured &amp; bonded</span><i>·</i><span>Photos + issue reports after every turnover</span><i>·</i><span>Happiness guaranteed</span><i>·</i><span>10,000+ turnovers completed</span><i>·</i><span class="hl">Probiotics cleaning that stays guest-ready for days</span><i>·</i><span>$2M insured &amp; bonded</span><i>·</i><span>Photos + issue reports after every turnover</span><i>·</i>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HERO SUB + COLLAGE ===================== -->
+<section class="herosub" id="intro">
+  <div class="wrap">
+    <p class="herosub-lead">Probiotic-grade turnovers for Airbnb &amp; short-term rentals across NYC&nbsp;·&nbsp;NJ&nbsp;·&nbsp;CT. Linens staged, photos delivered, issues flagged before your next guest walks&nbsp;in.</p>
+
+    <div class="proof">
+      <div class="rate"><span class="stars">★★★★★</span><b>4.9 rating</b></div>
+      <div class="seen">
+        <span class="lbl">As seen on</span>
+        <span class="press epi">epicurious</span>
+        <span class="press at">apartment<br>therapy</span>
+        <span class="press ms">martha<br>stewart</span>
+        <span class="press dom">domino</span>
+        <span class="press rs">REAL SIMPLE</span>
+      </div>
+    </div>
+
+    <div class="collage">
+      <img src="../assets/airbnb-collage.jpg" alt="An Everneat specialist wiping down a marble kitchen counter during a turnover">
+      <span class="pill" style="left:11%;top:29%">Consistent team</span>
+      <span class="pill" style="left:4.9%;top:80%">Personalized touches</span>
+      <span class="pill" style="left:41%;top:7%">Architectural detail</span>
+      <span class="pill" style="left:78.5%;top:26%">Naturally effective</span>
+      <span class="pill" style="left:73%;top:81%">Transparent communication</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMPARE ===================== -->
+<section class="compare">
+  <div class="wrap">
+    <h2 class="sec-title">The difference guest feel</h2>
+    <p class="sec-intro">You're not buying a clean, you're buying five-star reviews: a listing that's guest-ready on time, linens staged, and problems caught before your guest ever sees them.</p>
+
+    <div class="cmp-grid">
+      <div class="cmp-photo"><img src="../assets/airbnb-compare.jpg" alt="A freshly staged short-term rental bedroom and kitchen"></div>
+      <div class="cmp">
+        <div class="cmp-row cmp-head">
+          <div class="cmp-crit"></div>
+          <div class="cmp-ev">With Everneat</div>
+          <div class="cmp-alt">Standard turnover service</div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Beds made, towels staged, linens laundered on-site or off</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Sheets left in a pile for you to sort</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">The same team who learns your listing and your standards</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">A different stranger between every booking</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Photo report &amp; inventory count after every turnover</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">You just hope it was guest-ready</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Damage &amp; low-stock alerts before your guest arrives</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">You find out from a one-star review</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Peak-season &amp; same-day priority, never miss a booking</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Booked out when you need them most</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Probiotic, guest-safe surfaces, no fumes at check-in</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Chemical smell greets your guest</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Flat, transparent pricing, the quote is the price</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Surprise charges per extra room</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SELECT YOUR CLEAN ===================== -->
+<section class="plans" id="plans">
+  <div class="wrap">
+    <h2 class="sec-title">Select your clean</h2>
+    <p class="sec-intro">Three ways to work with us with the same probiotic protocol, run in full on every turnover. Pick the plan; open the complete 84-point checklist behind each.</p>
+
+    <div class="plan-grid">
+      <!-- Solo Host -->
+      <article class="plan">
+        <div class="plan-top">
+          <h3 class="plan-name">Solo Host</h3>
+          <p class="plan-tag">1–2 units · frequent stays</p>
+          <p class="plan-desc">Recurring turnover slots for active short-stay hosts. Lower per-turnover, same dedicated team.</p>
+        </div>
+        <div class="plan-hi">
+          <p class="cap">What you get</p>
+          <div class="plan-li"><span class="chk">✓</span><span>10% off every turnover, all sizes</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Priority same-day on peak weekends</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Dedicated team who knows your unit</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Monthly invoice, no per-visit checkout</span></div>
+        </div>
+        <div class="plan-foot">
+          <div class="plan-price"><span class="p">from $99</span><small>/ turnover</small></div>
+          <a class="btn btn--ghost" href="../book/">Start host plan&nbsp;&nbsp;&rarr;</a>
+          <button class="plan-proto" type="button" data-plan="solo">See the 84-point protocol</button>
+        </div>
+      </article>
+
+      <!-- Property Manager -->
+      <article class="plan plan--pop">
+        <span class="plan-badge">Most popular</span>
+        <div class="plan-top">
+          <h3 class="plan-name">Property Manager</h3>
+          <p class="plan-tag">6–30 units · portfolio</p>
+          <p class="plan-desc">Built for property managers. Dispatch, dashboard, PMS sync, and a portfolio-level SLA.</p>
+        </div>
+        <div class="plan-hi">
+          <p class="cap">What you get</p>
+          <div class="plan-li"><span class="chk">✓</span><span>iCal &amp; PMS sync for auto-scheduling</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Dedicated account manager</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Guaranteed SLA across the portfolio</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Consolidated billing &amp; monthly reporting</span></div>
+        </div>
+        <div class="plan-foot">
+          <div class="plan-price"><span class="p">Custom</span><small>/ portfolio</small></div>
+          <a class="btn btn--dark" href="../contact/">Talk to ops&nbsp;&nbsp;&rarr;</a>
+          <button class="plan-proto" type="button" data-plan="pm">See the 84-point protocol</button>
+        </div>
+      </article>
+
+      <!-- One-off -->
+      <article class="plan">
+        <div class="plan-top">
+          <h3 class="plan-name">One-off</h3>
+          <p class="plan-tag">Single booking · no commitment</p>
+          <p class="plan-desc">A single turnover at standard pricing. Same protocol, same team, no plan.</p>
+        </div>
+        <div class="plan-hi">
+          <p class="cap">What you get</p>
+          <div class="plan-li"><span class="chk">✓</span><span>Full 84-point turnover protocol</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Photo report after every clean</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Issue &amp; damage alerts</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>All unit sizes, see matrix below</span></div>
+        </div>
+        <div class="plan-foot">
+          <div class="plan-price"><span class="p">from $110</span><small>/ turnover</small></div>
+          <a class="btn btn--ghost" href="../book/">Book turnover&nbsp;&nbsp;&rarr;</a>
+          <button class="plan-proto" type="button" data-plan="oneoff">See the 84-point protocol</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING MATRIX ===================== -->
+<section class="matrix" id="pricing">
+  <div class="wrap">
+    <h2 class="sec-title">Pricing by unit size</h2>
+    <p class="sec-intro">Same protocol, scaled to the listing. Your per-turnover rate drops as your portfolio grows.</p>
+
+    <div class="mtable-scroll">
+      <table class="mtable">
+        <thead>
+          <tr>
+            <th scope="col" style="text-align:left"><span class="h-name">Unit size</span><span class="h-sub">Time on site</span></th>
+            <th scope="col" class="c-solo"><span class="h-name">Solo Host</span><span class="h-sub">1–3 properties</span><span class="h-rate">from $65<small>/hr</small></span></th>
+            <th scope="col"><span class="h-name">Property Managers</span><span class="h-sub">4+ properties</span><span class="h-rate">from $58.50<small>/hr</small></span></th>
+            <th scope="col"><span class="h-name">Enterprise</span><span class="h-sub">10+ properties</span><span class="h-rate">from $52<small>/hr</small></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Studio<small>2 hrs</small></th><td class="c-solo">$130</td><td>$117</td><td>$104</td></tr>
+          <tr><th scope="row">1BR / 1BA<small>2.5 hrs</small></th><td class="c-solo">$162.50</td><td>$146.25</td><td>$130</td></tr>
+          <tr><th scope="row">2BR / 1BA<small>3 hrs</small></th><td class="c-solo">$195</td><td>$175.50</td><td>$156</td></tr>
+          <tr><th scope="row">2BR / 2BA<small>3.5 hrs</small></th><td class="c-solo">$227.50</td><td>$204.75</td><td>$182</td></tr>
+          <tr><th scope="row">3BR / 2BA<small>4 hrs</small></th><td class="c-solo">$260</td><td>$234</td><td>$208</td></tr>
+          <tr><th scope="row">4BR+<small>custom</small></th><td class="c-solo">Custom</td><td>Custom</td><td>Custom</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="m-note">Based on apartments under 1,500 sq ft. Chat with Nova for an instant quote on your exact listing.</p>
+  </div>
+</section>
+
+<!-- ===================== TAILOR IT TO THE TURNOVER ===================== -->
+<section class="tailor">
+  <div class="wrap">
+    <h2 class="sec-title">Tailor it to the turnover</h2>
+    <p class="sec-intro">Mention any of these in chat. Each adds time to the visit; we quote it at your plan's rate when you book.</p>
+
+    <div class="tailor-strip">
+      <div class="x-item">
+        <div class="x-photo"><img src="../assets/airbnb-addon-fridge.jpg" alt="Line drawing of a refrigerator"></div>
+        <div class="x-cap"><span class="n">Fridge deep clean</span><span class="t">+45 min</span></div>
+        <div class="x-add"><span class="plus">+</span>add to turnover</div>
+      </div>
+      <div class="x-item">
+        <div class="x-photo"><img src="../assets/airbnb-addon-oven.jpg" alt="Line drawing of an oven"></div>
+        <div class="x-cap"><span class="n">Oven deep clean</span><span class="t">+45 min</span></div>
+        <div class="x-add"><span class="plus">+</span>add to turnover</div>
+      </div>
+      <div class="x-item">
+        <div class="x-photo"><img src="../assets/airbnb-addon-cabinets.jpg" alt="Line drawing of kitchen cabinets"></div>
+        <div class="x-cap"><span class="n">Inside cabinets</span><span class="t">+60 min</span></div>
+        <div class="x-add"><span class="plus">+</span>add to turnover</div>
+      </div>
+      <div class="x-item">
+        <div class="x-photo"><img src="../assets/airbnb-addon-windows.jpg" alt="Line drawing of a window"></div>
+        <div class="x-cap"><span class="n">Interior windows</span><span class="t">+10 min</span></div>
+        <div class="x-add"><span class="plus">+</span>add to turnover</div>
+      </div>
+      <div class="x-item">
+        <div class="x-photo"><img src="../assets/airbnb-addon-laundry.jpg" alt="Line drawing of a washing machine"></div>
+        <div class="x-cap"><span class="n">On-site laundry</span><span class="t">+60 min</span></div>
+        <div class="x-add"><span class="plus">+</span>add to turnover</div>
+      </div>
+      <div class="x-item">
+        <div class="x-photo ph">Pet cleanup</div>
+        <div class="x-cap"><span class="n">Pet cleanup</span><span class="t">+$30</span></div>
+        <div class="x-add"><span class="plus">+</span>add to turnover</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIAL ===================== -->
+<section class="testi">
+  <div class="testi-media" role="img" aria-label="A serene, hotel-crisp short-term rental bedroom"></div>
+  <div class="testi-inner wrap">
+    <blockquote class="testi-quote">&ldquo;Guests keep mentioning how spotless the place is in their reviews. Everneat turns it over and sends the photos before check-in. I&rsquo;ve stopped thinking about it.&rdquo;</blockquote>
+    <div class="testi-by">
+      <img class="testi-av" src="../assets/airbnb-avatar.jpg" alt="Marcus T.">
+      <span>Marcus T. · NYC · Superhost, 6 listings</span>
+    </div>
+    <div class="testi-stats">
+      <div><b>10,000+</b><span>Turnovers completed</span></div>
+      <div><b>4.9</b><span>Average rating</span></div>
+      <div><b>24h</b><span>Re-clean guarantee</span></div>
+      <div><b>97%</b><span>Hosts who stay with us</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="how">
+  <div class="wrap how-hd av-fadeUp">
+    <h2 class="sec-title">How it works</h2>
+  </div>
+  <div class="wrap">
+    <div class="stack-wrap">
+
+      <!-- Card 01 -->
+      <div class="stack-card" style="--si:0">
+        <div class="sc-inner">
+          <div class="mock mock--nova">
+            <div class="mock-head"><span class="mock-title">Chat with Nova</span><span class="mock-tag">Live · 4 min</span></div>
+            <hr class="mock-div">
+            <div class="nova-t1"><div><span></span><span></span><span></span></div></div>
+            <div class="bubble bot nova-b1">Hi! I'm Nova. How many bedrooms is the listing?</div>
+            <div class="chips nova-chips">
+              <span class="chip">Studio</span>
+              <span class="chip on">2 bed · 1 bath</span>
+              <span class="chip">3 bed +</span>
+            </div>
+            <div class="nova-t2"><div><span></span><span></span><span></span></div></div>
+            <div class="bubble bot nova-b2">Great. How many turnovers a month?</div>
+            <div class="bubble you nova-by">Every 2 weeks</div>
+            <div class="mock-foot nova-foot">
+              <span class="q-label">Your quote · 3 hrs</span>
+              <span class="price">$195<small>/ turnover</small></span>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">01</div>
+            <h3 class="sc-title">Book in chat</h3>
+            <p class="sc-copy">Chat with Nova. Live quote by unit size, live turnover slots, synced to your check-out calendar.</p>
+            <a class="btn btn--lime" href="../book/">Book my Airbnb Cleaning&nbsp;&nbsp;&rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 02 -->
+      <div class="stack-card" style="--si:1">
+        <div class="sc-inner">
+          <div class="mock mock--chk">
+            <div class="mock-head"><span class="mock-title">Your cleaner</span><span class="mock-tag">Dispatched</span></div>
+            <hr class="mock-div">
+            <div class="id">
+              <span class="avatar"></span>
+              <div><div class="n">Jazmin</div><div class="s">Lead cleaner · 640 visits · 4.9★</div></div>
+            </div>
+            <hr class="mock-div">
+            <div class="brow"><span class="chk">✓</span><span>Background check</span><span class="stat">Cleared</span></div>
+            <div class="brow"><span class="chk">✓</span><span>40-hour Protocol certification</span><span class="stat">Certified</span></div>
+            <div class="brow"><span class="chk">✓</span><span>Photo-verified identity</span><span class="stat">Verified</span></div>
+            <div class="brow"><span class="chk">✓</span><span>W-2 employee, not a subcontractor</span><span class="stat">On staff</span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">02</div>
+            <h3 class="sc-title">Cleaner dispatch</h3>
+            <p class="sc-copy">A Protocol-certified specialist who knows your listing. Insured, background-checked, and W-2 employed, never a random contractor between guests.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 03 -->
+      <div class="stack-card" style="--si:2">
+        <div class="sc-inner">
+          <div class="mock">
+            <div class="mock-head"><span class="mock-title">72-hour probiotic shield</span><span class="mock-tag">Active</span></div>
+            <hr class="mock-div">
+            <div class="track"><i></i></div>
+            <div class="ticks">
+              <div class="tk"><b>T+0h</b><span>Applied</span></div>
+              <div class="tk"><b>24h</b><span>Seeding</span></div>
+              <div class="tk"><b>48h</b><span>Working</span></div>
+              <div class="tk"><b>72h</b><span>Active</span></div>
+            </div>
+            <div class="prow"><span class="num">01</span><span>Plant-based surfactants lift residue</span><span class="stat">Clean</span></div>
+            <div class="prow"><span class="num">02</span><span>Live probiotics seed the surface</span><span class="stat">Seed</span></div>
+            <div class="prow"><span class="num">03</span><span>Shield metabolises new mess as it lands</span><span class="stat">72 hrs</span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">03</div>
+            <h3 class="sc-title">Protocol applied</h3>
+            <p class="sc-copy">The full 84-point turnover: linens staged, surfaces cleaned, and a 72-hour probiotic shield laid down so the space stays fresh right through your guest's stay.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 04 -->
+      <div class="stack-card" style="--si:3">
+        <div class="sc-inner">
+          <div class="mock">
+            <div class="mock-head"><span class="mock-title">Photo report</span><span class="mock-tag">The Smith's Home</span></div>
+            <hr class="mock-div">
+            <div class="photos">
+              <div class="pho before"><span class="t">Before</span></div>
+              <div class="pho after"><span class="t">After</span></div>
+            </div>
+            <div class="approve">
+              <span class="ok"><span class="chk">✓</span>Approved by you</span>
+              <span class="stars" style="font-size:14px">★★★★★</span>
+            </div>
+            <div class="refill"><span>Not thrilled? We re-clean within 24 hours</span><span class="stat">Free</span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">04</div>
+            <h3 class="sc-title">Happiness checked</h3>
+            <p class="sc-copy">Photo report and inventory count in your inbox before check-in. Damage or low stock? You get an alert. Not guest-ready? We re-clean free within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 05 -->
+      <div class="stack-card" style="--si:4">
+        <div class="sc-inner">
+          <div class="mock">
+            <div class="mock-head"><span class="mock-title">Everneat guest amenities</span><span class="mock-tag">In unit</span></div>
+            <hr class="mock-div">
+            <div class="prod">
+              <span class="thumb"></span>
+              <div><div class="pn">Surface cleaner</div><div class="ps">Probiotic multi-surface spray</div></div>
+              <span class="stocked"><span class="chk">✓</span><span class="stat">Stocked</span></span>
+            </div>
+            <div class="prod">
+              <span class="thumb"></span>
+              <div><div class="pn">Dish soap</div><div class="ps">Plant-based, cuts grease</div></div>
+              <span class="stocked"><span class="chk">✓</span><span class="stat">Stocked</span></span>
+            </div>
+            <div class="prod">
+              <span class="thumb"></span>
+              <div><div class="pn">Laundry soap</div><div class="ps">For on-site linen washes</div></div>
+              <span class="stocked"><span class="chk">✓</span><span class="stat">Stocked</span></span>
+            </div>
+            <div class="prod">
+              <span class="thumb"></span>
+              <div><div class="pn">Hand soap</div><div class="ps">Amino-acid, refillable</div></div>
+              <span class="stocked"><span class="chk">✓</span><span class="stat">Stocked</span></span>
+            </div>
+            <div class="refill"><span>Restock amenities every turnover</span><span class="toggle"></span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">05</div>
+            <h3 class="sc-title">Guest amenities</h3>
+            <p class="sc-copy">Stock the listing with the Protocol™ line: surface cleaner, dish soap, laundry and hand soap. Guests feel the difference, and we keep everything topped up on every turnover.</p>
+            <a class="btn btn--ghost" href="../products/">Add restock to my plan&nbsp;&nbsp;&rarr;</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="faq">
+  <div class="wrap faq-grid">
+    <div class="faq-img"><img src="../assets/airbnb-faq.jpg" alt="A clean, tiled rental bathroom with brass fixtures"></div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>How fast is a turnover?</summary>
+        <div class="faq-a">We build a buffer into every turnover window and track your check-out and check-in times. If a guest runs late, we re-sequence the route and keep you posted in real time, and we flag immediately if the gap puts your next check-in at risk, so you can decide together.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you send proof before check-in?</summary>
+        <div class="faq-a">Yes. A photo report and inventory count land in your inbox before your guest checks in, so you see the listing is guest-ready without setting foot in it. Damage or low stock triggers an alert the moment we find it.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can you handle back-to-back and same-day bookings?</summary>
+        <div class="faq-a">Yes. Host plans include priority same-day windows, and iCal / PMS sync schedules us automatically the moment a check-out lands. Peak weekends are reserved for plan members first, so you never miss a booking.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you launder and stage linens?</summary>
+        <div class="faq-a">Yes. Beds are stripped and remade with fresh linens, towel sets staged, and laundry run on-site or rotated off-site depending on your setup. Linens come back lint-rolled and hotel-crisp.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What if a guest leaves damage or runs low on supplies?</summary>
+        <div class="faq-a">Every turnover ends with an inspection: we photograph and report any damage and count essentials and consumables. You get an alert before the next guest arrives, in time to claim, restock, or reschedule.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is your cleaning safe for guests right after check-in?</summary>
+        <div class="faq-a">Yes. Everything we use is probiotic and plant-based, with no harsh chemicals or lingering fumes. Guests walk into clean air, not a chemical smell, and the shield keeps working for about 72 hours.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How is turnover pricing set?</summary>
+        <div class="faq-a">Transparent hourly rates by unit size, from $65/hr for solo hosts down to $52/hr for enterprise portfolios. The matrix above shows every size; the quote is the price, no surprise per-room charges.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Are your cleaners insured and background-checked?</summary>
+        <div class="faq-a">Every cleaner is background-checked, Protocol-certified, and W-2 employed, backed by $2M in insurance and bonding, never a random subcontractor between guests.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA + FOOTER ===================== -->
+<footer class="dark">
+  <div class="wrap cta">
+    <h2 class="cta-title">The turnover is the review.</h2>
+    <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Photos after every clean. Happiness guaranteed.</p>
+    <div class="cta-actions">
+      <a class="btn btn--lime" href="../book/">Book a Turnover&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="../contact/">Talk to a human</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-cols">
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="../home-cleaning/">Home</a><a href="../office-cleaning/">Office</a><a href="../airbnb-cleaning/">Airbnb / STR</a><a href="../commercial-cleaning/">Commercial</a><a href="../event-cleaning/">Event</a>
+    </div>
+    <div class="f-col">
+      <h4>Method</h4>
+      <a href="../the-protocol/">The Protocol™</a><a href="../products/">Products</a><a href="../blog/">Cleaning Guides</a><a href="../happiness-guarantee/">Happiness Guarantee</a>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <a href="../contact/">Contact</a><a href="../about/">About</a><a href="../press/">Press</a><a href="../careers/">Careers</a>
+    </div>
+    <div class="f-col">
+      <h4>Locations</h4>
+      <a href="../service-areas/nyc/">NYC · Manhattan · Brooklyn · Queens</a><a href="../service-areas/fairfield-county-ct/">Fairfield County, CT</a><a href="../service-areas/new-jersey/">New Jersey</a><a href="../partners/">Become a partner</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-bar">
+    <span class="logo">everneat</span>
+    <nav class="foot-legal">
+      <span>© 2026 Everneat</span><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a><a href="../cookies/">Cookies</a><a href="../accessibility/">Accessibility</a>
+    </nav>
+    <nav class="foot-social">
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ===================== TURNOVER PROTOCOL DRAWER ===================== -->
+<div class="dr-overlay" id="drOverlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drTitle" aria-hidden="true">
+  <button class="dr-x" id="drClose" type="button" aria-label="Close protocol drawer">✕</button>
+  <div class="dr-tabs" id="drTab">The Everneat Protocol™ · short-term rental turnover</div>
+  <div class="dr-hero">
+    <div class="top">
+      <div>
+        <h2 class="dr-title" id="drTitle">Turnover protocol</h2>
+        <p class="dr-sub">The complete turnover — run in full on every visit, every plan. Nothing skipped between guests.</p>
+      </div>
+      <div class="dr-84">
+        <div class="n">84</div>
+        <div class="l">protocol<br>points</div>
+      </div>
+    </div>
+    <div class="dr-legend">
+      <span><span class="cellg inc">✓</span>Included every turnover</span>
+      <span><span class="cellg add">+</span>Optional add-on</span>
+    </div>
+  </div>
+  <div class="dr-scroll">
+    <details class="acc-room" open>
+      <summary>Entry &amp; arrival<span class="cnt">10 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Check for items left by previous guests</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Refresh welcome letter &amp; house guide</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust entry console, shelves &amp; decor</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; disinfect door handles &amp; entry points</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Spot-clean glass surfaces &amp; mirrors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Tidy &amp; reset entryway surfaces</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Shake out &amp; vacuum entry rug</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean light switches &amp; doorknobs</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Vacuum &amp; mop floors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Probiotic treatment application</div>
+    </details>
+    <details class="acc-room">
+      <summary>Living spaces<span class="cnt">13 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust corners, baseboards &amp; window sills</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust light fixtures, blinds &amp; vents</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust &amp; wipe furniture, shelves &amp; accessories</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Lift &amp; dust under objects</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean glass surfaces &amp; mirrors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Tidy &amp; reset surfaces (beautification)</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Deep vacuum floors, under furniture &amp; between cushions</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Lint-roll upholstery to catch hair &amp; debris</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean inside trash cans &amp; replace liners</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean light switches &amp; doorknobs</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Vacuum &amp; mop floors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Probiotic upholstery &amp; fabric refresh</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Probiotic treatment application</div>
+    </details>
+    <details class="acc-room">
+      <summary>Bedrooms<span class="cnt">14 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Check for items left by previous guests</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust light fixtures, blinds &amp; vents</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust corners, baseboards &amp; windows</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust inside &amp; outside closets, nightstands &amp; drawers</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust &amp; wipe all furniture surfaces &amp; accessories</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Tidy &amp; reset surfaces (beautification)</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean glass surfaces &amp; mirrors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Strip &amp; remake bed with fresh linens</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Lint-roll linens &amp; upholstery for hair &amp; debris</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Place fresh towel sets on each bed</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Empty trash bin &amp; replace liner</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; disinfect light switches &amp; doorknobs</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Vacuum &amp; mop floors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Probiotic treatment application</div>
+    </details>
+    <details class="acc-room">
+      <summary>Bathrooms<span class="cnt">14 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Discard open toiletries &amp; items left by guests</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust light fixtures &amp; vents</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Wash tub, shower &amp; tile</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; disinfect toilet (bowl, seat, base &amp; surface)</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean inside medicine cabinet &amp; vanity</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean glass surfaces &amp; mirrors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Wipe sink &amp; countertops</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; polish fixtures &amp; accessories</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Replace all towels &amp; bath mat</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Restock hand soap, toilet paper &amp; amenities</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean inside &amp; outside trash bin &amp; replace liner</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; disinfect light switches &amp; doorknobs</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Vacuum &amp; mop floors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Probiotic treatment application</div>
+    </details>
+    <details class="acc-room">
+      <summary>Kitchen<span class="cnt">19 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust light fixtures, blinds &amp; vents</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Dust corners, baseboards &amp; windows</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Discard open &amp; expired food (dry &amp; refrigerated)</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Wash dishes or run &amp; empty dishwasher</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean inside &amp; outside refrigerator &amp; freezer</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; refill ice trays</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean microwave, hood &amp; small appliances</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean stove &amp; burners</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean inside oven (if needed)</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Wipe inside &amp; outside cabinets</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean countertops &amp; backsplash</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; polish faucet &amp; sink</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Tidy &amp; reset surfaces (beautification)</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Replace dish towels &amp; restock paper towel roll</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Refill dish soap &amp; replace sponge</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean inside trash &amp; recycle bins &amp; replace liners</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Clean &amp; disinfect light switches &amp; doorknobs</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Vacuum &amp; mop floors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Probiotic treatment application</div>
+    </details>
+    <details class="acc-room">
+      <summary>Outdoor &amp; patio<span class="cnt">6 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Sweep patio, deck or balcony</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Wipe outdoor furniture &amp; cushions</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Empty outdoor trash &amp; replace liners</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Check &amp; tidy grill or outdoor kitchen</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Water plants &amp; check planters</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Spot-clean entry mats &amp; outdoor rugs</div>
+    </details>
+    <details class="acc-room">
+      <summary>Final handoff<span class="cnt">8 tasks</span><span class="pm"></span></summary>
+      <div class="acc-task"><span class="cellg inc">✓</span>Inspect, report &amp; photograph any damages</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Count stock of essentials &amp; consumables</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Pack all boxes, tags &amp; receipts for recycling</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Take out all trash &amp; recycling</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Set temperature on thermostat or AC</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Turn off all lights</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Lock all windows &amp; doors</div>
+      <div class="acc-task"><span class="cellg inc">✓</span>Return keys &amp; verify guest copy is in pickup spot</div>
+    </details>
+    <div class="dr-addhead">Add-ons · mention any in chat</div>
+    <div class="acc-task"><span class="cellg add">+</span>Oven deep clean · +45 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Dishwasher deep clean · +30 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Fridge + freezer deep clean · +45 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Inside cabinets · +60 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Interior windows · +10 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Blinds · +10 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Full organization · +60 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>Pet cleanup · +30 min</div>
+    <div class="acc-task"><span class="cellg add">+</span>On-site laundry · +60 min</div>
+  </div>
+  <div class="dr-foot">
+    <div class="dr-price"><span class="p" id="drPrice">from $99</span><small id="drUnit">/ turnover</small></div>
+    <a class="btn btn--dark" href="../book/">Book a turnover&nbsp;&nbsp;&rarr;</a>
+  </div>
+</aside>
+
+<script>
+/* ---------- protocol drawer (works regardless of motion preference) ---------- */
+(function(){
+  var drawer=document.getElementById('drawer');
+  var overlay=document.getElementById('drOverlay');
+  var closeBtn=document.getElementById('drClose');
+  var tab=document.getElementById('drTab');
+  var priceEl=document.getElementById('drPrice');
+  var unitEl=document.getElementById('drUnit');
+  var plans={
+    solo:{tab:'Solo Host · The Everneat Protocol™ turnover',price:'from $99',unit:'/ turnover'},
+    pm:{tab:'Property Manager · The Everneat Protocol™ turnover',price:'Custom',unit:'/ portfolio'},
+    oneoff:{tab:'One-off · The Everneat Protocol™ turnover',price:'from $110',unit:'/ turnover'}
+  };
+  var lastFocus=null;
+  function openDrawer(plan){
+    var cfg=plans[plan]||{tab:'The Everneat Protocol™ · short-term rental turnover',price:'from $99',unit:'/ turnover'};
+    tab.textContent=cfg.tab;
+    priceEl.textContent=cfg.price;
+    unitEl.textContent=cfg.unit;
+    lastFocus=document.activeElement;
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    drawer.setAttribute('aria-hidden','false');
+    document.body.classList.add('dr-lock');
+    closeBtn.focus();
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true');
+    document.body.classList.remove('dr-lock');
+    if(lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll('.plan-proto').forEach(function(btn){
+    btn.addEventListener('click',function(){openDrawer(btn.getAttribute('data-plan'));});
+  });
+  closeBtn.addEventListener('click',closeDrawer);
+  overlay.addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&drawer.classList.contains('open')) closeDrawer();
+  });
+})();
+
+/* ---------- scroll animations (v2 patterns) ---------- */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  // nav strengthens on scroll
+  var nav=document.querySelector('.nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    nav.style.background=y>40?'rgba(244,241,234,0.97)':'';
+    nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
+  },{passive:true});
+
+  // compare photo parallax
+  var cmpImg=document.querySelector('.cmp-photo img');
+  if(cmpImg){
+    window.addEventListener('scroll',function(){
+      var rect=cmpImg.parentElement.getBoundingClientRect();
+      var off=(window.innerHeight/2-rect.top)*0.08;
+      cmpImg.style.transform='translateY('+off+'px)';
+    },{passive:true});
+  }
+
+  // IntersectionObserver (shared)
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+
+  function anim(sel,cls){
+    document.querySelectorAll(sel).forEach(function(el){el.classList.add(cls);io.observe(el);});
+  }
+  function stagger(sel,cls,ms){
+    document.querySelectorAll(sel).forEach(function(el,i){
+      el.classList.add(cls);
+      el.style.animationDelay=(i*ms)+'ms';
+      io.observe(el);
+    });
+  }
+
+  // herosub lead + proof row
+  anim('.herosub-lead','av-fadeUp');
+  document.querySelectorAll('.rate,.seen>*').forEach(function(el,i){
+    el.classList.add('av-fadeIn');
+    el.style.animationDelay=(i*80)+'ms';
+    io.observe(el);
+  });
+
+  // collage pills pop in
+  var collage=document.querySelector('.collage');
+  if(collage){io.observe(collage);}
+
+  // compare rows
+  anim('.compare .sec-title,.compare .sec-intro','av-fadeUp');
+  stagger('.cmp-row:not(.cmp-head)','av-slideLeft',45);
+
+  // plan cards rise
+  anim('.plans .sec-title,.plans .sec-intro','av-fadeUp');
+  stagger('.plan','av-scaleUp',110);
+
+  // pricing matrix
+  anim('.matrix .sec-title,.matrix .sec-intro,.mtable-scroll,.m-note','av-fadeUp');
+
+  // tailor strip
+  anim('.tailor .sec-title,.tailor .sec-intro','av-fadeUp');
+  stagger('.x-item','av-fadeUp',70);
+
+  // testimonial quote
+  anim('.testi-quote,.testi-by','av-fadeUp');
+
+  // stack cards: scale back buried cards on scroll
+  // ponytail: sticky tops cached (re-measured on resize), reads batched before writes, rAF-throttled
+  var stackCards=[].slice.call(document.querySelectorAll('.stack-card'));
+  if(stackCards.length){
+    var stackTops=[];
+    function measureStack(){
+      stackTops=stackCards.map(function(c){return parseFloat(getComputedStyle(c).top)||0;});
+    }
+    measureStack();
+    window.addEventListener('resize',measureStack);
+    var stackTick=false;
+    function updateStack(){
+      stackTick=false;
+      var tops=stackCards.map(function(c){return c.getBoundingClientRect().top;});
+      stackCards.forEach(function(card,i){
+        var depth=0;
+        for(var j=i+1;j<stackCards.length;j++){
+          if(tops[j]<=stackTops[j]+4){depth++;}
+        }
+        card.style.transform=depth?'scale('+(1-depth*.022)+') translateY('+(-depth*5)+'px)':'';
+        card.style.filter=depth?'brightness('+(1-depth*.035)+')':'';
+      });
+    }
+    window.addEventListener('scroll',function(){
+      if(!stackTick){stackTick=true;requestAnimationFrame(updateStack);}
+    },{passive:true});
+    updateStack();
+  }
+
+  // faq items
+  anim('.faq-img','av-fadeIn');
+  stagger('.faq-item','av-fadeUp',45);
+
+  // CTA word-split reveal
+  var ctaTitle=document.querySelector('.cta-title');
+  if(ctaTitle){
+    var words=ctaTitle.textContent.trim().split(/\s+/);
+    ctaTitle.innerHTML=words.map(function(w,i){
+      return '<span class="cta-word-wrap"><span class="cta-word-inner" style="animation-delay:'+(i*90)+'ms">'+w+'</span></span>';
+    }).join(' ');
+    io.observe(ctaTitle);
+  }
+  anim('.cta-copy,.cta-actions','av-fadeUp');
+
+  // Nova chat sequence
+  var nova=document.querySelector('.mock--nova');
+  if(nova){
+    var novaObs=new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      novaObs.disconnect();
+      var t1=nova.querySelector('.nova-t1');
+      var t2=nova.querySelector('.nova-t2');
+      var seq=[
+        [600,  function(){ t1.classList.add('show'); }],
+        [1200, function(){ t1.classList.remove('show'); nova.querySelector('.nova-b1').classList.add('nova-in'); }],
+        [1700, function(){ nova.querySelector('.nova-chips').classList.add('nova-in'); }],
+        [2200, function(){ t2.classList.add('show'); }],
+        [2800, function(){ t2.classList.remove('show'); nova.querySelector('.nova-b2').classList.add('nova-in'); }],
+        [3500, function(){ nova.querySelector('.nova-by').classList.add('nova-in'); }],
+        [4100, function(){ nova.querySelector('.nova-foot').classList.add('nova-in'); }],
+      ];
+      seq.forEach(function(s){ setTimeout(s[1], s[0]); });
+    },{threshold:0.4});
+    novaObs.observe(nova);
+  }
+
+  // Step 02 — checkbox row stagger
+  var chkMock=document.querySelector('.mock--chk');
+  if(chkMock){
+    var chkObs=new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      chkObs.disconnect();
+      chkMock.querySelectorAll('.brow').forEach(function(row,i){
+        setTimeout(function(){row.classList.add('in');},i*160);
+      });
+    },{threshold:0.35});
+    chkObs.observe(chkMock);
+  }
+
+  // testimonial stat counters
+  var statsIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      statsIO.unobserve(e.target);
+      var b=e.target.querySelector('b');
+      var raw=b.textContent;
+      var m=raw.match(/^([0-9,]+\.?[0-9]*)(.*)$/);
+      if(!m) return;
+      var num=parseFloat(m[1].replace(/,/g,''));
+      var suffix=m[2];
+      var hasComma=m[1].indexOf(',')>=0;
+      var hasDot=m[1].indexOf('.')>=0;
+      var t0=null,dur=1200;
+      (function tick(ts){
+        if(!t0) t0=ts;
+        var p=Math.min((ts-t0)/dur,1);
+        var ease=1-Math.pow(1-p,3);
+        var cur=ease*num;
+        b.textContent=(hasComma?Math.round(cur).toLocaleString():hasDot?cur.toFixed(1):Math.round(cur))+suffix;
+        if(p<1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('.testi-stats>div').forEach(function(el){statsIO.observe(el);});
+
+})();
+</script>
+</body>
+</html>
