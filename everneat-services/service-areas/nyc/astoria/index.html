@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cleaning Services in Astoria, Queens · Everneat</title>
+<meta name="description" content="Probiotic home, office, Airbnb, commercial &amp; event cleaning in Astoria, Queens — Everneat's home neighborhood. Plant-powered biology, zero harsh chemicals, the published Protocol™ for every space.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea; --cream:#eae6db; --panel:#edeae2; --card:#ffffff;
+    --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
+    --line:#e5e1d5; --line2:#d9d4c7;
+    --taupe:#d5cfbf; --butter:#f6f3d9;
+    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --dark:#181611;
+    --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --edge:clamp(20px,5vw,64px);
+    --pad:clamp(72px,9vw,120px);
+    --shadow:0 1px 2px rgba(30,28,22,.04), 0 26px 50px -30px rgba(30,28,22,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--edge)}
+  .caps{text-transform:uppercase;letter-spacing:.12em}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+    font-weight:500;font-size:15px;padding:14px 26px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--dark{background:var(--ink);color:#f4f1ea}
+  .btn--dark:hover{background:#000}
+  .btn--lime{background:var(--lime);color:#24230f}
+  .btn--lime:hover{background:var(--lime-deep)}
+  .btn--ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
+  .btn--ghost:hover{background:var(--ink);color:#f4f1ea}
+  .tlink{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .tlink:hover{border-color:var(--ink)}
+
+  /* ---------- section heading ---------- */
+  .sec-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(28px,3.4vw,42px);letter-spacing:.008em;line-height:1.04;margin:0;color:var(--ink)}
+  .sec-intro{font-size:clamp(17px,1.35vw,20px);color:var(--ink2);max-width:1000px;margin:20px 0 0;line-height:1.5}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,.05)}
+  .nav-in{display:flex;align-items:center;gap:24px;height:80px}
+  .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{text-decoration:none;color:var(--ink);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+  .nav-links a:hover{opacity:1}
+  .nav .btn{margin-left:8px;padding:11px 22px;font-size:13px;letter-spacing:.06em}
+  .nav-menu{display:none;position:relative;margin-left:6px}
+  .nav-menu>summary{list-style:none;cursor:pointer;width:42px;height:42px;border:1px solid var(--line2);
+    border-radius:11px;display:grid;place-items:center;color:var(--ink);background:var(--card)}
+  .nav-menu>summary::-webkit-details-marker{display:none}
+  .nav-menu>summary::before{content:"\2630";font-size:18px}
+  .nav-menu[open]>summary::before{content:"\2715";font-size:15px}
+  .nav-drop{position:absolute;right:0;top:calc(100% + 12px);width:min(80vw,300px);background:var(--card);
+    border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
+  .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop .btn{margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
+
+  /* ---------- breadcrumb ---------- */
+  .crumbs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;letter-spacing:.02em;
+    color:var(--muted);padding:24px 0 0;margin:0;list-style:none}
+  .crumbs a{color:var(--ink2);text-decoration:none}
+  .crumbs a:hover{color:var(--ink);text-decoration:underline}
+  .crumbs .sep{color:var(--muted)}
+  .crumbs [aria-current]{color:var(--ink);font-weight:600}
+
+  /* ---------- location hero ---------- */
+  .lhero{padding:0 0 72px}
+  .lhero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,96px);align-items:start;margin-top:56px}
+  .lhero-copy h1{font-weight:400;font-size:clamp(34px,4vw,56px);line-height:1.06;letter-spacing:-.01em;margin:0}
+  .lhero-copy h1 .borough{color:var(--ink2)}
+  .lhero-sub{font-size:18px;line-height:1.55;color:var(--ink2);max-width:520px;margin:32px 0 0}
+  .lhero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:44px}
+  .map-card{background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .map-card img{width:100%;height:auto;border-radius:8px}
+  .map-legend{display:grid;gap:8px;margin-top:16px;font-size:12px;color:var(--ink2)}
+  .map-legend .lg{display:flex;align-items:center;gap:10px}
+  .lg i{flex:none}
+  .lg .pin{width:10px;height:10px;border-radius:50%;background:var(--lime-deep);border:1px solid var(--ink)}
+  .lg .served{width:14px;height:14px;border-radius:3px;background:#e5e8e3;border:1px solid var(--ink)}
+  .lg .notyet{width:14px;height:14px;border-radius:3px;border:1px dashed var(--muted)}
+
+  /* ---------- loc intro ---------- */
+  .locintro{padding:var(--pad) 0 72px}
+  .locintro-lead{font-size:clamp(24px,2.6vw,34px);font-weight:400;line-height:1.4;text-align:center;
+    max-width:1120px;margin:0 auto;color:var(--ink);letter-spacing:-.01em}
+  .proof{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:22px 46px;margin:38px auto 0}
+  .rate{display:flex;align-items:center;gap:12px}
+  .stars{color:var(--ink);letter-spacing:2px;font-size:17px}
+  .rate b{font-weight:500;font-size:16px}
+  .seen{display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px}
+  .seen .lbl{font-size:14px;color:var(--ink2)}
+  .press{font-size:19px;color:var(--ink);opacity:.9}
+  .press.epi{font-family:var(--serif);font-style:italic;font-weight:600}
+  .press.at{font-size:14px;line-height:1.05;font-weight:500}
+  .press.ms{font-family:var(--serif);font-size:15px;line-height:1;text-align:center}
+  .press.dom{font-family:var(--serif);font-weight:600;font-size:21px}
+  .press.rs{font-weight:700;letter-spacing:.02em;font-size:16px}
+
+  /* ---------- services ---------- */
+  .svc{padding:24px 0}
+  .svc-step{background:var(--panel);border-radius:32px;padding:clamp(28px,4.4vw,64px);margin-bottom:2px}
+  .svc-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,2.5vw,32px);align-items:center}
+  .svc-eyebrow{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;color:var(--muted)}
+  .svc-eyebrow .n{letter-spacing:.04em}
+  .svc-eyebrow .t{letter-spacing:.11em;text-transform:uppercase}
+  .svc-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(24px,2.4vw,32px);line-height:1.08;letter-spacing:-.01em;margin:24px 0 0;color:var(--ink)}
+  .svc-copy{font-size:clamp(17px,1.4vw,20px);line-height:1.5;color:var(--ink2);margin:24px 0 0;max-width:580px}
+  .svc-copy p{margin:0}
+  .svc-copy p+p{margin-top:4px}
+  .svc-cta{margin-top:32px}
+  .svc-cta .btn{border-color:var(--ink);font-size:clamp(16px,1.3vw,19px);padding:14px 26px}
+  .svc-img{border-radius:16px;overflow:hidden;aspect-ratio:640/420}
+  .svc-img img{width:100%;height:100%;object-fit:cover}
+  .svc-note{text-align:center;padding:28px 0 0;font-size:15px;color:var(--ink2)}
+  .svc-note a{color:var(--ink)}
+
+  /* ---------- compare ---------- */
+  .compare{padding:var(--pad) 0}
+  .cmp-grid{display:grid;grid-template-columns:502px 1fr;gap:48px;margin-top:52px;align-items:start}
+  .cmp-photo{border-radius:20px;overflow:hidden;aspect-ratio:502/786}
+  .cmp-photo img{width:100%;height:100%;object-fit:cover}
+  .cmp{border:1px solid var(--line2);border-radius:18px;overflow:hidden;background:var(--card)}
+  .cmp-row{display:grid;grid-template-columns:1fr 120px 152px}
+  .cmp-row+.cmp-row{border-top:1px solid var(--line)}
+  .cmp-crit{padding:22px 26px;font-size:15px;line-height:1.4;align-self:center}
+  .cmp-ev{display:flex;align-items:center;justify-content:center;background:var(--butter)}
+  .cmp-alt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;padding:18px 14px}
+  .cmp-head{background:var(--taupe)}
+  .cmp-head .cmp-crit{padding:0}
+  .cmp-head .cmp-ev{background:transparent}
+  .cmp-head>div{min-height:100px;display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:11.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);padding:14px}
+  .cmp-head .cmp-alt{color:#6f6a5f;font-weight:600}
+  .tick,.xmark{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:none}
+  .tick{background:var(--lime-deep);color:#20200f}
+  .xmark{border:1px solid var(--line2);color:var(--muted);font-size:11px}
+  .cmp-note{font-size:12.5px;color:var(--muted);line-height:1.35}
+
+  /* ---------- days of protection ---------- */
+  .protect{background:var(--cream);padding:var(--pad) 0}
+  .phases{position:relative;margin-top:52px}
+  .phase-bands{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .band{border-radius:16px;aspect-ratio:427/640;overflow:hidden;background:#d7d2c6}
+  .band img{width:100%;height:100%;object-fit:cover}
+  .band.g2{background:linear-gradient(160deg,#e4e0d6,#d6d1c5)}
+  .band.g3{background:linear-gradient(160deg,#d7d3c8,#c7c3b8)}
+  .phase-tl{display:grid;grid-template-columns:repeat(3,1fr);position:relative;margin:20px 0 0}
+  .phase-tl::before{content:'';position:absolute;left:calc(100%/6);right:calc(100%/6);top:16px;height:2px;
+    background:var(--lime-deep)}
+  .phase-tl.in::before{transform:scaleX(1)}
+  .tl-node{display:flex;justify-content:center}
+  .tl-dot{width:32px;height:32px;border-radius:50%;background:var(--lime);color:#24230f;
+    display:grid;place-items:center;font-weight:700;font-size:13px;position:relative;z-index:1}
+  @media (prefers-reduced-motion:no-preference){
+    .phase-tl::before{transform:scaleX(0);transform-origin:left;
+      transition:transform .9s cubic-bezier(.22,1,.36,1) .15s}
+    .tl-dot{transform:scale(0);transition:transform .38s cubic-bezier(.34,1.56,.64,1)}
+  }
+  .phase-tl.in .tl-node:nth-child(1) .tl-dot{transform:scale(1);transition-delay:.1s}
+  .phase-tl.in .tl-node:nth-child(2) .tl-dot{transform:scale(1);transition-delay:.4s}
+  .phase-tl.in .tl-node:nth-child(3) .tl-dot{transform:scale(1);transition-delay:.7s}
+  .phase-desc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+  .pb{padding:12px 0 0}
+  .pb h4{margin:0 0 5px;font-size:14px;font-weight:700;letter-spacing:.06em;color:var(--ink);text-transform:uppercase}
+  .pb p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2)}
+
+  /* ---------- everything published ---------- */
+  .published{padding:var(--pad) 0}
+  .pub-grid{display:grid;grid-template-columns:minmax(0,613px) 1fr;gap:66px;align-items:center}
+  .pub-copy p{font-size:17px;color:var(--ink2);line-height:1.6;margin:24px 0 32px;max-width:560px}
+  .blueprint{background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:32px;box-shadow:var(--shadow)}
+  .bp-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+  .bp-head .t{font-size:18px;font-weight:500}
+  .bp-head .h{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .bp-div{border:none;border-top:1px solid var(--line);margin:20px 0}
+  .bp-group+.bp-group{margin-top:26px}
+  .bp-cap{font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .bp-item{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:baseline;padding:9px 0}
+  .bp-n{font-variant-numeric:tabular-nums;letter-spacing:.14em;color:var(--muted);font-size:13px}
+  .bp-t{font-size:15px;color:var(--ink)}
+  .bp-m{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- retail band ---------- */
+  .retail{padding:0 0 var(--pad)}
+  .retail-grid{display:grid;grid-template-columns:624px 1fr;gap:64px;align-items:center}
+  .retail-img{border-radius:20px;overflow:hidden;aspect-ratio:624/440}
+  .retail-img img{width:100%;height:100%;object-fit:cover}
+  .retail-copy p{font-size:17px;color:var(--ink2);line-height:1.6;margin:22px 0 30px;max-width:560px}
+  .retail-copy .row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+
+  /* ---------- testimonial ---------- */
+  .testi{position:relative;overflow:hidden;color:#fff}
+  .testi-media{position:absolute;inset:0;background:url(../../../assets/testi-bg.jpg) center 42%/cover no-repeat}
+  .testi-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,14,.5),rgba(20,18,14,.62))}
+  .testi-inner{position:relative;z-index:2;padding-block:clamp(64px,10vw,120px)}
+  .testi-quote{font-weight:400;font-size:clamp(23px,3.3vw,44px);line-height:1.3;margin:0;max-width:1120px;letter-spacing:-.01em}
+  .testi-by{display:flex;align-items:center;gap:14px;margin:26px 0 0;font-family:var(--serif);font-style:italic;
+    font-size:clamp(13px,1.3vw,16px);letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+  .testi-av{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
+  .testi-stats{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:26px 60px;margin-top:clamp(40px,6vw,64px)}
+  .testi-stats b{display:block;font-size:clamp(26px,3vw,40px);font-weight:500;line-height:1;margin-bottom:6px}
+  .testi-stats span{font-size:13px;color:rgba(255,255,255,.8)}
+
+  /* ---------- coverage ---------- */
+  .coverage{background:var(--cream);padding:var(--pad) 0}
+  .cov-sub{font-size:16px;color:var(--ink2);max-width:640px;margin:12px 0 0;line-height:1.5}
+  .cov-grid{display:grid;grid-template-columns:400px 1fr 1fr 1fr;gap:40px;align-items:start;margin-top:40px}
+  .cov-map{background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:20px}
+  .cov-map img{width:100%;height:auto}
+  .cov-map-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;font-size:12px}
+  .cov-map-foot .lg{display:flex;align-items:center;gap:6px;color:var(--ink2)}
+  .cov-map-foot .lg i{width:8px;height:8px;border-radius:50%;background:var(--lime-deep);flex:none}
+  .cov-map-foot .ct{font-weight:600;color:var(--muted)}
+  .nbh-col h3{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0;
+    border-bottom:1px solid var(--line2);padding-bottom:12px;
+    font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+  .nbh-col h3 span{color:var(--muted);letter-spacing:0}
+  .nbh-col ul{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px;font-size:14px;color:var(--ink)}
+  .nbh-here{font-weight:700}
+  .nbh-here .tag{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;background:var(--lime);
+    color:#24230f;font-size:11px;font-weight:600;letter-spacing:.02em;vertical-align:1px}
+
+  /* ---------- FAQ ---------- */
+  .faq{padding:var(--pad) 0}
+  .faq-grid{display:grid;grid-template-columns:502px 1fr;gap:64px;align-items:start}
+  .faq-img{border-radius:20px;overflow:hidden;aspect-ratio:502/724}
+  .faq-img img{width:100%;height:100%;object-fit:cover}
+  .faq-eyebrow{font-size:12px;font-weight:600;letter-spacing:.125em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .faq-title{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(26px,2.5vw,34px);
+    line-height:1.1;margin:0 0 28px;color:var(--ink)}
+  .faq-item{border:1px solid var(--line2);border-radius:14px;background:var(--card);margin-bottom:12px;overflow:hidden}
+  .faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:22px 26px;font-size:17px;font-weight:500;color:var(--ink)}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+";font-size:26px;font-weight:400;color:var(--muted);line-height:1}
+  .faq-item[open] summary::after{content:"\2013"}
+  .faq-a{padding:0 26px 24px;color:var(--ink2);font-size:15px;line-height:1.62;max-width:720px}
+
+  /* ---------- CTA + footer (dark) ---------- */
+  .dark{background:var(--dark);color:#e8e5dd}
+  .cta{padding-block:var(--pad) clamp(48px,6vw,72px)}
+  .cta-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(34px,4.6vw,56px);line-height:1.02;color:#fff;margin:0}
+  .cta-copy{color:#a8a49a;max-width:640px;font-size:17px;line-height:1.5;margin:22px 0 34px}
+  .cta-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .cta-actions .tlink{color:#fff}
+  .cta-actions .tlink:hover{border-color:#fff}
+  .foot-div{border:none;border-top:1px solid rgba(255,255,255,.09);margin:0}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-block:clamp(48px,6vw,72px)}
+  .f-col h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8c887d;margin:0 0 20px;font-weight:600}
+  .f-col a{display:block;color:#bdb9ae;text-decoration:none;font-size:15px;margin-bottom:13px}
+  .f-col a:hover{color:#fff}
+  .foot-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px 40px}
+  .foot-bar .logo{color:#fff}
+  .foot-legal{display:flex;gap:22px;flex-wrap:wrap;margin:0 auto}
+  .foot-legal a{color:#9c988e;text-decoration:none;font-size:14px}
+  .foot-legal a:hover{color:#fff}
+  .foot-social{display:flex;gap:26px}
+  .foot-social a{color:#cbc7bd;text-decoration:none;font-size:15px}
+  .foot-social a:hover{color:#fff}
+
+  /* ---------- animations ---------- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideLeft{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes slideRight{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes scaleUp{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+  @media(prefers-reduced-motion:no-preference){
+    .av-fadeUp,.av-fadeIn,.av-slideLeft,.av-slideRight,.av-scaleUp{opacity:0}
+    .av-fadeUp.in{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-fadeIn.in{animation:fadeIn .6s ease forwards}
+    .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-slideRight.in{animation:slideRight .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
+    .phase-bands .band{opacity:0;transform:translateY(-38px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1)}
+    .phase-bands.in .band{opacity:1;transform:none}
+    .phase-bands.in .band:nth-child(2){transition-delay:.1s}
+    .phase-bands.in .band:nth-child(3){transition-delay:.2s}
+    .phase-desc .pb{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+    .phase-desc.in .pb{opacity:1;transform:none}
+    .phase-desc.in .pb:nth-child(2){transition-delay:.18s}
+    .phase-desc.in .pb:nth-child(3){transition-delay:.36s}
+    .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
+    .cta-word-inner{display:inline-block;transform:translateY(110%)}
+    .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .nav-links,.nav-book{display:none}
+    .nav-menu{display:block;margin-left:auto}
+    .lhero-grid{grid-template-columns:1fr;gap:36px;margin-top:36px}
+    .map-card{max-width:560px}
+    .svc-in{grid-template-columns:1fr;gap:26px}
+    .svc-img{order:-1}
+    .cmp-grid,.faq-grid,.retail-grid,.pub-grid{grid-template-columns:1fr;gap:36px}
+    .cmp-photo,.faq-img,.retail-img{max-width:560px}
+    .cmp-row{grid-template-columns:1fr 48px 1fr}
+    .cmp-crit{padding:14px 12px;font-size:13.5px}
+    .cmp-ev{min-width:48px}
+    .cmp-alt{padding:14px 8px}
+    .cmp-note{font-size:11.5px}
+    .phase-tl,.phase-desc,.phase-bands{grid-template-columns:1fr}
+    .phase-tl::before{display:none}
+    .tl-node{justify-content:flex-start;padding-left:4px}
+    .testi-stats{grid-template-columns:1fr 1fr;gap:24px 32px}
+    .cov-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .cov-map{grid-column:1 / -1;max-width:480px}
+    .foot-cols{grid-template-columns:1fr 1fr;gap:36px}
+    .foot-legal{margin:8px 0;order:3;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="../../../v2/">everneat</a>
+    <nav class="nav-links">
+      <a href="../../../home-cleaning/">Home</a>
+      <a href="../../../office-cleaning/">Office</a>
+      <a href="../../../airbnb-cleaning/">Airbnb</a>
+      <a href="../../../commercial-cleaning/">Commercial</a>
+      <a href="../../../event-cleaning/">Event</a>
+      <a href="../../../products/">Shop Products</a>
+      <a href="../../../login/">Login</a>
+    </nav>
+    <a class="btn btn--dark nav-book" href="../../../book/">Book&nbsp;&nbsp;&rarr;</a>
+    <details class="nav-menu">
+      <summary aria-label="Open menu"></summary>
+      <div class="nav-drop">
+        <a href="../../../home-cleaning/">Home</a>
+        <a href="../../../office-cleaning/">Office</a>
+        <a href="../../../airbnb-cleaning/">Airbnb</a>
+        <a href="../../../commercial-cleaning/">Commercial</a>
+        <a href="../../../event-cleaning/">Event</a>
+        <a href="../../../products/">Shop Products</a>
+        <a href="../../../login/">Login</a>
+        <a class="btn btn--dark" href="../../../book/">Book&nbsp;&nbsp;&rarr;</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="lhero">
+  <div class="wrap">
+    <nav aria-label="Breadcrumb">
+      <ol class="crumbs">
+        <li><a href="../../../v2/">Home</a></li>
+        <li class="sep" aria-hidden="true">/</li>
+        <li><a href="../../">Service Areas</a></li>
+        <li class="sep" aria-hidden="true">/</li>
+        <li><a href="../">NYC</a></li>
+        <li class="sep" aria-hidden="true">/</li>
+        <li><a href="../">Queens</a></li>
+        <li class="sep" aria-hidden="true">/</li>
+        <li><span aria-current="page">Astoria</span></li>
+      </ol>
+    </nav>
+    <div class="lhero-grid">
+      <div class="lhero-copy">
+        <h1>Cleaning services in Astoria,<br><span class="borough">Queens.</span></h1>
+        <p class="lhero-sub">We clean homes and offices across Astoria and Queens, using the probiotic technology we manufacture in Fairfield, CT and the same numbered Protocol&trade; for every space.</p>
+        <div class="lhero-ctas">
+          <a class="btn btn--dark" href="../../../book/">Book a consultation&nbsp;&nbsp;&rarr;</a>
+          <a class="btn btn--ghost" href="#protocol">Read the Protocol&nbsp;&nbsp;&rarr;</a>
+        </div>
+      </div>
+      <div class="map-card">
+        <img src="../../../assets/nyc-hero-map.png" alt="Map of NYC showing Everneat's active service pins across Manhattan, Brooklyn, and Queens, with Astoria highlighted" width="608" height="439">
+        <div class="map-legend">
+          <div class="lg"><i class="pin"></i><span>Active service pin</span></div>
+          <div class="lg"><i class="served"></i><span>Borough served</span></div>
+          <div class="lg"><i class="notyet"></i><span>Not yet covered</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LOC INTRO (unique per neighborhood) ===================== -->
+<section class="locintro">
+  <div class="wrap">
+    <p class="locintro-lead">The first probiotic cleaning service for homes, offices, events &amp; short-term rentals. Plant-powered biology with zero harsh chemicals in Astoria<em>.</em></p>
+    <div class="proof">
+      <div class="rate"><span class="stars">★★★★★</span><b>4.9 rating</b></div>
+      <div class="seen">
+        <span class="lbl">As seen on</span>
+        <span class="press epi">epicurious</span>
+        <span class="press at">apartment<br>therapy</span>
+        <span class="press ms">martha<br>stewart</span>
+        <span class="press dom">domino</span>
+        <span class="press rs">REAL SIMPLE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="svc" id="services">
+  <div class="wrap">
+
+    <div class="svc-step">
+      <div class="svc-in">
+        <div class="svc-body">
+          <div class="svc-eyebrow"><span class="n">01</span><span class="t">Airbnb &amp; Short-Term Rental</span></div>
+          <h2 class="svc-title">Turnovers built for volume</h2>
+          <div class="svc-copy">
+            <p>Guest-ready in under three hours, with a scent that protects the 5-star review.</p>
+            <p>For operators in Astoria and across Queens.</p>
+          </div>
+          <div class="svc-cta"><a class="btn btn--lime" href="../../../airbnb-cleaning/">Quote my Airbnb Cleaning&nbsp;&nbsp;&rarr;</a></div>
+        </div>
+        <div class="svc-img"><img src="../../../assets/nyc-service.png" alt="An Everneat specialist making a bed in a bright Astoria bedroom" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="svc-step">
+      <div class="svc-in">
+        <div class="svc-body">
+          <div class="svc-eyebrow"><span class="n">02</span><span class="t">Home Cleaning</span></div>
+          <h2 class="svc-title">Regular, deep, move-in and move-out, post-construction.</h2>
+          <div class="svc-copy">
+            <p>Plant-based and non-toxic, safe around kids and pets. Every scope is written down before we arrive.</p>
+            <p>Serving homes throughout Astoria.</p>
+          </div>
+          <div class="svc-cta"><a class="btn btn--lime" href="../../../home-cleaning/">Quote my Home Cleaning&nbsp;&nbsp;&rarr;</a></div>
+        </div>
+        <div class="svc-img"><img src="../../../assets/nyc-service.png" alt="An Everneat specialist smoothing fresh linens during a home clean" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="svc-step">
+      <div class="svc-in">
+        <div class="svc-body">
+          <div class="svc-eyebrow"><span class="n">03</span><span class="t">Office Cleaning</span></div>
+          <h2 class="svc-title">Workplaces that care about their teams health</h2>
+          <div class="svc-copy">
+            <p>Room-by-room service on a 30, 38, or 50-point scope, scheduled around your team, whether that is day, morning, or evening.</p>
+            <p>For offices and studios in Astoria and nearby Queens.</p>
+          </div>
+          <div class="svc-cta"><a class="btn btn--lime" href="../../../office-cleaning/">Quote my Office Cleaning&nbsp;&nbsp;&rarr;</a></div>
+        </div>
+        <div class="svc-img"><img src="../../../assets/nyc-service.png" alt="An Everneat specialist resetting a workspace with probiotic cleaner" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="svc-step">
+      <div class="svc-in">
+        <div class="svc-body">
+          <div class="svc-eyebrow"><span class="n">04</span><span class="t">Commercial Cleaning</span></div>
+          <h2 class="svc-title">Workplaces that care about their teams health</h2>
+          <div class="svc-copy">
+            <p>Room-by-room service on a 30, 38, or 50-point scope, scheduled around your team, whether that is day, morning, or evening.</p>
+            <p>For offices and studios in Astoria and nearby Queens.</p>
+          </div>
+          <div class="svc-cta"><a class="btn btn--lime" href="../../../commercial-cleaning/">Quote my Commercial Cleaning&nbsp;&nbsp;&rarr;</a></div>
+        </div>
+        <div class="svc-img"><img src="../../../assets/nyc-service.png" alt="An Everneat crew servicing a commercial space" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="svc-step">
+      <div class="svc-in">
+        <div class="svc-body">
+          <div class="svc-eyebrow"><span class="n">05</span><span class="t">Event Cleaning</span></div>
+          <h2 class="svc-title">Before and after the event</h2>
+          <div class="svc-copy">
+            <p>Pre-event setup and full post-event reset for venues, private dining, and event spaces across NYC.</p>
+            <p>For events and venues in Astoria.</p>
+          </div>
+          <div class="svc-cta"><a class="btn btn--lime" href="../../../event-cleaning/">Quote my Event Cleaning&nbsp;&nbsp;&rarr;</a></div>
+        </div>
+        <div class="svc-img"><img src="../../../assets/nyc-service.png" alt="An Everneat specialist preparing a venue before an event" loading="lazy"></div>
+      </div>
+    </div>
+
+    <p class="svc-note">First time hiring a cleaner? <a href="../../../blog/sample-article/">Read this first.</a></p>
+  </div>
+</section>
+
+<!-- ===================== COMPARE ===================== -->
+<section class="compare">
+  <div class="wrap">
+    <h2 class="sec-title">You've done enough hoping</h2>
+    <p class="sec-intro">Every time you book a cleaner, you're taking a gamble: will they show, get it right, respect your home, and what will it cost? Everneat answers all four before you book. Here's the difference, line by line.</p>
+
+    <div class="cmp-grid">
+      <div class="cmp-photo"><img src="../../../assets/compare.jpg" alt="A bright, freshly cleaned living room" loading="lazy"></div>
+      <div class="cmp">
+        <div class="cmp-row cmp-head">
+          <div class="cmp-crit"></div>
+          <div class="cmp-ev">With Everneat</div>
+          <div class="cmp-alt">A standard cleaning service</div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Probiotic treatment that keeps working for 72 hours after we leave</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Surfaces wiped, odor masked with fragrance</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Every task published, numbered, and room by room</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">An internal checklist you never get to see</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">A photo report after every visit, so you see what got done</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">You just hope it got done</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Plant-based and non-toxic, safe around kids and pets</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Harsh chemicals and a lingering smell</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Insured, bonded, and background-checked</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">You are trusting a stranger with no guarantee</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Happiness guarantee. Not thrilled, we re-clean free</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">No recourse when it is wrong</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-crit">Transparent hourly rates</div>
+          <div class="cmp-ev"><span class="tick">✓</span></div>
+          <div class="cmp-alt"><span class="xmark">✕</span><span class="cmp-note">Surprise charges per extra room</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DAYS OF PROTECTION ===================== -->
+<section class="protect" id="protection">
+  <div class="wrap">
+    <h2 class="sec-title">Days of protection</h2>
+    <p class="sec-intro">Most cleans are gone by dinner. Everneat keeps working for three days after we leave.</p>
+
+    <div class="phases">
+      <div class="phase-bands">
+        <div class="band"><img src="../../../assets/protect.jpg" alt="Probiotic surface cleaner sprayed on a kitchen counter" loading="lazy"></div>
+        <div class="band g2"></div>
+        <div class="band g3"></div>
+      </div>
+      <div class="phase-tl">
+        <div class="tl-node"><div class="tl-dot">1</div></div>
+        <div class="tl-node"><div class="tl-dot">2</div></div>
+        <div class="tl-node"><div class="tl-dot">3</div></div>
+      </div>
+      <div class="phase-desc">
+        <div class="pb"><h4>0H · Purify</h4><p>Everneat Probiotic Surface Cleaner applied to every surface.</p></div>
+        <div class="pb"><h4>24–48H · Protect</h4><p>Living probiotic shield stays active, metabolizing new mess.</p></div>
+        <div class="pb"><h4>72H+ · Maintain</h4><p>Keep up the microbiome with the Everneat retail line between visits.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EVERYTHING PUBLISHED ===================== -->
+<section class="published" id="protocol">
+  <div class="wrap pub-grid">
+    <div class="pub-copy">
+      <h2 class="sec-title">Everything we do is published.</h2>
+      <p>With most services you just hope they hit everything, because the checklist stays in their pocket. Ours is written down, numbered, and room by room. Read every point before we arrive, and see what got done after.</p>
+      <a class="btn btn--ghost" href="../../../the-protocol/">Read The Protocol&trade;&nbsp;&nbsp;&rarr;</a>
+    </div>
+    <div class="blueprint">
+      <div class="bp-head"><span class="t">The Everneat Protocol&trade;</span><span class="h">The Smith's Home</span></div>
+      <hr class="bp-div">
+      <div class="bp-group">
+        <div class="bp-cap">Kitchen · 12 points</div>
+        <div class="bp-item"><span class="bp-n">01</span><span class="bp-t">Counters wiped, probiotic-treated</span><span class="bp-m">8 min</span></div>
+        <div class="bp-item"><span class="bp-n">02</span><span class="bp-t">Range, backsplash, hood vent</span><span class="bp-m">12 min</span></div>
+        <div class="bp-item"><span class="bp-n">03</span><span class="bp-t">Sink, faucet, disposal scent</span><span class="bp-m">6 min</span></div>
+      </div>
+      <hr class="bp-div">
+      <div class="bp-group">
+        <div class="bp-cap">Bathrooms · 14 points</div>
+        <div class="bp-item"><span class="bp-n">22</span><span class="bp-t">Grout, tile, tub scale</span><span class="bp-m">16 min</span></div>
+        <div class="bp-item"><span class="bp-n">23</span><span class="bp-t">Fixtures, mirror, glass</span><span class="bp-m">8 min</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RETAIL BAND ===================== -->
+<section class="retail">
+  <div class="wrap retail-grid">
+    <div class="retail-img"><img src="../../../assets/retail.jpg" alt="The Everneat retail line of probiotic cleaning bottles" loading="lazy"></div>
+    <div class="retail-copy">
+      <h2 class="sec-title">Keep the cleaning working between visits</h2>
+      <p>Same probiotic technology, in a bottle. Top up the microbiome between cleans in bathroom, kitchen, surfaces that work hardest. Less cleaning, cleaner longer.</p>
+      <div class="row">
+        <a class="btn btn--dark" href="../../../products/">Shop the line&nbsp;&nbsp;&rarr;</a>
+        <a class="tlink" href="#protection">How it works&nbsp;&rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIAL ===================== -->
+<section class="testi">
+  <div class="testi-media" role="img" aria-label="A serene, sunlit bedroom"></div>
+  <div class="testi-inner wrap">
+    <blockquote class="testi-quote">&ldquo;The air in my apartment actually feels different, and it lasts for days. No chemical smell, just clean. I&rsquo;ve stopped thinking about cleaning day.&rdquo;</blockquote>
+    <div class="testi-by">
+      <img class="testi-av" src="../../../assets/avatar.jpg" alt="Rachel K.">
+      <span>Rachel K. · Upper West Side · Home client, 2× monthly</span>
+    </div>
+    <div class="testi-stats">
+      <div><b>10,000+</b><span>Homes &amp; spaces cleaned</span></div>
+      <div><b>4.9</b><span>Average rating</span></div>
+      <div><b>24h</b><span>Re-clean guarantee</span></div>
+      <div><b>97%</b><span>Clients who stay with us</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COVERAGE ===================== -->
+<section class="coverage">
+  <div class="wrap">
+    <h2 class="sec-title">Nearby neighborhoods.</h2>
+    <p class="cov-sub">Everneat also serves these neighborhoods across Queens and the rest of NYC.</p>
+    <div class="cov-grid">
+      <div class="cov-map">
+        <img src="../../../assets/nyc-coverage-map.svg" alt="Coverage map of Everneat's 45 NYC service neighborhoods across Manhattan, Brooklyn, and Queens" width="358" height="307">
+        <div class="cov-map-foot">
+          <span class="lg"><i></i>Live service area</span>
+          <span class="ct">45 neighborhoods · 3 boroughs</span>
+        </div>
+      </div>
+      <!-- ponytail: plain list items, no links — sibling neighborhood pages don't exist yet; link them as pages ship -->
+      <div class="nbh-col">
+        <h3>Manhattan <span>20</span></h3>
+        <ul>
+          <li>Battery Park City</li>
+          <li>Bowery</li>
+          <li>Central Park South</li>
+          <li>Chelsea</li>
+          <li>Civic Center</li>
+          <li>Financial District</li>
+          <li>Flatiron</li>
+          <li>Gramercy</li>
+          <li>Greenwich Village</li>
+          <li>Hudson Square</li>
+          <li>Hudson Yards</li>
+          <li>Midtown East</li>
+          <li>NoHo</li>
+          <li>Nolita</li>
+          <li>SoHo</li>
+          <li>Theatre District</li>
+          <li>Tribeca</li>
+          <li>Upper East Side</li>
+          <li>Upper West Side</li>
+          <li>West Village</li>
+        </ul>
+      </div>
+      <div class="nbh-col">
+        <h3>Brooklyn <span>15</span></h3>
+        <ul>
+          <li>Bed-Stuy</li>
+          <li>Boerum Hill</li>
+          <li>Brooklyn Heights</li>
+          <li>Carroll Gardens</li>
+          <li>Clinton Hill</li>
+          <li>Cobble Hill</li>
+          <li>Crown Heights</li>
+          <li>Downtown Brooklyn</li>
+          <li>DUMBO</li>
+          <li>Fort Greene</li>
+          <li>Gowanus</li>
+          <li>Park Slope</li>
+          <li>Prospect Heights</li>
+          <li>Williamsburg</li>
+          <li>Windsor Terrace</li>
+        </ul>
+      </div>
+      <div class="nbh-col">
+        <h3>Queens <span>10</span></h3>
+        <ul>
+          <li class="nbh-here"><strong>Astoria</strong><span class="tag">you are here</span></li>
+          <li>Astoria Heights</li>
+          <li>East Elmhurst</li>
+          <li>Forest Hills</li>
+          <li>Jackson Heights</li>
+          <li>Kew Gardens</li>
+          <li>Long Island City</li>
+          <li>Rego Park</li>
+          <li>Sunnyside</li>
+          <li>Woodside</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="faq">
+  <div class="wrap faq-grid">
+    <div class="faq-img"><img src="../../../assets/nyc-faq.png" alt="A classic Astoria building facade with fire escapes" loading="lazy"></div>
+    <div class="faq-list">
+      <p class="faq-eyebrow">FAQ</p>
+      <h2 class="faq-title">Answers, before you ask.</h2>
+      <details class="faq-item" open>
+        <summary>Do you clean Astoria?</summary>
+        <div class="faq-a">Yes. Astoria is in our Queens service area, one of 45 neighborhoods we cover across Manhattan, Brooklyn, and Queens. Book a consultation to schedule.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How much does cleaning cost in NYC?</summary>
+        <div class="faq-a">Transparent hourly rates, quoted up front by unit size in chat, most homes land between $130 and $220 per visit. No surprise per-room charges, and you pay when it's done.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What is probiotic cleaning?</summary>
+        <div class="faq-a">Probiotic cleaning uses beneficial microbes to break down the organic buildup that odor-causing bacteria feed on, in grout, fabric, and soft surfaces. The microbes keep working for about 72 hours after we leave, so you get cleaner air and no chemical smell, not a masking fragrance.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you offer same-day or next-day cleaning?</summary>
+        <div class="faq-a">Often, yes. Astoria is Everneat's home neighborhood, so same-day and next-day slots come up regularly. Start a chat to see live openings near you.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is your cleaning safe for kids and pets?</summary>
+        <div class="faq-a">Yes. Everything we use is plant-based and non-toxic, with no harsh chemicals or lingering fumes, safe around kids, pets, and sensitive surfaces.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you clean Airbnb and short-term rentals?</summary>
+        <div class="faq-a">Yes, turnovers are one of our core services. Guest-ready in under three hours, synced to your check-out calendar, with a photo report before check-in.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What's included in an office cleaning?</summary>
+        <div class="faq-a">Room-by-room service on a 30, 38, or 50-point published scope, scheduled around your team, day, morning, or evening. Every point is written down before we arrive.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What makes Everneat different from other NYC cleaners?</summary>
+        <div class="faq-a">A probiotic treatment that keeps working for 72 hours, a published and numbered Protocol&trade; you can read before we arrive, a photo report after every visit, and a happiness guarantee: not thrilled, we re-clean free within 24 hours.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA + FOOTER ===================== -->
+<footer class="dark">
+  <div class="wrap cta">
+    <h2 class="cta-title">A cleaning that stays clean.</h2>
+    <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
+    <div class="cta-actions">
+      <a class="btn btn--lime" href="#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="../../../contact/">Talk to a human</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-cols">
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="../../../home-cleaning/">Home</a><a href="../../../office-cleaning/">Office</a><a href="../../../airbnb-cleaning/">Airbnb / STR</a><a href="../../../commercial-cleaning/">Commercial</a><a href="../../../event-cleaning/">Event</a>
+    </div>
+    <div class="f-col">
+      <h4>Method</h4>
+      <a href="../../../the-protocol/">The Protocol&trade;</a><a href="../../../products/">Products</a><a href="../../../blog/">Cleaning Guides</a><a href="../../../happiness-guarantee/">Happiness Guarantee</a>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <a href="../../../contact/">Contact</a><a href="../../../about/">About</a><a href="../../../press/">Press</a><a href="../../../careers/">Careers</a>
+    </div>
+    <div class="f-col">
+      <h4>Locations</h4>
+      <a href="../">NYC · Manhattan · Brooklyn · Queens</a><a href="../../fairfield-county-ct/">Fairfield County, CT</a><a href="../../new-jersey/">New Jersey</a><a href="../../../partners/">Become a partner</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-bar">
+    <span class="logo">everneat</span>
+    <nav class="foot-legal">
+      <span>© 2026 Everneat</span><a href="../../../privacy/">Privacy</a><a href="../../../terms/">Terms</a><a href="../../../cookies/">Cookies</a><a href="../../../accessibility/">Accessibility</a>
+    </nav>
+    <nav class="foot-social">
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  // nav strengthens on scroll
+  var nav=document.querySelector('.nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    nav.style.background=y>40?'rgba(244,241,234,0.97)':'';
+    nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
+  },{passive:true});
+
+  // IntersectionObserver (shared)
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+
+  function anim(sel,cls){
+    document.querySelectorAll(sel).forEach(function(el){el.classList.add(cls);io.observe(el);});
+  }
+  function stagger(sel,cls,ms){
+    document.querySelectorAll(sel).forEach(function(el,i){
+      el.classList.add(cls);
+      el.style.animationDelay=(i*ms)+'ms';
+      io.observe(el);
+    });
+  }
+
+  // hero
+  anim('.lhero-copy h1,.lhero-sub,.lhero-ctas','av-fadeUp');
+  anim('.map-card','av-scaleUp');
+
+  // loc intro
+  anim('.locintro-lead','av-fadeUp');
+  document.querySelectorAll('.rate,.seen>*').forEach(function(el,i){
+    el.classList.add('av-fadeIn');
+    el.style.animationDelay=(i*80)+'ms';
+    io.observe(el);
+  });
+
+  // services steps
+  document.querySelectorAll('.svc-step').forEach(function(step){
+    var body=step.querySelector('.svc-body'), img=step.querySelector('.svc-img');
+    body.classList.add('av-slideLeft'); io.observe(body);
+    img.classList.add('av-slideRight'); io.observe(img);
+  });
+  anim('.svc-note','av-fadeIn');
+
+  // compare rows
+  anim('.compare .sec-title,.compare .sec-intro','av-fadeUp');
+  stagger('.cmp-row:not(.cmp-head)','av-slideLeft',45);
+
+  // days of protection
+  anim('.protect .sec-title,.protect .sec-intro','av-fadeUp');
+  var phasesEl=document.querySelector('.phases');
+  if(phasesEl){
+    new IntersectionObserver(function(entries,obs){
+      if(!entries[0].isIntersecting) return;
+      obs.disconnect();
+      phasesEl.querySelector('.phase-bands').classList.add('in');
+      setTimeout(function(){phasesEl.querySelector('.phase-tl').classList.add('in');},280);
+      setTimeout(function(){phasesEl.querySelector('.phase-desc').classList.add('in');},620);
+    },{threshold:0.18}).observe(phasesEl);
+  }
+
+  // blueprint
+  anim('.pub-copy .sec-title,.pub-copy p,.pub-copy .btn','av-fadeUp');
+  stagger('.bp-item','av-fadeUp',38);
+
+  // retail
+  anim('.retail .sec-title,.retail-copy p,.retail-copy .row','av-fadeUp');
+  anim('.retail-img','av-fadeIn');
+
+  // testimonial
+  anim('.testi-quote,.testi-by','av-fadeUp');
+
+  // coverage
+  anim('.coverage .sec-title,.cov-sub','av-fadeUp');
+  anim('.cov-map','av-scaleUp');
+  stagger('.nbh-col','av-fadeUp',90);
+
+  // faq
+  anim('.faq-img','av-fadeIn');
+  anim('.faq-eyebrow,.faq-title','av-fadeUp');
+  stagger('.faq-item','av-fadeUp',45);
+
+  // CTA word-split reveal
+  var ctaTitle=document.querySelector('.cta-title');
+  if(ctaTitle){
+    var words=ctaTitle.textContent.trim().split(/\s+/);
+    ctaTitle.innerHTML=words.map(function(w,i){
+      return '<span class="cta-word-wrap"><span class="cta-word-inner" style="animation-delay:'+(i*90)+'ms">'+w+'</span></span>';
+    }).join(' ');
+    io.observe(ctaTitle);
+  }
+  anim('.cta-copy,.cta-actions','av-fadeUp');
+
+  // testimonial stat counters
+  var statsIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      statsIO.unobserve(e.target);
+      var b=e.target.querySelector('b');
+      var raw=b.textContent;
+      var m=raw.match(/^([0-9,]+\.?[0-9]*)(.*)$/);
+      if(!m) return;
+      var num=parseFloat(m[1].replace(/,/g,''));
+      var suffix=m[2];
+      var hasComma=m[1].indexOf(',')>=0;
+      var hasDot=m[1].indexOf('.')>=0;
+      var t0=null,dur=1200;
+      (function tick(ts){
+        if(!t0) t0=ts;
+        var p=Math.min((ts-t0)/dur,1);
+        var ease=1-Math.pow(1-p,3);
+        var cur=ease*num;
+        b.textContent=(hasComma?Math.round(cur).toLocaleString():hasDot?cur.toFixed(1):Math.round(cur))+suffix;
+        if(p<1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('.testi-stats>div').forEach(function(el){statsIO.observe(el);});
+
+})();
+</script>
+</body>
+</html>

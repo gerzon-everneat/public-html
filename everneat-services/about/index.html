@@ -1,12 +1,420 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
-<title>About Everneat · Everneat</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>body{margin:0;font-family:Inter,sans-serif;background:#f4f1ea;color:#2b2925;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
-h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(34px,6vw,56px);margin:0 0 10px}
-p{color:#6f6a5f;margin:0 0 28px;max-width:44ch}
-a{display:inline-block;background:#1c1b18;color:#fff;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:14px}
-small{display:block;margin-top:40px;color:#a09a8c;letter-spacing:.08em;text-transform:uppercase;font-size:11px}</style></head>
-<body><div><h1>About Everneat</h1><p>This page is being built from the Figma design. The internal-link architecture already works.</p>
-<a href="../v2/">Back to homepage</a><small>everneat · placeholder</small></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Everneat · Why we clean the way we do</title>
+<meta name="description" content="Everneat began in 2015 as one of NYC's first eco-friendly cleaning services. After a thousand homes, founders Claudia and Angelo Zimmermann built their own probiotic products — so no one has to choose between a clean home and a safe one.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea; --cream:#eae6db; --panel:#edeae2; --card:#ffffff;
+    --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
+    --line:#e5e1d5; --line2:#d9d4c7;
+    --taupe:#d5cfbf; --butter:#f6f3d9;
+    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --dark:#181611;
+    --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --edge:clamp(20px,5vw,64px);
+    --pad:clamp(72px,9vw,120px);
+    --shadow:0 1px 2px rgba(30,28,22,.04), 0 26px 50px -30px rgba(30,28,22,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--edge)}
+  .caps{text-transform:uppercase;letter-spacing:.12em}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+    font-weight:500;font-size:15px;padding:14px 26px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--dark{background:var(--ink);color:#f4f1ea}
+  .btn--dark:hover{background:#000}
+  .btn--lime{background:var(--lime);color:#24230f}
+  .btn--lime:hover{background:var(--lime-deep)}
+  .btn--ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
+  .btn--ghost:hover{background:var(--ink);color:#f4f1ea}
+  .tlink{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .tlink:hover{border-color:var(--ink)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,.05)}
+  .nav-in{display:flex;align-items:center;gap:24px;height:80px}
+  .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{text-decoration:none;color:var(--ink);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+  .nav-links a:hover{opacity:1}
+  .nav .btn{margin-left:8px;padding:11px 22px;font-size:13px;letter-spacing:.06em}
+  .nav-menu{display:none;position:relative;margin-left:6px}
+  .nav-menu>summary{list-style:none;cursor:pointer;width:42px;height:42px;border:1px solid var(--line2);
+    border-radius:11px;display:grid;place-items:center;color:var(--ink);background:var(--card)}
+  .nav-menu>summary::-webkit-details-marker{display:none}
+  .nav-menu>summary::before{content:"\2630";font-size:18px}
+  .nav-menu[open]>summary::before{content:"\2715";font-size:15px}
+  .nav-drop{position:absolute;right:0;top:calc(100% + 12px);width:min(80vw,300px);background:var(--card);
+    border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
+  .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop .btn{margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
+
+  /* ---------- intro ---------- */
+  .intro{padding:clamp(64px,8vw,112px) 0 56px;text-align:center}
+  .intro-cap{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(18px,1.8vw,24px);letter-spacing:.04em;margin:0 0 14px;color:var(--ink)}
+  .intro-title{font-weight:400;font-size:clamp(34px,4vw,54px);line-height:1.05;letter-spacing:-.01em;margin:0}
+  .intro-sub{font-size:clamp(18px,1.8vw,24px);line-height:1.35;letter-spacing:-.02em;color:var(--ink);
+    max-width:784px;margin:32px auto 0}
+
+  /* ---------- story ---------- */
+  .story{padding:var(--pad) 0}
+  .story-grid{display:grid;grid-template-columns:minmax(0,519px) 1fr;gap:56px;align-items:start}
+  .story-photos{display:flex;flex-direction:column;gap:64px}
+  .sp{border-radius:16px;overflow:hidden;background:var(--taupe)}
+  .sp img{width:100%;height:100%;object-fit:cover}
+  .sp-1{aspect-ratio:519/381}
+  .sp-2{width:72%;align-self:flex-end;aspect-ratio:374/475}
+  .sp-3{aspect-ratio:519/375}
+  .sp-4{width:64.4%;aspect-ratio:334/522}
+  .story-copy{display:flex;flex-direction:column;gap:48px}
+  .story-copy p{margin:0;font-weight:300;font-size:clamp(18px,1.75vw,24px);line-height:1.65;color:var(--ink)}
+  .story-sign{margin-top:8px}
+  .story-sign .who{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(19px,1.75vw,24px);line-height:1.5;color:var(--ink2)}
+  .story-sign .role{font-weight:300;font-size:18px;color:var(--ink2)}
+
+  /* ---------- numbers ---------- */
+  .numbers{background:var(--dark);color:#fff;padding:clamp(64px,7vw,84px) 0}
+  .num-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(28px,3vw,40px);letter-spacing:-.01em;line-height:1.15;margin:0 0 clamp(36px,4.5vw,56px);color:#fff}
+  .num-grid{display:grid;grid-template-columns:repeat(3,minmax(0,364px));gap:56px}
+  .num-grid b{display:block;font-weight:400;font-size:clamp(38px,4vw,54px);line-height:1;letter-spacing:-.01em;margin-bottom:21px}
+  .num-grid span{display:block;font-size:18px;line-height:1.55;letter-spacing:-.01em;color:#bdb9ae;max-width:364px}
+
+  /* ---------- founders ---------- */
+  .founders{padding:var(--pad) 0}
+  .fd-head{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+    margin-bottom:clamp(36px,4.5vw,56px)}
+  .fd-title{font-weight:400;font-size:clamp(30px,3vw,40px);line-height:1.15;letter-spacing:-.01em;margin:0}
+  .fd-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+  .fd-card img{width:100%;aspect-ratio:580/459;object-fit:cover;border-radius:16px}
+  .fd-name{margin:28px 0 0;font-weight:600;font-size:18px;letter-spacing:-.02em}
+  .fd-role{margin:2px 0 0;font-weight:300;font-size:16px;color:var(--ink2)}
+
+  /* ---------- trusted ---------- */
+  .trusted{background:var(--cream);padding:clamp(72px,8vw,112px) 0 clamp(88px,10vw,140px);text-align:center}
+  .tr-title{font-weight:400;font-size:clamp(32px,4vw,54px);line-height:1.05;letter-spacing:-.01em;margin:0 auto;max-width:784px}
+  .tr-copy{font-size:clamp(17px,1.6vw,22px);line-height:1.45;letter-spacing:-.02em;color:var(--ink);
+    max-width:784px;margin:28px auto 0}
+  .proof{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:22px clamp(40px,6.5vw,96px);margin:clamp(40px,4.5vw,64px) auto 0}
+  .rate{display:flex;align-items:center;gap:12px}
+  .stars{color:var(--ink);letter-spacing:2px;font-size:17px}
+  .rate b{font-weight:400;font-size:16px}
+  .seen{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 26px}
+  .seen .lbl{font-size:14px;color:var(--ink2)}
+  .press{font-size:19px;color:var(--ink);opacity:.9}
+  .press.epi{font-family:var(--serif);font-style:italic;font-weight:600}
+  .press.at{font-size:14px;line-height:1.05;font-weight:500;text-align:left}
+  .press.ms{font-family:var(--serif);font-size:15px;line-height:1;text-align:center}
+  .press.dom{font-family:var(--serif);font-weight:600;font-size:21px}
+  .press.rs{font-weight:700;letter-spacing:.02em;font-size:16px}
+
+  /* ---------- CTA + footer (dark) ---------- */
+  .dark{background:var(--dark);color:#e8e5dd}
+  .cta{padding-block:var(--pad) clamp(48px,6vw,72px)}
+  .cta-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(34px,4.6vw,56px);line-height:1.02;color:#fff;margin:0}
+  .cta-copy{color:#a8a49a;max-width:640px;font-size:17px;line-height:1.5;margin:22px 0 34px}
+  .cta-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .cta-actions .tlink{color:#fff}
+  .cta-actions .tlink:hover{border-color:#fff}
+  .foot-div{border:none;border-top:1px solid rgba(255,255,255,.09);margin:0}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-block:clamp(48px,6vw,72px)}
+  .f-col h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8c887d;margin:0 0 20px;font-weight:600}
+  .f-col a{display:block;color:#bdb9ae;text-decoration:none;font-size:15px;margin-bottom:13px}
+  .f-col a:hover{color:#fff}
+  .foot-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px 40px}
+  .foot-bar .logo{color:#fff}
+  .foot-legal{display:flex;gap:22px;flex-wrap:wrap;margin:0 auto}
+  .foot-legal a{color:#9c988e;text-decoration:none;font-size:14px}
+  .foot-legal a:hover{color:#fff}
+  .foot-social{display:flex;gap:26px}
+  .foot-social a{color:#cbc7bd;text-decoration:none;font-size:15px}
+  .foot-social a:hover{color:#fff}
+
+  /* ---------- animations ---------- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideLeft{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes slideRight{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes scaleUp{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+  @media(prefers-reduced-motion:no-preference){
+    .av-fadeUp,.av-fadeIn,.av-slideLeft,.av-slideRight,.av-scaleUp{opacity:0}
+    .av-fadeUp.in{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-fadeIn.in{animation:fadeIn .6s ease forwards}
+    .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-slideRight.in{animation:slideRight .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
+    .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
+    .cta-word-inner{display:inline-block;transform:translateY(110%)}
+    .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .nav-links,.nav-book{display:none}
+    .nav-menu{display:block;margin-left:auto}
+    .story-grid{grid-template-columns:1fr;gap:44px}
+    .story-photos{gap:20px}
+    .sp-2{width:100%;align-self:auto}
+    .sp-2,.sp-4{aspect-ratio:519/381}
+    .sp-4{width:100%}
+    .story-copy{gap:28px}
+    .num-grid{grid-template-columns:1fr;gap:36px}
+    .fd-grid{grid-template-columns:1fr;gap:44px}
+    .foot-cols{grid-template-columns:1fr 1fr;gap:36px}
+    .foot-legal{margin:8px 0;order:3;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="../v2/">everneat</a>
+    <nav class="nav-links">
+      <a href="../home-cleaning/">Home</a>
+      <a href="../office-cleaning/">Office</a>
+      <a href="../airbnb-cleaning/">Airbnb</a>
+      <a href="../commercial-cleaning/">Commercial</a>
+      <a href="../event-cleaning/">Event</a>
+      <a href="../products/">Shop Products</a>
+      <a href="../login/">Login</a>
+    </nav>
+    <a class="btn btn--dark nav-book" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+    <details class="nav-menu">
+      <summary aria-label="Open menu"></summary>
+      <div class="nav-drop">
+        <a href="../home-cleaning/">Home</a>
+        <a href="../office-cleaning/">Office</a>
+        <a href="../airbnb-cleaning/">Airbnb</a>
+        <a href="../commercial-cleaning/">Commercial</a>
+        <a href="../event-cleaning/">Event</a>
+        <a href="../products/">Shop Products</a>
+        <a href="../login/">Login</a>
+        <a class="btn btn--dark" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<!-- ===================== INTRO ===================== -->
+<section class="intro">
+  <div class="wrap">
+    <p class="intro-cap av-fadeUp">about</p>
+    <h1 class="intro-title av-fadeUp">Why we clean the way we do</h1>
+    <p class="intro-sub av-fadeUp">Works without compromise: human, planet, design.</p>
+  </div>
+</section>
+
+<!-- ===================== STORY ===================== -->
+<section class="story">
+  <div class="wrap story-grid">
+    <div class="story-photos">
+      <div class="sp sp-1 av-fadeIn"><img src="../assets/about-story-kitchen.jpg" alt="The Everneat team cleaning a bright kitchen with probiotic products"></div>
+      <div class="sp sp-2 av-fadeIn"><img src="../assets/about-story-family.jpg" alt="A family relaxing with their dog in a freshly cleaned living room"></div>
+      <div class="sp sp-3 av-fadeIn"><img src="../assets/about-story-lab.jpg" alt="Claudia and Angelo testing product formulations at a lab bench"></div>
+      <div class="sp sp-4 av-fadeIn"><img src="../assets/about-story-founders.jpg" alt="The founders in lab coats beside drums of Everneat formula"></div>
+    </div>
+    <div class="story-copy">
+      <p class="av-fadeUp">After cleaning more than a thousand homes ourselves, we noticed something the cleaning industry is built to ignore: the products that actually work are the ones making people sick. Everneat began in 2015 as one of New York&rsquo;s first eco-friendly cleaning services, and on nearly every job we hit the same wall. The gentle products did not really clean. The ones that did were harsh. Every day, we were choosing between a home that was clean and one that was safe.</p>
+      <p class="av-fadeUp">That tradeoff was not abstract. Angelo&rsquo;s asthma got worse with every harsh product he used. When we started hiring, we interviewed more than 500 professional cleaners, and the pattern was impossible to miss: rashes, breathing problems, immune systems worn down by years of exposure. The customers we cleaned for were breathing the same thing in their homes. The industry knew, and kept selling the next bottle anyway.</p>
+      <p class="av-fadeUp">We were sure there was a better way, because Claudia had already seen one. She trained as an architect, where every surface is a material with its own rules for care. Cleaning, she realized, should work the same way: surface by surface, written down, nothing left to guesswork. That discipline became the Everneat Protocol&trade;, surface-safe, detailed, and efficient.</p>
+      <p class="av-fadeUp">Angelo set the bar for the other half of the problem. He had worked in high-stakes environments where a mistake was not an option, and he lives with asthma and chemical sensitivity, so he knew exactly what a clean has to deliver to count as healthy: clean air, safe surfaces, and no harsh residue, for the people we clean for and the people who do the cleaning.</p>
+      <p class="av-fadeUp">Knowing the standard was one thing; the products to meet it did not exist. So we made them. Working with specialized labs, we formulated with the same class of biotechnology European hospitals use, enzymes and probiotics that keep working after the surface is wiped, and no synthetic chemicals. For the first time, the products that cleaned best were also the safe ones.</p>
+      <p class="av-fadeUp">Today Everneat is one system, a cleaning service and a product line. It is for busy New Yorkers who want a home that is healthy and sustainable, for the teams whose health we will not spend to get there, and for people beyond our service areas who can now buy the products directly. More than 10,000 homes later, the point is the same as it was in 2015: no one should have to choose between a clean home and a safe one.</p>
+      <div class="story-sign av-fadeUp">
+        <div class="who">Claudia and Angelo Zimmermann,</div>
+        <div class="role">co-founders</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BY THE NUMBERS ===================== -->
+<section class="numbers">
+  <div class="wrap">
+    <h2 class="num-title av-fadeUp">Everneat by the numbers.</h2>
+    <div class="num-grid">
+      <div class="av-fadeUp"><b>2015</b><span>The year we started, NYC&rsquo;s first eco-friendly cleaning services</span></div>
+      <div class="av-fadeUp"><b>10,000+</b><span>Homes cleaned to the published Everneat Protocol&trade;.</span></div>
+      <div class="av-fadeUp"><b>30,000+</b><span>Everneat products now in homes and offices.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MEET THE FOUNDERS ===================== -->
+<section class="founders">
+  <div class="wrap">
+    <div class="fd-head av-fadeUp">
+      <h2 class="fd-title">Meet the founders.</h2>
+      <a class="btn btn--ghost" href="../careers/">See open roles&nbsp;&nbsp;&rarr;</a>
+    </div>
+    <div class="fd-grid">
+      <div class="fd-card av-fadeUp">
+        <img src="../assets/about-founder-angelo.jpg" alt="Angelo Zimmermann cleaning an oven with an Everneat product">
+        <p class="fd-name">Angelo Zimmermann</p>
+        <p class="fd-role">Co-Founder</p>
+      </div>
+      <div class="fd-card av-fadeUp">
+        <img src="../assets/about-founder-claudia.jpg" alt="Claudia Zimmermann spraying a probiotic cleaner onto a cloth">
+        <p class="fd-name">Claudia Zimmermann</p>
+        <p class="fd-role">Co-Founder</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TRUSTED ===================== -->
+<section class="trusted">
+  <div class="wrap">
+    <h2 class="tr-title av-fadeUp">Trusted, insured, and guaranteed.</h2>
+    <p class="tr-copy av-fadeUp">Fully insured and bonded, every cleaner background-checked, backed by our happiness guarantee. If it is not right, we make it right.</p>
+    <div class="proof">
+      <div class="rate"><span class="stars">★★★★★</span><b>4.9 rating</b></div>
+      <div class="seen">
+        <span class="lbl">As seen on</span>
+        <span class="press epi">epicurious</span>
+        <span class="press at">apartment<br>therapy</span>
+        <span class="press ms">martha<br>stewart</span>
+        <span class="press dom">domino</span>
+        <span class="press rs">REAL SIMPLE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA + FOOTER ===================== -->
+<footer class="dark">
+  <div class="wrap cta">
+    <h2 class="cta-title">A cleaning that stays clean.</h2>
+    <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
+    <div class="cta-actions">
+      <a class="btn btn--lime" href="../v2/#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="../contact/">Talk to a human</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-cols">
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="../home-cleaning/">Home</a><a href="../office-cleaning/">Office</a><a href="../airbnb-cleaning/">Airbnb / STR</a><a href="../commercial-cleaning/">Commercial</a><a href="../event-cleaning/">Event</a>
+    </div>
+    <div class="f-col">
+      <h4>Method</h4>
+      <a href="../the-protocol/">The Protocol™</a><a href="../products/">Products</a><a href="../blog/">Cleaning Guides</a><a href="../happiness-guarantee/">Happiness Guarantee</a>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <a href="../contact/">Contact</a><a href="../about/">About</a><a href="../press/">Press</a><a href="../careers/">Careers</a>
+    </div>
+    <div class="f-col">
+      <h4>Locations</h4>
+      <a href="../service-areas/nyc/">NYC · Manhattan · Brooklyn · Queens</a><a href="../service-areas/fairfield-county-ct/">Fairfield County, CT</a><a href="../service-areas/new-jersey/">New Jersey</a><a href="../partners/">Become a partner</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-bar">
+    <span class="logo">everneat</span>
+    <nav class="foot-legal">
+      <span>© 2026 Everneat</span><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a><a href="../cookies/">Cookies</a><a href="../accessibility/">Accessibility</a>
+    </nav>
+    <nav class="foot-social">
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  // nav strengthens on scroll
+  var nav=document.querySelector('.nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    nav.style.background=y>40?'rgba(244,241,234,0.97)':'';
+    nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
+  },{passive:true});
+
+  // IntersectionObserver (shared)
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.av-fadeUp,.av-fadeIn,.av-slideLeft,.av-slideRight,.av-scaleUp').forEach(function(el){io.observe(el);});
+
+  // stagger the metric cards
+  document.querySelectorAll('.num-grid>div').forEach(function(el,i){el.style.animationDelay=(i*120)+'ms';});
+  // stagger the founder cards
+  document.querySelectorAll('.fd-card').forEach(function(el,i){el.style.animationDelay=(i*140)+'ms';});
+  // proof row stagger
+  document.querySelectorAll('.rate,.seen>*').forEach(function(el,i){
+    el.classList.add('av-fadeIn');
+    el.style.animationDelay=(i*80)+'ms';
+    io.observe(el);
+  });
+
+  // metric counters (10,000+ / 30,000+ roll up; 2015 stays put — it's a year, not a count)
+  var statsIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      statsIO.unobserve(e.target);
+      var b=e.target.querySelector('b');
+      var raw=b.textContent;
+      if(raw.indexOf(',')<0) return; /* skip "2015" */
+      var m=raw.match(/^([0-9,]+)(.*)$/);
+      if(!m) return;
+      var num=parseInt(m[1].replace(/,/g,''),10);
+      var suffix=m[2];
+      var t0=null,dur=1200;
+      (function tick(ts){
+        if(!t0) t0=ts;
+        var p=Math.min((ts-t0)/dur,1);
+        var ease=1-Math.pow(1-p,3);
+        b.textContent=Math.round(ease*num).toLocaleString()+suffix;
+        if(p<1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('.num-grid>div').forEach(function(el){statsIO.observe(el);});
+
+  // CTA word-split reveal
+  var ctaTitle=document.querySelector('.cta-title');
+  if(ctaTitle){
+    var words=ctaTitle.textContent.trim().split(/\s+/);
+    ctaTitle.innerHTML=words.map(function(w,i){
+      return '<span class="cta-word-wrap"><span class="cta-word-inner" style="animation-delay:'+(i*90)+'ms">'+w+'</span></span>';
+    }).join(' ');
+    io.observe(ctaTitle);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,12 +1,372 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact · Everneat</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>body{margin:0;font-family:Inter,sans-serif;background:#f4f1ea;color:#2b2925;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
-h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(34px,6vw,56px);margin:0 0 10px}
-p{color:#6f6a5f;margin:0 0 28px;max-width:44ch}
-a{display:inline-block;background:#1c1b18;color:#fff;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:14px}
-small{display:block;margin-top:40px;color:#a09a8c;letter-spacing:.08em;text-transform:uppercase;font-size:11px}</style></head>
-<body><div><h1>Contact</h1><p>This page is being built from the Figma design. The internal-link architecture already works.</p>
-<a href="../v2/">Back to homepage</a><small>everneat · placeholder</small></div></body></html>
+<meta name="description" content="Get in touch with Everneat — probiotic cleaning for NYC, NJ &amp; CT. Call 347-502-8828 or email contact@everneat.co. We reply within 2 hours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea; --cream:#eae6db; --panel:#edeae2; --card:#ffffff;
+    --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
+    --line:#e5e1d5; --line2:#d9d4c7;
+    --taupe:#d5cfbf; --butter:#f6f3d9;
+    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --dark:#181611;
+    --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --edge:clamp(20px,5vw,64px);
+    --pad:clamp(72px,9vw,120px);
+    --shadow:0 1px 2px rgba(30,28,22,.04), 0 26px 50px -30px rgba(30,28,22,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#fff;color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--edge)}
+  .caps{text-transform:uppercase;letter-spacing:.12em}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+    font-weight:500;font-size:15px;padding:14px 26px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--dark{background:var(--ink);color:#f4f1ea}
+  .btn--dark:hover{background:#000}
+  .btn--lime{background:var(--lime);color:#24230f}
+  .btn--lime:hover{background:var(--lime-deep)}
+  .tlink{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .tlink:hover{border-color:var(--ink)}
+
+  /* ---------- nav (from v2) ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,.05)}
+  .nav-in{display:flex;align-items:center;gap:24px;height:80px}
+  .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{text-decoration:none;color:var(--ink);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+  .nav-links a:hover{opacity:1}
+  .nav .btn{margin-left:8px;padding:11px 22px;font-size:13px;letter-spacing:.06em}
+  .nav-menu{display:none;position:relative;margin-left:6px}
+  .nav-menu>summary{list-style:none;cursor:pointer;width:42px;height:42px;border:1px solid var(--line2);
+    border-radius:11px;display:grid;place-items:center;color:var(--ink);background:var(--card)}
+  .nav-menu>summary::-webkit-details-marker{display:none}
+  .nav-menu>summary::before{content:"\2630";font-size:18px}
+  .nav-menu[open]>summary::before{content:"\2715";font-size:15px}
+  .nav-drop{position:absolute;right:0;top:calc(100% + 12px);width:min(80vw,300px);background:var(--card);
+    border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
+  .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop .btn{margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
+
+  /* ---------- page headings ---------- */
+  .pg-sub{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:400;
+    font-size:clamp(17px,1.7vw,24px);letter-spacing:.02em;margin:0 0 14px;color:var(--ink)}
+  .pg-h1{font-weight:400;font-size:clamp(34px,3.8vw,54px);letter-spacing:-.01em;line-height:1.05;margin:0}
+
+  /* ---------- hero: portrait + get in touch ---------- */
+  .c-hero{display:grid;grid-template-columns:469px 1fr;padding-bottom:clamp(56px,8vw,112px)}
+  .c-hero-media{height:679px}
+  .c-hero-media img{width:100%;height:100%;object-fit:cover}
+  .c-hero-body{display:flex;align-items:center;justify-content:center;padding:48px var(--edge)}
+  .c-hero-in{max-width:640px;width:100%}
+  .c-hero-in .pg-h1{margin-bottom:42px}
+  .c-cols{display:flex;gap:24px 56px;flex-wrap:wrap}
+  .c-col h2{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:0 0 7px;line-height:32px}
+  .c-col p{margin:0;font-size:17px;line-height:28px;color:var(--ink)}
+  .c-col a{display:block;font-weight:600;font-size:17px;line-height:28px;text-decoration:none}
+  .c-col a:hover{text-decoration:underline}
+  .c-book{margin-top:10px}
+  .c-book .tlink{font-size:14px;color:var(--ink2)}
+
+  /* ---------- form + map ---------- */
+  .c-form{display:grid;grid-template-columns:1fr 469px;border-top:1px solid var(--line)}
+  .c-form-body{display:flex;align-items:center;justify-content:center;padding:clamp(64px,8vw,112px) var(--edge)}
+  .c-form-in{width:min(574px,100%)}
+  .c-lead{font-size:clamp(19px,1.6vw,22px);letter-spacing:-.02em;line-height:1.45;margin:0 0 clamp(36px,4vw,56px)}
+  form{display:grid;gap:21px}
+  .field{display:grid;gap:7px}
+  .field label{font-size:15px;color:var(--ink2)}
+  .field input,.field textarea{width:100%;height:52px;border:1px solid rgba(0,0,0,.15);background:#fff;
+    padding:12px 21px;font:inherit;font-size:15px;color:var(--ink);border-radius:0}
+  .field textarea{height:164px;resize:vertical;line-height:1.5}
+  .field input:focus,.field textarea:focus{outline:2px solid var(--lime-deep);outline-offset:-1px}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:21px 32px}
+  form .btn{justify-self:start;margin-top:4px;font-weight:600}
+  .form-ok{margin:4px 0 0;padding:12px 16px;background:var(--butter);border-radius:10px;
+    font-size:15px;color:var(--ink)}
+
+  /* ---------- static map (no third-party embeds) ---------- */
+  .map{position:relative;min-height:640px;overflow:hidden;background-color:#edebe0;
+    background-image:
+      radial-gradient(circle at 82% 18%, #dde3c4 0 64px, transparent 65px),
+      radial-gradient(circle at 12% 78%, #dde3c4 0 44px, transparent 45px),
+      linear-gradient(115deg, transparent 46.6%, #e0ddcf 46.6% 48.4%, transparent 48.4%),
+      linear-gradient(24deg, transparent 63%, #e0ddcf 63% 64.6%, transparent 64.6%),
+      repeating-linear-gradient(0deg, transparent 0 54px, #f7f5ee 54px 58px),
+      repeating-linear-gradient(90deg, transparent 0 54px, #f7f5ee 54px 58px),
+      linear-gradient(200deg, transparent 82%, #d6dee0 82%)}
+  .map-route{position:absolute;left:24%;top:31%;width:46%;border-top:2px dashed #b3ad9c;transform:rotate(38deg);transform-origin:left center}
+  .map-pin{position:absolute;display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+  .map-pin.p1{left:16%;top:22%}
+  .map-pin.p2{left:44%;top:62%}
+  .map-dot{width:14px;height:14px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 6px rgba(204,216,74,.55);margin-left:8px}
+  .map-tag{background:#fff;border:1px solid var(--line2);border-radius:10px;padding:10px 14px;
+    font-size:13px;line-height:1.45;box-shadow:var(--shadow)}
+  .map-tag b{display:block;font-size:14px}
+  .map-note{position:absolute;left:18px;bottom:14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- CTA + footer (from v2) ---------- */
+  .sec-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(28px,3.4vw,42px);letter-spacing:.008em;line-height:1.04;margin:0;color:var(--ink)}
+  .dark{background:var(--dark);color:#e8e5dd}
+  .cta{padding-block:var(--pad) clamp(48px,6vw,72px)}
+  .cta-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(34px,4.6vw,56px);line-height:1.02;color:#fff;margin:0}
+  .cta-copy{color:#a8a49a;max-width:640px;font-size:17px;line-height:1.5;margin:22px 0 34px}
+  .cta-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .cta-actions .tlink{color:#fff}
+  .cta-actions .tlink:hover{border-color:#fff}
+  .foot-div{border:none;border-top:1px solid rgba(255,255,255,.09);margin:0}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-block:clamp(48px,6vw,72px)}
+  .f-col h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8c887d;margin:0 0 20px;font-weight:600}
+  .f-col a{display:block;color:#bdb9ae;text-decoration:none;font-size:15px;margin-bottom:13px}
+  .f-col a:hover{color:#fff}
+  .foot-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px 40px}
+  .foot-bar .logo{color:#fff}
+  .foot-legal{display:flex;gap:22px;flex-wrap:wrap;margin:0 auto}
+  .foot-legal a{color:#9c988e;text-decoration:none;font-size:14px}
+  .foot-legal a:hover{color:#fff}
+  .foot-social{display:flex;gap:26px}
+  .foot-social a{color:#cbc7bd;text-decoration:none;font-size:15px}
+  .foot-social a:hover{color:#fff}
+
+  /* ---------- animations (v2 pattern) ---------- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slideLeft{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+  @keyframes pinPulse{0%,100%{box-shadow:0 0 0 6px rgba(204,216,74,.55)}50%{box-shadow:0 0 0 11px rgba(204,216,74,.28)}}
+  @media(prefers-reduced-motion:no-preference){
+    .av-fadeUp,.av-fadeIn,.av-slideLeft{opacity:0}
+    .av-fadeUp.in{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-fadeIn.in{animation:fadeIn .6s ease forwards}
+    .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
+    .map-dot{animation:pinPulse 2.6s ease-in-out infinite}
+    .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
+    .cta-word-inner{display:inline-block;transform:translateY(110%)}
+    .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .nav-links,.nav-book{display:none}
+    .nav-menu{display:block;margin-left:auto}
+    .c-hero{grid-template-columns:1fr;padding-bottom:56px}
+    .c-hero-media{height:min(58vh,440px)}
+    .c-hero-body{padding:40px var(--edge) 0;justify-content:flex-start}
+    .c-form{grid-template-columns:1fr}
+    .f-row{grid-template-columns:1fr}
+    .map{min-height:400px}
+    .foot-cols{grid-template-columns:1fr 1fr;gap:36px}
+    .foot-legal{margin:8px 0;order:3;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="../v2/">everneat</a>
+    <nav class="nav-links">
+      <a href="../home-cleaning/">Home</a>
+      <a href="../office-cleaning/">Office</a>
+      <a href="../airbnb-cleaning/">Airbnb</a>
+      <a href="../commercial-cleaning/">Commercial</a>
+      <a href="../event-cleaning/">Event</a>
+      <a href="../products/">Shop Products</a>
+      <a href="../login/">Login</a>
+    </nav>
+    <a class="btn btn--dark nav-book" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+    <details class="nav-menu">
+      <summary aria-label="Open menu"></summary>
+      <div class="nav-drop">
+        <a href="../home-cleaning/">Home</a>
+        <a href="../office-cleaning/">Office</a>
+        <a href="../airbnb-cleaning/">Airbnb</a>
+        <a href="../commercial-cleaning/">Commercial</a>
+        <a href="../event-cleaning/">Event</a>
+        <a href="../products/">Shop Products</a>
+        <a href="../login/">Login</a>
+        <a class="btn btn--dark" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<!-- ===================== HERO · GET IN TOUCH ===================== -->
+<section class="c-hero">
+  <div class="c-hero-media"><img src="../assets/contact-portrait.jpg" alt="An Everneat cleaner smoothing fresh linens on a bed"></div>
+  <div class="c-hero-body">
+    <div class="c-hero-in">
+      <p class="pg-sub av-fadeUp">contact us</p>
+      <h1 class="pg-h1 av-fadeUp">Get in touch.</h1>
+      <div class="c-cols">
+        <div class="c-col av-fadeUp">
+          <h2>Our locations</h2>
+          <p>New York: 2311 41st St, Astoria, NY 11105.<br>
+             Connecticut: 91 Kenwood Ave, Fairfield, CT 06824 (warehouse).</p>
+        </div>
+        <div class="c-col av-fadeUp">
+          <h2>Get In Touch</h2>
+          <a href="tel:+13475028828">347-502-8828</a>
+          <a href="mailto:contact@everneat.co">contact@everneat.co</a>
+          <p class="c-book"><a class="tlink" href="https://cal.com/team/everneat-services" rel="noopener">Book a call &rarr;</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FORM + MAP ===================== -->
+<section class="c-form">
+  <div class="c-form-body">
+    <div class="c-form-in">
+      <p class="c-lead av-fadeUp">Drop us a line and we usually reply within 2&nbsp;hours.</p>
+      <!-- ponytail: no backend — action="" + JS confirmation; wire a real endpoint when one exists -->
+      <form action="" novalidate>
+        <div class="field av-fadeUp">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="f-row av-fadeUp">
+          <div class="field">
+            <label for="f-email">Email Address</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+        </div>
+        <div class="field av-fadeUp">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message" required></textarea>
+        </div>
+        <button class="btn btn--lime av-fadeUp" type="submit">Send Message</button>
+        <p class="form-ok" hidden role="status">Thanks &mdash; we reply within 2 hours.</p>
+      </form>
+    </div>
+  </div>
+  <!-- ponytail: CSS-drawn map, no external embeds (the Figma map was a Melbourne placeholder) -->
+  <div class="map av-fadeIn" role="img" aria-label="Map of Everneat's two locations: Astoria, New York and Fairfield, Connecticut">
+    <span class="map-route" aria-hidden="true"></span>
+    <div class="map-pin p1">
+      <span class="map-dot" aria-hidden="true"></span>
+      <span class="map-tag"><b>Astoria, NY</b>2311 41st St &middot; 11105</span>
+    </div>
+    <div class="map-pin p2">
+      <span class="map-dot" aria-hidden="true"></span>
+      <span class="map-tag"><b>Fairfield, CT</b>91 Kenwood Ave &middot; warehouse</span>
+    </div>
+    <span class="map-note">Service area &middot; NYC &harr; CT</span>
+  </div>
+</section>
+
+<!-- ===================== CTA + FOOTER ===================== -->
+<footer class="dark">
+  <div class="wrap cta">
+    <h2 class="cta-title">A cleaning that stays clean.</h2>
+    <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
+    <div class="cta-actions">
+      <a class="btn btn--lime" href="../v2/#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="../book/">Talk to a human</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-cols">
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="../home-cleaning/">Home</a><a href="../office-cleaning/">Office</a><a href="../airbnb-cleaning/">Airbnb / STR</a><a href="../commercial-cleaning/">Commercial</a><a href="../event-cleaning/">Event</a>
+    </div>
+    <div class="f-col">
+      <h4>Method</h4>
+      <a href="../the-protocol/">The Protocol™</a><a href="../products/">Products</a><a href="../blog/">Cleaning Guides</a><a href="../happiness-guarantee/">Happiness Guarantee</a>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <a href="../contact/">Contact</a><a href="../about/">About</a><a href="../press/">Press</a><a href="../careers/">Careers</a>
+    </div>
+    <div class="f-col">
+      <h4>Locations</h4>
+      <a href="../service-areas/nyc/">NYC · Manhattan · Brooklyn · Queens</a><a href="../service-areas/fairfield-county-ct/">Fairfield County, CT</a><a href="../service-areas/new-jersey/">New Jersey</a><a href="../partners/">Become a partner</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-bar">
+    <span class="logo">everneat</span>
+    <nav class="foot-legal">
+      <span>© 2026 Everneat</span><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a><a href="../cookies/">Cookies</a><a href="../accessibility/">Accessibility</a>
+    </nav>
+    <nav class="foot-social">
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Contact form — no backend: show confirmation instead of submitting
+  var form=document.querySelector('form');
+  var ok=document.querySelector('.form-ok');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    ok.hidden=false;
+    form.reset();
+  });
+
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  // nav strengthens on scroll
+  var nav=document.querySelector('.nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    nav.style.background=y>40?'rgba(244,241,234,0.97)':'';
+    nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
+  },{passive:true});
+
+  // IntersectionObserver (shared)
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.av-fadeUp,.av-fadeIn,.av-slideLeft').forEach(function(el,i){
+    el.style.animationDelay=(i%6*70)+'ms';
+    io.observe(el);
+  });
+
+  // CTA word-split reveal
+  var ctaTitle=document.querySelector('.cta-title');
+  if(ctaTitle){
+    var words=ctaTitle.textContent.trim().split(/\s+/);
+    ctaTitle.innerHTML=words.map(function(w,i){
+      return '<span class="cta-word-wrap"><span class="cta-word-inner" style="animation-delay:'+(i*90)+'ms">'+w+'</span></span>';
+    }).join(' ');
+    io.observe(ctaTitle);
+  }
+})();
+</script>
+</body>
+</html>

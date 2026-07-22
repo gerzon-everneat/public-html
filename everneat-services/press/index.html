@@ -1,12 +1,357 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Press · Everneat</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>body{margin:0;font-family:Inter,sans-serif;background:#f4f1ea;color:#2b2925;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
-h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(34px,6vw,56px);margin:0 0 10px}
-p{color:#6f6a5f;margin:0 0 28px;max-width:44ch}
-a{display:inline-block;background:#1c1b18;color:#fff;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:14px}
-small{display:block;margin-top:40px;color:#a09a8c;letter-spacing:.08em;text-transform:uppercase;font-size:11px}</style></head>
-<body><div><h1>Press</h1><p>This page is being built from the Figma design. The internal-link architecture already works.</p>
-<a href="../v2/">Back to homepage</a><small>everneat · placeholder</small></div></body></html>
+<meta name="description" content="Everneat in the press — coverage of probiotic cleaning across home, design, and food media, including Domino, Martha Stewart, Apartment Therapy, and Epicurious.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea; --cream:#eae6db; --panel:#edeae2; --card:#ffffff;
+    --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
+    --line:#e5e1d5; --line2:#d9d4c7;
+    --taupe:#d5cfbf; --butter:#f6f3d9;
+    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --dark:#181611;
+    --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --edge:clamp(20px,5vw,64px);
+    --pad:clamp(72px,9vw,120px);
+    --shadow:0 1px 2px rgba(30,28,22,.04), 0 26px 50px -30px rgba(30,28,22,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#fff;color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--edge)}
+  .caps{text-transform:uppercase;letter-spacing:.12em}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+    font-weight:500;font-size:15px;padding:14px 26px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--dark{background:var(--ink);color:#f4f1ea}
+  .btn--dark:hover{background:#000}
+  .btn--lime{background:var(--lime);color:#24230f}
+  .btn--lime:hover{background:var(--lime-deep)}
+  .tlink{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .tlink:hover{border-color:var(--ink)}
+
+  /* ---------- nav (from v2) ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,241,234,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,.05)}
+  .nav-in{display:flex;align-items:center;gap:24px;height:80px}
+  .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{text-decoration:none;color:var(--ink);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+  .nav-links a:hover{opacity:1}
+  .nav .btn{margin-left:8px;padding:11px 22px;font-size:13px;letter-spacing:.06em}
+  .nav-menu{display:none;position:relative;margin-left:6px}
+  .nav-menu>summary{list-style:none;cursor:pointer;width:42px;height:42px;border:1px solid var(--line2);
+    border-radius:11px;display:grid;place-items:center;color:var(--ink);background:var(--card)}
+  .nav-menu>summary::-webkit-details-marker{display:none}
+  .nav-menu>summary::before{content:"\2630";font-size:18px}
+  .nav-menu[open]>summary::before{content:"\2715";font-size:15px}
+  .nav-drop{position:absolute;right:0;top:calc(100% + 12px);width:min(80vw,300px);background:var(--card);
+    border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
+  .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop .btn{margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
+
+  /* ---------- hero ---------- */
+  .pg-sub{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:400;
+    font-size:clamp(16px,1.5vw,22px);letter-spacing:.02em;margin:0 0 14px;color:var(--ink)}
+  .pg-h1{font-weight:400;font-size:clamp(32px,3.8vw,54px);letter-spacing:-.01em;line-height:1.08;margin:0}
+  .pr-hero{text-align:center;padding:clamp(64px,8vw,112px) var(--edge) 0}
+  .pr-hero .pg-h1{max-width:1216px;margin-inline:auto}
+  .pr-intro{font-size:clamp(17px,1.5vw,22px);letter-spacing:-.01em;line-height:1.45;margin:32px auto 0;max-width:784px;color:var(--ink)}
+
+  /* ---------- filters ---------- */
+  .pr-filters{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    padding:clamp(40px,4.5vw,72px) var(--edge) 44px;max-width:1440px;margin-inline:auto}
+  .pills{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{font:inherit;font-size:14px;padding:7px 16px;border-radius:999px;background:#fff;color:var(--ink);
+    border:1px solid var(--line2);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+  .pill:hover{border-color:var(--ink)}
+  .pill.on{background:var(--ink);color:#f4f1ea;border-color:var(--ink)}
+  .p-search{display:flex;align-items:center;gap:10px;width:300px;height:39px;padding:0 16px;
+    border:1px solid var(--line2);border-radius:999px;background:#fff}
+  .p-search svg{flex:none;color:var(--muted)}
+  .p-search input{border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--ink);width:100%}
+  .p-search input::placeholder{color:var(--muted)}
+  .p-search:focus-within{border-color:var(--ink)}
+
+  /* ---------- placement grid ---------- */
+  .pr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:48px 33px;
+    padding:0 var(--edge) clamp(56px,7vw,96px);max-width:1440px;margin-inline:auto}
+  .pcard{margin:0}
+  .pcard img{width:100%;aspect-ratio:415/291;object-fit:cover;border-radius:16px}
+  .pcard-meta{display:flex;gap:14px;align-items:baseline;padding:21px 0 10px}
+  .pcard-meta b{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .pcard-meta span{font-size:14px;color:var(--muted)}
+  /* outlet logotypes — cards are non-linking: placements are unverified, no fabricated URLs */
+  .o-name{display:block;font-size:22px;line-height:1.25;color:var(--ink)}
+  .o-dom{font-family:var(--serif);font-weight:600;font-size:27px}
+  .o-ms{font-family:var(--serif);font-size:25px}
+  .o-at{font-weight:500}
+  .o-epi{font-family:var(--serif);font-style:italic;font-weight:600;font-size:26px}
+  .o-rs{font-weight:700;letter-spacing:.03em;font-size:20px}
+  .o-kit{font-weight:600}
+  .o-dd{font-family:var(--serif);font-size:25px}
+  .p-empty{padding:0 var(--edge) 72px;max-width:1440px;margin-inline:auto;color:var(--ink2);font-size:16px}
+
+  /* ---------- CTA + footer (from v2) ---------- */
+  .dark{background:var(--dark);color:#e8e5dd}
+  .cta{padding-block:var(--pad) clamp(48px,6vw,72px)}
+  .cta-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(34px,4.6vw,56px);line-height:1.02;color:#fff;margin:0}
+  .cta-copy{color:#a8a49a;max-width:640px;font-size:17px;line-height:1.5;margin:22px 0 34px}
+  .cta-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .cta-actions .tlink{color:#fff}
+  .cta-actions .tlink:hover{border-color:#fff}
+  .foot-div{border:none;border-top:1px solid rgba(255,255,255,.09);margin:0}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-block:clamp(48px,6vw,72px)}
+  .f-col h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8c887d;margin:0 0 20px;font-weight:600}
+  .f-col a{display:block;color:#bdb9ae;text-decoration:none;font-size:15px;margin-bottom:13px}
+  .f-col a:hover{color:#fff}
+  .foot-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px 40px}
+  .foot-bar .logo{color:#fff}
+  .foot-legal{display:flex;gap:22px;flex-wrap:wrap;margin:0 auto}
+  .foot-legal a{color:#9c988e;text-decoration:none;font-size:14px}
+  .foot-legal a:hover{color:#fff}
+  .foot-social{display:flex;gap:26px}
+  .foot-social a{color:#cbc7bd;text-decoration:none;font-size:15px}
+  .foot-social a:hover{color:#fff}
+
+  /* ---------- animations (v2 pattern) ---------- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes scaleUp{from{opacity:0;transform:scale(.96) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+  @media(prefers-reduced-motion:no-preference){
+    .av-fadeUp,.av-fadeIn,.av-scaleUp{opacity:0}
+    .av-fadeUp.in{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-fadeIn.in{animation:fadeIn .6s ease forwards}
+    .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
+    .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
+    .cta-word-inner{display:inline-block;transform:translateY(110%)}
+    .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .nav-links,.nav-book{display:none}
+    .nav-menu{display:block;margin-left:auto}
+    .pr-filters{flex-direction:column;align-items:flex-start}
+    .p-search{width:100%}
+    .foot-cols{grid-template-columns:1fr 1fr;gap:36px}
+    .foot-legal{margin:8px 0;order:3;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="../v2/">everneat</a>
+    <nav class="nav-links">
+      <a href="../home-cleaning/">Home</a>
+      <a href="../office-cleaning/">Office</a>
+      <a href="../airbnb-cleaning/">Airbnb</a>
+      <a href="../commercial-cleaning/">Commercial</a>
+      <a href="../event-cleaning/">Event</a>
+      <a href="../products/">Shop Products</a>
+      <a href="../login/">Login</a>
+    </nav>
+    <a class="btn btn--dark nav-book" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+    <details class="nav-menu">
+      <summary aria-label="Open menu"></summary>
+      <div class="nav-drop">
+        <a href="../home-cleaning/">Home</a>
+        <a href="../office-cleaning/">Office</a>
+        <a href="../airbnb-cleaning/">Airbnb</a>
+        <a href="../commercial-cleaning/">Commercial</a>
+        <a href="../event-cleaning/">Event</a>
+        <a href="../products/">Shop Products</a>
+        <a href="../login/">Login</a>
+        <a class="btn btn--dark" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="pr-hero">
+  <p class="pg-sub av-fadeUp">press</p>
+  <h1 class="pg-h1 av-fadeUp">Everneat in the press.</h1>
+  <p class="pr-intro av-fadeUp">Coverage of Everneat and probiotic cleaning across home, design, and food media.</p>
+</section>
+
+<!-- ===================== FILTERS ===================== -->
+<section class="pr-filters">
+  <div class="pills av-fadeUp" role="group" aria-label="Filter placements">
+    <button type="button" class="pill on" data-cat="all">All</button>
+    <button type="button" class="pill" data-cat="design">Design &amp; Home</button>
+    <button type="button" class="pill" data-cat="food">Food &amp; Kitchen</button>
+    <button type="button" class="pill" data-cat="life">Lifestyle</button>
+  </div>
+  <label class="p-search av-fadeUp">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.4" stroke="currentColor" stroke-width="1.4"/><path d="M11.2 11.2 15 15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <input type="search" placeholder="Search press outlets" aria-label="Search press outlets">
+  </label>
+</section>
+
+<!-- ===================== PLACEMENT GRID ===================== -->
+<!-- ponytail: cards are spans, not anchors — placements unverified per handoff, no outbound article URLs -->
+<section class="pr-grid" aria-label="Press placements">
+  <article class="pcard av-scaleUp" data-cat="design" data-name="domino">
+    <img src="../assets/press-card-1.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Design &amp; Home</b><span>Featured outlet</span></div>
+    <span class="o-name o-dom">domino</span>
+  </article>
+  <article class="pcard av-scaleUp" data-cat="life" data-name="martha stewart">
+    <img src="../assets/press-card-2.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Lifestyle</b><span>Featured outlet</span></div>
+    <span class="o-name o-ms">Martha Stewart</span>
+  </article>
+  <article class="pcard av-scaleUp" data-cat="design" data-name="apartment therapy">
+    <img src="../assets/press-card-3.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Design &amp; Home</b><span>Featured outlet</span></div>
+    <span class="o-name o-at">Apartment Therapy</span>
+  </article>
+  <article class="pcard av-scaleUp" data-cat="food" data-name="epicurious">
+    <img src="../assets/press-card-2.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Food &amp; Kitchen</b><span>Featured outlet</span></div>
+    <span class="o-name o-epi">epicurious</span>
+  </article>
+  <article class="pcard av-scaleUp" data-cat="life" data-name="real simple">
+    <img src="../assets/press-card-3.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Lifestyle</b><span>Featured outlet</span></div>
+    <span class="o-name o-rs">REAL SIMPLE</span>
+  </article>
+  <article class="pcard av-scaleUp" data-cat="food" data-name="the kitchn">
+    <img src="../assets/press-card-1.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Food &amp; Kitchen</b><span>Featured outlet</span></div>
+    <span class="o-name o-kit">the kitchn</span>
+  </article>
+  <article class="pcard av-scaleUp" data-cat="design" data-name="design + decor">
+    <img src="../assets/press-card-2.jpg" alt="" loading="lazy">
+    <div class="pcard-meta"><b>Design &amp; Home</b><span>Featured outlet</span></div>
+    <span class="o-name o-dd">Design + Decor</span>
+  </article>
+</section>
+<p class="p-empty" hidden>No placements match &mdash; try a different search or filter.</p>
+
+<!-- ===================== CTA + FOOTER ===================== -->
+<footer class="dark">
+  <div class="wrap cta">
+    <h2 class="cta-title">A cleaning that stays clean.</h2>
+    <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
+    <div class="cta-actions">
+      <a class="btn btn--lime" href="../v2/#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="../contact/">Talk to a human</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-cols">
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="../home-cleaning/">Home</a><a href="../office-cleaning/">Office</a><a href="../airbnb-cleaning/">Airbnb / STR</a><a href="../commercial-cleaning/">Commercial</a><a href="../event-cleaning/">Event</a>
+    </div>
+    <div class="f-col">
+      <h4>Method</h4>
+      <a href="../the-protocol/">The Protocol™</a><a href="../products/">Products</a><a href="../blog/">Cleaning Guides</a><a href="../happiness-guarantee/">Happiness Guarantee</a>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <a href="../contact/">Contact</a><a href="../about/">About</a><a href="../press/">Press</a><a href="../careers/">Careers</a>
+    </div>
+    <div class="f-col">
+      <h4>Locations</h4>
+      <a href="../service-areas/nyc/">NYC · Manhattan · Brooklyn · Queens</a><a href="../service-areas/fairfield-county-ct/">Fairfield County, CT</a><a href="../service-areas/new-jersey/">New Jersey</a><a href="../partners/">Become a partner</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-bar">
+    <span class="logo">everneat</span>
+    <nav class="foot-legal">
+      <span>© 2026 Everneat</span><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a><a href="../cookies/">Cookies</a><a href="../accessibility/">Accessibility</a>
+    </nav>
+    <nav class="foot-social">
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // filters + search (run regardless of motion preference)
+  var pills=[].slice.call(document.querySelectorAll('.pill'));
+  var cards=[].slice.call(document.querySelectorAll('.pcard'));
+  var q=document.querySelector('.p-search input');
+  var empty=document.querySelector('.p-empty');
+  var cat='all';
+  function apply(){
+    var t=(q.value||'').trim().toLowerCase();
+    var n=0;
+    cards.forEach(function(c){
+      var ok=(cat==='all'||c.getAttribute('data-cat')===cat)&&c.getAttribute('data-name').indexOf(t)>=0;
+      c.style.display=ok?'':'none';
+      if(ok)n++;
+    });
+    empty.hidden=n>0;
+  }
+  pills.forEach(function(p){
+    p.addEventListener('click',function(){
+      pills.forEach(function(x){x.classList.remove('on');});
+      p.classList.add('on');
+      cat=p.getAttribute('data-cat');
+      apply();
+    });
+  });
+  q.addEventListener('input',apply);
+
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  // nav strengthens on scroll
+  var nav=document.querySelector('.nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    nav.style.background=y>40?'rgba(244,241,234,0.97)':'';
+    nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
+  },{passive:true});
+
+  // IntersectionObserver (shared)
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.av-fadeUp,.av-fadeIn,.av-scaleUp').forEach(function(el){io.observe(el);});
+  cards.forEach(function(el,i){el.style.animationDelay=(i%3*90)+'ms';});
+
+  // CTA word-split reveal
+  var ctaTitle=document.querySelector('.cta-title');
+  if(ctaTitle){
+    var words=ctaTitle.textContent.trim().split(/\s+/);
+    ctaTitle.innerHTML=words.map(function(w,i){
+      return '<span class="cta-word-wrap"><span class="cta-word-inner" style="animation-delay:'+(i*90)+'ms">'+w+'</span></span>';
+    }).join(' ');
+    io.observe(ctaTitle);
+  }
+})();
+</script>
+</body>
+</html>
