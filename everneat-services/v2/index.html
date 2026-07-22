@@ -347,6 +347,13 @@
     .mock--nova .nova-chips,.mock--nova .nova-by,
     .mock--nova .nova-foot{opacity:0;transform:translateY(6px);transition:opacity .3s ease,transform .3s ease}
     .mock--nova .nova-in{opacity:1;transform:translateY(0)}
+    /* Step 02 checkbox rows */
+    @keyframes rowSlide{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes checkPop{0%{transform:scale(0)}65%{transform:scale(1.22)}100%{transform:scale(1)}}
+    .mock--chk .chk{transform:scale(0)}
+    .mock--chk .brow{opacity:0}
+    .mock--chk .brow.in{animation:rowSlide .45s cubic-bezier(.22,1,.36,1) forwards}
+    .mock--chk .brow.in .chk{animation:checkPop .38s cubic-bezier(.34,1.56,.64,1) forwards .22s}
   }
 
   /* ---------- responsive ---------- */
@@ -612,7 +619,7 @@
 
     <!-- Step 02 -->
     <div class="step rev">
-      <div class="mock">
+      <div class="mock mock--chk">
         <div class="mock-head"><span class="mock-title">Your cleaner</span><span class="mock-tag">Dispatched</span></div>
         <hr class="mock-div">
         <div class="id">
@@ -907,6 +914,19 @@
       seq.forEach(function(s){ setTimeout(s[1], s[0]); });
     },{threshold:0.4});
     novaObs.observe(nova);
+  }
+
+  // Step 02 — checkbox row stagger
+  var chkMock=document.querySelector('.mock--chk');
+  if(chkMock){
+    var chkObs=new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      chkObs.disconnect();
+      chkMock.querySelectorAll('.brow').forEach(function(row,i){
+        setTimeout(function(){row.classList.add('in');},i*160);
+      });
+    },{threshold:0.35});
+    chkObs.observe(chkMock);
   }
 
   // #12 — testimonial stat counters
