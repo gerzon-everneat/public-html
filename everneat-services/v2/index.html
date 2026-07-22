@@ -118,8 +118,6 @@
     box-shadow:var(--shadow)}
   .cat img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
   .cat:hover img{transform:scale(1.03)}
-  .cat .tag{position:absolute;top:20px;left:20px;background:rgba(240,236,225,.82);backdrop-filter:blur(6px);
-    color:var(--ink);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;border-radius:999px}
 
   /* ---------- compare ---------- */
   .compare{padding:var(--pad) 0}
@@ -413,28 +411,28 @@
 <!-- ===================== NAV ===================== -->
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="logo" href="#">everneat</a>
+    <a class="logo" href="/">everneat</a>
     <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Office</a>
-      <a href="#">Airbnb</a>
-      <a href="#">Commercial</a>
-      <a href="#">Event</a>
-      <a href="#">Shop Products</a>
-      <a href="#">Login</a>
+      <a href="/home-cleaning/">Home</a>
+      <a href="/office-cleaning/">Office</a>
+      <a href="/airbnb-cleaning/">Airbnb</a>
+      <a href="/commercial-cleaning/">Commercial</a>
+      <a href="/event-cleaning/">Event</a>
+      <a href="/products/">Shop Products</a>
+      <a href="/login/">Login</a>
     </nav>
-    <a class="btn btn--dark nav-book" href="#">Book&nbsp;&nbsp;&rarr;</a>
+    <a class="btn btn--dark nav-book" href="/book/">Book&nbsp;&nbsp;&rarr;</a>
     <details class="nav-menu">
       <summary aria-label="Open menu"></summary>
       <div class="nav-drop">
-        <a href="#">Home</a>
-        <a href="#">Office</a>
-        <a href="#">Airbnb</a>
-        <a href="#">Commercial</a>
-        <a href="#">Event</a>
-        <a href="#">Shop Products</a>
-        <a href="#">Login</a>
-        <a class="btn btn--dark" href="#">Book&nbsp;&nbsp;&rarr;</a>
+        <a href="/home-cleaning/">Home</a>
+        <a href="/office-cleaning/">Office</a>
+        <a href="/airbnb-cleaning/">Airbnb</a>
+        <a href="/commercial-cleaning/">Commercial</a>
+        <a href="/event-cleaning/">Event</a>
+        <a href="/products/">Shop Products</a>
+        <a href="/login/">Login</a>
+        <a class="btn btn--dark" href="/book/">Book&nbsp;&nbsp;&rarr;</a>
       </div>
     </details>
   </div>
@@ -445,7 +443,7 @@
   <div class="hero-media" role="img" aria-label="A calm, minimal kitchen and dining room"></div>
   <div class="hero-inner wrap">
     <p class="hero-cap">A clean home you never have to check.</p>
-    <h1 class="hero-head">My <span class="fill">home</span> needs a <span class="fill">regular</span> cleaning every <span class="fill">1&nbsp;week</span><a class="hero-go" href="#" aria-label="Get started">&rarr;</a></h1>
+    <h1 class="hero-head">My <span class="fill">home</span> needs a <span class="fill">regular</span> cleaning every <span class="fill">1&nbsp;week</span><a class="hero-go" href="/book/" aria-label="Get started">&rarr;</a></h1>
   </div>
   <div class="hero-ticker" aria-hidden="true">
     <div class="ticker-track">
@@ -455,7 +453,7 @@
 </section>
 
 <!-- ===================== HERO SUB ===================== -->
-<section class="herosub">
+<section class="herosub" id="services">
   <div class="wrap">
     <p class="herosub-lead">The first probiotic cleaning service for homes, offices, events &amp; short-term rentals. Plant-powered biology with zero harsh chemicals in NYC&nbsp;·&nbsp;NJ&nbsp;·&nbsp;CT.</p>
 
@@ -472,9 +470,10 @@
     </div>
 
     <div class="cats">
-      <a class="cat" href="#"><span class="tag">Home Cleaning</span><img src="../assets/card-home.jpg" alt="Home cleaning"></a>
-      <a class="cat" href="#"><span class="tag">Airbnb &amp; STR</span><img src="../assets/card-airbnb.jpg" alt="Airbnb &amp; short-term rental cleaning"></a>
-      <a class="cat" href="#"><span class="tag">Office</span><img src="../assets/card-office.jpg" alt="Office cleaning"></a>
+      <!-- ponytail: tag pills are baked into the card JPGs — no HTML overlay, alt text carries the label -->
+      <a class="cat" href="/home-cleaning/"><img src="../assets/card-home.jpg" alt="Home cleaning"></a>
+      <a class="cat" href="/airbnb-cleaning/"><img src="../assets/card-airbnb.jpg" alt="Airbnb &amp; short-term rental cleaning"></a>
+      <a class="cat" href="/office-cleaning/"><img src="../assets/card-office.jpg" alt="Office cleaning"></a>
     </div>
   </div>
 </section>
@@ -534,7 +533,7 @@
 </section>
 
 <!-- ===================== DAYS OF PROTECTION ===================== -->
-<section class="protect">
+<section class="protect" id="protection">
   <div class="wrap">
     <h2 class="sec-title">Days of protection</h2>
     <p class="sec-intro">Most cleans are gone by dinner. Everneat keeps working for three days after we leave.</p>
@@ -565,7 +564,7 @@
     <div class="pub-copy">
       <h2 class="sec-title">Everything we do is published.</h2>
       <p>With most services you just hope they hit everything, because the checklist stays in their pocket. Ours is written down, numbered, and room by room. Read every point before we arrive, and see what got done after.</p>
-      <a class="btn btn--ghost" href="#">Read The Protocol™&nbsp;&nbsp;&rarr;</a>
+      <a class="btn btn--ghost" href="/the-protocol/">Read The Protocol™&nbsp;&nbsp;&rarr;</a>
     </div>
     <div class="blueprint">
       <div class="bp-head"><span class="t">The Everneat Protocol™</span><span class="h">The Smith's Home</span></div>
@@ -594,8 +593,8 @@
       <h2 class="sec-title">Keep the cleaning working between visits</h2>
       <p>Same probiotic technology, in a bottle. Top up the microbiome between cleans in bathroom, kitchen, surfaces that work hardest. Less cleaning, cleaner longer.</p>
       <div class="row">
-        <a class="btn btn--dark" href="#">Shop the line&nbsp;&nbsp;&rarr;</a>
-        <a class="tlink" href="#">How it works&nbsp;&rarr;</a>
+        <a class="btn btn--dark" href="/products/">Shop the line&nbsp;&nbsp;&rarr;</a>
+        <a class="tlink" href="#protection">How it works&nbsp;&rarr;</a>
       </div>
     </div>
   </div>
@@ -652,7 +651,7 @@
             <div class="sc-n">01</div>
             <h3 class="sc-title">Book in chat</h3>
             <p class="sc-copy">Chat with Nova. Live quote by unit size, live turnover slots, synced to your check-out calendar.</p>
-            <a class="btn btn--lime" href="#">Book my Cleaning&nbsp;&nbsp;&rarr;</a>
+            <a class="btn btn--lime" href="/book/">Book my Cleaning&nbsp;&nbsp;&rarr;</a>
           </div>
         </div>
       </div>
@@ -752,7 +751,7 @@
             <div class="sc-n">05</div>
             <h3 class="sc-title">Maintain between visits</h3>
             <p class="sc-copy">The cleaning keeps working. Top up the microbiome between visits with the Protocol™ at home, a retail line of the same probiotic technology your cleaner uses.</p>
-            <a class="btn btn--ghost" href="#">Shop the line&nbsp;&nbsp;&rarr;</a>
+            <a class="btn btn--ghost" href="/products/">Shop the line&nbsp;&nbsp;&rarr;</a>
           </div>
         </div>
       </div>
@@ -808,8 +807,8 @@
     <h2 class="cta-title">A cleaning that stays clean.</h2>
     <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
     <div class="cta-actions">
-      <a class="btn btn--lime" href="#">Find your service&nbsp;&nbsp;&rarr;</a>
-      <a class="tlink" href="#">Talk to a human</a>
+      <a class="btn btn--lime" href="#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="/contact/">Talk to a human</a>
     </div>
   </div>
 
@@ -818,19 +817,19 @@
   <div class="wrap foot-cols">
     <div class="f-col">
       <h4>Services</h4>
-      <a href="#">Home</a><a href="#">Office</a><a href="#">Airbnb / STR</a><a href="#">Commercial</a><a href="#">Event</a>
+      <a href="/home-cleaning/">Home</a><a href="/office-cleaning/">Office</a><a href="/airbnb-cleaning/">Airbnb / STR</a><a href="/commercial-cleaning/">Commercial</a><a href="/event-cleaning/">Event</a>
     </div>
     <div class="f-col">
       <h4>Method</h4>
-      <a href="#">The Protocol™</a><a href="#">Products</a><a href="#">Cleaning Guides</a><a href="#">Happiness Guarantee</a>
+      <a href="/the-protocol/">The Protocol™</a><a href="/products/">Products</a><a href="/blog/">Cleaning Guides</a><a href="/happiness-guarantee/">Happiness Guarantee</a>
     </div>
     <div class="f-col">
       <h4>Connect</h4>
-      <a href="#">Contact</a><a href="#">About</a><a href="#">Press</a><a href="#">Careers</a>
+      <a href="/contact/">Contact</a><a href="/about/">About</a><a href="/press/">Press</a><a href="/careers/">Careers</a>
     </div>
     <div class="f-col">
       <h4>Locations</h4>
-      <a href="#">NYC · Manhattan · Brooklyn · Queens</a><a href="#">Fairfield County, CT</a><a href="#">New Jersey</a><a href="#">Become a partner</a>
+      <a href="/service-areas/nyc/">NYC · Manhattan · Brooklyn · Queens</a><a href="/service-areas/fairfield-county-ct/">Fairfield County, CT</a><a href="/service-areas/new-jersey/">New Jersey</a><a href="/partners/">Become a partner</a>
     </div>
   </div>
 
@@ -839,10 +838,10 @@
   <div class="wrap foot-bar">
     <span class="logo">everneat</span>
     <nav class="foot-legal">
-      <a href="#">© 2026 Everneat</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a>
+      <span>© 2026 Everneat</span><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/cookies/">Cookies</a><a href="/accessibility/">Accessibility</a>
     </nav>
     <nav class="foot-social">
-      <a href="#">LinkedIn</a><a href="#">Substack</a><a href="#">Instagram</a>
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
     </nav>
   </div>
 </footer>
