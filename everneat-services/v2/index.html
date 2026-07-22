@@ -196,15 +196,19 @@
   .testi-stats b{display:block;font-size:clamp(26px,3vw,40px);font-weight:500;line-height:1;margin-bottom:6px}
   .testi-stats span{font-size:13px;color:rgba(255,255,255,.8)}
 
-  /* ---------- how it works ---------- */
-  .how{padding:var(--pad) 0;display:flex;flex-direction:column;gap:32px}
-  .step{background:var(--panel);border-radius:24px;padding:clamp(28px,4vw,64px);
-    display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,4vw,64px);align-items:center}
-  .step.rev .mock{order:2}
-  .step-num{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1;color:var(--ink)}
-  .step-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
-    font-size:clamp(26px,3vw,36px);line-height:1.02;margin:4px 0 22px}
-  .step-copy{font-size:16px;color:var(--ink2);line-height:1.58;max-width:512px;margin:0 0 28px}
+  /* ---------- how it works — sticky stack ---------- */
+  .how{padding:var(--pad) 0 0}
+  .how-hd{text-align:center;margin-bottom:clamp(40px,5vw,64px)}
+  .stack-wrap{padding-bottom:var(--pad)}
+  .stack-card{position:sticky;top:calc(var(--si)*14px);background:var(--panel);
+    border-radius:28px;padding:clamp(24px,4vw,56px);margin-bottom:70vh;
+    transform-origin:top center;transition:transform .5s ease,filter .5s ease}
+  .stack-card:last-child{margin-bottom:0}
+  .sc-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px);align-items:center}
+  .sc-n{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,28px);line-height:1;color:var(--ink);margin-bottom:6px}
+  .sc-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(26px,3vw,40px);line-height:1.02;margin:0 0 20px}
+  .sc-copy{font-size:16px;color:var(--ink2);line-height:1.58;margin:0 0 28px}
 
   .mock{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
   .mock-head{display:flex;justify-content:space-between;align-items:center}
@@ -318,7 +322,6 @@
     .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
     .av-slideRight.in{animation:slideRight .65s cubic-bezier(.22,1,.36,1) forwards}
     .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
-    .mock{animation:goFloat 3.5s ease-in-out infinite}
     .protection-bar{transform:scaleX(0);transform-origin:left center}
     .protection-bar.in{animation:barGrow .9s cubic-bezier(.22,1,.36,1) forwards}
     .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
@@ -361,8 +364,7 @@
     .cmp-grid,.faq-grid,.retail-grid{grid-template-columns:1fr;gap:36px}
     .cmp-photo,.faq-img,.retail-img{max-width:560px}
     .pub-grid{grid-template-columns:1fr;gap:40px}
-    .step{grid-template-columns:1fr;gap:36px}
-    .step.rev .mock{order:0}
+    .sc-inner{grid-template-columns:1fr;gap:28px}
     .foot-cols{grid-template-columns:repeat(2,1fr);gap:36px}
   }
   @media(max-width:760px){
@@ -595,125 +597,142 @@
 
 <!-- ===================== HOW IT WORKS ===================== -->
 <section class="how">
+  <div class="wrap how-hd av-fadeUp">
+    <h2 class="sec-title">How it works</h2>
+  </div>
   <div class="wrap">
-    <!-- Step 01 -->
-    <div class="step">
-      <div class="mock mock--nova">
-        <div class="mock-head"><span class="mock-title">Chat with Nova</span><span class="mock-tag">Live · 4 min</span></div>
-        <hr class="mock-div">
-        <div class="nova-t1"><div><span></span><span></span><span></span></div></div>
-        <div class="bubble bot nova-b1">Hi! I'm Nova. What size is your home?</div>
-        <div class="chips nova-chips">
-          <span class="chip">Studio</span>
-          <span class="chip on">2 bed · 1 bath</span>
-          <span class="chip">3 bed +</span>
-        </div>
-        <div class="nova-t2"><div><span></span><span></span><span></span></div></div>
-        <div class="bubble bot nova-b2">Great. How often should we come?</div>
-        <div class="bubble you nova-by">Every 2 weeks</div>
-        <div class="mock-foot nova-foot">
-          <span class="q-label">Your quote · 2–4 hrs</span>
-          <span class="price">$104<small>/ visit</small></span>
-        </div>
-      </div>
-      <div class="step-body">
-        <div class="step-num">01</div>
-        <h3 class="step-title">Book in chat</h3>
-        <p class="step-copy">Chat with Nova. Live quote by unit size, live turnover slots, synced to your check-out calendar.</p>
-        <a class="btn btn--lime" href="#">Book my Cleaning&nbsp;&nbsp;&rarr;</a>
-      </div>
-    </div>
+    <div class="stack-wrap">
 
-    <!-- Step 02 -->
-    <div class="step rev">
-      <div class="mock mock--chk">
-        <div class="mock-head"><span class="mock-title">Your cleaner</span><span class="mock-tag">Dispatched</span></div>
-        <hr class="mock-div">
-        <div class="id">
-          <span class="avatar"></span>
-          <div><div class="n">Jazmin</div><div class="s">Lead cleaner · 640 visits · 4.9★</div></div>
+      <!-- Card 01 -->
+      <div class="stack-card" style="--si:0">
+        <div class="sc-inner">
+          <div class="mock mock--nova">
+            <div class="mock-head"><span class="mock-title">Chat with Nova</span><span class="mock-tag">Live · 4 min</span></div>
+            <hr class="mock-div">
+            <div class="nova-t1"><div><span></span><span></span><span></span></div></div>
+            <div class="bubble bot nova-b1">Hi! I'm Nova. What size is your home?</div>
+            <div class="chips nova-chips">
+              <span class="chip">Studio</span>
+              <span class="chip on">2 bed · 1 bath</span>
+              <span class="chip">3 bed +</span>
+            </div>
+            <div class="nova-t2"><div><span></span><span></span><span></span></div></div>
+            <div class="bubble bot nova-b2">Great. How often should we come?</div>
+            <div class="bubble you nova-by">Every 2 weeks</div>
+            <div class="mock-foot nova-foot">
+              <span class="q-label">Your quote · 2–4 hrs</span>
+              <span class="price">$104<small>/ visit</small></span>
+            </div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">01</div>
+            <h3 class="sc-title">Book in chat</h3>
+            <p class="sc-copy">Chat with Nova. Live quote by unit size, live turnover slots, synced to your check-out calendar.</p>
+            <a class="btn btn--lime" href="#">Book my Cleaning&nbsp;&nbsp;&rarr;</a>
+          </div>
         </div>
-        <hr class="mock-div">
-        <div class="brow"><span class="chk">✓</span><span>Background check</span><span class="stat">Cleared</span></div>
-        <div class="brow"><span class="chk">✓</span><span>40-hour Protocol certification</span><span class="stat">Certified</span></div>
-        <div class="brow"><span class="chk">✓</span><span>Photo-verified identity</span><span class="stat">Verified</span></div>
-        <div class="brow"><span class="chk">✓</span><span>W-2 employee, not a subcontractor</span><span class="stat">On staff</span></div>
       </div>
-      <div class="step-body">
-        <div class="step-num">02</div>
-        <h3 class="step-title">Cleaner dispatch</h3>
-        <p class="step-copy">A Protocol-certified specialist who knows your listing. Insured, background-checked, and W-2 employed, never a random contractor between guests.</p>
-      </div>
-    </div>
 
-    <!-- Step 03 -->
-    <div class="step">
-      <div class="mock">
-        <div class="mock-head"><span class="mock-title">72-hour probiotic shield</span><span class="mock-tag">Active</span></div>
-        <hr class="mock-div">
-        <div class="track"><i></i></div>
-        <div class="ticks">
-          <div class="tk"><b>T+0h</b><span>Applied</span></div>
-          <div class="tk"><b>24h</b><span>Seeding</span></div>
-          <div class="tk"><b>48h</b><span>Working</span></div>
-          <div class="tk"><b>72h</b><span>Active</span></div>
+      <!-- Card 02 -->
+      <div class="stack-card" style="--si:1">
+        <div class="sc-inner">
+          <div class="mock mock--chk">
+            <div class="mock-head"><span class="mock-title">Your cleaner</span><span class="mock-tag">Dispatched</span></div>
+            <hr class="mock-div">
+            <div class="id">
+              <span class="avatar"></span>
+              <div><div class="n">Jazmin</div><div class="s">Lead cleaner · 640 visits · 4.9★</div></div>
+            </div>
+            <hr class="mock-div">
+            <div class="brow"><span class="chk">✓</span><span>Background check</span><span class="stat">Cleared</span></div>
+            <div class="brow"><span class="chk">✓</span><span>40-hour Protocol certification</span><span class="stat">Certified</span></div>
+            <div class="brow"><span class="chk">✓</span><span>Photo-verified identity</span><span class="stat">Verified</span></div>
+            <div class="brow"><span class="chk">✓</span><span>W-2 employee, not a subcontractor</span><span class="stat">On staff</span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">02</div>
+            <h3 class="sc-title">Cleaner dispatch</h3>
+            <p class="sc-copy">A Protocol-certified specialist who knows your listing. Insured, background-checked, and W-2 employed, never a random contractor between guests.</p>
+          </div>
         </div>
-        <div class="prow"><span class="num">01</span><span>Plant-based surfactants lift residue</span><span class="stat">Clean</span></div>
-        <div class="prow"><span class="num">02</span><span>Live probiotics seed the surface</span><span class="stat">Seed</span></div>
-        <div class="prow"><span class="num">03</span><span>Shield metabolises new mess as it lands</span><span class="stat">72 hrs</span></div>
       </div>
-      <div class="step-body">
-        <div class="step-num">03</div>
-        <h3 class="step-title">Protocol applied</h3>
-        <p class="step-copy">The full 84-point turnover: linens staged, surfaces cleaned, and a 72-hour probiotic shield laid down so the space stays fresh right through your guest's stay.</p>
-      </div>
-    </div>
 
-    <!-- Step 04 -->
-    <div class="step rev">
-      <div class="mock">
-        <div class="mock-head"><span class="mock-title">Photo report</span><span class="mock-tag">The Smith's Home</span></div>
-        <hr class="mock-div">
-        <div class="photos">
-          <div class="pho before"><span class="t">Before</span></div>
-          <div class="pho after"><span class="t">After</span></div>
+      <!-- Card 03 -->
+      <div class="stack-card" style="--si:2">
+        <div class="sc-inner">
+          <div class="mock">
+            <div class="mock-head"><span class="mock-title">72-hour probiotic shield</span><span class="mock-tag">Active</span></div>
+            <hr class="mock-div">
+            <div class="track"><i></i></div>
+            <div class="ticks">
+              <div class="tk"><b>T+0h</b><span>Applied</span></div>
+              <div class="tk"><b>24h</b><span>Seeding</span></div>
+              <div class="tk"><b>48h</b><span>Working</span></div>
+              <div class="tk"><b>72h</b><span>Active</span></div>
+            </div>
+            <div class="prow"><span class="num">01</span><span>Plant-based surfactants lift residue</span><span class="stat">Clean</span></div>
+            <div class="prow"><span class="num">02</span><span>Live probiotics seed the surface</span><span class="stat">Seed</span></div>
+            <div class="prow"><span class="num">03</span><span>Shield metabolises new mess as it lands</span><span class="stat">72 hrs</span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">03</div>
+            <h3 class="sc-title">Protocol applied</h3>
+            <p class="sc-copy">The full 84-point turnover: linens staged, surfaces cleaned, and a 72-hour probiotic shield laid down so the space stays fresh right through your guest's stay.</p>
+          </div>
         </div>
-        <div class="approve">
-          <span class="ok"><span class="chk">✓</span>Approved by you</span>
-          <span class="stars" style="font-size:14px">★★★★★</span>
-        </div>
-        <div class="refill"><span>Not thrilled? We re-clean within 24 hours</span><span class="stat">Free</span></div>
       </div>
-      <div class="step-body">
-        <div class="step-num">04</div>
-        <h3 class="step-title">Happiness checked</h3>
-        <p class="step-copy">Photo report and inventory count in your inbox before check-in. Damage or low stock? You get an alert. Not guest-ready? We re-clean free within 24 hours.</p>
-      </div>
-    </div>
 
-    <!-- Step 05 -->
-    <div class="step">
-      <div class="mock">
-        <div class="mock-head"><span class="mock-title">The Protocol™ at home</span><span class="mock-tag">Shop</span></div>
-        <hr class="mock-div">
-        <div class="prod">
-          <span class="thumb"></span>
-          <div><div class="pn">Probiotic Surface Cleaner</div><div class="ps">The same technology your cleaner uses</div></div>
-          <span class="price">$12</span>
+      <!-- Card 04 -->
+      <div class="stack-card" style="--si:3">
+        <div class="sc-inner">
+          <div class="mock">
+            <div class="mock-head"><span class="mock-title">Photo report</span><span class="mock-tag">The Smith's Home</span></div>
+            <hr class="mock-div">
+            <div class="photos">
+              <div class="pho before"><span class="t">Before</span></div>
+              <div class="pho after"><span class="t">After</span></div>
+            </div>
+            <div class="approve">
+              <span class="ok"><span class="chk">✓</span>Approved by you</span>
+              <span class="stars" style="font-size:14px">★★★★★</span>
+            </div>
+            <div class="refill"><span>Not thrilled? We re-clean within 24 hours</span><span class="stat">Free</span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">04</div>
+            <h3 class="sc-title">Happiness checked</h3>
+            <p class="sc-copy">Photo report and inventory count in your inbox before check-in. Damage or low stock? You get an alert. Not guest-ready? We re-clean free within 24 hours.</p>
+          </div>
         </div>
-        <div class="prod">
-          <span class="thumb"></span>
-          <div><div class="pn">Between-Visit Refill Kit</div><div class="ps">4-pack · tops up the microbiome</div></div>
-          <span class="price">$20</span>
+      </div>
+
+      <!-- Card 05 -->
+      <div class="stack-card" style="--si:4">
+        <div class="sc-inner">
+          <div class="mock">
+            <div class="mock-head"><span class="mock-title">The Protocol™ at home</span><span class="mock-tag">Shop</span></div>
+            <hr class="mock-div">
+            <div class="prod">
+              <span class="thumb"></span>
+              <div><div class="pn">Probiotic Surface Cleaner</div><div class="ps">The same technology your cleaner uses</div></div>
+              <span class="price">$12</span>
+            </div>
+            <div class="prod">
+              <span class="thumb"></span>
+              <div><div class="pn">Between-Visit Refill Kit</div><div class="ps">4-pack · tops up the microbiome</div></div>
+              <span class="price">$20</span>
+            </div>
+            <div class="refill"><span>Auto-refill every 60 days · pause anytime</span><span class="toggle"></span></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-n">05</div>
+            <h3 class="sc-title">Maintain between visits</h3>
+            <p class="sc-copy">The cleaning keeps working. Top up the microbiome between visits with the Protocol™ at home, a retail line of the same probiotic technology your cleaner uses.</p>
+            <a class="btn btn--ghost" href="#">Shop the line&nbsp;&nbsp;&rarr;</a>
+          </div>
         </div>
-        <div class="refill"><span>Auto-refill every 60 days · pause anytime</span><span class="toggle"></span></div>
       </div>
-      <div class="step-body">
-        <div class="step-num">05</div>
-        <h3 class="step-title">Maintain between visits</h3>
-        <p class="step-copy">The cleaning keeps working. Top up the microbiome between visits with the Protocol™ at home, a retail line of the same probiotic technology your cleaner uses.</p>
-        <a class="btn btn--ghost" href="#">Shop the line&nbsp;&nbsp;&rarr;</a>
-      </div>
+
     </div>
   </div>
 </section>
@@ -877,11 +896,24 @@
   // testimonial quote
   anim('.testi-quote,.testi-by','av-fadeUp');
 
-  // #13 — steps alternate left/right
-  document.querySelectorAll('.step').forEach(function(el,i){
-    el.classList.add(i%2===0?'av-slideLeft':'av-slideRight');
-    io.observe(el);
-  });
+  // #13 — stack cards: scale back buried cards on scroll
+  var stackCards=[].slice.call(document.querySelectorAll('.stack-card'));
+  if(stackCards.length){
+    function updateStack(){
+      stackCards.forEach(function(card,i){
+        var depth=0;
+        for(var j=i+1;j<stackCards.length;j++){
+          var nr=stackCards[j].getBoundingClientRect();
+          var stickyTop=parseFloat(getComputedStyle(stackCards[j]).top)||0;
+          if(nr.top<=stickyTop+4){depth++;}
+        }
+        card.style.transform=depth?'scale('+(1-depth*.022)+') translateY('+(-depth*5)+'px)':'';
+        card.style.filter=depth?'brightness('+(1-depth*.035)+')':'';
+      });
+    }
+    window.addEventListener('scroll',updateStack,{passive:true});
+    updateStack();
+  }
 
   // #15 — faq items
   anim('.faq-img','av-fadeIn');
