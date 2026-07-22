@@ -462,6 +462,11 @@
     .foot-cols{grid-template-columns:1fr 1fr}
     .foot-legal{margin:8px 0;order:3;width:100%}
   }
+  /* <=900px: sticky deck degrades to flowing cards - mobile 100vh is unstable and single-column cards exceed it */
+  @media (max-width:900px){
+    .stack-card{position:static;min-height:0;margin-bottom:24px;transform:none !important;filter:none !important}
+    .stack-gap{display:none}
+  }
 </style>
 </head>
 <body>
@@ -1154,6 +1159,7 @@
     measureStack();
     window.addEventListener('resize',measureStack);
     var stackTick=false;
+      if(window.innerWidth<=900){stackCards.forEach(function(c){c.style.transform='';c.style.filter='';});return;}
     function updateStack(){
       stackTick=false;
       var tops=stackCards.map(function(c){return c.getBoundingClientRect().top;});

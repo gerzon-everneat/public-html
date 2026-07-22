@@ -423,6 +423,22 @@
     .foot-cols{grid-template-columns:1fr 1fr}
     .foot-legal{margin:8px 0;order:3;width:100%}
   }
+  /* <=900px: sticky deck degrades to flowing cards - mobile 100vh is unstable and single-column cards exceed it */
+  @media (max-width:900px){
+    .stack-card{position:static;min-height:0;margin-bottom:24px;transform:none !important;filter:none !important}
+    .stack-gap{display:none}
+  }
+  /* <=900px: pinned scrub degrades to the static 3-step section */
+  @media (max-width:900px){
+    .protect{height:auto;padding:var(--pad) 0}
+    .protect .wrap{position:static;min-height:0;display:block}
+    .protect .phases{margin-top:40px}
+    .protect .band{height:min(60vw,420px);aspect-ratio:auto}
+    .band.g2 img,.band.g3 img{opacity:1}
+    .phase-tl::before{transform:none}
+    .tl-dot{transform:scale(1)}
+    .phase-desc .pb{opacity:1}
+  }
 </style>
 </head>
 <body>
@@ -931,6 +947,7 @@
     var pDescs=[].slice.call(protectEl.querySelectorAll('.phase-desc .pb'));
     var pLine=protectEl.querySelector('.phase-tl');
     var pTick=false;
+      if(window.innerWidth<=900)return;
     function updateProtect(){
       pTick=false;
       var r=protectEl.getBoundingClientRect();
@@ -971,6 +988,7 @@
     measureStack();
     window.addEventListener('resize',measureStack);
     var stackTick=false;
+      if(window.innerWidth<=900){stackCards.forEach(function(c){c.style.transform='';c.style.filter='';});return;}
     function updateStack(){
       stackTick=false;
       var tops=stackCards.map(function(c){return c.getBoundingClientRect().top;});
