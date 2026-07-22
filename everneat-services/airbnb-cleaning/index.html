@@ -69,7 +69,7 @@
     border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
   .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
     font-size:14px;text-transform:uppercase;letter-spacing:.08em}
-  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop a:not(.btn):hover{background:var(--panel)}
   .nav-drop .btn{color:#f4f1ea;margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
 
   /* ---------- hero ---------- */
@@ -515,7 +515,7 @@
   </div>
   <div class="hero-ticker" aria-hidden="true">
     <div class="ticker-track">
-      <span>Happiness guaranteed</span><i>·</i><span>10,000+ turnovers completed</span><i>·</i><span class="hl">Probiotics cleaning that stays guest-ready for days</span><i>·</i><span>$2M insured &amp; bonded</span><i>·</i><span>Photos + issue reports after every turnover</span><i>·</i><span>Happiness guaranteed</span><i>·</i><span>10,000+ turnovers completed</span><i>·</i><span class="hl">Probiotics cleaning that stays guest-ready for days</span><i>·</i><span>$2M insured &amp; bonded</span><i>·</i><span>Photos + issue reports after every turnover</span><i>·</i>
+      <span>Happiness guaranteed</span><i>·</i><span>10,000+ turnovers completed</span><i>·</i><span class="hl">Probiotic cleaning that stays guest-ready for days</span><i>·</i><span>$2M insured &amp; bonded</span><i>·</i><span>Photos + issue reports after every turnover</span><i>·</i><span>Happiness guaranteed</span><i>·</i><span>10,000+ turnovers completed</span><i>·</i><span class="hl">Probiotic cleaning that stays guest-ready for days</span><i>·</i><span>$2M insured &amp; bonded</span><i>·</i><span>Photos + issue reports after every turnover</span><i>·</i>
     </div>
   </div>
 </section>
@@ -1276,9 +1276,9 @@
     measureStack();
     window.addEventListener('resize',measureStack);
     var stackTick=false;
-      if(window.innerWidth<=900){stackCards.forEach(function(c){c.style.transform='';c.style.filter='';});return;}
     function updateStack(){
       stackTick=false;
+      if(window.innerWidth<=900){stackCards.forEach(function(c){c.style.transform='';c.style.filter='';});return;}
       var tops=stackCards.map(function(c){return c.getBoundingClientRect().top;});
       stackCards.forEach(function(card,i){
         var depth=0;
@@ -1309,6 +1309,7 @@
     io.observe(ctaTitle);
   }
   anim('.cta-copy,.cta-actions','av-fadeUp');
+  anim('.how-hd','av-fadeUp');
 
   // Nova chat sequence
   var nova=document.querySelector('.mock--nova');
@@ -1407,6 +1408,7 @@
   if(!w) return;
   w.style.display='none';
   document.addEventListener('click',function(e){
+    if(e.defaultPrevented) return;
     var a=e.target.closest('a[href$="book/"]');
     if(!a) return;
     if(!window.customElements||!customElements.get('booking-widget')) return;
