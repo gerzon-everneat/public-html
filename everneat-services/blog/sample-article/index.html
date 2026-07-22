@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why probiotic cleaning keeps working for 72 hours · Everneat</title>
+<meta name="description" content="Most cleaning masks odor. Probiotic cleaning removes its source, then keeps removing it for three more days. Here is what that means for the air in your home.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea; --cream:#eae6db; --panel:#edeae2; --card:#ffffff;
+    --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
+    --line:#e5e1d5; --line2:#d9d4c7;
+    --taupe:#d5cfbf; --butter:#f6f3d9;
+    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --olive:#5f5f53;
+    --dark:#181611;
+    --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --edge:clamp(20px,5vw,64px);
+    --shadow:0 1px 2px rgba(30,28,22,.04), 0 26px 50px -30px rgba(30,28,22,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#fff;color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--edge)}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;
+    font-weight:500;font-size:15px;padding:14px 26px;text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)}
+  .btn--dark{background:var(--ink);color:#f4f1ea}
+  .btn--dark:hover{background:#000}
+  .btn--lime{background:var(--lime);color:#24230f}
+  .btn--lime:hover{background:var(--lime-deep)}
+  .tlink{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;border-bottom:1px solid transparent;transition:border-color .15s}
+  .tlink:hover{border-color:var(--ink)}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(0,0,0,.05)}
+  .nav-in{display:flex;align-items:center;gap:24px;height:80px}
+  .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
+  .nav-links{display:flex;gap:26px;margin-left:auto}
+  .nav-links a{text-decoration:none;color:var(--ink);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.82}
+  .nav-links a:hover{opacity:1}
+  .nav .btn{margin-left:8px;padding:11px 22px;font-size:13px;letter-spacing:.06em}
+  .nav-menu{display:none;position:relative;margin-left:6px}
+  .nav-menu>summary{list-style:none;cursor:pointer;width:42px;height:42px;border:1px solid var(--line2);
+    border-radius:11px;display:grid;place-items:center;color:var(--ink);background:var(--card)}
+  .nav-menu>summary::-webkit-details-marker{display:none}
+  .nav-menu>summary::before{content:"\2630";font-size:18px}
+  .nav-menu[open]>summary::before{content:"\2715";font-size:15px}
+  .nav-drop{position:absolute;right:0;top:calc(100% + 12px);width:min(80vw,300px);background:var(--card);
+    border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
+  .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop .btn{margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
+
+  /* ---------- article hero (split) ---------- */
+  .ahero{display:flex;align-items:stretch;background:#fff}
+  .ahero-copy{flex:1;background:var(--butter);display:flex;align-items:center;justify-content:center;
+    padding:clamp(64px,14vh,245px) clamp(24px,7vw,96px)}
+  .ahero-in{width:min(574px,100%);display:flex;flex-direction:column;gap:16px}
+  .ahero-cap{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:18px;letter-spacing:.06em;line-height:28px;margin:0 0 -2px}
+  .ahero-title{font-weight:400;font-size:clamp(30px,3.1vw,44px);line-height:1.08;letter-spacing:-.005em;margin:0}
+  .ahero-dek{font-weight:300;font-size:clamp(18px,1.7vw,24px);line-height:1.35;letter-spacing:-.02em;margin:0}
+  .byline{display:flex;align-items:center;gap:10px;margin-top:2px}
+  .by-e{width:28px;height:28px;border-radius:50%;background:var(--lime);display:grid;place-items:center;
+    font-family:var(--serif);font-style:italic;font-weight:400;font-size:17px;color:var(--ink);flex:none}
+  .byline span{font-size:14px;color:var(--ink2)}
+  .ahero-img{width:min(469px,33vw);flex:none}
+  .ahero-img img{width:100%;height:100%;object-fit:cover}
+
+  /* ---------- article body layout ---------- */
+  .art-body{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,2fr) minmax(0,.75fr);
+    gap:clamp(24px,4vw,70px);padding:64px var(--edge);max-width:1440px;margin-inline:auto}
+
+  /* TOC rail */
+  .toc{position:sticky;top:104px;align-self:start;width:210px;max-width:100%}
+  .toc-cap{font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink2);margin:0 0 12px}
+  .toc a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;padding:6px 0;font-size:14px;line-height:1.3;color:var(--ink2)}
+  .toc a i{width:2px;height:16px;background:#ccccc7;flex:none;margin-top:1px}
+  .toc a.on{color:var(--ink);font-weight:600}
+  .toc a.on i{background:var(--lime-deep)}
+  .toc a:hover{color:var(--ink)}
+
+  /* body column */
+  .bodycol{display:flex;flex-direction:column;gap:26px;max-width:750px}
+  .tldr{background:var(--cream);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;gap:12px}
+  .tldr-cap{font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0}
+  .tldr-item{display:flex;gap:12px;align-items:baseline;margin:0;font-size:16px;line-height:1.5;color:#33312b}
+  .tldr-item i{width:7px;height:7px;border-radius:50%;background:var(--lime-deep);flex:none;position:relative;top:-2px}
+  .tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .tags-cap{font-weight:600;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink2)}
+  .tag{border:1px solid rgba(31,29,24,.16);border-radius:999px;padding:6px 13px;font-size:14px;color:var(--ink)}
+
+  /* article prose */
+  .prose{font-size:18px;line-height:28px;letter-spacing:-.01em}
+  .prose p{margin:0 0 28px}
+  .prose h2{font-weight:400;font-size:clamp(26px,2.4vw,32px);line-height:1.25;letter-spacing:-.01em;margin:7px 0 14px}
+  .prose h3{font-weight:600;font-size:22px;line-height:32px;letter-spacing:-.02em;margin:14px 0 21px}
+  .prose ul{list-style:none;margin:0 0 35px;padding:0}
+  .prose ul li{padding:0 0 14px 27px;position:relative}
+  .prose ul li::before{content:"•";position:absolute;left:9px}
+  .prose ul li+li{border-top:1px solid rgba(0,0,0,.15);padding-top:14px}
+  .figure{margin:14px 0 42px}
+  .figure img{border-radius:8px;width:100%;aspect-ratio:750/372;object-fit:cover}
+  .figure figcaption{font-weight:700;font-size:16px;letter-spacing:-.01em;margin-top:14px}
+  .quote{display:flex;gap:28px;margin:0;padding:28px 0}
+  .quote i{width:3px;background:rgba(0,0,0,.15);flex:none}
+  .quote p{font-weight:400;font-size:clamp(22px,2vw,28px);line-height:36px;letter-spacing:0;margin:0}
+
+  /* actions */
+  .art-actions{padding-top:16px;display:flex;flex-direction:column;gap:24px}
+  .art-actions hr{border:none;border-top:1px solid rgba(31,29,24,.12);margin:0;width:100%}
+  .crumbs{display:flex;gap:8px;font-size:12px;color:var(--ink2)}
+  .crumbs a{text-decoration:none;color:var(--ink2)}
+  .crumbs a:hover{color:var(--ink)}
+  .share{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .share-cap{font-weight:600;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink2)}
+  .share-pill{display:inline-block;border:1px solid rgba(31,29,24,.16);border-radius:999px;padding:7px 13px;
+    font-family:var(--sans);font-weight:600;font-size:12px;color:var(--ink);background:transparent;
+    text-decoration:none;cursor:pointer;transition:background .15s}
+  .share-pill:hover{background:var(--panel)}
+
+  /* ---------- ask everneat ---------- */
+  .ask{background:var(--olive);padding:64px var(--edge);color:#fff}
+  .ask-in{width:min(620px,100%);margin-inline:auto;display:flex;flex-direction:column;gap:16px;text-align:center;align-items:center}
+  .ask-cap{color:var(--lime);font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0}
+  .ask-title{font-weight:300;font-size:clamp(26px,2.6vw,34px);line-height:1.2;margin:0;color:#fff}
+  .ask-copy{color:#ccc9bd;font-size:15px;line-height:1.55;margin:0}
+  .ask-form{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(21,23,26,.12);
+    border-radius:999px;padding:6px 6px 6px 22px;width:100%}
+  .ask-form input{border:0;outline:0;background:transparent;font-family:var(--sans);font-size:15px;color:var(--ink);flex:1;min-width:0}
+  .ask-form input::placeholder{color:var(--ink2)}
+  .ask-btn{background:var(--lime);color:var(--ink);border:0;border-radius:999px;cursor:pointer;flex:none;
+    font-family:var(--sans);font-weight:600;font-size:14px;padding:12px 22px;transition:background .15s}
+  .ask-btn:hover{background:var(--lime-deep)}
+  .ask-note{color:#9e9c91;font-size:12px;line-height:1.5;margin:0}
+  .ask-thanks{color:#fff;font-size:15px;margin:0;padding:10px 0}
+
+  /* ---------- related ---------- */
+  .related{background:var(--cream);padding:64px var(--edge) 72px}
+  .rel-in{max-width:1312px;margin-inline:auto;display:flex;flex-direction:column;gap:32px}
+  .rel-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(24px,2.2vw,30px);letter-spacing:.02em;margin:0;color:var(--ink)}
+  .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:33px}
+  .bcard{display:block;text-decoration:none;color:var(--ink)}
+  .bcard-img{border-radius:16px;overflow:hidden;aspect-ratio:415/291}
+  .bcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .bcard:hover .bcard-img img{transform:scale(1.04)}
+  .meta{display:flex;gap:14px;align-items:baseline;padding:21px 0 14px;font-size:16px;letter-spacing:-.01em}
+  .meta b{font-weight:700}
+  .meta span{font-weight:300}
+  .bcard-title{font-weight:400;font-size:18px;line-height:1.3;margin:0}
+  .bcard:hover .bcard-title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+
+  /* subscribe card inside related */
+  .sub-card{background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:space-between;
+    gap:24px;padding:30px clamp(24px,4vw,64px);flex-wrap:wrap}
+  .sub-title{font-weight:600;font-size:18px;margin:0}
+  .sub-form{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .sub-form input{border:0;border-bottom:1px solid rgba(31,29,24,.3);background:transparent;outline:0;
+    font-family:var(--sans);font-size:15px;color:var(--ink);padding:2px 0 9px;width:240px}
+  .sub-form input::placeholder{color:var(--ink2)}
+  .sub-form input:focus{border-bottom-color:var(--ink)}
+  .sub-btn{background:var(--ink);color:#fff;border:0;border-radius:999px;cursor:pointer;
+    font-family:var(--sans);font-weight:600;font-size:14px;padding:12px 22px;transition:background .15s}
+  .sub-btn:hover{background:#000}
+  .sub-thanks{font-size:14px;color:var(--ink2);margin:0}
+
+  /* ---------- CTA + footer (dark) ---------- */
+  .dark{background:var(--dark);color:#e8e5dd}
+  .cta{padding-block:clamp(56px,7vw,72px) clamp(48px,6vw,72px)}
+  .cta-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
+    font-size:clamp(34px,4.6vw,56px);line-height:1.02;color:#fff;margin:0}
+  .cta-copy{color:#a8a49a;max-width:640px;font-size:17px;line-height:1.5;margin:22px 0 34px}
+  .cta-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .cta-actions .tlink{color:#fff}
+  .cta-actions .tlink:hover{border-color:#fff}
+  .foot-div{border:none;border-top:1px solid rgba(255,255,255,.09);margin:0}
+  .foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-block:clamp(48px,6vw,72px)}
+  .f-col h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8c887d;margin:0 0 20px;font-weight:600}
+  .f-col a{display:block;color:#bdb9ae;text-decoration:none;font-size:15px;margin-bottom:13px}
+  .f-col a:hover{color:#fff}
+  .foot-bar{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px 40px}
+  .foot-bar .logo{color:#fff}
+  .foot-legal{display:flex;gap:22px;flex-wrap:wrap;margin:0 auto}
+  .foot-legal a{color:#9c988e;text-decoration:none;font-size:14px}
+  .foot-legal a:hover{color:#fff}
+  .foot-social{display:flex;gap:26px}
+  .foot-social a{color:#cbc7bd;text-decoration:none;font-size:15px}
+  .foot-social a:hover{color:#fff}
+
+  /* ---------- animations ---------- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @media(prefers-reduced-motion:no-preference){
+    .av-fadeUp,.av-fadeIn{opacity:0}
+    .av-fadeUp.in{animation:fadeUp .65s cubic-bezier(.22,1,.36,1) forwards}
+    .av-fadeIn.in{animation:fadeIn .6s ease forwards}
+  }
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .nav-links,.nav-book{display:none}
+    .nav-menu{display:block;margin-left:auto}
+    .ahero{flex-direction:column}
+    .ahero-img{width:100%}
+    .ahero-img img{aspect-ratio:16/10}
+    .art-body{grid-template-columns:1fr;gap:32px}
+    .toc{position:static;width:100%}
+    .rel-grid{grid-template-columns:1fr}
+    .sub-card,.sub-in{flex-direction:column;align-items:flex-start}
+    .foot-cols{grid-template-columns:repeat(2,1fr);gap:36px}
+    .foot-legal{margin:8px 0;order:3;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="../../v2/">everneat</a>
+    <nav class="nav-links">
+      <a href="../../home-cleaning/">Home</a>
+      <a href="../../office-cleaning/">Office</a>
+      <a href="../../airbnb-cleaning/">Airbnb</a>
+      <a href="../../commercial-cleaning/">Commercial</a>
+      <a href="../../event-cleaning/">Event</a>
+      <a href="../../products/">Shop Products</a>
+      <a href="../">Cleaning Guides</a>
+      <a href="../../login/">Login</a>
+    </nav>
+    <a class="btn btn--dark nav-book" href="../../book/">Book&nbsp;&nbsp;&rarr;</a>
+    <details class="nav-menu">
+      <summary aria-label="Open menu"></summary>
+      <div class="nav-drop">
+        <a href="../../home-cleaning/">Home</a>
+        <a href="../../office-cleaning/">Office</a>
+        <a href="../../airbnb-cleaning/">Airbnb</a>
+        <a href="../../commercial-cleaning/">Commercial</a>
+        <a href="../../event-cleaning/">Event</a>
+        <a href="../../products/">Shop Products</a>
+        <a href="../">Cleaning Guides</a>
+        <a href="../../login/">Login</a>
+        <a class="btn btn--dark" href="../../book/">Book&nbsp;&nbsp;&rarr;</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="ahero">
+  <div class="ahero-copy">
+    <div class="ahero-in">
+      <p class="ahero-cap av-fadeUp">Probiotic science</p>
+      <h1 class="ahero-title av-fadeUp">Why probiotic cleaning keeps working for 72 hours</h1>
+      <p class="ahero-dek av-fadeUp">Most cleaning masks odor. Probiotic cleaning removes its source, then keeps removing it for three more days. Here is what that means for the air in your home.</p>
+      <div class="byline av-fadeUp">
+        <span class="by-e" aria-hidden="true">e</span>
+        <span>By Everneat&nbsp;&nbsp;·&nbsp;&nbsp;Jul 17, 2026&nbsp;&nbsp;·&nbsp;&nbsp;4 min read</span>
+      </div>
+    </div>
+  </div>
+  <div class="ahero-img"><img src="../../assets/article-hero.jpg" alt="A hand spraying probiotic cleaner across a marble countertop"></div>
+</section>
+
+<!-- ===================== ARTICLE BODY ===================== -->
+<div class="art-body">
+
+  <!-- On this page -->
+  <nav class="toc" aria-label="On this page">
+    <p class="toc-cap">On this page</p>
+    <a href="#what-it-is" class="on"><i></i>What probiotic cleaning is</a>
+    <a href="#window"><i></i>Why the 72-hour window matters</a>
+    <a href="#difference"><i></i>Where it makes the difference</a>
+    <a href="#after"><i></i>What to expect after we leave</a>
+  </nav>
+
+  <!-- body column -->
+  <div class="bodycol">
+
+    <aside class="tldr av-fadeUp">
+      <p class="tldr-cap">Key takeaways</p>
+      <p class="tldr-item"><i></i>Probiotic cleaning removes odor at its source instead of masking it.</p>
+      <p class="tldr-item"><i></i>The microbes keep working for about 72 hours after we leave.</p>
+      <p class="tldr-item"><i></i>Biggest impact in bathrooms, kitchens, and fabric-heavy rooms.</p>
+    </aside>
+
+    <div class="tags av-fadeUp">
+      <span class="tags-cap">Tagged</span>
+      <span class="tag">Probiotic cleaning</span>
+      <span class="tag">Air quality</span>
+      <span class="tag">NYC</span>
+      <span class="tag">Home</span>
+    </div>
+
+    <article class="prose" id="what-it-is">
+      <p>Vitae sollicitudin consequat volutpat augue molestie orci, cursus ultricies. Elementum placerat tortor tristique habitant sed et non laoreet eleifend. Est cursus mattis lacus, viverra pharetra pellentesque suspendisse morbi. Sed iaculis neque auctor dui ut volutpat iaculis. Arcu, volutpat consequat faucibus accumsan. Velit interdum diam vel aliquam et. At feugiat ac massa congue suspendisse id. Mauris sit amet elementum lobortis condimentum integer. Tincidunt vel praesent rhoncus quisque amet, nibh penatibus sem. Elementum pretium, non id enim sit id.</p>
+      <p>No chemical smell. No sticky residue on the surfaces your skin touches. Just a space that stays fresher for longer, backed by the same published Protocol™ we follow on every visit.</p>
+
+      <h2 id="window">What probiotic cleaning actually is</h2>
+      <p>Nunc, quam blandit in vitae. Est lacus, diam enim in venenatis a etiam egestas. Scelerisque egestas imperdiet integer magna blandit egestas enim est a. Non in egestas lectus quis vestibulum dapibus viverra risus orci. Consectetur hac convallis in molestie ac arcu.</p>
+
+      <ul>
+        <li>List Item 1</li>
+        <li>List Item 2</li>
+        <li>List Item 3</li>
+      </ul>
+
+      <p>Felis morbi ut tristique pretium libero. Eget purus, enim, orci, quis tempor sed. Sed nec eget nibh et enim, at mi. Ut orci, sagittis tellus dui congue. Blandit laoreet nullam amet eget. Ut tincidunt diam tempor sed turpis odio vitae sem lobortis. Lobortis enim non eu a. Adipiscing accumsan urna eget pharetra. Elementum enim imperdiet a pellentesque. Aliquet varius proin turpis tristique faucibus ornare venenatis, amet massa. Eu sit nullam venenatis ultrices arcu arcu, id. Neque, sit orci in pellentesque suspendisse vitae pulvinar.</p>
+
+      <figure class="figure" id="difference">
+        <img src="../../assets/article-figure.jpg" alt="Yellow ceramic pots and plants arranged against a warm yellow wall">
+        <figcaption>Caption for the photo above.</figcaption>
+      </figure>
+
+      <p>At odio viverra est quisque dignissim. Risus amet accumsan eu tristique tortor, risus. Sed tincidunt velit facilisis nulla quam augue tempor. Eget odio viverra senectus potenti.</p>
+
+      <blockquote class="quote">
+        <i></i>
+        <p>&ldquo;The air in my apartment actually feels different, and it lasts for days. No chemical smell, just clean. I&rsquo;ve stopped thinking about cleaning day.&rdquo;</p>
+      </blockquote>
+
+      <p>Felis morbi ut tristique pretium libero. Eget purus, enim, orci, quis tempor sed. Sed nec eget nibh et enim, at mi. Ut orci, sagittis tellus dui congue. Blandit laoreet nullam amet eget. Ut tincidunt diam tempor sed turpis odio vitae sem lobortis. Lobortis enim non eu a. Adipiscing accumsan urna eget pharetra. Elementum enim imperdiet a pellentesque. Aliquet varius proin turpis tristique faucibus ornare venenatis, amet massa. Eu sit nullam venenatis ultrices arcu arcu, id. Neque, sit orci in pellentesque suspendisse vitae pulvinar.</p>
+
+      <h3 id="after">What to expect after we leave</h3>
+      <p>The microbes keep working long after we leave. For about 72 hours they compete with the bacteria that cause smells, reaching into grout, fabric, and the soft surfaces a wipe-down never touches. The result is cleaner indoor air, not a masking fragrance.</p>
+      <p>Conventional products strip a surface and evaporate. Probiotic formulas leave beneficial microbes behind, and those microbes digest the organic residue that odor-causing bacteria feed on. Nothing to feed on means nothing to smell.</p>
+    </article>
+
+    <div class="art-actions">
+      <hr>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="../../v2/">Home</a><span>/</span><a href="../">Journal</a><span>/</span><span>Probiotic science</span>
+      </nav>
+      <div class="share">
+        <span class="share-cap">Share</span>
+        <button type="button" class="share-pill" id="copy-link">Copy link</button>
+        <a class="share-pill" href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+        <a class="share-pill" href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a>
+        <a class="share-pill" href="mailto:?subject=Why%20probiotic%20cleaning%20keeps%20working%20for%2072%20hours">Email</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- right spacer column (design leaves it empty) -->
+  <div aria-hidden="true"></div>
+</div>
+
+<!-- ===================== ASK EVERNEAT ===================== -->
+<section class="ask">
+  <div class="ask-in">
+    <p class="ask-cap av-fadeUp">Ask Everneat</p>
+    <h2 class="ask-title av-fadeUp">Have a question? Get an answer.</h2>
+    <p class="ask-copy av-fadeUp">Ask anything about probiotic cleaning, our Protocol, or service in NYC.<br>Answers come straight from our published guides.</p>
+    <form class="ask-form av-fadeUp" action="">
+      <input type="text" required placeholder="e.g. Are your products safe for pets?" aria-label="Your question">
+      <button class="ask-btn" type="submit">Ask&nbsp;&nbsp;&rarr;</button>
+    </form>
+    <p class="ask-note av-fadeUp">Questions may be stored to improve our answers and service. No personal information required.</p>
+  </div>
+</section>
+
+<!-- ===================== MORE FROM CLEANING GUIDES ===================== -->
+<section class="related">
+  <div class="rel-in">
+    <h2 class="rel-title av-fadeUp">More from cleaning guides</h2>
+    <div class="rel-grid">
+      <a class="bcard av-fadeUp" href="../">
+        <div class="bcard-img"><img src="../../assets/blog-card-01.jpg" alt="A man carrying moving boxes outside a house"></div>
+        <div class="meta"><b>HOME</b><span>28th April, 2021</span></div>
+        <h3 class="bcard-title">How often should you deep clean a NYC apartment?</h3>
+      </a>
+      <a class="bcard av-fadeUp" href="../">
+        <div class="bcard-img"><img src="../../assets/blog-card-03.jpg" alt="Potted cacti and colorful objects on pastel pedestals"></div>
+        <div class="meta"><b>AIRBNB</b><span>28th April, 2021</span></div>
+        <h3 class="bcard-title">The 3-hour turnover: what guests notice first</h3>
+      </a>
+      <a class="bcard av-fadeUp" href="../">
+        <div class="bcard-img"><img src="../../assets/blog-card-02.jpg" alt="Three colleagues laughing together on an office sofa"></div>
+        <div class="meta"><b>OFFICE</b><span>28th April, 2021</span></div>
+        <h3 class="bcard-title">Why office air quality starts with the floor</h3>
+      </a>
+    </div>
+    <div class="sub-card av-fadeUp">
+      <p class="sub-title">Get the Cleaning Guides in your inbox.</p>
+      <form class="sub-form" action="">
+        <input type="email" required placeholder="your@email.com" aria-label="Your email address">
+        <button class="sub-btn" type="submit">Subscribe&nbsp;&nbsp;&rarr;</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA + FOOTER ===================== -->
+<footer class="dark">
+  <div class="wrap cta">
+    <h2 class="cta-title">A cleaning that stays clean.</h2>
+    <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
+    <div class="cta-actions">
+      <a class="btn btn--lime" href="../../v2/#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="tlink" href="../../contact/">Talk to a human</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-cols">
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="../../home-cleaning/">Home</a><a href="../../office-cleaning/">Office</a><a href="../../airbnb-cleaning/">Airbnb / STR</a><a href="../../commercial-cleaning/">Commercial</a><a href="../../event-cleaning/">Event</a>
+    </div>
+    <div class="f-col">
+      <h4>Method</h4>
+      <a href="../../the-protocol/">The Protocol™</a><a href="../../products/">Products</a><a href="../">Cleaning Guides</a><a href="../../happiness-guarantee/">Happiness Guarantee</a>
+    </div>
+    <div class="f-col">
+      <h4>Connect</h4>
+      <a href="../../contact/">Contact</a><a href="../../about/">About</a><a href="../../press/">Press</a><a href="../../careers/">Careers</a>
+    </div>
+    <div class="f-col">
+      <h4>Locations</h4>
+      <a href="../../service-areas/nyc/">NYC · Manhattan · Brooklyn · Queens</a><a href="../../service-areas/fairfield-county-ct/">Fairfield County, CT</a><a href="../../service-areas/new-jersey/">New Jersey</a><a href="../../partners/">Become a partner</a>
+    </div>
+  </div>
+
+  <div class="wrap"><hr class="foot-div"></div>
+
+  <div class="wrap foot-bar">
+    <span class="logo">everneat</span>
+    <nav class="foot-legal">
+      <span>© 2026 Everneat</span><a href="../../privacy/">Privacy</a><a href="../../terms/">Terms</a><a href="../../cookies/">Cookies</a><a href="../../accessibility/">Accessibility</a>
+    </nav>
+    <nav class="foot-social">
+      <a href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a><a href="https://everneat.substack.com" rel="noopener">Substack</a><a href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Subscribe form — no backend, tiny thanks handler
+  var sub=document.querySelector('.sub-form');
+  sub.addEventListener('submit',function(e){
+    e.preventDefault();
+    sub.innerHTML='<p class="sub-thanks">Thanks — you’re on the list. First guide lands next month.</p>';
+  });
+
+  // Ask form — same treatment
+  var ask=document.querySelector('.ask-form');
+  ask.addEventListener('submit',function(e){
+    e.preventDefault();
+    ask.outerHTML='<p class="ask-thanks">Thanks — we’ll answer from our published guides and get back to you.</p>';
+  });
+
+  // Copy link pill
+  var copy=document.getElementById('copy-link');
+  copy.addEventListener('click',function(){
+    var done=function(){copy.textContent='Copied';setTimeout(function(){copy.textContent='Copy link';},1800);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(location.href).then(done,done);
+    }else{done();}
+  });
+
+  // TOC scroll spy — highlights the section closest above the viewport top
+  var tocLinks=[].slice.call(document.querySelectorAll('.toc a'));
+  var targets=tocLinks.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function spy(){
+    var idx=0;
+    for(var i=0;i<targets.length;i++){
+      if(targets[i]&&targets[i].getBoundingClientRect().top<160) idx=i;
+    }
+    tocLinks.forEach(function(a,i){a.classList.toggle('on',i===idx);});
+  }
+  window.addEventListener('scroll',spy,{passive:true});
+  spy();
+
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  // nav strengthens on scroll
+  var nav=document.querySelector('.nav');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    nav.style.background=y>40?'rgba(255,255,255,0.97)':'';
+    nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
+  },{passive:true});
+
+  // IntersectionObserver reveal
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.av-fadeUp,.av-fadeIn').forEach(function(el){io.observe(el);});
+  // stagger related cards
+  document.querySelectorAll('.rel-grid .bcard').forEach(function(el,i){
+    el.style.animationDelay=(i*90)+'ms';
+  });
+})();
+</script>
+</body>
+</html>
