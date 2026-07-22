@@ -235,10 +235,10 @@
   .how{padding:var(--pad) 0 0}
   .stack-wrap{padding-bottom:var(--pad)}
   .stack-card{position:sticky;top:calc(88px + var(--si)*14px);background:var(--panel);
-    border-radius:28px;padding:clamp(24px,4vw,56px);margin-bottom:70vh;min-height:min(calc(100vh - 180px),720px);display:flex;flex-direction:column;justify-content:center;
+    border-radius:28px;padding:clamp(24px,4vw,56px);min-height:min(calc(100vh - 180px),720px);display:flex;flex-direction:column;justify-content:center;
     box-shadow:0 -4px 12px rgba(0,0,0,0.07);
     transform-origin:top center;transition:transform .5s ease,filter .5s ease}
-  .stack-card:last-child{margin-bottom:0}
+  .stack-gap{height:70vh}
   .sc-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px);align-items:center}
   .sc-n{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,28px);line-height:1;color:var(--ink);margin-bottom:6px}
   .sc-title{font-family:var(--serif);font-style:italic;text-transform:uppercase;font-weight:500;
@@ -815,6 +815,7 @@
       </div>
 
       <!-- Card 02 -->
+      <div class="stack-gap" aria-hidden="true"></div>
       <div class="stack-card" style="--si:1">
         <div class="sc-inner">
           <div class="mock mock--chk">
@@ -839,6 +840,7 @@
       </div>
 
       <!-- Card 03 -->
+      <div class="stack-gap" aria-hidden="true"></div>
       <div class="stack-card" style="--si:2">
         <div class="sc-inner">
           <div class="mock">
@@ -864,6 +866,7 @@
       </div>
 
       <!-- Card 04 -->
+      <div class="stack-gap" aria-hidden="true"></div>
       <div class="stack-card" style="--si:3">
         <div class="sc-inner">
           <div class="mock">
@@ -888,6 +891,7 @@
       </div>
 
       <!-- Card 05 -->
+      <div class="stack-gap" aria-hidden="true"></div>
       <div class="stack-card" style="--si:4">
         <div class="sc-inner">
           <div class="mock">
