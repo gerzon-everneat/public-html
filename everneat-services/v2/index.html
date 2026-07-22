@@ -151,13 +151,22 @@
   .band img{width:100%;height:100%;object-fit:cover}
   .band.g2{background:linear-gradient(160deg,#e4e0d6,#d6d1c5)}
   .band.g3{background:linear-gradient(160deg,#d7d3c8,#c7c3b8)}
-  .protection-bar{position:absolute;left:16px;right:16px;bottom:14px;
-    display:grid;grid-template-columns:repeat(3,1fr);
-    background:linear-gradient(90deg,var(--lime) 0%,#dbe37e 52%,#eef0d6 100%);
-    border-radius:12px;overflow:hidden}
-  .protection-bar .pb{padding:20px 26px}
-  .protection-bar .pb h4{margin:0 0 6px;font-size:15px;font-weight:700;letter-spacing:.03em;color:#2b2a10;text-transform:uppercase}
-  .protection-bar .pb p{margin:0;font-size:12.5px;line-height:1.4;color:#4a4824}
+  .phase-tl{display:grid;grid-template-columns:repeat(3,1fr);position:relative;margin:20px 0 0}
+  .phase-tl::before{content:'';position:absolute;left:calc(100%/6);right:calc(100%/6);top:16px;height:2px;
+    background:var(--lime-deep);transform:scaleX(0);transform-origin:left;
+    transition:transform .9s cubic-bezier(.22,1,.36,1) .15s}
+  .phase-tl.in::before{transform:scaleX(1)}
+  .tl-node{display:flex;justify-content:center}
+  .tl-dot{width:32px;height:32px;border-radius:50%;background:var(--lime);color:#24230f;
+    display:grid;place-items:center;font-weight:700;font-size:13px;position:relative;z-index:1;
+    transform:scale(0);transition:transform .38s cubic-bezier(.34,1.56,.64,1)}
+  .phase-tl.in .tl-node:nth-child(1) .tl-dot{transform:scale(1);transition-delay:.1s}
+  .phase-tl.in .tl-node:nth-child(2) .tl-dot{transform:scale(1);transition-delay:.4s}
+  .phase-tl.in .tl-node:nth-child(3) .tl-dot{transform:scale(1);transition-delay:.7s}
+  .phase-desc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+  .pb{padding:12px 0 0}
+  .pb h4{margin:0 0 5px;font-size:14px;font-weight:700;letter-spacing:.06em;color:var(--ink);text-transform:uppercase}
+  .pb p{margin:0;font-size:13px;line-height:1.45;color:var(--ink2)}
 
   /* ---------- everything published ---------- */
   .published{padding:var(--pad) 0}
@@ -322,8 +331,15 @@
     .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
     .av-slideRight.in{animation:slideRight .65s cubic-bezier(.22,1,.36,1) forwards}
     .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
-    .protection-bar{transform:scaleX(0);transform-origin:left center}
-    .protection-bar.in{animation:barGrow .9s cubic-bezier(.22,1,.36,1) forwards}
+    /* Days of protection — drop from above / rise from below */
+    .phase-bands .band{opacity:0;transform:translateY(-38px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1)}
+    .phase-bands.in .band{opacity:1;transform:none}
+    .phase-bands.in .band:nth-child(2){transition-delay:.1s}
+    .phase-bands.in .band:nth-child(3){transition-delay:.2s}
+    .phase-desc .pb{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+    .phase-desc.in .pb{opacity:1;transform:none}
+    .phase-desc.in .pb:nth-child(2){transition-delay:.18s}
+    .phase-desc.in .pb:nth-child(3){transition-delay:.36s}
     .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
     .cta-word-inner{display:inline-block;transform:translateY(110%)}
     .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
@@ -383,7 +399,9 @@
     .cmp-ev{min-width:48px}
     .cmp-alt{padding:14px 8px}
     .cmp-note{font-size:11.5px}
-    .protection-bar{position:static;left:auto;right:auto;grid-template-columns:1fr;margin-top:16px}
+    .phase-tl,.phase-desc,.phase-bands{grid-template-columns:1fr}
+    .phase-tl::before{display:none}
+    .tl-node{justify-content:flex-start;padding-left:4px}
     .foot-cols{grid-template-columns:1fr 1fr}
     .foot-legal{margin:8px 0;order:3;width:100%}
   }
@@ -526,7 +544,12 @@
         <div class="band g2"></div>
         <div class="band g3"></div>
       </div>
-      <div class="protection-bar">
+      <div class="phase-tl">
+        <div class="tl-node"><div class="tl-dot">1</div></div>
+        <div class="tl-node"><div class="tl-dot">2</div></div>
+        <div class="tl-node"><div class="tl-dot">3</div></div>
+      </div>
+      <div class="phase-desc">
         <div class="pb"><h4>0H · Purify</h4><p>Everneat Probiotic Surface Cleaner applied to every surface.</p></div>
         <div class="pb"><h4>24–48H · Protect</h4><p>Living probiotic shield stays active, metabolizing new mess.</p></div>
         <div class="pb"><h4>72H+ · Maintain</h4><p>Keep up the microbiome with the Everneat retail line between visits.</p></div>
@@ -877,13 +900,18 @@
   anim('.compare .sec-title,.compare .sec-intro','av-fadeUp');
   stagger('.cmp-row:not(.cmp-head)','av-slideLeft',45);
 
-  // #9 — phase bands
+  // #9 — days of protection: bands drop, timeline pops, descriptions rise
   anim('.protect .sec-title,.protect .sec-intro','av-fadeUp');
-  stagger('.band','av-scaleUp',100);
-
-  // #10 — protection bar
-  var pb=document.querySelector('.protection-bar');
-  if(pb) io.observe(pb);
+  var phasesEl=document.querySelector('.phases');
+  if(phasesEl){
+    new IntersectionObserver(function(entries,obs){
+      if(!entries[0].isIntersecting) return;
+      obs.disconnect();
+      phasesEl.querySelector('.phase-bands').classList.add('in');
+      setTimeout(function(){phasesEl.querySelector('.phase-tl').classList.add('in');},280);
+      setTimeout(function(){phasesEl.querySelector('.phase-desc').classList.add('in');},620);
+    },{threshold:0.18}).observe(phasesEl);
+  }
 
   // #11 — blueprint items
   anim('.pub-copy .sec-title,.pub-copy p,.pub-copy .btn','av-fadeUp');
