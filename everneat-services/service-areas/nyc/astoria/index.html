@@ -956,5 +956,22 @@
 
 })();
 </script>
+<booking-widget></booking-widget>
+<script src="https://everneat.neatr.ai/embed.js"></script>
+<script>
+// Book CTAs open the booking overlay in place; if embed.js failed, links fall through to /book/.
+(function(){
+  var w=document.querySelector('booking-widget');
+  if(!w) return;
+  w.style.display='none';
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href$="book/"]');
+    if(!a) return;
+    if(!window.customElements||!customElements.get('booking-widget')) return;
+    e.preventDefault();
+    w.style.display='block';
+  });
+})();
+</script>
 </body>
 </html>
