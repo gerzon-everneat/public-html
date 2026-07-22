@@ -165,18 +165,22 @@
   .phase-tl{display:grid;grid-template-columns:repeat(3,1fr);position:relative;margin:20px 0 0}
   .phase-tl::before{content:'';position:absolute;left:calc(100%/6);right:calc(100%/6);top:16px;height:2px;
     background:var(--lime-deep)}
-  .phase-tl.in::before{transform:scaleX(1)}
   .tl-node{display:flex;justify-content:center}
   .tl-dot{width:32px;height:32px;border-radius:50%;background:var(--lime);color:#24230f;
     display:grid;place-items:center;font-weight:700;font-size:13px;position:relative;z-index:1}
+  /* scroll-scrubbed 3-step sequence — gated so reduced-motion (JS returns early) sees everything static */
   @media (prefers-reduced-motion:no-preference){
-    .phase-tl::before{transform:scaleX(0);transform-origin:left;
-      transition:transform .9s cubic-bezier(.22,1,.36,1) .15s}
+    .protect{height:280vh;padding:0}
+    .protect .wrap{position:sticky;top:80px;min-height:calc(100vh - 80px);
+      display:flex;flex-direction:column;justify-content:center}
+    .protect .phases{margin-top:32px}
+    .protect .band{aspect-ratio:auto;height:min(48vh,500px)}
+    .phase-tl::before{transform:scaleX(var(--p,0));transform-origin:left}
     .tl-dot{transform:scale(0);transition:transform .38s cubic-bezier(.34,1.56,.64,1)}
+    .tl-node.on .tl-dot{transform:scale(1)}
+    .band.g2 img,.band.g3 img{opacity:0;transition:opacity .6s ease}
+    .band.on img{opacity:1}
   }
-  .phase-tl.in .tl-node:nth-child(1) .tl-dot{transform:scale(1);transition-delay:.1s}
-  .phase-tl.in .tl-node:nth-child(2) .tl-dot{transform:scale(1);transition-delay:.4s}
-  .phase-tl.in .tl-node:nth-child(3) .tl-dot{transform:scale(1);transition-delay:.7s}
   .phase-desc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
   .pb{padding:12px 0 0}
   .pb h4{margin:0 0 5px;font-size:14px;font-weight:700;letter-spacing:.06em;color:var(--ink);text-transform:uppercase}
@@ -291,14 +295,8 @@
     .av-slideLeft.in{animation:slideLeft .65s cubic-bezier(.22,1,.36,1) forwards}
     .av-slideRight.in{animation:slideRight .65s cubic-bezier(.22,1,.36,1) forwards}
     .av-scaleUp.in{animation:scaleUp .7s cubic-bezier(.22,1,.36,1) forwards}
-    .phase-bands .band{opacity:0;transform:translateY(-38px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1)}
-    .phase-bands.in .band{opacity:1;transform:none}
-    .phase-bands.in .band:nth-child(2){transition-delay:.1s}
-    .phase-bands.in .band:nth-child(3){transition-delay:.2s}
-    .phase-desc .pb{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
-    .phase-desc.in .pb{opacity:1;transform:none}
-    .phase-desc.in .pb:nth-child(2){transition-delay:.18s}
-    .phase-desc.in .pb:nth-child(3){transition-delay:.36s}
+    .phase-desc .pb{opacity:.35;transition:opacity .45s ease}
+    .phase-desc .pb.on{opacity:1}
     .cta-word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom}
     .cta-word-inner{display:inline-block;transform:translateY(110%)}
     .cta-title.in .cta-word-inner{animation:wordUp .7s cubic-bezier(.22,1,.36,1) forwards}
@@ -563,8 +561,8 @@
     <div class="phases">
       <div class="phase-bands">
         <div class="band"><img src="../../../assets/protect.jpg" alt="Probiotic surface cleaner sprayed on a kitchen counter" loading="lazy"></div>
-        <div class="band g2"></div>
-        <div class="band g3"></div>
+        <div class="band g2"><img src="../../../assets/faq.jpg" alt="Living probiotic shield staying active on clean bathroom surfaces" loading="lazy"></div>
+        <div class="band g3"><img src="../../../assets/retail.jpg" alt="The Everneat retail line for maintaining the microbiome between visits" loading="lazy"></div>
       </div>
       <div class="phase-tl">
         <div class="tl-node"><div class="tl-dot">1</div></div>
@@ -862,15 +860,28 @@
 
   // days of protection
   anim('.protect .sec-title,.protect .sec-intro','av-fadeUp');
-  var phasesEl=document.querySelector('.phases');
-  if(phasesEl){
-    new IntersectionObserver(function(entries,obs){
-      if(!entries[0].isIntersecting) return;
-      obs.disconnect();
-      phasesEl.querySelector('.phase-bands').classList.add('in');
-      setTimeout(function(){phasesEl.querySelector('.phase-tl').classList.add('in');},280);
-      setTimeout(function(){phasesEl.querySelector('.phase-desc').classList.add('in');},620);
-    },{threshold:0.18}).observe(phasesEl);
+  var protectEl=document.querySelector('.protect');
+  if(protectEl){
+    var pBands=[].slice.call(protectEl.querySelectorAll('.band'));
+    var pNodes=[].slice.call(protectEl.querySelectorAll('.tl-node'));
+    var pDescs=[].slice.call(protectEl.querySelectorAll('.phase-desc .pb'));
+    var pLine=protectEl.querySelector('.phase-tl');
+    var pTick=false;
+    function updateProtect(){
+      pTick=false;
+      var r=protectEl.getBoundingClientRect();
+      var total=r.height-window.innerHeight;
+      var p=total>0?Math.min(1,Math.max(0,-r.top/total)):1;
+      if(pLine) pLine.style.setProperty('--p',p.toFixed(4));
+      var step=p>=0.9?2:p>=0.45?1:0;
+      pBands.forEach(function(b,i){b.classList.toggle('on',i<=step);});
+      pNodes.forEach(function(n,i){n.classList.toggle('on',i<=step);});
+      pDescs.forEach(function(d,i){d.classList.toggle('on',i<=step);});
+    }
+    window.addEventListener('scroll',function(){
+      if(!pTick){pTick=true;requestAnimationFrame(updateProtect);}
+    },{passive:true});
+    updateProtect();
   }
 
   // blueprint
