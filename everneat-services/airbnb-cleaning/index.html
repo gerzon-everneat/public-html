@@ -1304,13 +1304,13 @@
       var t1=nova.querySelector('.nova-t1');
       var t2=nova.querySelector('.nova-t2');
       var seq=[
-        [600,  function(){ t1.classList.add('show'); }],
-        [1200, function(){ t1.classList.remove('show'); nova.querySelector('.nova-b1').classList.add('nova-in'); }],
-        [1700, function(){ nova.querySelector('.nova-chips').classList.add('nova-in'); }],
-        [2200, function(){ t2.classList.add('show'); }],
-        [2800, function(){ t2.classList.remove('show'); nova.querySelector('.nova-b2').classList.add('nova-in'); }],
-        [3500, function(){ nova.querySelector('.nova-by').classList.add('nova-in'); }],
-        [4100, function(){ nova.querySelector('.nova-foot').classList.add('nova-in'); }],
+        [300,  function(){ t1.classList.add('show'); }],
+        [600, function(){ t1.classList.remove('show'); nova.querySelector('.nova-b1').classList.add('nova-in'); }],
+        [850, function(){ nova.querySelector('.nova-chips').classList.add('nova-in'); }],
+        [1100, function(){ t2.classList.add('show'); }],
+        [1400, function(){ t2.classList.remove('show'); nova.querySelector('.nova-b2').classList.add('nova-in'); }],
+        [1750, function(){ nova.querySelector('.nova-by').classList.add('nova-in'); }],
+        [2050, function(){ nova.querySelector('.nova-foot').classList.add('nova-in'); }],
       ];
       seq.forEach(function(s){ setTimeout(s[1], s[0]); });
     },{threshold:0.4});
