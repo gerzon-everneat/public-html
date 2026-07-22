@@ -62,7 +62,7 @@
     border:1px solid var(--line2);border-radius:16px;padding:10px;box-shadow:var(--shadow);display:grid;gap:2px}
   .nav-drop a{padding:12px 14px;border-radius:10px;text-decoration:none;color:var(--ink);
     font-size:14px;text-transform:uppercase;letter-spacing:.08em}
-  .nav-drop a:hover{background:var(--panel)}
+  .nav-drop a:not(.btn):hover{background:var(--panel)}
   .nav-drop .btn{color:#f4f1ea;margin:8px 0 0;justify-content:center;text-transform:none;letter-spacing:.02em;font-size:14px}
 
   /* ---------- page headings ---------- */
@@ -241,7 +241,7 @@
     <div class="c-form-in">
       <p class="c-lead av-fadeUp">Drop us a line and we usually reply within 2&nbsp;hours.</p>
       <!-- ponytail: no backend — action="" + JS confirmation; wire a real endpoint when one exists -->
-      <form action="" novalidate>
+      <form action="">
         <div class="field av-fadeUp">
           <label for="f-name">Name</label>
           <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -377,6 +377,7 @@
   if(!w) return;
   w.style.display='none';
   document.addEventListener('click',function(e){
+    if(e.defaultPrevented) return;
     var a=e.target.closest('a[href$="book/"]');
     if(!a) return;
     if(!window.customElements||!customElements.get('booking-widget')) return;
