@@ -467,6 +467,11 @@
     .stack-card{position:static;min-height:0;margin-bottom:24px;transform:none !important;filter:none !important}
     .stack-gap{display:none}
   }
+  /* add-on picker selected state */
+  .x-item{cursor:pointer}
+  .x-item.on .x-photo{outline:3px solid var(--lime-deep);outline-offset:-3px}
+  .x-item.on .plus{background:var(--lime);border-color:var(--lime);color:#24230f}
+  .x-item.on .x-add{font-weight:600}
 </style>
 </head>
 <body>
@@ -1366,6 +1371,31 @@
   },{threshold:0.5});
   document.querySelectorAll('.testi-stats>div').forEach(function(el){statsIO.observe(el);});
 
+})();
+</script>
+<script>
+// add-on picker: tap toggles the added state (prototype -- selection is visual only).
+// Runs outside the reduced-motion guard: this is functionality, not motion.
+(function(){
+  document.querySelectorAll('.x-item').forEach(function(it){
+    it.setAttribute('role','button');
+    it.setAttribute('tabindex','0');
+    it.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();it.click();}});
+    it.setAttribute('aria-pressed','false');
+    it.addEventListener('click',function(e){
+      e.preventDefault();
+      var on=it.classList.toggle('on');
+      it.setAttribute('aria-pressed',String(on));
+      var plus=it.querySelector('.plus');
+      var lbl=it.querySelector('.x-add');
+      if(lbl){
+        var txt=lbl.lastChild;
+        if(!it.dataset.addLabel) it.dataset.addLabel=txt.textContent;
+        txt.textContent=on?'added':it.dataset.addLabel;
+      }
+      if(plus) plus.textContent=on?'✓':'+';
+    });
+  });
 })();
 </script>
 </body>
