@@ -167,10 +167,16 @@
   .prot-step strong{display:block;font-size:11px;font-weight:700;color:#15171a;text-transform:uppercase;letter-spacing:.07em;line-height:1}
   .prot-step p{margin:0;font-size:12px;line-height:1.35;color:#383829}
   @media (prefers-reduced-motion:no-preference){
-    .phase-bands .band{opacity:0;transform:translateY(-32px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1)}
-    .phase-bands.in .band{opacity:1;transform:none}
-    .phase-bands.in .band:nth-child(2){transition-delay:.09s}
-    .phase-bands.in .band:nth-child(3){transition-delay:.18s}
+    .protect{height:280vh;padding:0}
+    .protect .wrap{position:sticky;top:80px;min-height:calc(100vh - 80px);
+      display:flex;flex-direction:column;justify-content:center}
+    .protect .phases{margin-top:32px}
+    .phase-bands .band{transition:opacity .45s ease}
+    .phase-bands .band:nth-child(2),.phase-bands .band:nth-child(3){opacity:0.22}
+    .phase-bands .band.on{opacity:1}
+    .prot-step{opacity:0.28;transition:opacity .4s ease}
+    .prot-step:first-child{opacity:1}
+    .prot-step.on{opacity:1}
   }
 
   /* ---------- everything published ---------- */
@@ -921,10 +927,27 @@
   anim('.compare .sec-title,.compare .sec-intro','av-fadeUp');
   stagger('.cmp-row:not(.cmp-head)','av-slideLeft',45);
 
-  // #9 — days of protection: drop-in animation
+  // #9 — days of protection: scroll-scrubbed step reveal
   anim('.protect .sec-title,.protect .sec-intro','av-fadeUp');
-  var pBandsEl=document.querySelector('.phase-bands');
-  if(pBandsEl) io.observe(pBandsEl);
+  var protectEl=document.querySelector('.protect');
+  if(protectEl){
+    var pBands=[].slice.call(protectEl.querySelectorAll('.band'));
+    var pSteps=[].slice.call(protectEl.querySelectorAll('.prot-step'));
+    var pTick=false;
+    function updateProtect(){
+      pTick=false;
+      var r=protectEl.getBoundingClientRect();
+      var total=r.height-window.innerHeight;
+      var p=total>0?Math.min(1,Math.max(0,-r.top/total)):1;
+      var step=p>=0.9?2:p>=0.45?1:0;
+      pBands.forEach(function(b,i){b.classList.toggle('on',i<=step);});
+      pSteps.forEach(function(s,i){s.classList.toggle('on',i===step);});
+    }
+    window.addEventListener('scroll',function(){
+      if(!pTick){pTick=true;requestAnimationFrame(updateProtect);}
+    },{passive:true});
+    updateProtect();
+  }
 
   // #11 — blueprint items
   anim('.pub-copy .sec-title,.pub-copy p,.pub-copy .btn','av-fadeUp');
