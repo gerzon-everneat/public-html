@@ -941,7 +941,7 @@
       var p=total>0?Math.min(1,Math.max(0,-r.top/total)):1;
       var step=p>=0.9?2:p>=0.45?1:0;
       pBands.forEach(function(b,i){b.classList.toggle('on',i<=step);});
-      pSteps.forEach(function(s,i){s.classList.toggle('on',i===step);});
+      pSteps.forEach(function(s,i){s.classList.toggle('on',i<=step);});
     }
     window.addEventListener('scroll',function(){
       if(!pTick){pTick=true;requestAnimationFrame(updateProtect);}
