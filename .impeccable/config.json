@@ -1,0 +1,16 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      "everneat-services/airbnb-cleaning/index.html"
+    ],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 1.56, .64, 1)",
+        "reason": "Value already replaced with cubic-bezier(.22,1,.36,1)",
+        "createdAt": "2026-07-24T13:10:59.736Z"
+      }
+    ]
+  }
+}
