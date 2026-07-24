@@ -203,8 +203,21 @@
 
   /* ---------- tailor strip ---------- */
   .tailor{padding:0 0 var(--pad)}
+  .carousel-wrap{position:relative}
+  .carousel-wrap::before,.carousel-wrap::after{content:"";position:absolute;top:0;bottom:12px;width:56px;z-index:2;pointer-events:none}
+  .carousel-wrap::before{left:0;background:linear-gradient(to right,#fff 40%,transparent)}
+  .carousel-wrap::after{right:0;background:linear-gradient(to left,#fff 40%,transparent)}
+  .car-btn{position:absolute;top:120px;z-index:3;width:44px;height:44px;border-radius:50%;
+    background:#fff;border:1px solid var(--border-strong,#d1d5db);display:grid;place-items:center;
+    cursor:pointer;font-size:18px;transition:background .15s,color .15s,opacity .15s;
+    box-shadow:0 2px 10px rgba(0,0,0,0.10);color:var(--ink)}
+  .car-btn:hover{background:var(--ink);color:#fff}
+  .car-btn[disabled]{opacity:.28;pointer-events:none}
+  .car-prev{left:-8px}
+  .car-next{right:-8px}
   .tailor-strip{display:flex;gap:18px;margin-top:48px;overflow-x:auto;padding-bottom:12px;
-    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tailor-strip::-webkit-scrollbar{display:none}
   .x-item{flex:0 0 236px;scroll-snap-align:start}
   .x-photo{height:300px;border-radius:8px;overflow:hidden;background:#e9ebe6}
   .x-photo img{width:100%;height:100%;object-fit:cover}
@@ -722,6 +735,9 @@
     <h2 class="sec-title">Tailor it to the turnover</h2>
     <p class="sec-intro">Mention any of these in chat. Each adds time to the visit; we quote it at your plan's rate when you book.</p>
 
+    <div class="carousel-wrap">
+    <button class="car-btn car-prev" aria-label="Previous add-ons" disabled>&#8592;</button>
+    <button class="car-btn car-next" aria-label="Next add-ons">&#8594;</button>
     <div class="tailor-strip">
       <div class="x-item">
         <div class="x-photo"><img src="../assets/airbnb-addon-fridge.jpg" alt="Line drawing of a refrigerator"></div>
@@ -754,6 +770,7 @@
         <div class="x-add"><span class="plus">+</span>add to turnover</div>
       </div>
     </div>
+    </div><!-- /carousel-wrap -->
   </div>
 </section>
 
@@ -1385,6 +1402,25 @@
 })();
 </script>
 <script>
+// tailor carousel arrows
+(function(){
+  var strip=document.querySelector('.tailor-strip');
+  var prev=document.querySelector('.car-prev');
+  var next=document.querySelector('.car-next');
+  if(!strip||!prev||!next) return;
+  var step=254; // item width (236) + gap (18)
+  function sync(){
+    var atStart=strip.scrollLeft<=0;
+    var atEnd=strip.scrollLeft>=strip.scrollWidth-strip.clientWidth-1;
+    prev.disabled=atStart;
+    next.disabled=atEnd;
+  }
+  prev.addEventListener('click',function(){strip.scrollBy({left:-step*3,behavior:'smooth'});});
+  next.addEventListener('click',function(){strip.scrollBy({left:step*3,behavior:'smooth'});});
+  strip.addEventListener('scroll',sync,{passive:true});
+  sync();
+})();
+
 // add-on picker: tap toggles the added state (prototype -- selection is visual only).
 // Runs outside the reduced-motion guard: this is functionality, not motion.
 (function(){
