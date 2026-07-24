@@ -2,7 +2,8 @@
   "detector": {
     "ignoreRules": [],
     "ignoreFiles": [
-      "everneat-services/airbnb-cleaning/index.html"
+      "everneat-services/airbnb-cleaning/index.html",
+      "everneat-services/office-cleaning/index.html"
     ],
     "ignoreValues": [
       {
@@ -12,5 +13,12 @@
         "createdAt": "2026-07-24T13:10:59.736Z"
       }
     ]
+  },
+  "hook": {
+    "enabled": true,
+    "limits": {
+      "maxFindings": 5,
+      "maxChars": 8000
+    }
   }
 }
