@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everneat LS — Campaign Boost Proposal</title><style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1a1a1a;--muted:#5f6368;--line:#e3e3df;--accent:#2d6a4f;--accent-soft:#e6f0eb;--code:#f0f0ec}
+@media (prefers-color-scheme:dark){:root{--bg:#161615;--card:#1f1f1e;--ink:#ececea;--muted:#a1a1a0;--line:#333331;--accent:#6fbf9a;--accent-soft:#1c2b25;--code:#28282a}}
+:root[data-theme=dark]{--bg:#161615;--card:#1f1f1e;--ink:#ececea;--muted:#a1a1a0;--line:#333331;--accent:#6fbf9a;--accent-soft:#1c2b25;--code:#28282a}
+:root[data-theme=light]{--bg:#f7f7f5;--card:#fff;--ink:#1a1a1a;--muted:#5f6368;--line:#e3e3df;--accent:#2d6a4f;--accent-soft:#e6f0eb;--code:#f0f0ec}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:40px 20px 90px}
+h1{font-size:1.75rem;line-height:1.25;margin:0 0 6px;border:0}
+h2{font-size:1.2rem;margin:34px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
+h3{font-size:1.02rem;margin:20px 0 8px}
+h4{font-size:.92rem;margin:16px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+p,li{margin:.5em 0}
+a{color:var(--accent)}
+strong{font-weight:650}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font:.85em ui-monospace,SFMono-Regular,Menlo,monospace}
+blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:8px}
+blockquote p{margin:.3em 0}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:10px 0;display:block;overflow-x:auto}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+ul,ol{padding-left:1.3em}
+</style></head>
+<body><div class="wrap"><h1>Proposal: Materials &amp; Actions Needed to Boost the Laundry Soap (LS) Campaign</h1>
+<p><strong>To:</strong> Everneat marketing / ops team · <strong>From:</strong> Ads ops · <strong>Date:</strong> 2026-07-24 · <strong>Status:</strong> Draft (rev 1, Codex-reviewed)</p>
+<blockquote>
+<p><strong>This is a template pending staffing.</strong> Owners/approvers are <code>&lt;TBD&gt;</code> by design — the ads team cannot assign Everneat personnel. <strong>The team lead must replace every <code>&lt;TBD&gt;</code> with a named individual + due date before this circulates for approval.</strong> Until then it is a scoping brief, not an executable plan.</p>
+</blockquote>
+<hr />
+<h2>1. Problem statement (a working hypothesis, not a settled fact)</h2>
+<p>All 6 LS Sponsored Products campaigns serve <strong>~0 impressions</strong>. Audits to date have found <strong>no blocking config/negative/bid-plumbing defect</strong> (structure diffed, negatives audited, bids present, buy box held, listing live) — but earlier diagnoses on this have been unstable, so this is "nothing found," not "impossible." The <strong>leading hypothesis</strong> is an <strong>ASIN-relevance / cold-listing</strong> limit (5 reviews, low velocity, $1.50–3.00 CPC category) — but this is <strong>not yet proven</strong>. A live fixed-bid isolate test resolves it:</p>
+<blockquote>
+<p><strong>HARD GATE — 2026-07-25 isolate verdict.</strong> If the isolated keyword gets impressions at ≤$2.50 fixed → a <strong>bid/auction</strong> lever is viable and this listing-led plan is scaled back. If it stays at zero at that ceiling → <strong>bid-only recovery is not supported at this ceiling; proceed to listing-side remediation unless further auction testing (higher ceiling / more terms) is approved.</strong> (One ceiling failing does not by itself <em>prove</em> relevance is the cause — it rules out cheap bid recovery.) <strong>Do not commit P0 spend on listing work until this gate is read.</strong></p>
+</blockquote>
+<p>Bid/budget changes alone are <strong>unproven</strong> and should not be scaled until the verdict is in. No blanket bid/budget increase is requested here.</p>
+<p><strong>Preparatory vs. committed work at the gate:</strong> <em>preparatory, reversible</em> work may begin before 07-25 (drafting copy, shooting images, running the Vine eligibility check, confirming inventory). <em>Financial or irreversible commitments</em> — reserving Vine units, publishing listing changes, releasing test budget — are <strong>blocked until the verdict is read.</strong></p>
+<h2>2. Confirmed vs. still-open</h2>
+<ul>
+<li><strong>Confirmed:</strong> buy box held, in stock, ASINs ELIGIBLE, listing live (5.0★/5 reviews), all campaigns ENABLED/"delivering", no blocking defect found in audits, siblings (OS/SR/DS) serve on <strong>similar</strong> account structure (per-type field diff not yet fully attached).</li>
+<li><strong>Still open (pending):</strong> isolate verdict (07-25); PDP/catalog audit (below); whether reviews are the <em>primary</em> vs a <em>contributing</em> limiter.</li>
+</ul>
+<h2>3. Ads-team pre-work (we deliver these BEFORE asking the team to decide)</h2>
+<p>So we're not asking for decisions on thin air. <strong>Split by dependency:</strong></p>
+<p><em>Deliverable now (no external dependency):</em>
+- Isolate-test verdict + written read-out (07-25).
+- <strong>PDP/catalog audit</strong>: category/browse node, variation structure, suppressed-attribute risk, listing↔query alignment (needs Seller Central access, §7 — request this first).</p>
+<p><em>Deliverable only after access is granted (prerequisite, not a promise):</em>
+- <strong>Keyword map</strong> with search volume + competitor PDP/query benchmark — <strong>blocked on keyword-tool access (§7); grant this before we commit a delivery date.</strong>
+- Competitor <strong>per-load price</strong> and post-coupon effective-price benchmark — needs Seller Central + keyword/market tool.</p>
+<h2>4. Inputs needed FROM Everneat (the actual ask)</h2>
+<p>Priority: <strong>P0</strong> = prerequisite/unblocks, <strong>P1</strong> = raises rank/CVR, <strong>P2</strong> = later. RACI: R=does it, A=approves.</p>
+<h3>A. Compliance gate (BLOCKS all copy/claims work — do first)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>R / A</th>
+<th>Due</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claims substantiation + approved phrasing list</strong> for "non-toxic", "plant-based", "enzyme", "baby-safe", "HE"</td>
+<td>R <code>&lt;TBD legal/brand&gt;</code> / A <code>&lt;TBD&gt;</code></td>
+<td><code>&lt;TBD&gt;</code></td>
+<td><strong>P0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>No title/bullet/image/keyword work using these claims proceeds until this list is signed off.</em></p>
+<h3>B. Listing content (Owner: Brand/Content — every visual asset also needs a content-compliance approver <code>&lt;TBD&gt;</code> confirming overlays / before-after / ingredient visuals are Amazon-TOS + claim-safe)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Spec / acceptance criteria</th>
+<th>R / A</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main image</strong></td>
+<td>Pure white bg (RGB 255), product fills ≥85% frame, ≥1600px, no text/badges (Amazon TOS)</td>
+<td><code>&lt;TBD&gt;</code> / <code>&lt;TBD&gt;</code></td>
+<td><strong>P0</strong></td>
+</tr>
+<tr>
+<td><strong>Title + bullets rewrite</strong></td>
+<td>Uses only §A-approved claims; front-loads primary keyword; 5 bullets, benefit-led</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td><strong>P0</strong></td>
+</tr>
+<tr>
+<td><strong>5–7 secondary images</strong></td>
+<td>Shot list: lifestyle, infographic (loads/value), how-to-use, size/dilution, ingredients, before/after</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>A+ / Brand Story</strong></td>
+<td>≥3 modules; claim-safe overlays</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Backend search terms</strong></td>
+<td>From the ads-team keyword map (§3); ≤250 bytes, no dupes</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Product video</strong></td>
+<td>≤30s, demo + claims</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td>P2</td>
+</tr>
+</tbody>
+</table>
+<h3>C. Reviews / velocity (Owner: Brand/Ops)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Prerequisite</th>
+<th>R / A</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vine enrollment</strong></td>
+<td>Readiness checklist: (1) <strong>eligibility check path</strong> — ASIN is FBA, brand-registered, &lt;30 existing reviews, adult/compliant category; (2) <strong>reserve ≤30 units</strong>; (3) <strong>min sellable inventory AFTER reservation ≥6 weeks cover</strong> (see §D — reserving units must not cause a stockout); (4) unit-cost impact <code>&lt;$&gt;</code>; (5) owner named</td>
+<td><code>&lt;TBD&gt;</code> / <code>&lt;TBD&gt;</code></td>
+<td><strong>P0</strong></td>
+</tr>
+<tr>
+<td>"Request a Review" cadence</td>
+<td>recent-orders list</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td>Review checkpoints</td>
+<td>staged heuristic (not a proven unlock): review at <strong>10 / 20 / 30</strong> reviews — measure ad-rank change at each, don't assume a single threshold</td>
+<td>ads-team</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3>D. Inventory (Owner: Ops) — prerequisite for any launch window</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>R / A</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>≥6 weeks of cover</strong> confirmed + reorder placed before boost starts (stockout mid-boost invalidates learnings)</td>
+<td><code>&lt;TBD&gt;</code></td>
+<td><strong>P0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>E. Pricing / offer (Owner: Ops/Finance)</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Detail</th>
+<th>R / A</th>
+<th>Pri</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pricing review</strong></td>
+<td>vs competitor <strong>price-per-load</strong>; confirm no "not competitive" flag</td>
+<td><code>&lt;TBD&gt;</code> / <code>&lt;TBD&gt;</code></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Coupon / Subscribe &amp; Save</strong></td>
+<td>define <strong>margin floor</strong>, allowable discount range, post-coupon effective price; approver named</td>
+<td><code>&lt;TBD finance&gt;</code></td>
+<td>P1</td>
+</tr>
+</tbody>
+</table>
+<h3>F. Phase 2 — channel expansion (OPTIONAL, only after SP recovery is proven)</h3>
+<p>Split out because these do <strong>not</strong> unblock the zero-impression SP problem:
+| Item | R / A | Pri |
+|---|---|---|
+| Brand logo (transparent PNG, Amazon specs) | <code>&lt;TBD design&gt;</code> | P2 |
+| SD custom creative (headline + lifestyle image) — API auto-creative is bug-blocked; manual/console only | <code>&lt;TBD&gt;</code> | P2 |
+| <strong>SD ad completion in console</strong> (60s) — needs named console operator + approved creative | <code>&lt;TBD console owner&gt;</code> | P2 |
+| Brand Registry confirmation (gates Sponsored Brands) | <code>&lt;TBD&gt;</code> | P2 |</p>
+<h2>5. Sequence (gated, not calendar-locked)</h2>
+<ol>
+<li><strong>07-25:</strong> read isolate verdict → <strong>decision gate</strong> (bid path vs listing path).</li>
+<li><strong>Test 1 — post-isolate AUCTION test</strong> (ads-side, immediate if verdict warrants): does a fixed bid clear on long-tail? Distinct from Test 2.</li>
+<li><strong>Gate A:</strong> claims substantiation signed off → unlocks all copy/image/keyword work.</li>
+<li><strong>P0 parallel:</strong> main image, title/bullets, Vine enrollment (variable latency — see below), inventory cover confirmed.</li>
+<li><strong>Reviews accrue (variable latency, weeks — NOT schedulable):</strong> earliest useful signal ~2–4 wks post-Vine; treat as a workstream, not a Week-2 milestone.</li>
+<li><strong>Test 2 — post-copy RELEVANCE test:</strong> after new copy + reviews land, ads team rebuilds keyword targets on approved claims and re-tests. Separate experiment from Test 1, separate baseline.</li>
+<li><strong>Phase 2 (optional):</strong> SD/SB once SP recovery is demonstrated.</li>
+</ol>
+<h2>6. Budget ask (guardrailed)</h2>
+<ul>
+<li>Existing $7–10/day caps <strong>unchanged</strong>.</li>
+<li>Contained <strong>test budget: ≤$75 total over 2 weeks</strong> funds <strong>Test 1 (post-isolate auction test)</strong> on named campaigns only (<code>LS-SP-EXACT-WINNERS</code> isolate + one long-tail campaign), <strong>max $5/day incremental</strong>, <strong>stop-loss: pause if $40 spent with 0 orders</strong>. Approver: <code>&lt;TBD budget owner&gt;</code>. (Test 2, the post-copy relevance test, is re-scoped separately once copy lands.)</li>
+<li>Vine: up to 30 free units + program fee (Ops to confirm unit-cost tolerance).</li>
+<li>This is a <strong>relevance investment</strong>, not a profitability play — elevated ACOS expected and accepted within the cap.</li>
+</ul>
+<h2>7. Access / tooling needed</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Why</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seller Central access</td>
+<td>buy-box %, inventory, pricing flags, Vine, PDP audit — Ads API can't read these</td>
+<td><code>&lt;TBD&gt;</code></td>
+</tr>
+<tr>
+<td>Keyword-volume tool (e.g. DataForSEO)</td>
+<td>Ads API lacks search volume for the keyword map</td>
+<td><code>&lt;TBD&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h2>8. Success metrics &amp; kill criteria (concrete, attributable)</h2>
+<p>Two separate decision cycles so causality isn't blurred:</p>
+<p><strong>Short-cycle (ad auction, ~1 week):</strong>
+- Exit-zero threshold: <strong>≥500 impressions AND ≥5 clicks AND ≥$5 spend</strong> on the isolate/long-tail over a 7-day window (0→trivial does NOT count).
+- CTR target uses an <strong>internal comparator, not an external benchmark we can't source:</strong> LS SP CTR should reach <strong>≥50% of the account's own OS/SR SP CTR</strong> (pull both from the same report, same placement mix, same window). Rationale: same account, same ad system, so it's an apples-to-apples floor.</p>
+<p><strong>Long-cycle (listing/reviews, ~4–8 weeks):</strong>
+- Reviews ≥20; <strong>CVR ≥ +30% vs the pre-intervention 4-week baseline</strong> and <strong>detail-page-view-rate ≥ +20% vs baseline</strong> (directional-but-measured, not "trend up").
+- LS-specific stage metrics (auction entry rate, CTR, CVR, CPC, TACOS contribution) — <strong>NOT</strong> parity with the OS line (different product/demand/economics).</p>
+<p><strong>Instrumentation (required):</strong> a dated <strong>experiment log</strong> capturing each intervention (listing edit, Vine date, price/coupon change, each ad test) with pre/post windows, so effects are attributable. Owner: ads team.</p>
+<p><strong>Kill criteria (staged by dated intervention, so attribution stays clean):</strong>
+- <em>Ad-side (07-25 + 3 days):</em> isolate still can't clear at ≤$2.50 fixed → no scaling of SP bids; pause and redirect.
+- <em>Listing-copy checkpoint (4 wks after copy+images publish, baseline = pre-publish):</em> if impressions/CTR haven't moved → copy/relevance is not the lever.
+- <em>Reviews checkpoint (4 wks after ≥20 reviews land, baseline = pre-Vine):</em> if CVR/impressions haven't moved → reviews weren't the limiter either → <strong>pause LS paid search, redirect to OS/SR/DS.</strong></p>
+<h2>9. Decisions requested</h2>
+<ol>
+<li>Approve <strong>Gate A</strong> (claims substantiation) + name owner/approver.</li>
+<li>Approve P0 materials (main image, copy, Vine, inventory cover) — assign R/A per row.</li>
+<li>Approve the <strong>≤$75 guardrailed</strong> test budget + name budget approver.</li>
+<li>Assign a <strong>Seller Central owner</strong> (buy-box, pricing, Vine, PDP audit).</li>
+<li>Grant keyword-tool access.</li>
+</ol>
+<h2>10. Risks / open questions</h2>
+<ul>
+<li>Price gap vs mass-market detergents is structural; images/reviews may not fully close CVR.</li>
+<li>Vine latency is weeks and variable — not a fast fix.</li>
+<li>Isolate verdict may flip the plan toward a bid lever (good problem to have).</li>
+<li>SD stays blocked until a human places the console creative.</li>
+</ul></div></body></html>
