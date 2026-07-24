@@ -3,7 +3,7 @@
 **Audited:** 2026-07-24  
 **Figma source:** `is60g7wqOcvweINNhvNUMT` (frame `7706:310`, HOME V2 1440px)  
 **Live URL:** https://gerzon-everneat.github.io/public-html/everneat-services/v2/  
-**Authority:** Figma has higher authority on colors, backgrounds, and component specs. User override on record: body background = `#fff` (white).
+**Authority:** Figma has higher authority on colors, backgrounds, and component specs. User override on record: body background = `#fff` (white — global bg is intentionally white; section-level card containers carry their own backgrounds).
 
 ---
 
@@ -56,40 +56,7 @@ Figma shows even right-edge text across these sections — consistent justified 
 
 ---
 
-### 3 · How-It-Works section — background color 🟡
-
-| | Figma | Live |
-|---|---|---|
-| Section background | Warm off-white (~`#f4f1ea`) | `#fff` (inherits white body) |
-| Stack cards | Appear slightly lighter than section bg | `--panel: #edeae2` (warm gray) |
-
-In Figma the section sits on a warm cream background with the cards appearing lighter on top. The live implementation is inverted: white background with warm-gray cards.
-
-**Action:** Add explicit background to `.how`:
-```css
-.how { background: var(--bg); }  /* --bg: #f4f1ea */
-```
-Also verify `.stack-card` background should be `var(--card)` (#fff) vs current `var(--panel)` (#edeae2).
-
----
-
-### 4 · Retail section — background color 🟡
-
-| | Figma | Live |
-|---|---|---|
-| Section background | Warm off-white (subtle, similar to `--bg`) | `#fff` (inherits white body) |
-
-Figma 06-retail shows the product image on the left and copy on the right against a slightly warm background — the same warm off-white as other content sections.
-
-**Action:** Add explicit background to `.retail`:
-```css
-.retail { background: var(--bg); padding: var(--pad) 0; }
-```
-(Remove the current `padding:0 0 var(--pad)` top-gap-only padding if the section gets its own bg.)
-
----
-
-### 5 · Days of Protection — label bar (prot-bar) saturation 🟡
+### 3 · Days of Protection — label bar (prot-bar) saturation 🟡
 
 | | Figma | Live |
 |---|---|---|
@@ -104,7 +71,7 @@ The Figma prot-bar reads as a true lime green, not the current warm olive. Once 
 
 ---
 
-### 6 · Compare section — "sec-intro" paragraph color 🟡
+### 4 · Compare section — "sec-intro" paragraph color 🟡
 
 | | Figma | Live |
 |---|---|---|
@@ -116,7 +83,7 @@ Looking at Figma 03-compare, the intro text appears slightly darker/stronger tha
 
 ---
 
-### 7 · Hero — photo overlay darkness 🟢
+### 5 · Hero — photo overlay darkness 🟢
 
 | | Figma | Live |
 |---|---|---|
@@ -131,7 +98,7 @@ background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.15) 50%, rgba(0
 
 ---
 
-### 8 · Published section — "Read The Protocol™" button style 🟢
+### 6 · Published section — "Read The Protocol™" button style 🟢
 
 | | Figma | Live |
 |---|---|---|
@@ -141,7 +108,7 @@ Figma 05-published shows the protocol button as an outlined oval/pill. Live uses
 
 ---
 
-### 9 · Mock card content drift (content, not design) 🟢
+### 7 · Mock card content drift (content, not design) 🟢
 
 | Mock | Figma | Live | Note |
 |---|---|---|---|
@@ -158,12 +125,10 @@ These are copy-level differences, not design mismatches. Flag with content owner
 |---|---|---|---|
 | 1 | Update `--lime`, `--lime-deep`, `--lime-soft` CSS variables | `index.html` `:root` | S |
 | 2 | Add `text-align:justify;text-align-last:left` to `.pub-copy p`, `.retail-copy p`, `.faq-a` | `index.html` CSS | S |
-| 3 | Add `background:var(--bg)` to `.how` section | `index.html` CSS | XS |
-| 4 | Add `background:var(--bg)` to `.retail` section | `index.html` CSS | XS |
-| 5 | Update `.prot-bar` gradient saturation (after #1) | `index.html` CSS | XS |
-| 6 | Verify `.sec-intro` color against Figma | — | XS |
-| 7 | Soften hero overlay gradient (optional) | `index.html` CSS | XS |
-| 8 | Verify copy — Nova quote price + cleaner dispatch line | `index.html` HTML | — |
+| 3 | Update `.prot-bar` gradient saturation (after #1) | `index.html` CSS | XS |
+| 4 | Verify `.sec-intro` color against Figma | — | XS |
+| 5 | Soften hero overlay gradient (optional) | `index.html` CSS | XS |
+| 6 | Verify copy — Nova quote price + cleaner dispatch line | `index.html` HTML | — |
 
 ---
 
