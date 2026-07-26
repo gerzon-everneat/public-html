@@ -84,7 +84,7 @@
   /* ---------- hero ---------- */
   .hero{position:relative;overflow:hidden;display:flex;align-items:center;
     min-height:min(90vh,880px);padding-bottom:56px;background:#cbc8c0}
-  .hero-media{position:absolute;inset:0;background:url(../assets/office-hero.jpg) center 40%/cover no-repeat}
+  .hero-media{position:absolute;inset:0;background:url(https://cdn.everneat.co/assets/services/office-cleaning/office-hero.jpg) center 40%/cover no-repeat}
   .hero-media::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.25) 50%,rgba(0,0,0,.34))}
   .hero-inner{position:relative;z-index:2;width:100%;color:#fff;padding-block:clamp(32px,7vh,72px);text-align:center}
@@ -139,7 +139,8 @@
   .compare{padding:var(--pad) 0}
   .cmp-grid{display:grid;grid-template-columns:502px 1fr;gap:48px;margin-top:52px;align-items:start}
   .cmp-photo{border-radius:15px;overflow:hidden;aspect-ratio:502/770}
-  .cmp-photo img{width:100%;height:100%;object-fit:cover}
+  /* ponytail: source is landscape, slot is portrait — hold the crop on the specialist (~41% across) */
+  .cmp-photo img{width:100%;height:100%;object-fit:cover;object-position:41% center}
   .cmp{border:1px solid #dfe2dc;border-radius:16px;overflow:hidden;background:var(--card)}
   .cmp-row{display:grid;grid-template-columns:1fr 128px 150px}
   .cmp-row+.cmp-row{border-top:1px solid #dfe2dc}
@@ -210,7 +211,7 @@
 
   /* ---------- testimonial ---------- */
   .testi{position:relative;overflow:hidden;color:#fff}
-  .testi-media{position:absolute;inset:0;background:url(../assets/office-testi-bg.jpg) center 55%/cover no-repeat}
+  .testi-media{position:absolute;inset:0;background:url(https://cdn.everneat.co/assets/services/office-cleaning/office-testi-bg.jpg) center 55%/cover no-repeat}
   .testi-media::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.55)}
   .testi-inner{position:relative;z-index:2;padding-block:clamp(64px,10vw,120px)}
   .testi-quote{font-weight:400;font-size:clamp(23px,3.3vw,46px);line-height:1.36;margin:0;max-width:1200px;letter-spacing:-.02em;color:#eff1ee}
@@ -452,7 +453,9 @@
   @media(max-width:760px){
     .nav-links,.nav-book{display:none}
     .nav-menu{display:block;margin-left:auto}
+    /* ponytail: specialist sits at the far right; centred cover crops her out entirely below ~760px */
     .hero{min-height:82vh}
+    .hero-media{background-position:right 40%}
     .hero-go{width:40px;height:40px}
     .hero-head{font-size:clamp(24px,6.6vw,30px)}
     .feature .pill{padding:5px 10px;font-size:9px}
@@ -518,7 +521,7 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="hero">
-  <div class="hero-media" role="img" aria-label="A bright, minimal open-plan office"></div>
+  <div class="hero-media" role="img" aria-label="An Everneat specialist vacuuming the lounge of a bright, minimal office"></div>
   <div class="hero-inner wrap">
     <p class="hero-cap">An office your team walks into clean</p>
     <h1 class="hero-head">My office needs a <span class="fill">standard<i>&#9662;</i></span> clean every <span class="fill">night<i>&#9662;</i></span><a class="hero-go" href="../book/" aria-label="Get started">&rarr;</a></h1>
@@ -565,7 +568,7 @@
     <p class="sec-intro">You're not buying a cleaning, you're buying the mornings after: a workspace that's ready, a team you trust with keys, and zero disruption to your day.</p>
 
     <div class="cmp-grid">
-      <div class="cmp-photo"><img src="../assets/office-compare.jpg" alt="A calm meeting room with a dark table and a pendant lamp"></div>
+      <div class="cmp-photo"><img src="https://cdn.everneat.co/assets/services/office-cleaning/office-compare.jpg" alt="An Everneat specialist wiping down a row of iMac workstations"></div>
       <div class="cmp">
         <div class="cmp-row cmp-head">
           <div class="cmp-crit"></div>
@@ -764,7 +767,7 @@
 
 <!-- ===================== TESTIMONIAL ===================== -->
 <section class="testi">
-  <div class="testi-media" role="img" aria-label="A warm, wood-lined office lounge"></div>
+  <div class="testi-media" role="img" aria-label="An Everneat specialist cleaning the glass wall of a wood-lined meeting room"></div>
   <div class="testi-inner wrap">
     <blockquote class="testi-quote">&ldquo;Our team stopped noticing the cleaning, which is the point. The office just feels ready every morning.&rdquo;</blockquote>
     <div class="testi-by">
@@ -898,7 +901,7 @@
 <!-- ===================== FAQ ===================== -->
 <section class="faq">
   <div class="wrap faq-grid">
-    <div class="faq-img"><img src="../assets/office-faq.jpg" alt="A bright office corner with plants and clean surfaces"></div>
+    <div class="faq-img"><img src="https://cdn.everneat.co/assets/services/office-cleaning/office-faq.jpg" alt="An Everneat specialist mopping a polished floor by a brownstone-facing window"></div>
     <div class="faq-list">
       <details class="faq-item" open>
         <summary>How is office cleaning priced?</summary>
