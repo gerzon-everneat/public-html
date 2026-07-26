@@ -44,7 +44,7 @@
   .tlink:hover{border-color:var(--ink)}
 
   /* ---------- nav ---------- */
-  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
+  .nav{position:sticky;top:0;z-index:50;background:#fff;backdrop-filter:blur(12px);
     border-bottom:1px solid rgba(0,0,0,.05)}
   .nav-in{display:flex;align-items:center;gap:24px;height:80px}
   .logo{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:.01em;color:var(--ink);text-decoration:none;line-height:1}
@@ -173,7 +173,7 @@
 <!-- ===================== NAV ===================== -->
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="logo" href="../v2/">everneat</a>
+    <a class="logo" href="../">everneat</a>
     <nav class="nav-links">
       <a href="../home-cleaning/">Home</a>
       <a href="../office-cleaning/">Office</a>
@@ -291,7 +291,7 @@
     <h2 class="cta-title">A cleaning that stays clean.</h2>
     <p class="cta-copy">Probiotic, plant-powered cleaning across NYC, Fairfield County, and NJ. Quote in 60 seconds. Pay when it's done. Happiness guaranteed.</p>
     <div class="cta-actions">
-      <a class="btn btn--lime" href="../v2/#services">Find your service&nbsp;&nbsp;&rarr;</a>
+      <a class="btn btn--lime" href="../#services">Find your service&nbsp;&nbsp;&rarr;</a>
       <a class="tlink" href="../contact/">Talk to a human</a>
     </div>
   </div>
@@ -345,7 +345,7 @@
   var nav=document.querySelector('.nav');
   window.addEventListener('scroll',function(){
     var y=window.scrollY;
-    nav.style.background=y>40?'rgba(255,255,255,0.97)':'';
+    nav.style.background=y>40?'#fff':'';
     nav.style.borderBottomColor=y>40?'rgba(0,0,0,0.10)':'';
   },{passive:true});
 
