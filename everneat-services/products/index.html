@@ -1,12 +1,15 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
+<!-- The shop lives on the main brand site. Canonical shop URL: https://www.everneat.co/
+     (www + trailing slash resolves in 0 redirects; the apex costs an extra hop.)
+     GitHub Pages cannot issue a 301, so this is an instant meta refresh plus a canonical.
+     Deliberately NO robots noindex: noindex would fight the canonical and stop the URL
+     consolidating into the shop. -->
+<meta http-equiv="refresh" content="0;url=https://www.everneat.co/">
+<link rel="canonical" href="https://www.everneat.co/">
 <title>Shop Products · Everneat</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>body{margin:0;font-family:Inter,sans-serif;background:#f4f1ea;color:#2b2925;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
-h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(34px,6vw,56px);margin:0 0 10px}
+<style>body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#f4f1ea;color:#2b2925;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}
 p{color:#6f6a5f;margin:0 0 28px;max-width:44ch}
-a{display:inline-block;background:#1c1b18;color:#fff;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:14px}
-small{display:block;margin-top:40px;color:#a09a8c;letter-spacing:.08em;text-transform:uppercase;font-size:11px}</style></head>
-<body><div><h1>Shop Products</h1><p>This page is being built from the Figma design. The internal-link architecture already works.</p>
-<a href="../">Back to homepage</a><small>everneat · placeholder</small></div></body></html>
+a{display:inline-block;background:#1c1b18;color:#fff;text-decoration:none;border-radius:999px;padding:12px 22px;font-size:14px}</style></head>
+<body><div><p>Everneat products have moved to our main site.</p>
+<a href="https://www.everneat.co/">Shop Everneat products</a></div></body></html>
