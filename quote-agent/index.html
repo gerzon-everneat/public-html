@@ -53,8 +53,15 @@
   .ratio b{font-weight:650}.ratio.pass b{color:var(--good)}.ratio.fail b{color:#df2020}
 
   /* ================= shared agent component ================= */
+  /* overscroll-behavior on the widget root is the one that matters. Putting it
+     only on the inner scrollers leaves ~70% of the surface — scrim, pinned
+     price, CTA, summary bar — passing the wheel straight to the document,
+     which drags the open overlay off screen. overflow:hidden already makes
+     this a scroll container, so `contain` here stops the chain for the whole
+     widget regardless of which part the pointer is over. */
   .agent{background:var(--canvas);color:var(--ink);border:1px solid var(--line);border-radius:14px;
-    box-shadow:0 1px 2px rgb(24 24 27 / .04),0 8px 24px -8px rgb(24 24 27 / .12);font-size:15px;overflow:hidden;position:relative}
+    box-shadow:0 1px 2px rgb(24 24 27 / .04),0 8px 24px -8px rgb(24 24 27 / .12);font-size:15px;
+    overflow:hidden;overscroll-behavior:contain;position:relative}
   .a-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex:none}
   .avatar{width:34px;height:34px;border-radius:9px;flex:none;background:var(--accent);color:var(--accent-ink);
     display:grid;place-items:center;font-weight:600;font-size:15px;transition:background .2s}
@@ -87,6 +94,12 @@
     cursor:pointer;transition:background .15s}
   .qcard-open:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
   .qcard-open:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+  /* A summary that omits the state the breakdown warns about is a summary that
+     lies. The old desktop rail showed "not applied" permanently; behind a click
+     it needs to surface on the card too, or the sighted user is told less than
+     the live region already tells a screen-reader user. */
+  .qcard-warn{display:none;margin:0;font-size:12.5px;font-weight:600;color:#b42318}
+  .qcard.warn .qcard-warn{display:block}
 
   /* ---- quote surface -----------------------------------------------------
      One paint. Both layouts now show only a live summary card in the chat and
@@ -104,11 +117,15 @@
     --q-cta-bg:#fff; --q-cta-ink:var(--rail); --q-cta-hover:#e4e4e7;
     background:var(--q-bg);color:var(--q-ink);display:flex;flex-direction:column;min-height:0}
 
-  /* Spacing tuned so the DEFAULT state does not scroll at 640px: 14px padding
-     + 14px gaps + 7px label offsets clears it by ~2px. Extra add-ons or a long
-     tenant frequency list scroll the controls only; price and CTA never move. */
-  .q-scroll{overflow-y:auto;overscroll-behavior:contain;padding:14px 20px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;flex:1;min-height:0}
-  .q-head{display:flex;align-items:center;gap:10px}
+  /* The controls are the only thing that scrolls: tier header, price and CTA are
+     all pinned outside this box, so extra add-ons or a long tenant frequency
+     list never move the number you are agreeing to or the button that commits
+     you to it. At 640px the default state clears without scrolling at all. */
+  .q-scroll{overflow-y:auto;overscroll-behavior:contain;padding:12px 20px 14px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;flex:1;min-height:0}
+  /* Pinned, like the price and CTA. The close button used to ride inside
+     .q-scroll, so on a long tenant list it scrolled out of reach and the only
+     way out was Escape or the scrim. An exit that can scroll away is not one. */
+  .q-head{flex:none;display:flex;align-items:center;gap:10px;padding:14px 20px 0}
   .q-head h3{margin:0;font-size:17px;font-weight:600}
   .pill{margin-left:auto;font:inherit;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
     padding:6px 11px;border-radius:999px;background:var(--q-fill);color:var(--q-ink);border:1px solid var(--q-border);cursor:pointer;transition:background .15s}
@@ -176,7 +193,13 @@
 
   /* ================= COMPACT (embed) layout ================= */
   .agent.compact{width:400px;height:548px;display:flex;flex-direction:column}
-  .agent.compact .quote{position:absolute;inset:auto 0 0 0;z-index:2;height:74%;border-radius:16px 16px 0 0;
+  /* 88%, not 74%: at 74 the default breakdown overflowed its own scroller by
+     ~240px — the "quote is too long" complaint restated inside the sheet.
+     At 88 it is ~165px, so it still scrolls; a full breakdown genuinely does
+     not fit in a 400×548 embed. What matters is that it is ONE contained
+     scroller, not the sheet and the host page moving together.
+     padding-bottom clears the summary bar, which stays tappable underneath. */
+  .agent.compact .quote{position:absolute;inset:auto 0 0 0;z-index:2;height:88%;border-radius:16px 16px 0 0;
     transform:translateY(101%);visibility:hidden;padding-bottom:74px;
     transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear .38s}
   .agent.compact.open .quote{transform:translateY(0);visibility:visible;transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear 0s}
@@ -201,9 +224,14 @@
   .agent.desktop .chat-col{flex:1;display:flex;flex-direction:column;min-height:0}
   .agent.desktop .msg{max-width:480px}
   .agent.desktop .qcard{align-self:flex-start;width:100%;max-width:480px}
-  .agent.desktop .quote{position:absolute;inset:0 0 0 auto;z-index:2;width:min(420px,100%);
+  /* 480px, wider than the 420px rail it replaces — otherwise "opens expanded"
+     is just "opens elsewhere". Below 760px it goes full-bleed: a 420px drawer
+     over a 600px widget leaves a 120px strip of chat that is not a usable
+     chat, only a mis-tap that closes the drawer. */
+  .agent.desktop .quote{position:absolute;inset:0 0 0 auto;z-index:2;width:min(480px,100%);
     box-shadow:-16px 0 40px -12px rgb(0 0 0 / .35);transform:translateX(102%);visibility:hidden;
     transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear .38s}
+  @media (max-width:760px){ .agent.desktop .quote{width:100%} }
   .agent.desktop.open .quote{transform:translateX(0);visibility:visible;
     transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear 0s}
   .composer{flex:none;border-top:1px solid var(--line);padding:14px 16px;display:flex;gap:8px;align-items:center}
@@ -255,7 +283,8 @@
 
   <div>
     <h2 class="sec">1 · Embedded widget (400px)</h2>
-    <p class="sec-note">The quote lives in a bottom sheet because there is no room beside the chat. Tap the summary bar to expand it.</p>
+    <p class="sec-note">The chat carries a live summary card; the full breakdown opens as a bottom sheet, from
+      either the summary bar or the card's “Adjust &amp; book”. Escape, the ×, or the scrim closes it.</p>
   </div>
 
   <div class="cols">
@@ -381,7 +410,9 @@
             '<div class="qcard-top"><span>Standard Plus · <span data-b="cad">Weekly</span></span><span class="live-tag">Live</span></div>' +
             '<div class="qcard-body"><p>Everything maintained + desk-by-desk detail</p>' +
               '<div class="qcard-row"><span>Per visit, tax included</span><b data-b="total">—</b></div>' +
-              '<button class="qcard-open" type="button" data-b="qopen" aria-expanded="false">Adjust &amp; book</button></div>' +
+              '<p class="qcard-warn" data-b="cardWarn"></p>' +
+              '<button class="qcard-open" type="button" data-b="qopen" aria-haspopup="dialog" ' +
+                'aria-controls="q'+id+'" aria-expanded="false">Adjust &amp; book</button></div>' +
           '</div>' +
         '</div>' +
         (isCompact ? '' :
@@ -389,10 +420,10 @@
       '</div>';
 
     var quote =
-      '<div class="quote">' +
+      '<div class="quote" id="q'+id+'" role="dialog" aria-modal="true" aria-label="Quote details">' +
+        '<div class="q-head"><h3>Standard Plus</h3><button class="pill" type="button">Change tier</button>' +
+          '<button class="q-close" data-b="qclose" type="button" aria-label="Close quote details">&times;</button></div>' +
         '<div class="q-scroll">' +
-          '<div class="q-head"><h3>Standard Plus</h3><button class="pill" type="button">Change tier</button>' +
-            '<button class="q-close" data-b="qclose" type="button" aria-label="Close quote details">&times;</button></div>' +
           '<div class="lines" data-b="lines"></div>' +
           '<div><div class="grp-label">How often</div>' +
             '<div class="cadence" role="radiogroup" aria-label="How often" data-b="cadence"></div></div>' +
@@ -406,7 +437,7 @@
       '</div>';
 
     var bar = !isCompact ? '' :
-      '<button class="bar" data-b="bar" type="button" aria-expanded="false">' +
+      '<button class="bar" data-b="bar" type="button" aria-haspopup="dialog" aria-controls="q'+id+'" aria-expanded="false">' +
         '<i class="grab"></i>' +
         '<span><span class="bar-label">Your quote</span><br><span class="bar-price" data-b="barPrice">—</span></span>' +
         '<span class="bar-mid" data-b="barMid">—</span>' +
@@ -427,7 +458,7 @@
     $('cadence').innerHTML = TENANT_FREQUENCIES.map(function(f,i){
       var key = freqValue(f.name), ok = isPriceable(key);
       // One line per row: name left, effect right. Two-line cards cost ~55px of
-      // vertical space the rail could not spare.
+      // vertical space, and the sheet is the tightest surface in the widget.
       var save = f.discount>0 ? (f.discountType==='amount' ? '−$'+f.discount : '−'+f.discount+'%') : '—';
       return '<label><input type="radio" name="cad-'+id+'" value="'+i+'"'+(key==='weekly'?' checked':'')+'>'+
         '<span class="'+(ok?'':'unpriced')+'"><span class="cad-name">'+f.name+'</span>'+
@@ -482,8 +513,12 @@
       });
 
       // The forensic explanation lives in the page's side panel, not inside a
-      // customer-facing mock. The card keeps the two-word state flag; the live
-      // region still announces it, because a screen-reader user has no card.
+      // customer-facing mock. The card and the breakdown both carry the short
+      // state flag, so closing the drawer cannot hide it; the live region still
+      // announces it, because a screen-reader user has no card.
+      root.querySelector('.qcard').classList.toggle('warn', !q.priceable);
+      $('cardWarn').textContent = q.priceable ? ''
+        : 'The ' + q.advertisedPct + '% ' + q.label + ' discount is not applied.';
 
       clearTimeout(liveTimer);
       liveTimer = setTimeout(function(){
@@ -496,10 +531,23 @@
     $('addons').addEventListener('change', render);
 
     var barEl = $('bar');   // compact only; desktop opens from the chat card
+    var quoteEl = root.querySelector('.quote'), headEl = root.querySelector('.a-head');
+    var chatEl = root.querySelector('.chat-col'), opener = barEl || $('qopen');
+
+    // `inert` does the job two ways at once, which is why it beats a hand-rolled
+    // focus trap here. Closed, the drawer is off-screen but its visibility stays
+    // `visible` for the whole 380ms slide-out (and, under reduced motion, for
+    // 380ms after it has already snapped away) — long enough to Tab into a
+    // control nobody can see, which then scrolls the whole widget sideways to
+    // reach it. Open, the chat behind an opaque scrim is still in the tab order,
+    // so Shift+Tab lands in a composer the user cannot click.
     function setOpen(open){
       root.classList.toggle('open', open);
       if (barEl) barEl.setAttribute('aria-expanded', String(open));
       $('qopen').setAttribute('aria-expanded', String(open));
+      quoteEl.inert = !open;
+      chatEl.inert = open;
+      headEl.inert = open;
       if (open) {
         var first = root.querySelector('input[name="cad-'+id+'"]:checked');
         // preventScroll is load-bearing: focusing inside an overflow:hidden container
@@ -507,16 +555,29 @@
         // bar out of place (measured 373px).
         if (first) first.focus({ preventScroll:true });
         root.querySelector('.q-scroll').scrollTop = 0;
-      } else (barEl || $('qopen')).focus({ preventScroll:true });
-      root.scrollTop = 0;
+      } else opener.focus({ preventScroll:true });
+      // Both axes: the compact sheet drags the widget vertically, the desktop
+      // drawer horizontally, and neither has a scrollbar to undo it by hand.
+      root.scrollTop = 0; root.scrollLeft = 0;
     }
-    if (barEl) barEl.addEventListener('click', function(){ setOpen(!root.classList.contains('open')); });
-    $('qopen').addEventListener('click', function(){ setOpen(true); });
+    // Return focus to whichever control opened it — compact has two openers now,
+    // and always returning to the bar strands a user who came from the card.
+    function openFrom(el){ opener = el; setOpen(true); }
+    if (barEl) barEl.addEventListener('click', function(){
+      if (root.classList.contains('open')) setOpen(false); else openFrom(barEl);
+    });
+    $('qopen').addEventListener('click', function(){ openFrom($('qopen')); });
     $('qclose').addEventListener('click', function(){ setOpen(false); });
     $('scrim').addEventListener('click', function(){ setOpen(false); });
+    // Scoped to this instance. Both widgets register on `document`, so an
+    // unscoped handler let one Escape close both — and let Escape pressed in
+    // the desktop composer collapse the unrelated compact sheet.
     document.addEventListener('keydown', function(e){
-      if (e.key === 'Escape' && root.classList.contains('open')) setOpen(false);
+      if (e.key !== 'Escape' || !root.classList.contains('open')) return;
+      var a = document.activeElement;
+      if (root.contains(a) || a === document.body) setOpen(false);
     });
+    quoteEl.inert = true;   // not setOpen(false): that would steal focus on load
     render();
   }
 
