@@ -98,11 +98,14 @@
   .pcard-meta span{font-size:14px;color:var(--muted)}
   /* outlet logotypes — cards are non-linking: placements are unverified, no fabricated URLs */
   .o-name{display:block;font-size:22px;line-height:1.25;color:var(--ink)}
-  .o-dom{font-family:var(--serif);font-weight:600;font-size:27px}
-  .o-ms{font-family:var(--serif);font-size:25px}
-  .o-at{font-weight:500}
-  .o-epi{font-family:var(--serif);font-style:italic;font-weight:600;font-size:26px}
-  .o-rs{font-weight:700;letter-spacing:.03em;font-size:20px}
+  /* real Drive artwork; raster marks capped at their intrinsic height so they never upscale */
+  .o-logo{display:block;width:auto}
+  .o-logo.o-at{height:34px}
+  .o-logo.o-ms{height:31px}
+  .o-logo.o-epi{height:30px}
+  .o-logo.o-dom{height:22px}
+  .o-logo.o-rs{height:19px}
+  /* ponytail: the kitchn + design+decor stay as text — no logo artwork in Drive yet */
   .o-kit{font-weight:600}
   .o-dd{font-family:var(--serif);font-size:25px}
   .p-empty{padding:0 var(--edge) 72px;max-width:1440px;margin-inline:auto;color:var(--ink2);font-size:16px}
@@ -215,27 +218,27 @@
   <article class="pcard av-scaleUp" data-cat="design" data-name="domino">
     <img src="../assets/press-card-1.jpg" alt="" loading="lazy">
     <div class="pcard-meta"><b>Design &amp; Home</b><span>Featured outlet</span></div>
-    <span class="o-name o-dom">domino</span>
+    <img class="o-logo o-dom" src="https://cdn.everneat.co/assets/press/domino.png" alt="Domino" width="124" height="22" loading="lazy">
   </article>
   <article class="pcard av-scaleUp" data-cat="life" data-name="martha stewart">
     <img src="../assets/press-card-2.jpg" alt="" loading="lazy">
     <div class="pcard-meta"><b>Lifestyle</b><span>Featured outlet</span></div>
-    <span class="o-name o-ms">Martha Stewart</span>
+    <img class="o-logo o-ms" src="https://cdn.everneat.co/assets/press/martha-stewart.png" alt="Martha Stewart" width="65" height="31" loading="lazy">
   </article>
   <article class="pcard av-scaleUp" data-cat="design" data-name="apartment therapy">
     <img src="../assets/press-card-3.jpg" alt="" loading="lazy">
     <div class="pcard-meta"><b>Design &amp; Home</b><span>Featured outlet</span></div>
-    <span class="o-name o-at">Apartment Therapy</span>
+    <img class="o-logo o-at" src="https://cdn.everneat.co/assets/press/apartment-therapy.svg" alt="Apartment Therapy" width="120" height="31" loading="lazy">
   </article>
   <article class="pcard av-scaleUp" data-cat="food" data-name="epicurious">
     <img src="../assets/press-card-2.jpg" alt="" loading="lazy">
     <div class="pcard-meta"><b>Food &amp; Kitchen</b><span>Featured outlet</span></div>
-    <span class="o-name o-epi">epicurious</span>
+    <img class="o-logo o-epi" src="https://cdn.everneat.co/assets/press/epicurious.svg" alt="Epicurious" width="120" height="25" loading="lazy">
   </article>
   <article class="pcard av-scaleUp" data-cat="life" data-name="real simple">
     <img src="../assets/press-card-3.jpg" alt="" loading="lazy">
     <div class="pcard-meta"><b>Lifestyle</b><span>Featured outlet</span></div>
-    <span class="o-name o-rs">REAL SIMPLE</span>
+    <img class="o-logo o-rs" src="https://cdn.everneat.co/assets/press/real-simple.png" alt="Real Simple" width="162" height="19" loading="lazy">
   </article>
   <article class="pcard av-scaleUp" data-cat="food" data-name="the kitchn">
     <img src="../assets/press-card-1.jpg" alt="" loading="lazy">
