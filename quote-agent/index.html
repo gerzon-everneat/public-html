@@ -8,8 +8,8 @@
   /* ============================================================
      Tokens lifted from the shipped system: booking-fe src/index.css (@theme)
      and src/styles/abstracts/_themes.scss. Two marked exceptions:
-     --good-on-dark (status green lightened for AA on the dark rail, which the
-     shipped system never needed) and this page's own chrome.
+     --good-on-dark (status green lightened for AA on the dark quote sheet,
+     which the shipped system never needed) and this page's own chrome.
      ============================================================ */
   :root {
     --canvas:#ffffff; --ink:#18181b; --rail:#171717; --line:#e4e4e7;
@@ -82,15 +82,19 @@
   .qcard-row{display:flex;justify-content:space-between;align-items:baseline;font-size:14px}
   .qcard-row b{font-weight:650;font-variant-numeric:tabular-nums}
   .live-tag{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-soft-ink);opacity:.75;margin-left:auto}
+  .qcard-open{margin-top:2px;align-self:flex-start;font:inherit;font-size:13px;font-weight:600;padding:6px 11px;border-radius:8px;
+    border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));background:transparent;color:var(--accent-soft-ink);
+    cursor:pointer;transition:background .15s}
+  .qcard-open:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+  .qcard-open:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
 
-  /* ---- quote surface : one component, two paints ------------------------
-     Compact keeps the dark sheet, where dark correctly connotes "overlay".
-     Desktop repaints LIGHT: in booking-fe #171717 is button ink, and a
-     permanent 380×535 slab of it outranks the conversation, which is the
-     product. It also forced two off-token colours into existence
-     (--good-on-dark, and a coral flag) purely to survive the dark ground.
-     Every colour below goes through a --q-* variable so the surface flips
-     without touching a single component rule. */
+  /* ---- quote surface -----------------------------------------------------
+     One paint. Both layouts now show only a live summary card in the chat and
+     open this sheet/drawer on demand, so the dark ground is always an overlay
+     — where dark correctly connotes "overlay". The old desktop rail was a
+     permanent slab of #171717 (button ink in booking-fe) that outranked the
+     conversation and needed a whole light repaint to survive; with no
+     permanent rail, that repaint and its off-token light colours are gone. */
   .quote{
     --q-bg:var(--rail); --q-ink:#fff; --q-dim:rgb(255 255 255 / .62);
     --q-line:rgb(255 255 255 / .13); --q-fill:rgb(255 255 255 / .05);
@@ -99,12 +103,6 @@
     --q-good:var(--good-on-dark); --q-flag:#ffb4a8;
     --q-cta-bg:#fff; --q-cta-ink:var(--rail); --q-cta-hover:#e4e4e7;
     background:var(--q-bg);color:var(--q-ink);display:flex;flex-direction:column;min-height:0}
-  .agent.desktop .quote{
-    --q-bg:var(--canvas); --q-ink:var(--ink); --q-dim:var(--muted-ink);
-    --q-line:var(--line); --q-fill:var(--muted); --q-fill-sel:var(--muted);
-    --q-border:var(--line); --q-border-sel:var(--ink); --q-mark:var(--ink);
-    --q-good:var(--good); --q-flag:#b42318;
-    --q-cta-bg:var(--accent); --q-cta-ink:var(--accent-ink); --q-cta-hover:var(--accent-hover)}
 
   /* Spacing tuned so the DEFAULT state does not scroll at 640px: 14px padding
      + 14px gaps + 7px label offsets clears it by ~2px. Extra add-ons or a long
@@ -115,6 +113,9 @@
   .pill{margin-left:auto;font:inherit;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
     padding:6px 11px;border-radius:999px;background:var(--q-fill);color:var(--q-ink);border:1px solid var(--q-border);cursor:pointer;transition:background .15s}
   .pill:hover{background:var(--q-fill-sel)} .pill:focus-visible{outline:2px solid var(--q-mark);outline-offset:2px}
+  .q-close{flex:none;width:30px;height:30px;border-radius:8px;border:0;background:transparent;color:var(--q-dim);
+    cursor:pointer;font-size:17px;line-height:1;display:grid;place-items:center;transition:background .15s}
+  .q-close:hover{background:var(--q-fill-sel)} .q-close:focus-visible{outline:2px solid var(--q-mark);outline-offset:1px}
 
   .lines{display:flex;flex-direction:column;gap:9px}
   .line{display:flex;justify-content:space-between;gap:16px;font-size:14px;align-items:baseline}
@@ -168,7 +169,7 @@
     font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:background .18s,transform .1s}
   .cta:hover{background:var(--q-cta-hover)} .cta:active{transform:translateY(1px)}
   .cta:focus-visible{outline:2px solid var(--q-mark);outline-offset:2px}
-  :root[data-palette="green"] .agent.compact .cta{background:var(--accent);color:var(--accent-ink)}
+  :root[data-palette="green"] .cta{background:var(--accent);color:var(--accent-ink)}
 
   .morph{display:inline-block;animation:pop .3s cubic-bezier(.2,.9,.3,1)}
   @keyframes pop{0%{opacity:.35;transform:translateY(-4px)}100%{opacity:1;transform:none}}
@@ -191,18 +192,20 @@
   .chev{display:inline-block;transition:transform .34s cubic-bezier(.2,.7,.3,1)}
   .agent.compact.open .chev{transform:rotate(180deg)}
   .scrim{position:absolute;inset:0;z-index:1;background:rgb(0 0 0 / .34);opacity:0;pointer-events:none;transition:opacity .3s}
-  .agent.compact.open .scrim{opacity:1;pointer-events:auto}
-  .agent.desktop .bar,.agent.desktop .scrim,.agent.desktop .grab{display:none}
+  .agent.open .scrim{opacity:1;pointer-events:auto}
 
   /* ================= DESKTOP layout ================= */
-  /* 420px rail: the dense column had the narrow track while five static
-     messages had the wide one. One seam between columns, not two. */
-  .agent.desktop{width:100%;max-width:1040px;height:640px;display:grid;grid-template-columns:1fr 420px;grid-template-rows:auto 1fr}
-  .agent.desktop .a-head{grid-column:1 / -1}
-  .agent.desktop .chat-col{display:flex;flex-direction:column;min-height:0}
-  .agent.desktop .quote{min-height:0;height:auto;border-left:1px solid var(--line)}
+  /* No permanent rail. The chat is the only scrolling surface until the
+     drawer opens; then the drawer owns the scroll. One scrollbar at a time. */
+  .agent.desktop{width:100%;max-width:1040px;height:640px;display:flex;flex-direction:column}
+  .agent.desktop .chat-col{flex:1;display:flex;flex-direction:column;min-height:0}
   .agent.desktop .msg{max-width:480px}
-  .agent.desktop .qcard{display:none}   /* the rail shows this total permanently */
+  .agent.desktop .qcard{align-self:flex-start;width:100%;max-width:480px}
+  .agent.desktop .quote{position:absolute;inset:0 0 0 auto;z-index:2;width:min(420px,100%);
+    box-shadow:-16px 0 40px -12px rgb(0 0 0 / .35);transform:translateX(102%);visibility:hidden;
+    transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear .38s}
+  .agent.desktop.open .quote{transform:translateX(0);visibility:visible;
+    transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear 0s}
   .composer{flex:none;border-top:1px solid var(--line);padding:14px 16px;display:flex;gap:8px;align-items:center}
   .composer input{flex:1;height:38px;border:1px solid var(--line);border-radius:9px;padding:0 12px;font:inherit;font-size:14px;color:var(--ink);background:var(--canvas)}
   .composer input:focus-visible{outline:2px solid var(--ring);outline-offset:1px}
@@ -214,9 +217,6 @@
   .agent.compact .chat-col{display:contents}
   .agent.compact .composer{display:none}
 
-  @media (max-width:1080px){ .agent.desktop{grid-template-columns:1fr;height:auto}
-    .agent.desktop .chat-col{border-bottom:1px solid var(--line);height:420px}
-    .agent.desktop .quote{border-left:0} }
   @media (max-width:460px){ .agent.compact{width:100%} }
   @media (prefers-reduced-motion:reduce){ *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important} }
 
@@ -294,15 +294,16 @@
   </div>
 
   <div>
-    <h2 class="sec">2 · Desktop: a persistent quote rail</h2>
+    <h2 class="sec">2 · Desktop: summary in chat, full quote in a drawer</h2>
     <p class="sec-note">
-      Same component, same pricing, no sheet. The promise here is narrow and keepable:
-      <b>the price and the booking button never move.</b> Options scroll if a tenant configures many
-      of them, but the number you are agreeing to, and the button that commits you to it, stay put.
-      An earlier version put the total mid-scroll, so touching a cadence pushed the price out of
-      view at the exact moment it changed. The rail is also light rather than dark: in this design
-      system <code>#171717</code> is button ink, and a permanent slab of it outranks the
-      conversation, which is the actual product.
+      Same pattern as the widget, one size up. The chat carries only the live summary card and is
+      the only thing that scrolls; “Adjust &amp; book” slides the full breakdown in as a drawer,
+      which then owns the scroll — never two scrollbars side by side. Inside the drawer the promise
+      is unchanged: <b>the price and the booking button never move.</b> Options scroll if a tenant
+      configures many of them, but the number you are agreeing to, and the button that commits you
+      to it, stay put. An earlier version kept a permanent quote rail beside the chat: it doubled
+      the scroll surfaces, and its full-height slab of <code>#171717</code> — button ink in this
+      design system — outranked the conversation, which is the actual product.
     </p>
   </div>
   <div class="agent desktop" id="desk"></div>
@@ -379,7 +380,8 @@
           '<div class="qcard" style="animation-delay:.68s">' +
             '<div class="qcard-top"><span>Standard Plus · <span data-b="cad">Weekly</span></span><span class="live-tag">Live</span></div>' +
             '<div class="qcard-body"><p>Everything maintained + desk-by-desk detail</p>' +
-              '<div class="qcard-row"><span>Per visit, tax included</span><b data-b="total">—</b></div></div>' +
+              '<div class="qcard-row"><span>Per visit, tax included</span><b data-b="total">—</b></div>' +
+              '<button class="qcard-open" type="button" data-b="qopen" aria-expanded="false">Adjust &amp; book</button></div>' +
           '</div>' +
         '</div>' +
         (isCompact ? '' :
@@ -389,7 +391,8 @@
     var quote =
       '<div class="quote">' +
         '<div class="q-scroll">' +
-          '<div class="q-head"><h3>Standard Plus</h3><button class="pill" type="button">Change tier</button></div>' +
+          '<div class="q-head"><h3>Standard Plus</h3><button class="pill" type="button">Change tier</button>' +
+            '<button class="q-close" data-b="qclose" type="button" aria-label="Close quote details">&times;</button></div>' +
           '<div class="lines" data-b="lines"></div>' +
           '<div><div class="grp-label">How often</div>' +
             '<div class="cadence" role="radiogroup" aria-label="How often" data-b="cadence"></div></div>' +
@@ -403,7 +406,6 @@
       '</div>';
 
     var bar = !isCompact ? '' :
-      '<div class="scrim" data-b="scrim"></div>' +
       '<button class="bar" data-b="bar" type="button" aria-expanded="false">' +
         '<i class="grab"></i>' +
         '<span><span class="bar-label">Your quote</span><br><span class="bar-price" data-b="barPrice">—</span></span>' +
@@ -415,7 +417,7 @@
       '<div class="a-head"><div class="avatar">e</div>' +
         '<div class="a-title"><strong>Everneat</strong><span><i class="dot"></i> Quote assistant</span></div>' +
         '<button class="a-close" type="button" aria-label="Close quote assistant">&times;</button></div>' +
-      chat + quote + bar +
+      chat + '<div class="scrim" data-b="scrim"></div>' + quote + bar +
       '<p data-b="live" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></p>';
 
     var $ = function(n){ return root.querySelector('[data-b="'+n+'"]'); };
@@ -493,27 +495,28 @@
     $('cadence').addEventListener('change', render);
     $('addons').addEventListener('change', render);
 
-    if (isCompact) {
-      var barEl = $('bar');
-      function setOpen(open){
-        root.classList.toggle('open', open);
-        barEl.setAttribute('aria-expanded', String(open));
-        if (open) {
-          var first = root.querySelector('input[name="cad-'+id+'"]:checked');
-          // preventScroll is load-bearing: focusing inside an overflow:hidden container
-          // still scrolls that container, which dragged the header, thread and sticky
-          // bar out of place (measured 373px).
-          if (first) first.focus({ preventScroll:true });
-          root.querySelector('.q-scroll').scrollTop = 0;
-        } else barEl.focus({ preventScroll:true });
-        root.scrollTop = 0;
-      }
-      barEl.addEventListener('click', function(){ setOpen(!root.classList.contains('open')); });
-      $('scrim').addEventListener('click', function(){ setOpen(false); });
-      document.addEventListener('keydown', function(e){
-        if (e.key === 'Escape' && root.classList.contains('open')) setOpen(false);
-      });
+    var barEl = $('bar');   // compact only; desktop opens from the chat card
+    function setOpen(open){
+      root.classList.toggle('open', open);
+      if (barEl) barEl.setAttribute('aria-expanded', String(open));
+      $('qopen').setAttribute('aria-expanded', String(open));
+      if (open) {
+        var first = root.querySelector('input[name="cad-'+id+'"]:checked');
+        // preventScroll is load-bearing: focusing inside an overflow:hidden container
+        // still scrolls that container, which dragged the header, thread and sticky
+        // bar out of place (measured 373px).
+        if (first) first.focus({ preventScroll:true });
+        root.querySelector('.q-scroll').scrollTop = 0;
+      } else (barEl || $('qopen')).focus({ preventScroll:true });
+      root.scrollTop = 0;
     }
+    if (barEl) barEl.addEventListener('click', function(){ setOpen(!root.classList.contains('open')); });
+    $('qopen').addEventListener('click', function(){ setOpen(true); });
+    $('qclose').addEventListener('click', function(){ setOpen(false); });
+    $('scrim').addEventListener('click', function(){ setOpen(false); });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && root.classList.contains('open')) setOpen(false);
+    });
     render();
   }
 
