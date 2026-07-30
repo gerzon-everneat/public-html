@@ -249,7 +249,7 @@
   .price small{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted);margin-left:5px}
 
   .id{display:flex;align-items:center;gap:14px;margin-bottom:6px}
-  .avatar{width:52px;height:52px;border-radius:50%;flex:none;background:linear-gradient(135deg,#dcc8ad,#b79aa0)}
+  .avatar{width:52px;height:52px;border-radius:50%;flex:none;object-fit:cover}
   .id .n{font-weight:500;font-size:16px}
   .id .s{font-size:13px;color:var(--muted)}
   .brow{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;font-size:14px}
@@ -692,7 +692,7 @@
             <div class="mock-head"><span class="mock-title">Your cleaner</span><span class="mock-tag">Dispatched</span></div>
             <hr class="mock-div">
             <div class="id">
-              <span class="avatar"></span>
+              <img class="avatar" src="assets/cleaner-avatar.jpg" alt="Jazmin, lead cleaner" width="52" height="52" loading="lazy">
               <div><div class="n">Jazmin</div><div class="s">Lead cleaner · 640 visits · 4.9★</div></div>
             </div>
             <hr class="mock-div">
