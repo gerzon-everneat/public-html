@@ -307,17 +307,15 @@
   /* ---------- FAQ ---------- */
   .faq{padding:0 0 var(--pad)}
   .faq-grid{display:grid;grid-template-columns:502px 1fr;gap:64px;align-items:start}
-  .faq-img{border-radius:32px;overflow:hidden;aspect-ratio:502/724}
+  .faq-img{border-radius:20px;overflow:hidden;aspect-ratio:502/724}
   .faq-img img{width:100%;height:100%;object-fit:cover}
-  .faq-item{border:1px solid var(--ink);border-bottom:none;background:var(--bg);overflow:hidden}
-  .faq-item:first-of-type{border-radius:16px 16px 0 0}
-  .faq-item:last-of-type{border-radius:0 0 16px 16px;border-bottom:1px solid var(--ink)}
+  .faq-item{border:1px solid var(--line2);border-radius:14px;background:var(--card);margin-bottom:12px;overflow:hidden}
   .faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;
-    padding:26px 24px;font-size:clamp(17px,1.5vw,22px);font-weight:600;letter-spacing:-.01em;line-height:1.18;color:#15171a}
+    padding:24px 26px;font-size:18px;font-weight:500;color:var(--ink)}
   .faq-item summary::-webkit-details-marker{display:none}
-  .faq-item summary::after{content:"+";font-size:22px;font-weight:400;color:#15171a;line-height:1;flex:none}
+  .faq-item summary::after{content:"+";font-size:26px;font-weight:400;color:var(--muted);line-height:1}
   .faq-item[open] summary::after{content:"\2013"}
-  .faq-a{padding:0 24px 28px;color:#464a48;font-size:clamp(15px,1.25vw,18px);line-height:1.5;max-width:760px;text-align:justify;text-align-last:left}
+  .faq-a{padding:0 26px 26px;color:var(--ink2);font-size:15px;line-height:1.62;max-width:720px;text-align:justify;text-align-last:left}
 
   /* ---------- CTA + footer (dark) ---------- */
   .dark{background:var(--dark);color:#e8e5dd}
