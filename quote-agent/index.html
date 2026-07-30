@@ -200,7 +200,7 @@
      scroller, not the sheet and the host page moving together.
      padding-bottom clears the summary bar, which stays tappable underneath. */
   .agent.compact .quote{position:absolute;inset:auto 0 0 0;z-index:2;height:88%;border-radius:16px 16px 0 0;
-    transform:translateY(101%);visibility:hidden;padding-bottom:74px;
+    transform:translateY(101%);visibility:hidden;padding-bottom:88px;
     transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear .38s}
   .agent.compact.open .quote{transform:translateY(0);visibility:visible;transition:transform .38s cubic-bezier(.22,.9,.28,1),visibility 0s linear 0s}
   .bar{flex:none;position:relative;z-index:3;width:100%;border:0;text-align:left;background:var(--rail);color:#fff;
@@ -208,10 +208,19 @@
   .bar:focus-visible{outline:2px solid #fff;outline-offset:-4px}
   .grab{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:34px;height:3px;border-radius:2px;background:rgb(255 255 255 / .28)}
   .bar-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgb(255 255 255 / .62)}
-  .bar-price{font-size:25px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
-  .bar-price small{font-size:13px;font-weight:500;color:rgb(255 255 255 / .62);margin-left:3px}
-  .bar-mid{font-size:13px;color:rgb(255 255 255 / .68);margin-left:4px}
-  .bar-cta{margin-left:auto;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+  /* The sheet reserves a fixed 88px for this bar (padding-bottom above), so the
+     bar must not grow past it. The bar measures 81px at every width once its
+     parts stay on one line; below ~430px the price and the tier label were
+     wrapping, pushing it to 111px and hiding 25px of the CTA behind it. The
+     reservation was 74px — under the bar's real height even on desktop, so the
+     CTA cleared by a few pixels by luck rather than by design. */
+  .bar-price{font-size:25px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap}
+  .bar-price small{font-size:13px;font-weight:500;color:rgb(255 255 255 / .62);margin-left:3px;white-space:nowrap}
+  .bar-mid{font-size:13px;color:rgb(255 255 255 / .68);margin-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .bar-cta{margin-left:auto;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  /* Narrow embeds cannot fit price + tier + affordance on one line. The tier is
+     the droppable one: it is already the first line of the chat summary card. */
+  @media (max-width:430px){ .bar-mid{display:none} }
   .chev{display:inline-block;transition:transform .34s cubic-bezier(.2,.7,.3,1)}
   .agent.compact.open .chev{transform:rotate(180deg)}
   .scrim{position:absolute;inset:0;z-index:1;background:rgb(0 0 0 / .34);opacity:0;pointer-events:none;transition:opacity .3s}
