@@ -162,15 +162,21 @@
   .protect-stage{position:relative;overflow:hidden;background:#d7d2c6;
     min-height:clamp(420px,70vh,640px)}
   .phase-scene{position:absolute;inset:0}
-  .phase-scene>img,.phase-scene>video{width:100%;height:100%;object-fit:cover;object-position:center 45%}
-  /* Scrim: opaque enough behind the copy to hold contrast, gone by the midpoint so the
-     film reads clean. Sized off the copy block, not the stage, so it scales with the type. */
-  .protect-veil{position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.92) 16%,
-      rgba(255,255,255,.62) 28%,rgba(255,255,255,.2) 40%,rgba(255,255,255,0) 52%)}
+  /* absolute, not static: both children are 100%x100%, so in normal flow the video lays out
+     *after* the poster and lands entirely below the stage, clipped and invisible. */
+  .phase-scene>img,.phase-scene>video{position:absolute;inset:0;
+    width:100%;height:100%;object-fit:cover;object-position:center 45%}
+  /* Scrim is left-anchored and does not span the section: it is strong for the first ~15%
+     where the type starts, then falls away, leaving the right half of the film untouched.
+     Width tracks .protect-copy's measure so the type always sits on backing. */
+  .protect-veil{position:absolute;top:0;bottom:0;left:0;width:min(46%,660px);pointer-events:none;
+    background:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.94) 30%,
+      rgba(255,255,255,.85) 60%,rgba(255,255,255,.55) 85%,rgba(255,255,255,0) 100%)}
   .protect-copy{position:absolute;top:0;left:0;right:0;z-index:2;
     padding:clamp(28px,4.5vw,64px) var(--edge) 0}
-  .protect-copy .sec-intro{max-width:640px}
+  /* Measure is capped so the type ends well inside the scrim rather than trailing off its
+     soft edge onto busy footage. */
+  .protect-copy .sec-intro{max-width:460px}
   .phase-scene>video{opacity:0;transition:opacity .5s ease}
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
@@ -453,6 +459,11 @@
     /* relative, not static: .phase-scene / veil / copy are absolute and would otherwise
        escape to the viewport. This only needs to undo the sticky pin, not the containing block. */
     .protect-stage{position:relative;top:auto;height:auto;min-height:clamp(420px,70vh,640px)}
+    /* The copy uses the full measure at these widths, so a left-anchored scrim would leave
+       its right half unbacked. Full width with a vertical falloff instead. */
+    .protect-veil{width:100%;background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,
+      rgba(255,255,255,.9) 24%,rgba(255,255,255,.5) 44%,rgba(255,255,255,0) 62%)}
+    .protect-copy .sec-intro{max-width:none}
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
     .phase-desc .pb{opacity:1}
