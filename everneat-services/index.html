@@ -166,22 +166,23 @@
      *after* the poster and lands entirely below the stage, clipped and invisible. */
   .phase-scene>img,.phase-scene>video{position:absolute;inset:0;
     width:100%;height:100%;object-fit:cover;object-position:center 45%}
-  /* Scrim is left-anchored and does not span the section: it is strong for the first ~15%
-     where the type starts, then falls away, leaving the right half of the film untouched.
-     Width tracks .protect-copy's measure so the type always sits on backing. */
-  .protect-veil{position:absolute;top:0;bottom:0;left:0;width:min(40%,560px);pointer-events:none;
-    background:linear-gradient(90deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.78) 38%,
-      rgba(255,255,255,.45) 70%,rgba(255,255,255,0) 100%)}
+  /* Scrim is an ellipse centred on the copy mass rather than a band across the section, so
+     it falls off in every direction — the right half and the whole lower half of the film
+     stay untouched. Centre tracks where the type actually sits (~17%/17% of the stage);
+     move the copy and this must move with it. */
+  .protect-veil{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 32% 34% at 17% 17%,
+      rgba(255,255,255,.92) 0%,rgba(255,255,255,.84) 34%,
+      rgba(255,255,255,.5) 64%,rgba(255,255,255,.18) 84%,rgba(255,255,255,0) 100%)}
   .protect-copy{position:absolute;top:0;left:0;right:0;z-index:2;
     padding:clamp(28px,4.5vw,64px) var(--edge) 0}
   /* A local white halo does the legibility work the scrim used to, which is what lets the
      scrim stay light enough to see the film through. */
   .protect-copy .sec-title,.protect-copy .sec-intro{
     text-shadow:0 1px 2px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.95),0 0 38px rgba(255,255,255,.7)}
-  /* Measure is capped so the standfirst ends inside the scrim's strong zone instead of
-     trailing onto bare footage. Measured: past ~x400 contrast drops under 4.5:1, so this
-     is a legibility constraint, not a taste one — widen it and the tail fails AA. */
-  .protect-copy .sec-intro{max-width:360px}
+  /* The elliptical scrim holds contrast well past where the old linear band fell away, so
+     the measure no longer has to be clipped short to stay legible. */
+  .protect-copy .sec-intro{max-width:460px}
   .phase-scene>video{opacity:0;transition:opacity .5s ease}
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
