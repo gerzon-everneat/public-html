@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meridian Offices — commercial cleaning</title>
+<meta name="description" content="A stand-in customer site showing the Everneat quote assistant embedded with two lines of HTML.">
+<style>
+  :root{
+    --ink:#16161a; --dim:#5a5a64; --faint:#8c8c96; --line:#e7e7ec; --card:#fff;
+    --brand:#0f7d5c; --ground:#fff;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--ink:#ececf1;--dim:#a6a6b0;--faint:#75757f;--line:#28282f;--card:#17171b;--ground:#0f0f12}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.6}
+  header{display:flex;align-items:center;gap:11px;padding:20px 34px;border-bottom:1px solid var(--line)}
+  .logo{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;display:grid;
+    place-items:center;font-weight:700}
+  nav{margin-left:auto;display:flex;gap:24px;font-size:14px;color:var(--dim)}
+  @media (max-width:640px){nav{display:none}}
+  main{max-width:860px;margin:0 auto;padding:64px 24px 96px}
+  h1{font-size:clamp(32px,6vw,46px);line-height:1.08;letter-spacing:-.028em;margin:0 0 16px;max-width:17ch}
+  .lede{font-size:18px;color:var(--dim);max-width:54ch;margin:0}
+  .note{margin-top:26px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);
+    font-size:14px;color:var(--dim);max-width:62ch}
+  .note b{color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:56px}
+  .card{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--card)}
+  .card h3{margin:0 0 6px;font-size:15px}
+  .card p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.55}
+  .snippet{margin-top:56px}
+  .snippet h2{font-size:14px;margin:0 0 10px}
+  pre{margin:0;background:#17171b;color:#ececf1;border-radius:10px;padding:15px 17px;overflow-x:auto;
+    font-family:var(--mono);font-size:12.5px;line-height:1.6}
+  footer{border-top:1px solid var(--line);padding:22px 34px;font-size:12.5px;color:var(--faint)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">M</div><strong>Meridian Offices</strong>
+    <nav><span>Services</span><span>Pricing</span><span>Contact</span></nav>
+  </header>
+
+  <main>
+    <h1>Commercial cleaning, priced in a minute.</h1>
+    <p class="lede">
+      This page is not a product page. It stands in for a customer's own website, so the quote assistant
+      can be seen where it actually runs — on someone else's domain, in an iframe, with no login.
+    </p>
+
+    <div class="note">
+      <b>Look bottom-right.</b> Everything on this page is Meridian's except the two lines at the end of the
+      source. Click <b>Get a quote</b> and describe a space — for example
+      &ldquo;4,000 sq ft office, about 20 desks&rdquo;.
+    </div>
+
+    <div class="grid">
+      <div class="card"><h3>Nightly</h3><p>Desks, floors and washrooms after hours.</p></div>
+      <div class="card"><h3>Deep clean</h3><p>Quarterly detail on everything that gets missed.</p></div>
+      <div class="card"><h3>Turnover</h3><p>Between tenancies, photographed on completion.</p></div>
+    </div>
+
+    <section class="snippet">
+      <h2>The entire integration</h2>
+      <pre>&lt;quote-agent&gt;&lt;/quote-agent&gt;
+&lt;script src="https://everneat.neatr.ai/v2/embed.js"&gt;&lt;/script&gt;</pre>
+    </section>
+  </main>
+
+  <footer>Demo page — Everneat quote assistant embedded on a stand-in tenant site.</footer>
+
+  <!-- ── the entire integration ─────────────────────────────────────────── -->
+  <quote-agent></quote-agent>
+  <script src="https://everneat.neatr.ai/v2/embed.js"></script>
+  <!-- ───────────────────────────────────────────────────────────────────── -->
+</body>
+</html>
