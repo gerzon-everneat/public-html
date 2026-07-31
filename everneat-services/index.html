@@ -934,10 +934,11 @@
   stagger('.cmp-row:not(.cmp-head)','av-slideLeft',45);
 
   // #9 — days of protection: the technology film, scrubbed by scroll position
-  // ponytail: technique lifted from oso95/scroll-world's scrub-engine — blob src (seekable
-  // without server byte-range support), rAF lerp toward the target time (this is the actual
-  // "smooth"; jamming currentTime straight from the scroll handler stutters), and never
-  // queueing a seek while the decoder is still `seeking`. Skipped mounting the engine
+  // ponytail: technique lifted from oso95/scroll-world's scrub-engine (MIT, (c) 2026 cyw) —
+  // blob src (seekable without server byte-range support), rAF lerp toward the target time
+  // (this is the actual "smooth"; jamming currentTime straight from the scroll handler
+  // stutters), and never queueing a seek while the decoder is still `seeking`. The lerp
+  // factor and seek epsilon below are their tuned values. Skipped mounting the engine
   // itself: it's a fixed-position full-page takeover with its own nav, copy layer and
   // progress bar, which would fight this page. Revisit if we ever build a standalone
   // scroll site. Mobile/reduced-motion never fetch the clip — the sticky scrub is already
