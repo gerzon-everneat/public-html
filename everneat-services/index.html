@@ -423,7 +423,9 @@
     /* ponytail: the protection bar's 3 columns leave ~80px each here, so the copy
        clipped mid-word against height:88px + overflow:hidden. Stack and let it grow.
        Sequential dimming only reads side-by-side, so all three stay lit when stacked. */
-    .phase-scene{height:min(38vh,320px);margin-bottom:0}
+    /* No height here: .phase-scene carries aspect-ratio, so a definite height would make
+       width derive from it and overflow the viewport. Let the ratio set the height. */
+    .phase-scene{margin-bottom:0}
     .prot-bar{flex-direction:column;height:auto}
     .prot-step{flex:none;padding:13px 18px;border-right:none;
       border-bottom:1px solid rgba(255,255,255,.32);opacity:1}
@@ -443,7 +445,6 @@
     .protect{height:auto;padding:var(--pad) 0}
     .protect .wrap{position:static;min-height:0;display:block}
     .protect .phases{margin-top:40px}
-    .protect .phase-scene{height:min(60vw,420px)}
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
     .phase-desc .pb{opacity:1}
