@@ -153,23 +153,30 @@
 
   /* ---------- days of protection ---------- */
   .protect{background:var(--cream);padding:var(--pad) 0}
-  /* The scene box is pinned to the film's own aspect ratio so no part of the frame is
-     cropped, and the width cap derives from the same ratio so the block still fits inside
-     the pinned viewport on tall screens. Both numbers track assets/protect-tech.mp4 —
-     update them together if the clip is ever re-encoded at different dimensions. */
-  .phases{position:relative;margin:52px auto 0;overflow:hidden;border-radius:16px;
-    max-width:calc(min(55vh,580px) * 1320 / 740)}
-  .phase-scene{position:relative;aspect-ratio:1320/740;margin-bottom:-88px;
-    border-radius:16px;overflow:hidden;background:#d7d2c6}
-  .phase-scene>img,.phase-scene>video{position:absolute;inset:0;width:100%;height:100%}
-  .phase-scene>img{object-fit:cover}
-  .phase-scene>video{object-fit:contain}
+  /* The film IS the section: a full-bleed stage with the copy laid over it behind a white
+     scrim, so the footage stays visible and the type stays legible. Full-bleed means the
+     film must cover (and therefore crop) — the stage is far wider than the clip's 1.78:1.
+     object-position keeps the spray in frame as the top/bottom go. */
+  /* .phase-scene is absolute, so the stage carries its own height. The pinned rule below
+     overrides this with the viewport height; this is the static (mobile / reduced-motion) size. */
+  .protect-stage{position:relative;overflow:hidden;background:#d7d2c6;
+    min-height:clamp(420px,70vh,640px)}
+  .phase-scene{position:absolute;inset:0}
+  .phase-scene>img,.phase-scene>video{width:100%;height:100%;object-fit:cover;object-position:center 45%}
+  /* Scrim: opaque enough behind the copy to hold contrast, gone by the midpoint so the
+     film reads clean. Sized off the copy block, not the stage, so it scales with the type. */
+  .protect-veil{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.88) 22%,
+      rgba(255,255,255,.55) 40%,rgba(255,255,255,.16) 56%,rgba(255,255,255,0) 70%)}
+  .protect-copy{position:absolute;top:0;left:0;right:0;z-index:2;
+    padding:clamp(28px,4.5vw,64px) var(--edge) 0}
+  .protect-copy .sec-intro{max-width:640px}
   .phase-scene>video{opacity:0;transition:opacity .5s ease}
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
   .phase-scene.has-clip>img{opacity:0}
   .prot-bar{display:flex;background:linear-gradient(to right,rgba(200,255,0,0.72),rgba(200,255,0,0.42));
-    border-radius:16px 16px 0 0;overflow:hidden;height:88px;position:relative;z-index:1}
+    overflow:hidden;height:88px;position:absolute;left:0;right:0;bottom:0;z-index:2}
   .prot-step{flex:1;min-width:0;padding:0 22px;display:flex;flex-direction:column;justify-content:center;gap:5px;
     border-right:1px solid rgba(255,255,255,0.32)}
   .prot-step:last-child{border-right:none}
@@ -177,9 +184,7 @@
   .prot-step p{margin:0;font-size:12px;line-height:1.35;color:#383829}
   @media (prefers-reduced-motion:no-preference){
     .protect{height:280vh;padding:0}
-    .protect .wrap{position:sticky;top:80px;min-height:calc(100vh - 80px);
-      display:flex;flex-direction:column;justify-content:center}
-    .protect .phases{margin-top:32px}
+    .protect-stage{position:sticky;top:80px;height:calc(100vh - 80px);min-height:0}
     .prot-step{opacity:0.28;transition:opacity .4s ease}
     .prot-step:first-child{opacity:1}
     .prot-step.on{opacity:1}
@@ -423,10 +428,9 @@
     /* ponytail: the protection bar's 3 columns leave ~80px each here, so the copy
        clipped mid-word against height:88px + overflow:hidden. Stack and let it grow.
        Sequential dimming only reads side-by-side, so all three stay lit when stacked. */
-    /* No height here: .phase-scene carries aspect-ratio, so a definite height would make
-       width derive from it and overflow the viewport. Let the ratio set the height. */
-    .phase-scene{margin-bottom:0}
-    .prot-bar{flex-direction:column;height:auto}
+    /* Stacked, the bar is ~220px tall — overlaid on the stage that leaves almost no clear
+       film between it and the copy. Let it flow below the stage instead. */
+    .prot-bar{position:static;flex-direction:column;height:auto}
     .prot-step{flex:none;padding:13px 18px;border-right:none;
       border-bottom:1px solid rgba(255,255,255,.32);opacity:1}
     .prot-step:last-child{border-bottom:none}
@@ -443,8 +447,12 @@
   /* <=900px: pinned scrub degrades to the static 3-step section */
   @media (max-width:900px){
     .protect{height:auto;padding:var(--pad) 0}
-    .protect .wrap{position:static;min-height:0;display:block}
-    .protect .phases{margin-top:40px}
+    /* min-height is restated because the pinned rule zeroes it and that block is not
+       width-scoped; without this the stage collapses to its content (0 where the bar is
+       still absolute) since .phase-scene is absolutely positioned. */
+    /* relative, not static: .phase-scene / veil / copy are absolute and would otherwise
+       escape to the viewport. This only needs to undo the sticky pin, not the containing block. */
+    .protect-stage{position:relative;top:auto;height:auto;min-height:clamp(420px,70vh,640px)}
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
     .phase-desc .pb{opacity:1}
@@ -578,19 +586,19 @@
 
 <!-- ===================== DAYS OF PROTECTION ===================== -->
 <section class="protect" id="protection">
-  <div class="wrap">
-    <h2 class="sec-title">Days of protection</h2>
-    <p class="sec-intro">Most cleans are gone by dinner. Everneat keeps working for three days after we leave.</p>
-
-    <div class="phases">
-      <div class="phase-scene">
-        <img src="assets/protect.jpg" alt="Probiotic surface cleaner sprayed on a kitchen counter">
-      </div>
-      <div class="prot-bar">
-        <div class="prot-step"><strong>0H · Purify</strong><p>Probiotic Surface Cleaner applied to every surface.</p></div>
-        <div class="prot-step"><strong>24–48H · Protect</strong><p>Living probiotic shield stays active, metabolizing new mess.</p></div>
-        <div class="prot-step"><strong>72H+ · Maintain</strong><p>Keep up the microbiome with the retail line between visits.</p></div>
-      </div>
+  <div class="protect-stage">
+    <div class="phase-scene">
+      <img src="assets/protect.jpg" alt="Probiotic surface cleaner sprayed on a kitchen counter">
+    </div>
+    <div class="protect-veil"></div>
+    <div class="protect-copy">
+      <h2 class="sec-title">Days of protection</h2>
+      <p class="sec-intro">Most cleans are gone by dinner. Everneat keeps working for three days after we leave.</p>
+    </div>
+    <div class="prot-bar">
+      <div class="prot-step"><strong>0H · Purify</strong><p>Probiotic Surface Cleaner applied to every surface.</p></div>
+      <div class="prot-step"><strong>24–48H · Protect</strong><p>Living probiotic shield stays active, metabolizing new mess.</p></div>
+      <div class="prot-step"><strong>72H+ · Maintain</strong><p>Keep up the microbiome with the retail line between visits.</p></div>
     </div>
   </div>
 </section>
