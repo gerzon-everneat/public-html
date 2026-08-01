@@ -202,16 +202,27 @@
     font-size:clamp(16px,1.3vw,19px);line-height:1.2;letter-spacing:0;text-transform:none;
     color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:7px}
   .prot-step p{margin:0;font-size:clamp(13.5px,1.02vw,15.5px);line-height:1.45;color:var(--ink)}
-  /* State is carried by colour within a legible range, never by fading toward the video:
-     an unreached step must still read on its own. .on adds emphasis; it is never what makes
-     the text legible — that is exactly how the old opacity:0.28 dimming failed at 1.26:1. */
+  /* Three states, so the scroll reads as a position and not just an accumulation:
+       .now  — the step you are on: deeper lime cell, full ink
+       .on   — already passed: plinth lime, full ink
+       none  — not yet reached: plinth lime, ink2
+     State is colour and surface within a legible range, never opacity toward the video —
+     every state stays readable on its own (ink 11.0:1, ink2 5.1:1, ink on lime-deep 10.4:1).
+     That is what the old opacity:0.28 dimming got wrong at 1.26:1. */
   .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink2)}
+  /* The current cell inverts rather than shifting shade: lime-deep on lime is only a few
+     points of luminance apart and does not read as "you are here". Lime on ink measures
+     14.2:1 and the description 13.1:1, so the emphasis costs nothing in legibility. */
+  .prot-step.now{background:var(--ink)}
+  .prot-step.now strong{color:var(--lime)}
+  .prot-step.now p{color:rgba(255,255,255,.88)}
   /* Progress rail along the plinth's top edge — the one place the lime earns attention. */
   .prot-bar::after{content:"";position:absolute;top:-1px;left:0;height:3px;
     width:calc(var(--p,0) * 100%);background:var(--ink)}
   @media (prefers-reduced-motion:no-preference){
     .protect{height:280vh;padding:0}
     .protect-stage{position:sticky;top:80px;height:calc(100vh - 80px);min-height:0}
+    .prot-step{transition:background-color .45s ease}
     .prot-step strong,.prot-step p{transition:color .4s ease}
   }
   /* A static view should read as a completed timeline, not an empty track. */
@@ -487,8 +498,13 @@
     .prot-bar::after{width:100%}
     .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.14)}
     .prot-step:first-child{border-top:none}
-    /* No scroll sequence when unpinned: rail reads complete, every step at full ink. */
+    /* No scroll sequence when unpinned: rail reads complete, every step at full ink, and
+       no current-step highlight — pTarget pins to 1 there, which would arbitrarily light the
+       last cell. */
     .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink)}
+    .prot-step.now{background:transparent}
+    .prot-step.now strong{color:var(--ink)}
+    .prot-step.now p{color:var(--ink)}
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
     .phase-desc .pb{opacity:1}
@@ -1029,7 +1045,10 @@
       // 0.30/0.62, not 0.45/0.9 — the old thresholds gave "72H+ · Maintain" (the only step
       // pointing at the retail line) the last 10% of the pin. Least dwell to the most sellable line.
       var step=pTarget>=0.62?2:pTarget>=0.30?1:0;
-      pSteps.forEach(function(s,i){s.classList.toggle('on',i<=step);});
+      pSteps.forEach(function(s,i){
+        s.classList.toggle('on',i<=step);
+        s.classList.toggle('now',i===step);
+      });
       // Drives the rail fill. Only meaningful while pinned; unpinned, CSS holds it full.
       if(pScrub)protectEl.style.setProperty('--p',pTarget.toFixed(4));
       if(pScrub&&!pAsked&&r.top<window.innerHeight*1.5&&r.bottom>0)loadProtectClip();
