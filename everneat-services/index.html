@@ -187,16 +187,16 @@
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
   .phase-scene.has-clip>img{opacity:0}
-  /* Steps sit in a plinth across the bottom of the stage. The surface is near-opaque on
-     purpose: the old translucent lime made legibility a function of whichever frame the
-     scrub landed on (measured 9.5:1 over a bright frame, 2.34:1 over a dark one, 1.26:1
-     once dimmed). White at .93 holds contrast constant whatever the film is doing. */
+  /* Lime plinth across the bottom of the stage — OPAQUE, which is the whole point. The old
+     bar was lime at 0.72->0.42 alpha, so legibility tracked whichever frame the scrub landed
+     on: 9.5:1 over a bright frame, 2.34:1 over a dark one, 1.26:1 once dimmed. Solid lime
+     measures ~14:1 for ink and ~6.6:1 for ink2 no matter what the film is doing. Do not
+     reintroduce alpha here. */
   .prot-bar{position:absolute;left:0;right:0;bottom:0;z-index:2;
     display:grid;grid-template-columns:repeat(3,1fr);
-    background:rgba(255,255,255,.93);backdrop-filter:blur(10px) saturate(1.04);
-    border-top:1px solid rgba(31,29,24,.12)}
+    background:var(--lime);border-top:1px solid rgba(31,29,24,.16)}
   .prot-step{padding:clamp(16px,1.7vw,24px) clamp(18px,2vw,30px);
-    border-right:1px solid rgba(31,29,24,.10);min-width:0}
+    border-right:1px solid rgba(31,29,24,.14);min-width:0}
   .prot-step:last-child{border-right:none}
   .prot-step strong{display:block;font-family:var(--serif);font-style:italic;font-weight:400;
     font-size:clamp(16px,1.3vw,19px);line-height:1.2;letter-spacing:0;text-transform:none;
@@ -207,8 +207,8 @@
      the text legible — that is exactly how the old opacity:0.28 dimming failed at 1.26:1. */
   .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink2)}
   /* Progress rail along the plinth's top edge — the one place the lime earns attention. */
-  .prot-bar::after{content:"";position:absolute;top:-1px;left:0;height:2px;
-    width:calc(var(--p,0) * 100%);background:var(--lime-deep)}
+  .prot-bar::after{content:"";position:absolute;top:-1px;left:0;height:3px;
+    width:calc(var(--p,0) * 100%);background:var(--ink)}
   @media (prefers-reduced-motion:no-preference){
     .protect{height:280vh;padding:0}
     .protect-stage{position:sticky;top:80px;height:calc(100vh - 80px);min-height:0}
@@ -483,10 +483,9 @@
     /* Unpinned, --p is never updated, so the rail would sit permanently empty. Show the
        timeline as complete and light every step — there is no scroll sequence to convey. */
     .protect-stage{display:flex;flex-direction:column;justify-content:flex-end}
-    .prot-bar{position:relative;grid-template-columns:1fr;backdrop-filter:none;
-      background:rgba(255,255,255,.95)}
+    .prot-bar{position:relative;grid-template-columns:1fr;background:var(--lime)}
     .prot-bar::after{width:100%}
-    .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.10)}
+    .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.14)}
     .prot-step:first-child{border-top:none}
     /* No scroll sequence when unpinned: rail reads complete, every step at full ink. */
     .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink)}
