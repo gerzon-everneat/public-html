@@ -194,7 +194,7 @@
      reintroduce alpha here. */
   .prot-bar{position:absolute;left:0;right:0;bottom:0;z-index:2;
     display:grid;grid-template-columns:repeat(3,1fr);
-    background:rgba(255,255,255,.94);border-top:1px solid rgba(31,29,24,.14)}
+    background:transparent;border-top:1px solid rgba(31,29,24,.14)}
   .prot-step{padding:clamp(16px,1.7vw,24px) clamp(18px,2vw,30px);
     border-right:1px solid rgba(31,29,24,.14);min-width:0}
   .prot-step:last-child{border-right:none}
@@ -207,8 +207,16 @@
      so the bar fills across and ends fully green with all three active.
      Both states stay legible on their own — ink on lime 11.0:1, ink2 on the neutral
      plinth ~7:1 — never opacity toward the video, which is how the old bar failed at 1.26:1. */
+  /* Inactive cells are translucent so the film reads through them; active cells are solid
+     lime. The alpha is chosen from measurement, not taste — too low and the inactive text
+     contrast starts tracking the footage again, which is exactly how the original bar
+     failed at 1.26:1. See the measured figures in the commit. */
+  .prot-step{background:rgba(255,255,255,.66)}
   .prot-step.on{background:var(--lime)}
-  .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink2)}
+  /* Inactive type stays full ink, not ink2. Over a translucent cell ink2 measured 4.5:1
+     mean / 3.8:1 worst against the clip's darkest stretch — failing AA and drifting with
+     the footage. Ink holds 9.7:1 / 8.2:1 there. The lime cell already carries the state,
+     so lightening the type only bought a legibility risk. */
   /* Progress rail along the plinth's top edge — the one place the lime earns attention. */
   .prot-bar::after{content:"";position:absolute;top:-1px;left:0;height:3px;
     width:calc(var(--p,0) * 100%);background:var(--ink)}
@@ -487,7 +495,7 @@
     /* Unpinned, --p is never updated, so the rail would sit permanently empty. Show the
        timeline as complete and light every step — there is no scroll sequence to convey. */
     .protect-stage{display:flex;flex-direction:column;justify-content:flex-end}
-    .prot-bar{position:relative;grid-template-columns:1fr;background:rgba(255,255,255,.95)}
+    .prot-bar{position:relative;grid-template-columns:1fr;background:transparent}
     .prot-bar::after{width:100%}
     .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.14)}
     .prot-step:first-child{border-top:none}
