@@ -171,14 +171,15 @@
      stay untouched. Centre tracks where the type actually sits (~17%/17% of the stage);
      move the copy and this must move with it. */
   .protect-veil{position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(ellipse 32% 34% at 17% 17%,
-      rgba(255,255,255,.92) 0%,rgba(255,255,255,.84) 34%,
-      rgba(255,255,255,.5) 64%,rgba(255,255,255,.18) 84%,rgba(255,255,255,0) 100%)}
+    background:radial-gradient(ellipse 34% 54% at 18% 36%,
+      rgba(255,255,255,.94) 0%,rgba(255,255,255,.9) 40%,
+      rgba(255,255,255,.62) 68%,rgba(255,255,255,.22) 86%,rgba(255,255,255,0) 100%)}
   .protect-copy{position:absolute;top:0;left:0;right:0;z-index:2;
     padding:clamp(28px,4.5vw,64px) var(--edge) 0}
   /* A local white halo does the legibility work the scrim used to, which is what lets the
      scrim stay light enough to see the film through. */
-  .protect-copy .sec-title,.protect-copy .sec-intro{
+  .protect-copy .sec-title,.protect-copy .sec-intro,
+  .protect-copy .prot-step strong,.protect-copy .prot-step p{
     text-shadow:0 1px 2px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.95),0 0 38px rgba(255,255,255,.7)}
   /* The elliptical scrim holds contrast well past where the old linear band fell away, so
      the measure no longer has to be clipped short to stay legible. */
@@ -187,19 +188,38 @@
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
   .phase-scene.has-clip>img{opacity:0}
-  .prot-bar{display:flex;background:linear-gradient(to right,rgba(200,255,0,0.72),rgba(200,255,0,0.42));
-    overflow:hidden;height:88px;position:absolute;left:0;right:0;bottom:0;z-index:2}
-  .prot-step{flex:1;min-width:0;padding:0 22px;display:flex;flex-direction:column;justify-content:center;gap:5px;
-    border-right:1px solid rgba(255,255,255,0.32)}
-  .prot-step:last-child{border-right:none}
-  .prot-step strong{display:block;font-size:11px;font-weight:700;color:#15171a;text-transform:uppercase;letter-spacing:.07em;line-height:1}
-  .prot-step p{margin:0;font-size:12px;line-height:1.35;color:#383829}
+  /* The three steps ARE the section's argument, so they sit in the copy column at the same
+     authority as the heading — not in a strip along the bottom. The old translucent lime bar
+     had no defined contrast: measured 9.5:1 over a bright frame and 2.34:1 over a dark one
+     (1.26:1 once dimmed), because legibility depended on whichever frame the scrub landed on.
+     Backing them with the scrim instead makes contrast independent of the footage. */
+  .prot-bar{position:relative;display:grid;max-width:520px;
+    margin-top:clamp(22px,3vw,38px);padding-left:18px}
+  /* 116px, not a guess: the widest label ("24–48H · Protect") measures 104px of ink at this
+     size, and nowrap in a narrower column silently overlaps the description. */
+  .prot-step{display:grid;grid-template-columns:116px 1fr;gap:0 16px;align-items:baseline;
+    padding:13px 0;border-top:1px solid rgba(31,29,24,.16)}
+  .prot-step:first-child{border-top:none}
+  .prot-step strong{grid-column:1;font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:15px;line-height:1.3;letter-spacing:0;text-transform:none;color:var(--ink);
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+  .prot-step p{grid-column:2;margin:0;font-size:14px;line-height:1.45;color:var(--ink)}
+  /* State is carried by colour within a legible range, never by fading toward the video:
+     an unreached step must still read on its own (ink2 measures ~5.5:1 on the scrim).
+     .on adds emphasis; it must never be what makes the text readable. */
+  .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink2)}
+  /* Rail fills with scroll progress — the one place the lime earns attention. */
+  .prot-bar::before,.prot-bar::after{content:"";position:absolute;left:0;top:6px;width:2px}
+  .prot-bar::before{bottom:6px;background:rgba(31,29,24,.14)}
+  .prot-bar::after{height:calc(var(--p,0) * (100% - 12px));background:var(--lime-deep)}
   @media (prefers-reduced-motion:no-preference){
     .protect{height:280vh;padding:0}
     .protect-stage{position:sticky;top:80px;height:calc(100vh - 80px);min-height:0}
-    .prot-step{opacity:0.28;transition:opacity .4s ease}
-    .prot-step:first-child{opacity:1}
-    .prot-step.on{opacity:1}
+    .prot-step strong,.prot-step p{transition:color .4s ease}
+  }
+  /* A static view should read as a completed timeline, not an empty track. */
+  @media (prefers-reduced-motion:reduce){
+    .prot-bar::after{height:calc(100% - 12px)}
   }
 
   /* ---------- everything published ---------- */
@@ -437,16 +457,11 @@
     .phase-tl,.phase-desc{grid-template-columns:1fr}
     .phase-tl::before{display:none}
     .tl-node{justify-content:flex-start;padding-left:4px}
-    /* ponytail: the protection bar's 3 columns leave ~80px each here, so the copy
-       clipped mid-word against height:88px + overflow:hidden. Stack and let it grow.
-       Sequential dimming only reads side-by-side, so all three stay lit when stacked. */
-    /* Stacked, the bar is ~220px tall — overlaid on the stage that leaves almost no clear
-       film between it and the copy. Let it flow below the stage instead. */
-    .prot-bar{position:static;flex-direction:column;height:auto}
-    .prot-step{flex:none;padding:13px 18px;border-right:none;
-      border-bottom:1px solid rgba(255,255,255,.32);opacity:1}
-    .prot-step:last-child{border-bottom:none}
-    .prot-step strong{font-size:11.5px}
+    /* The steps live in the copy column at every width now, so there is no bar to stack and
+       no 760-vs-900 gap where the old absolute strip survived the pin being switched off.
+       Only the two-column step row needs to collapse for narrow measures. */
+    .prot-step{grid-template-columns:1fr;gap:3px 0}
+    .prot-step strong,.prot-step p{grid-column:1}
     .prot-step p{font-size:13px}
     .foot-cols{grid-template-columns:1fr 1fr}
     .foot-legal{margin:8px 0;order:3;width:100%}
@@ -470,6 +485,11 @@
     .protect-veil{width:100%;background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,
       rgba(255,255,255,.9) 24%,rgba(255,255,255,.5) 44%,rgba(255,255,255,0) 62%)}
     .protect-copy .sec-intro{max-width:none}
+    /* Unpinned, --p is never updated, so the rail would sit permanently empty. Show the
+       timeline as complete and light every step — there is no scroll sequence to convey. */
+    .prot-bar{max-width:none}
+    .prot-bar::after{height:calc(100% - 12px)}
+    .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink)}
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
     .phase-desc .pb{opacity:1}
@@ -611,11 +631,11 @@
     <div class="protect-copy">
       <h2 class="sec-title">Days of protection</h2>
       <p class="sec-intro">Most cleans are gone by dinner. Everneat keeps working for three days after we leave.</p>
-    </div>
-    <div class="prot-bar">
-      <div class="prot-step"><strong>0H · Purify</strong><p>Probiotic Surface Cleaner applied to every surface.</p></div>
-      <div class="prot-step"><strong>24–48H · Protect</strong><p>Living probiotic shield stays active, metabolizing new mess.</p></div>
-      <div class="prot-step"><strong>72H+ · Maintain</strong><p>Keep up the microbiome with the retail line between visits.</p></div>
+      <div class="prot-bar">
+        <div class="prot-step"><strong>0H · Purify</strong><p>Probiotic Surface Cleaner applied to every surface.</p></div>
+        <div class="prot-step"><strong>24–48H · Protect</strong><p>Living probiotic shield stays active, metabolizing new mess.</p></div>
+        <div class="prot-step"><strong>72H+ · Maintain</strong><p>Keep up the microbiome with the retail line between visits.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1007,8 +1027,12 @@
       var r=protectEl.getBoundingClientRect();
       var total=r.height-window.innerHeight;
       pTarget=total>0?Math.min(1,Math.max(0,-r.top/total)):1;
-      var step=pTarget>=0.9?2:pTarget>=0.45?1:0;
+      // 0.30/0.62, not 0.45/0.9 — the old thresholds gave "72H+ · Maintain" (the only step
+      // pointing at the retail line) the last 10% of the pin. Least dwell to the most sellable line.
+      var step=pTarget>=0.62?2:pTarget>=0.30?1:0;
       pSteps.forEach(function(s,i){s.classList.toggle('on',i<=step);});
+      // Drives the rail fill. Only meaningful while pinned; unpinned, CSS holds it full.
+      if(pScrub)protectEl.style.setProperty('--p',pTarget.toFixed(4));
       if(pScrub&&!pAsked&&r.top<window.innerHeight*1.5&&r.bottom>0)loadProtectClip();
     }
 
