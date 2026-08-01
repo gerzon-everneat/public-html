@@ -194,7 +194,7 @@
      reintroduce alpha here. */
   .prot-bar{position:absolute;left:0;right:0;bottom:0;z-index:2;
     display:grid;grid-template-columns:repeat(3,1fr);
-    background:var(--lime);border-top:1px solid rgba(31,29,24,.16)}
+    background:rgba(255,255,255,.94);border-top:1px solid rgba(31,29,24,.14)}
   .prot-step{padding:clamp(16px,1.7vw,24px) clamp(18px,2vw,30px);
     border-right:1px solid rgba(31,29,24,.14);min-width:0}
   .prot-step:last-child{border-right:none}
@@ -202,20 +202,13 @@
     font-size:clamp(16px,1.3vw,19px);line-height:1.2;letter-spacing:0;text-transform:none;
     color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:7px}
   .prot-step p{margin:0;font-size:clamp(13.5px,1.02vw,15.5px);line-height:1.45;color:var(--ink)}
-  /* Three states, so the scroll reads as a position and not just an accumulation:
-       .now  — the step you are on: deeper lime cell, full ink
-       .on   — already passed: plinth lime, full ink
-       none  — not yet reached: plinth lime, ink2
-     State is colour and surface within a legible range, never opacity toward the video —
-     every state stays readable on its own (ink 11.0:1, ink2 5.1:1, ink on lime-deep 10.4:1).
-     That is what the old opacity:0.28 dimming got wrong at 1.26:1. */
+  /* Lime IS the active state, so the plinth cannot also be lime — an all-lime bar makes
+     every step look reached. Cells start neutral and turn lime as the scroll reaches them,
+     so the bar fills across and ends fully green with all three active.
+     Both states stay legible on their own — ink on lime 11.0:1, ink2 on the neutral
+     plinth ~7:1 — never opacity toward the video, which is how the old bar failed at 1.26:1. */
+  .prot-step.on{background:var(--lime)}
   .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink2)}
-  /* The current cell inverts rather than shifting shade: lime-deep on lime is only a few
-     points of luminance apart and does not read as "you are here". Lime on ink measures
-     14.2:1 and the description 13.1:1, so the emphasis costs nothing in legibility. */
-  .prot-step.now{background:var(--ink)}
-  .prot-step.now strong{color:var(--lime)}
-  .prot-step.now p{color:rgba(255,255,255,.88)}
   /* Progress rail along the plinth's top edge — the one place the lime earns attention. */
   .prot-bar::after{content:"";position:absolute;top:-1px;left:0;height:3px;
     width:calc(var(--p,0) * 100%);background:var(--ink)}
@@ -494,7 +487,7 @@
     /* Unpinned, --p is never updated, so the rail would sit permanently empty. Show the
        timeline as complete and light every step — there is no scroll sequence to convey. */
     .protect-stage{display:flex;flex-direction:column;justify-content:flex-end}
-    .prot-bar{position:relative;grid-template-columns:1fr;background:var(--lime)}
+    .prot-bar{position:relative;grid-template-columns:1fr;background:rgba(255,255,255,.95)}
     .prot-bar::after{width:100%}
     .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.14)}
     .prot-step:first-child{border-top:none}
@@ -502,9 +495,7 @@
        no current-step highlight — pTarget pins to 1 there, which would arbitrarily light the
        last cell. */
     .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink)}
-    .prot-step.now{background:transparent}
-    .prot-step.now strong{color:var(--ink)}
-    .prot-step.now p{color:var(--ink)}
+
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
     .phase-desc .pb{opacity:1}
