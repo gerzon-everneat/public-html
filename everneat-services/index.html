@@ -187,11 +187,8 @@
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
   .phase-scene.has-clip>img{opacity:0}
-  /* Lime plinth across the bottom of the stage — OPAQUE, which is the whole point. The old
-     bar was lime at 0.72->0.42 alpha, so legibility tracked whichever frame the scrub landed
-     on: 9.5:1 over a bright frame, 2.34:1 over a dark one, 1.26:1 once dimmed. Solid lime
-     measures ~14:1 for ink and ~6.6:1 for ink2 no matter what the film is doing. Do not
-     reintroduce alpha here. */
+  /* Timeline plinth across the bottom of the stage. The bar itself has no surface — each
+     cell carries its own, so the cell colour can encode state (see .prot-step below). */
   .prot-bar{position:absolute;left:0;right:0;bottom:0;z-index:2;
     display:grid;grid-template-columns:repeat(3,1fr);
     background:transparent;border-top:1px solid rgba(31,29,24,.14)}
@@ -202,15 +199,17 @@
     font-size:clamp(16px,1.3vw,19px);line-height:1.2;letter-spacing:0;text-transform:none;
     color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:7px}
   .prot-step p{margin:0;font-size:clamp(13.5px,1.02vw,15.5px);line-height:1.45;color:var(--ink)}
-  /* Lime IS the active state, so the plinth cannot also be lime — an all-lime bar makes
-     every step look reached. Cells start neutral and turn lime as the scroll reaches them,
-     so the bar fills across and ends fully green with all three active.
-     Both states stay legible on their own — ink on lime 11.0:1, ink2 on the neutral
-     plinth ~7:1 — never opacity toward the video, which is how the old bar failed at 1.26:1. */
-  /* Inactive cells are translucent so the film reads through them; active cells are solid
-     lime. The alpha is chosen from measurement, not taste — too low and the inactive text
-     contrast starts tracking the footage again, which is exactly how the original bar
-     failed at 1.26:1. See the measured figures in the commit. */
+  /* Lime IS the active state, so no surface may also be lime — an all-lime bar makes every
+     step look reached. Inactive cells are translucent white (the film reads through them);
+     reaching a step turns its cell solid lime, so the bar fills left to right and ends
+     fully green with all three active.
+     Alpha and type colour are both set from measurement over the clip's DARKEST stretch,
+     not from a bright frame:
+       inactive cell + ink2  4.5:1 mean / 3.8:1 worst  FAILS AA
+       inactive cell + ink   9.7:1 mean / 8.2:1 worst  passes  <- shipped
+       active cell (lime)   11.0:1, frame-independent (opaque)
+     Never encode state as opacity on the TEXT; that is how the original 0.72->0.42 lime bar
+     ended up at 1.26:1. Lower this alpha and re-measure, or the floor drifts back under AA. */
   .prot-step{background:rgba(255,255,255,.66)}
   .prot-step.on{background:var(--lime)}
   /* Inactive type stays full ink, not ink2. Over a translucent cell ink2 measured 4.5:1
@@ -492,17 +491,15 @@
     .protect-veil{width:100%;background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,
       rgba(255,255,255,.9) 24%,rgba(255,255,255,.5) 44%,rgba(255,255,255,0) 62%)}
     .protect-copy .sec-intro{max-width:none}
-    /* Unpinned, --p is never updated, so the rail would sit permanently empty. Show the
-       timeline as complete and light every step — there is no scroll sequence to convey. */
+    /* Unpinned the plinth sits in flow at the stage's bottom edge — three stacked steps are
+       far too tall to overlay the film. */
     .protect-stage{display:flex;flex-direction:column;justify-content:flex-end}
     .prot-bar{position:relative;grid-template-columns:1fr;background:transparent}
     .prot-bar::after{width:100%}
     .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.14)}
     .prot-step:first-child{border-top:none}
-    /* No scroll sequence when unpinned: rail reads complete, every step at full ink, and
-       no current-step highlight — pTarget pins to 1 there, which would arbitrarily light the
-       last cell. */
-    .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink)}
+    /* No scroll sequence when unpinned: --p is never updated, so the rail is held complete
+       by the width:100% above and every step renders active. */
 
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
@@ -1044,10 +1041,7 @@
       // 0.30/0.62, not 0.45/0.9 — the old thresholds gave "72H+ · Maintain" (the only step
       // pointing at the retail line) the last 10% of the pin. Least dwell to the most sellable line.
       var step=pTarget>=0.62?2:pTarget>=0.30?1:0;
-      pSteps.forEach(function(s,i){
-        s.classList.toggle('on',i<=step);
-        s.classList.toggle('now',i===step);
-      });
+      pSteps.forEach(function(s,i){s.classList.toggle('on',i<=step);});
       // Drives the rail fill. Only meaningful while pinned; unpinned, CSS holds it full.
       if(pScrub)protectEl.style.setProperty('--p',pTarget.toFixed(4));
       if(pScrub&&!pAsked&&r.top<window.innerHeight*1.5&&r.bottom>0)loadProtectClip();
