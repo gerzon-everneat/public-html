@@ -18,8 +18,8 @@ Method and node IDs come from `FIGMA-MAP.md`. Comparisons are perceptual-hash
 ## Status
 | Page | Node | Images | Content | State |
 |---|---|---|---|---|
-| HOME V2 | `7706:310` | audited | partial | **in progress** |
-| HOME CLEANING | `7756:454` | — | — | not started |
+| HOME V2 | `7706:310` | audited, re-checked 08-03 | partial | **in progress** |
+| HOME CLEANING | `7756:454` | FAQ slot audited + **fixed** | — | **in progress** |
 | AIRBNB | `7991:6627` | — | — | not started |
 | OFFICE | `8007:10293` | — | — | not started |
 | COMMERCIAL | `8068:163` | — | — | not started |
@@ -162,3 +162,66 @@ prefix on the next upload pass. No user-visible effect — do not churn URLs jus
 `8119:173` and `8112:173` were built from Figma and have since been rewired to the landing API
 (`blog/` and the new `blog/article/?id=`). Their imagery is now CMS-driven, so a Figma image audit no
 longer applies to the card/hero slots — only to chrome and layout.
+
+
+---
+
+# Re-check — 2026-08-03
+
+Figma was reported updated. Re-ran the HOME V2 slots against the 08-02 baselines.
+
+**HOME V2 is unchanged.** The frame export is byte-identical at **1,506,554 bytes**, the hero
+export at **2,147,108**, and `8142:16310` still returns `export: null` with no images — so finding 1
+(the invented before/after) stands exactly as written, and findings 2–6 are unaffected.
+
+Byte-identical export sizes are a cheap change detector. Recording them here so the next re-check
+does not have to re-download and re-hash a frame that has not moved:
+
+| Node | Frame | export sizeBytes |
+|---|---|---|
+| `7706:310` | HOME V2 | 1,506,554 |
+| `7709:366` | hero | 2,147,108 |
+| `8142:16310` | before/after | *null — no export* |
+| `8142:15581` | phases band | 2,483 |
+
+---
+
+# HOME CLEANING — `7756:454` → `home-cleaning/`
+
+### 7 · FAQ image was the wrong photo — **fixed** 🔴 → resolved
+
+The FAQ slot `7953:1458` specifies a cleaner wiping a bathroom mirror. The page was shipping
+`cdn…/services/airbnb-cleaning/airbnb-compare.jpg`, **unrelated at distance 107**.
+
+The alt text was already correct — *"An Everneat cleaner finishing a bathroom mirror"* — which is
+exactly what the Figma image shows. So the copy was written from the design and the `src` was wired
+to the wrong file; the two had simply never been checked against each other.
+
+This was **not** the usual "reference points at the wrong existing file" case. Sweeping every local
+asset against the Figma image put the nearest match at distance 60 (`card-office.jpg`), so the
+correct photo had never been added to the repo at all.
+
+**Fix applied:**
+
+| | |
+|---|---|
+| Figma source | 1792×2400 PNG |
+| Added | `assets/home-cleaning-faq.jpg` — 896×1200, JPEG q82 progressive, 111 KB |
+| Match | distance **0** to Figma |
+| Reference | `../assets/home-cleaning-faq.jpg`, `loading="lazy"` added |
+| Alt | unchanged — it already described the correct image |
+
+896×1200 matches the sibling convention (the home-page FAQ ships at exactly that, half the Figma
+source) and sits well inside the 2560px pipeline cap.
+
+Verified in-browser after the change: `loaded: true`, natural size `896x1200`, no broken images on
+the page. Local path is correct per the provenance rule — this is a Figma export with no Drive
+original yet. If one lands, push to S3 and switch to the CDN.
+
+### Still to do on this page
+NAV-HERO-BANNER `7756:456`, feature panel `7778:1466`, compare-photo `8007:9236`, tailor-strip
+`7963:2050`, testimonial bg/avatar `7814:1765` / `7814:1770`. Before/after `7953:1380` is EMPTY in
+the design (trap 7) yet the page ships the Airbnb pair — **same decision as finding 1**.
+
+Note this page also carries five local `addon-*.jpg` files and `airbnb-avatar.jpg` /
+`cleaner-avatar.jpg` that have not been hashed against Figma yet.
