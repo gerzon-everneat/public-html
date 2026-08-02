@@ -112,13 +112,18 @@ is missing something.
 
 ---
 
-### 4 · `assets/faq.jpg` is unused and is a different photo 🟢
+### 4 · `assets/faq.jpg` is a different photo, reused on the NYC page 🟢
 
 The homepage FAQ correctly uses the CDN image (distance 0 to Figma). The local `assets/faq.jpg`
-(502×762, 327 KB) is a **different photo** — distance 34 — and nothing on the homepage references it.
+(502×762, 327 KB) is a **different photo** — distance 34 — and the homepage does not reference it.
 
-**Action:** confirm no other page uses it, then delete. This is the "reference pointing at the wrong
-existing file" class the map warns about, caught before it caused a mismatch.
+It is **not** dead, though: `service-areas/nyc/astoria/index.html` uses it in the phases band, with
+alt text about "living probiotic shield staying active on clean bathroom surfaces". So it is a
+genuine asset serving a different page, not a stray file.
+
+**Action:** none on the homepage. When the NYC template is audited (`8079:163`), check that this photo
+is what its design actually calls for — a shared local file used by exactly one page is the shape
+that later gets deleted by mistake.
 
 ---
 
