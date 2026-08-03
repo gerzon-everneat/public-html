@@ -129,17 +129,20 @@
   .press.rs{font-weight:700;letter-spacing:.02em;font-size:16px}
 
   /* ---------- showcase panel with pills ---------- */
-  /* ponytail: Figma showcase is a plain sage canvas (no photo) — built faithful, drop an <img> in .feature when photography lands */
+  /* The photography has landed — Figma 8068:1096 now carries a real activation shot behind the pills.
+     Sage stays as the fill behind it so the panel never flashes empty while the photo loads. */
   .showcase{padding:0 0 var(--pad)}
   .feature{position:relative;border-radius:15px;overflow:hidden;aspect-ratio:1312/640;background:#e5e8e3;box-shadow:var(--shadow)}
+  .feature>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
   .feature .pill{position:absolute;background:#e5e8e3;color:#292929;border-radius:20px;padding:8px 16px;
     box-shadow:0 6px 18px -8px rgba(0,0,0,.3);
     font-weight:700;font-size:clamp(9px,1.1vw,16px);line-height:1.3;white-space:nowrap}
-  .pill.p1{left:3.7%;top:10.3%}
-  .pill.p2{left:6.3%;top:78.9%}
-  .pill.p3{left:42.7%;top:14.1%}
-  .pill.p4{left:74.7%;top:39.8%}
-  .pill.p5{left:80%;top:78.9%}
+  /* percentages of the 1312x640 design frame: 48/66, 83/505, 868/58, 1078/344, 948/523 */
+  .pill.p1{left:3.66%;top:10.31%}
+  .pill.p2{left:6.33%;top:78.91%}
+  .pill.p3{left:66.16%;top:9.06%}
+  .pill.p4{left:82.16%;top:53.75%}
+  .pill.p5{left:72.26%;top:81.72%}
 
   /* ---------- compare ---------- */
   .compare{padding:var(--pad) 0}
@@ -266,7 +269,8 @@
   .prow .num{font-size:12px;font-weight:600;color:#5f5f53;width:20px;flex:none}
 
   .photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-  .pho{position:relative;aspect-ratio:250/195;border-radius:12px}
+  .pho{position:relative;aspect-ratio:250/195;border-radius:12px;overflow:hidden}
+  .pho img{width:100%;height:100%;object-fit:cover;display:block}
   .pho.before{background:rgba(95,95,83,.6)}
   .pho.after{background:#eae6da}
   .pho .t{position:absolute;top:10px;left:10px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
@@ -479,9 +483,10 @@
 <section class="showcase">
   <div class="wrap">
     <div class="feature">
+      <img src="../assets/event-showcase.jpg" alt="Two Everneat specialists working a brand activation floor — one wiping down an Info Booth counter, one vacuuming between stands" loading="lazy">
       <span class="pill p1">pre · live · post</span>
-      <span class="pill p2">2–20 specialists</span>
-      <span class="pill p3">same-day under 72 hrs</span>
+      <span class="pill p2">cleaning equipment</span>
+      <span class="pill p3">multi-day events</span>
       <span class="pill p4">COI in 24 hours</span>
       <span class="pill p5">$2M insured &amp; bonded</span>
     </div>
@@ -757,8 +762,10 @@
           <div class="mock-head"><span class="mock-title">Photo report</span><span class="mock-tag">Chelsea gallery</span></div>
           <hr class="mock-div">
           <div class="photos">
-            <div class="pho before"><span class="t">Before</span></div>
-            <div class="pho after"><span class="t">After</span></div>
+            <!-- ponytail: Figma's event photo-report (8512:24677/24680) uses the same two bitmaps as
+                 commercial's (8096:14266/14269) — byte-identical raws. Sharing the files, not copying them. -->
+            <div class="pho before"><img src="../assets/commercial-before.jpg" alt="A washroom vanity before the visit — smeared mirror, towel left across the counter" loading="lazy"><span class="t">Before</span></div>
+            <div class="pho after"><img src="../assets/commercial-after.jpg" alt="The same vanity after the visit — mirror clear, towels rolled, counter wiped down" loading="lazy"><span class="t">After</span></div>
           </div>
           <div class="approve">
             <span class="ok"><span class="chk">✓</span>Approved by you</span>

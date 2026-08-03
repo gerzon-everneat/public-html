@@ -280,7 +280,8 @@
   .prow .num{font-size:12px;font-weight:600;color:#5f5f53;width:20px;flex:none}
 
   .photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-  .pho{position:relative;aspect-ratio:250/195;border-radius:12px}
+  .pho{position:relative;aspect-ratio:250/195;border-radius:12px;overflow:hidden}
+  .pho img{width:100%;height:100%;object-fit:cover;display:block}
   .pho.before{background:rgba(95,95,83,.6)}
   .pho.after{background:#eae6da}
   .pho .t{position:absolute;top:10px;left:10px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
@@ -891,8 +892,8 @@
           <div class="mock-head"><span class="mock-title">Photo report</span><span class="mock-tag">Upper West Side Pilates</span></div>
           <hr class="mock-div">
           <div class="photos">
-            <div class="pho before"><span class="t">Before</span></div>
-            <div class="pho after"><span class="t">After</span></div>
+            <div class="pho before"><img src="../assets/commercial-before.jpg" alt="A washroom vanity before the visit — smeared mirror, towel left across the counter" loading="lazy"><span class="t">Before</span></div>
+            <div class="pho after"><img src="../assets/commercial-after.jpg" alt="The same vanity after the visit — mirror clear, towels rolled, counter wiped down" loading="lazy"><span class="t">After</span></div>
           </div>
           <div class="approve">
             <span class="ok"><span class="chk">✓</span>Approved by you</span>
