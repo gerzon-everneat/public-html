@@ -89,8 +89,15 @@
   .hero-inner{position:relative;z-index:2;width:100%;color:#fff;padding-block:clamp(32px,7vh,72px)}
   .hero-cap{font-family:var(--serif);font-style:italic;font-weight:200;font-size:clamp(15px,1.5vw,20px);
     opacity:.92;margin:0 0 20px;text-shadow:0 1px 14px rgba(0,0,0,.45)}
-  .hero-head{font-weight:400;font-size:clamp(29px,4.8vw,58px);line-height:1.2;margin:0;max-width:1080px;
-    letter-spacing:-.01em;text-shadow:0 2px 22px rgba(0,0,0,.4)}
+  /* Headline holds one line at >=1440px. The old max-width:1080px was the only thing forcing
+     a wrap there — measured, the text needs ~22.5x its font-size (58px -> ~1300px) and .wrap
+     offers 1297px of content at 1440. Cap removed; the vw coefficient is left at 4.8.
+     Lowering it was tried and reverted: below 1440 the clamp is capped at 58px anyway, so a
+     smaller coefficient shrank the type without removing the wrap, and reaching one line at
+     1280 would need ~3.94vw — under 1% of margin, which any font-metric shift would break.
+     Two balanced lines below 1440 is the honest outcome. */
+  .hero-head{font-weight:400;font-size:clamp(29px,4.8vw,58px);line-height:1.2;margin:0;
+    letter-spacing:-.01em;text-shadow:0 2px 22px rgba(0,0,0,.4);text-wrap:balance}
   .hero-head .fill{color:var(--lime);border-bottom:2px solid rgba(200,255,0,.5);padding-bottom:1px;white-space:nowrap}
   .hero-go{display:inline-grid;place-items:center;width:clamp(38px,4vw,54px);height:clamp(38px,4vw,54px);
     border-radius:50%;border:1.5px solid rgba(255,255,255,.8);color:#fff;text-decoration:none;
