@@ -9,10 +9,10 @@ from the design, nor wording that differs only slightly.
 
 | Page | Node | Design strings | Build strings | Missing |
 |---|---|---|---|---|
-| AIRBNB | `7991:6627` | 232 | 590 | **43** |
-| HOME CLEANING | `7756:454` | 197 | 395 | **7** |
-| OFFICE | `8007:10293` | 698 | 342 | **80** |
-| COMMERCIAL | `8068:163` | 276 | 361 | **29** |
+| AIRBNB | `7991:6627` | 232 | 593 | **5** |
+| HOME CLEANING | `7756:454` | 197 | 395 | **2** |
+| OFFICE | `8007:10293` | 698 | 342 | **76** |
+| COMMERCIAL | `8068:163` | 276 | 361 | **25** |
 
 EVENT `8068:1034` was checked by targeted string match rather than full diff: only
 `04 wrapped and reported` is absent (the build says `04 happiness checked`). Effectively in parity.
@@ -21,71 +21,28 @@ HOME V2 `7706:310` not yet diffed — its metadata fits inline and was not captu
 
 ## AIRBNB — `7991:6627` → `airbnb-cleaning/index.html`
 
-232 design strings, 43 unique not found in the build.
+232 design strings, 5 unique not found in the build.
 
 ```
-1 unit · frequent stays
-Auto-scheduling from your calendar
-Photo report + next-day fix guarantee
-Pay per visit, no commitment
-from $117
-$58.50/hr · extra time billed at this rate
-2–9 units · portfolio
-Run your whole portfolio hands-off. One calendar, auto-scheduled at a better rate.
-Volume rate across your portfolio
-Multi-unit auto-scheduling (iCal)
-One dashboard: every turnover, photo &amp; issue
-One monthly statement across all units
-from $113
-$56.50/hr · extra time billed at this rate
-10+ units · contract
-For operators with 10+ units. Priority capacity, guaranteed SLA, PMS wired in.
-Guaranteed turnaround SLA
-PMS / API integration
-Consolidated monthly invoicing &amp; net terms
-$55/hr · extra time billed at this rate
-1 unit
-2–9 units
-from $56.50
-10+ units
-from $55
-$113
-$141.25
-$137.50
-$169.50
-$165
-$197.75
-$192.50
-$226
-$220
 Oven deeo clean
 Your quote · 2–4 hrs
+$104
 / visit
-01 book in chat
-02 cleaner dispatch
-03 protocol applied
 Park Ave #5E
-04 happiness checked
-05 guest amenities
 ```
 
 ## HOME CLEANING — `7756:454` → `home-cleaning/index.html`
 
-197 design strings, 7 unique not found in the build.
+197 design strings, 2 unique not found in the build.
 
 ```
 THE DIFFERENCE you’ll FEEL
 $104
-01 book in chat
-02 cleaner dispatch
-03 protocol applied
-04 happiness checked
-05 maintain between visits
 ```
 
 ## OFFICE — `8007:10293` → `office-cleaning/index.html`
 
-698 design strings, 80 unique not found in the build.
+698 design strings, 76 unique not found in the build.
 
 ```
 With Everneat
@@ -97,10 +54,6 @@ Organization
 3 bed +
 Every 2 weeks
 $104
-01 book in chat
-02 cleaner dispatch
-03 protocol applied
-04 happiness checked
 Basic
 protocol points
 5 of 7
@@ -172,14 +125,10 @@ Book Signature →
 
 ## COMMERCIAL — `8068:163` → `commercial-cleaning/index.html`
 
-276 design strings, 29 unique not found in the build.
+276 design strings, 25 unique not found in the build.
 
 ```
 With Everneat
-01 book in chat
-02 cleaner dispatch
-03 protocol applied
-04 happiness checked
 Everneat guest amenities
 IN UNIT
 05 guest amenities
