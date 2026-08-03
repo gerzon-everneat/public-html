@@ -19,7 +19,7 @@ Method and node IDs come from `FIGMA-MAP.md`. Comparisons are perceptual-hash
 | Page | Node | Images | Content | State |
 |---|---|---|---|---|
 | HOME V2 | `7706:310` | audited, re-checked 08-03 | partial | **in progress** |
-| HOME CLEANING | `7756:454` | FAQ **fixed**, compare + tailor-strip verified | — | **in progress** |
+| HOME CLEANING | `7756:454` | FAQ (finding 7 retracted), compare + tailor-strip verified | — | **in progress** |
 | AIRBNB | `7991:6627` | — | — | not started |
 | OFFICE | `8007:10293` | — | — | not started |
 | COMMERCIAL | `8068:163` | — | — | not started |
@@ -188,35 +188,28 @@ does not have to re-download and re-hash a frame that has not moved:
 
 # HOME CLEANING — `7756:454` → `home-cleaning/`
 
-### 7 · FAQ image was the wrong photo — **fixed** 🔴 → resolved
+### 7 · ~~FAQ image was the wrong photo~~ — **RETRACTED, the page was already correct** ⛔
 
-The FAQ slot `7953:1458` specifies a cleaner wiping a bathroom mirror. The page was shipping
-`cdn…/services/airbnb-cleaning/airbnb-compare.jpg`, **unrelated at distance 107**.
+**This finding was wrong and the "fix" has been reverted.** Recorded in full because the mistake is
+instructive.
 
-The alt text was already correct — *"An Everneat cleaner finishing a bathroom mirror"* — which is
-exactly what the Figma image shows. So the copy was written from the design and the `src` was wired
-to the wrong file; the two had simply never been checked against each other.
+The claim was that home-cleaning's FAQ slot `7953:1458` shipped an unrelated photo at distance 107.
+It does not. The Figma image for that slot is `airbnb-compare.jpg` at **distance 0** — the page was
+correct all along.
 
-This was **not** the usual "reference points at the wrong existing file" case. Sweeping every local
-asset against the Figma image put the nearest match at distance 60 (`card-office.jpg`), so the
-correct photo had never been added to the repo at all.
+What went wrong: the markup was grepped correctly and the `src` read as `airbnb-compare.jpg`, but the
+hash was then run against **`airbnb-faq.jpg`** — a different file in the same CDN folder. That
+produced 107, which looked like a real mismatch. The alt text matching the Figma image was taken as
+corroboration, when in fact it was corroborating that the page was *already right*.
 
-**Fix applied:**
+Reverted: `assets/home-cleaning-faq.jpg` deleted (it was a byte-identical duplicate of a CDN asset
+the site already served) and the `src` restored to the CDN path. `loading="lazy"` was kept — the FAQ
+sits below the fold, so that part was an independent improvement.
 
-| | |
-|---|---|
-| Figma source | 1792×2400 PNG |
-| Added | `assets/home-cleaning-faq.jpg` — 896×1200, JPEG q82 progressive, 111 KB |
-| Match | distance **0** to Figma |
-| Reference | `../assets/home-cleaning-faq.jpg`, `loading="lazy"` added |
-| Alt | unchanged — it already described the correct image |
-
-896×1200 matches the sibling convention (the home-page FAQ ships at exactly that, half the Figma
-source) and sits well inside the 2560px pipeline cap.
-
-Verified in-browser after the change: `loaded: true`, natural size `896x1200`, no broken images on
-the page. Local path is correct per the provenance rule — this is a Figma export with no Drive
-original yet. If one lands, push to S3 and switch to the CDN.
+**The lesson, which the very next round then re-learned as a near-miss:** resolve the comparison
+target from the markup and hash *that exact URL*. Never substitute a same-folder filename that looks
+like the right one. Two of this audit's four "mismatches" so far have been this error, not a defect —
+one caught before it shipped, this one caught only a round later.
 
 ### Still to do on this page
 NAV-HERO-BANNER `7756:456`, feature panel `7778:1466`, compare-photo `8007:9236`, tailor-strip
@@ -270,3 +263,26 @@ repoint the Airbnb and Office pages. Low priority, zero visual risk.
 ### Still to do on this page
 NAV-HERO-BANNER `7756:456`, feature panel `7778:1466`, testimonial bg/avatar `7814:1765` /
 `7814:1770`. Before/after `7953:1380` is EMPTY in the design — same decision as finding 1.
+
+
+---
+
+# AIRBNB — `7991:6627` → `airbnb-cleaning/`
+
+## Verified matching — no action
+
+| Slot | Node | Prototype | Distance |
+|---|---|---|---|
+| before/after | `7991:7147` | `airbnb-before.jpg` / `airbnb-after.jpg` | **0** both |
+| compare-photo | `7992:7335` | `airbnb-compare.jpg` | **0** identical |
+| FAQ image | `7991:7208` | `airbnb-faq.jpg` | **7** same photo, different crop |
+
+The before/after slot returns 4 raw images that resolve to 2 unique photos — the pair, duplicated.
+Trap 7 holds: this is the only page where the before/after has real artwork, and the prototype
+matches it exactly.
+
+This page is the cleanest audited so far — every slot checked is correct.
+
+### Still to do on this page
+NAV-HERO-BANNER `7991:6629`, testimonial bg/avatar `7991:6999` / `7991:7004`. Note the page ships
+both `airbnb-hero.jpg` and `airbnb-kitchen.jpg`; only one is in the hero, so the other needs placing.
