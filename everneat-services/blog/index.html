@@ -14,7 +14,7 @@
     --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
     --line:#e5e1d5; --line2:#d9d4c7;
     --taupe:#d5cfbf; --butter:#f6f3d9;
-    --lime:#ccd84a; --lime-deep:#c0cd3a; --lime-soft:#e8ecab;
+    --lime:#C9C42B; --lime-deep:#ABA725; --lime-soft:rgba(201,196,43,0.15);
     --dark:#181611;
     --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
     --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
@@ -76,8 +76,13 @@
   /* ---------- featured article ---------- */
   .featured{background:var(--butter);padding:64px 0}
   .feat-card{display:block;text-decoration:none;color:var(--ink)}
-  .feat-img{border-radius:16px;overflow:hidden;aspect-ratio:1312/600;box-shadow:var(--shadow)}
-  .feat-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  /* The API's blog images are TITLE CARDS with baked-in text, not photographs, and their
+     ratios vary (16:9, 1.75:1, and at least one 1:1). object-fit:cover slices the wording —
+     the hero rendered as "…athroom Deep Clean". Slots are 16/9 to match the dominant source
+     ratio so most fill exactly, with contain so an odd ratio letterboxes instead of losing
+     words. Revisit only if the CMS starts serving real photography. */
+  .feat-img{border-radius:16px;overflow:hidden;aspect-ratio:16/9;box-shadow:var(--shadow);background:var(--panel)}
+  .feat-img img{width:100%;height:100%;object-fit:contain;transition:transform .6s ease}
   .feat-card:hover .feat-img img{transform:scale(1.02)}
   .meta{display:flex;gap:14px;align-items:baseline;padding:21px 0 0;font-size:16px;letter-spacing:-.01em}
   .meta b{font-weight:700}
@@ -86,24 +91,29 @@
   .feat-card:hover .feat-title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
   .feat-dek{font-weight:300;font-size:18px;line-height:1.55;letter-spacing:-.01em;margin:16px 0 0;color:var(--ink)}
 
-  /* ---------- filters ---------- */
-  .filters{padding:32px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .pills{display:flex;gap:10px;flex-wrap:wrap}
-  .pill{font-family:var(--sans);font-weight:600;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;
-    background:transparent;border:1px solid rgba(31,29,24,.18);color:var(--ink);transition:background .15s,color .15s}
-  .pill:hover{background:var(--panel)}
-  .pill.on{background:var(--ink);border-color:var(--ink);color:#fff}
-  .bsearch{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(31,29,24,.15);
-    border-radius:999px;padding:10px 18px 10px 16px;width:300px;max-width:100%}
-  .bsearch svg{flex:none;color:var(--muted)}
-  .bsearch input{border:0;outline:0;background:transparent;font-family:var(--sans);font-size:14px;color:var(--ink);width:100%}
-  .bsearch input::placeholder{color:var(--ink2)}
-
   /* ---------- blog grid ---------- */
-  .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 33px;padding-bottom:72px}
+  .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px 33px;padding-bottom:24px;min-height:220px}
+  /* Async states. The grid is empty on first paint, so reserve height to stop the footer
+     jumping up and back down when the first page lands. */
+  .bstate{padding:56px 0 72px;text-align:center;color:var(--ink2);font-size:16px}
+  .bstate button{margin-left:10px;font:inherit;text-decoration:underline;background:none;border:0;
+    color:var(--ink);cursor:pointer}
+  .bskel{border-radius:16px;aspect-ratio:415/291;background:var(--panel);
+    animation:bpulse 1.4s ease-in-out infinite}
+  @keyframes bpulse{0%,100%{opacity:1}50%{opacity:.55}}
+  .bpager{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+    padding:8px 0 80px}
+  .bpager a,.bpager span{min-width:40px;height:40px;padding:0 12px;border-radius:999px;
+    display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+    font-size:14px;color:var(--ink);border:1px solid rgba(31,29,24,.15)}
+  .bpager a:hover{background:var(--panel)}
+  .bpager .on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .bpager .gap{border:0;min-width:20px;padding:0}
+  .bpager .off{opacity:.35;pointer-events:none}
+  .bcount{text-align:center;color:var(--ink2);font-size:14px;padding-bottom:18px}
   .bcard{display:block;text-decoration:none;color:var(--ink)}
-  .bcard-img{border-radius:16px;overflow:hidden;aspect-ratio:415/291}
-  .bcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .bcard-img{border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:var(--panel)}
+  .bcard-img img{width:100%;height:100%;object-fit:contain;transition:transform .5s ease}
   .bcard:hover .bcard-img img{transform:scale(1.04)}
   .bcard .meta{padding:21px 0 14px}
   .bcard-title{font-weight:400;font-size:18px;line-height:1.3;margin:0}
@@ -161,7 +171,6 @@
     .nav-menu{display:block;margin-left:auto}
     .bgrid{grid-template-columns:1fr;gap:40px}
     .filters{flex-direction:column;align-items:flex-start}
-    .bsearch{width:100%}
     .sub-in{flex-direction:column;align-items:flex-start}
     .foot-cols{grid-template-columns:repeat(2,1fr);gap:36px}
     .foot-legal{margin:8px 0;order:3;width:100%}
@@ -212,67 +221,15 @@
 </section>
 
 <!-- ===================== FEATURED ===================== -->
-<section class="featured">
-  <div class="wrap">
-    <a class="feat-card av-fadeUp" href="./sample-article/">
-      <div class="feat-img"><img src="../assets/blog-featured.jpg" alt="A cleaner smoothing fresh linen bedding in a calm bedroom"></div>
-      <div class="meta"><b>SCIENCE</b><span>28th April, 2026&nbsp;&nbsp;·&nbsp;&nbsp;4 min read</span></div>
-      <h2 class="feat-title">Why probiotic cleaning keeps working for 72 hours</h2>
-      <p class="feat-dek">Most cleaning masks odor. Probiotic cleaning removes its source, then keeps removing it for three more days. Here is what that means for the air in your home.</p>
-    </a>
-  </div>
-</section>
-
-<!-- ===================== FILTERS ===================== -->
-<section class="wrap filters">
-  <!-- ponytail: pills are decorative — one sample article, nothing to filter yet -->
-  <div class="pills" role="group" aria-label="Filter guides by topic">
-    <button type="button" class="pill on">All</button>
-    <button type="button" class="pill">Science</button>
-    <button type="button" class="pill">Home</button>
-    <button type="button" class="pill">Airbnb</button>
-    <button type="button" class="pill">Office</button>
-    <button type="button" class="pill">NYC</button>
-  </div>
-  <div class="bsearch">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.25" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    <input type="search" placeholder="Search the Cleaning Guides" aria-label="Search the Cleaning Guides">
-  </div>
+<section class="featured" id="featured" hidden>
+  <div class="wrap" id="feat-slot"></div>
 </section>
 
 <!-- ===================== BLOG GRID ===================== -->
-<section class="wrap bgrid">
-  <a class="bcard av-fadeUp" href="./sample-article/">
-    <div class="bcard-img"><img src="../assets/blog-card-01.jpg" alt="A man carrying moving boxes outside a house"></div>
-    <div class="meta"><b>HOME</b><span>28th April, 2021</span></div>
-    <h3 class="bcard-title">How often should you deep clean a NYC apartment?</h3>
-  </a>
-  <a class="bcard av-fadeUp" href="./sample-article/">
-    <div class="bcard-img"><img src="../assets/blog-card-03.jpg" alt="Potted cacti and colorful objects on pastel pedestals"></div>
-    <div class="meta"><b>AIRBNB</b><span>28th April, 2021</span></div>
-    <h3 class="bcard-title">The 3-hour turnover: what guests notice first</h3>
-  </a>
-  <a class="bcard av-fadeUp" href="./sample-article/">
-    <div class="bcard-img"><img src="../assets/blog-card-02.jpg" alt="Three colleagues laughing together on an office sofa"></div>
-    <div class="meta"><b>OFFICE</b><span>28th April, 2021</span></div>
-    <h3 class="bcard-title">Why office air quality starts with the floor</h3>
-  </a>
-  <a class="bcard av-fadeUp" href="./sample-article/">
-    <div class="bcard-img"><img src="../assets/blog-card-01.jpg" alt="A man carrying moving boxes outside a house"></div>
-    <div class="meta"><b>HOME</b><span>28th April, 2021</span></div>
-    <h3 class="bcard-title">How often should you deep clean a NYC apartment?</h3>
-  </a>
-  <a class="bcard av-fadeUp" href="./sample-article/">
-    <div class="bcard-img"><img src="../assets/blog-card-03.jpg" alt="Potted cacti and colorful objects on pastel pedestals"></div>
-    <div class="meta"><b>AIRBNB</b><span>28th April, 2021</span></div>
-    <h3 class="bcard-title">The 3-hour turnover: what guests notice first</h3>
-  </a>
-  <a class="bcard av-fadeUp" href="./sample-article/">
-    <div class="bcard-img"><img src="../assets/blog-card-02.jpg" alt="Three colleagues laughing together on an office sofa"></div>
-    <div class="meta"><b>OFFICE</b><span>28th April, 2021</span></div>
-    <h3 class="bcard-title">Why office air quality starts with the floor</h3>
-  </a>
-</section>
+<p class="wrap bcount" id="bcount" hidden></p>
+<section class="wrap bgrid" id="bgrid" aria-busy="true"></section>
+<div class="wrap bstate" id="bstate">Loading guides&hellip;</div>
+<nav class="wrap bpager" id="bpager" aria-label="Guide pages" hidden></nav>
 
 <!-- ===================== SUBSCRIBE ===================== -->
 <section class="subscribe">
@@ -356,10 +313,184 @@
     });
   },{threshold:0.12});
   document.querySelectorAll('.av-fadeUp,.av-fadeIn').forEach(function(el){io.observe(el);});
-  // stagger grid cards
-  document.querySelectorAll('.bgrid .bcard').forEach(function(el,i){
-    el.style.animationDelay=(i%3*90)+'ms';
-  });
+  // Cards arrive after fetch, so expose the observer for the renderer to hand new nodes to.
+  window.__revealNew=function(root){
+    root.querySelectorAll('.av-fadeUp,.av-fadeIn').forEach(function(el){io.observe(el);});
+  };
+})();
+</script>
+<script>
+/* ---------------------------------------------------------------------------
+   Cleaning Guides index — server-paginated from the landing API.
+
+   GET /v1/landing/blogs?platform=…&page=N&limit=20
+     -> { list:[{id,name,creationDate,blogCategories,files:[{pathname}]}],
+          pagination:{page,limit,total,total_pages} }
+
+   The API honours ONLY page and limit. search / q / keyword / filter and every
+   sort param were probed and are ignored (total stayed 29, order unchanged).
+   That is why this page has no search box and no category pills: blogCategories
+   is null on every record today, so pills would filter nothing and a search box
+   would only ever search the current page. Add them back when the API supports it.
+--------------------------------------------------------------------------- */
+(function(){
+  var API='https://vriaxdtfduddjupiwiyx.supabase.co/functions/v1/landing-api/v1/landing/blogs';
+  var PLATFORM='clean_everneat_co';
+  var PER=20;
+
+  var grid=document.getElementById('bgrid'),
+      state=document.getElementById('bstate'),
+      pager=document.getElementById('bpager'),
+      count=document.getElementById('bcount'),
+      featSec=document.getElementById('featured'),
+      featSlot=document.getElementById('feat-slot');
+  if(!grid) return;
+
+  function pageFromUrl(){
+    var n=parseInt(new URLSearchParams(location.search).get('page'),10);
+    return (isFinite(n)&&n>0)?n:1;
+  }
+  function esc(v){
+    return String(v==null?'':v).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function fmtDate(iso){
+    var d=new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  }
+  function imgOf(b){
+    var f=(b&&b.files)||[];
+    return (f[0]&&f[0].pathname)||'';
+  }
+  /* blogCategories is null across the whole catalogue today. Render the chip only if
+     the API starts populating it, rather than inventing a label. */
+  function catOf(b){
+    var c=b&&b.blogCategories;
+    if(!c) return '';
+    if(Array.isArray(c)) c=c[0];
+    return typeof c==='string'?c:(c&&(c.name||c.title))||'';
+  }
+  function hrefOf(b){ return './article/?id='+encodeURIComponent(b.id); }
+
+  function metaHtml(b){
+    var cat=catOf(b), date=fmtDate(b.creationDate);
+    return '<div class="meta">'+(cat?'<b>'+esc(cat.toUpperCase())+'</b>':'')+
+           (date?'<span>'+esc(date)+'</span>':'')+'</div>';
+  }
+  function cardHtml(b){
+    var img=imgOf(b);
+    return '<a class="bcard av-fadeUp" href="'+esc(hrefOf(b))+'">'+
+      '<div class="bcard-img">'+(img?'<img loading="lazy" src="'+esc(img)+'" alt="">':'')+'</div>'+
+      metaHtml(b)+
+      '<h3 class="bcard-title">'+esc(b.name)+'</h3>'+
+    '</a>';
+  }
+  function featHtml(b){
+    var img=imgOf(b);
+    return '<a class="feat-card av-fadeUp" href="'+esc(hrefOf(b))+'">'+
+      '<div class="feat-img">'+(img?'<img src="'+esc(img)+'" alt="">':'')+'</div>'+
+      metaHtml(b)+
+      '<h2 class="feat-title">'+esc(b.name)+'</h2>'+
+    '</a>';
+  }
+
+  function pagerHtml(pg,total){
+    if(total<=1) return '';
+    function link(n,label,cls){
+      var u=new URL(location.href);
+      if(n<=1) u.searchParams.delete('page'); else u.searchParams.set('page',n);
+      return '<a class="'+(cls||'')+'" href="'+esc(u.pathname+u.search)+'">'+label+'</a>';
+    }
+    var out=[];
+    out.push(pg>1?link(pg-1,'&larr;',''):'<span class="off">&larr;</span>');
+    var nums=[],i;
+    for(i=1;i<=total;i++){
+      if(i===1||i===total||Math.abs(i-pg)<=1) nums.push(i);
+      else if(nums[nums.length-1]!=='ELLIPSIS') nums.push('ELLIPSIS');
+    }
+    nums.forEach(function(n){
+      if(n==='ELLIPSIS') out.push('<span class="gap">&hellip;</span>');
+      else if(n===pg) out.push('<span class="on" aria-current="page">'+n+'</span>');
+      else out.push(link(n,String(n),''));
+    });
+    out.push(pg<total?link(pg+1,'&rarr;',''):'<span class="off">&rarr;</span>');
+    return out.join('');
+  }
+
+  function skeletons(n){
+    var h='';
+    while(n--) h+='<div class="bskel"></div>';
+    return h;
+  }
+
+  function render(data,pg){
+    var list=(data&&data.list)||[];
+    var pgn=(data&&data.pagination)||{};
+    var totalPages=pgn.total_pages||1;
+    var total=pgn.total||list.length;
+
+    if(!list.length){
+      grid.innerHTML='';
+      grid.removeAttribute('aria-busy');
+      featSec.hidden=true;
+      count.hidden=true;
+      pager.hidden=true;
+      state.hidden=false;
+      state.textContent=pg>1?'No guides on this page.':'No guides published yet.';
+      return;
+    }
+
+    /* First item of page 1 gets the featured treatment; later pages are a plain grid. */
+    var rest=list;
+    if(pg===1){
+      featSlot.innerHTML=featHtml(list[0]);
+      featSec.hidden=false;
+      rest=list.slice(1);
+    }else{
+      featSec.hidden=true;
+    }
+
+    grid.innerHTML=rest.map(cardHtml).join('');
+    grid.removeAttribute('aria-busy');
+    grid.querySelectorAll('.bcard').forEach(function(el,i){
+      el.style.animationDelay=(i%3*90)+'ms';
+    });
+
+    state.hidden=true;
+    count.hidden=false;
+    count.textContent=total+' guide'+(total===1?'':'s')+
+      (totalPages>1?' · page '+pg+' of '+totalPages:'');
+
+    pager.innerHTML=pagerHtml(pg,totalPages);
+    pager.hidden=!pager.innerHTML;
+
+    if(window.__revealNew){ window.__revealNew(document); }
+  }
+
+  function load(pg){
+    grid.innerHTML=skeletons(6);
+    grid.setAttribute('aria-busy','true');
+    state.hidden=true;
+    var url=API+'?platform='+encodeURIComponent(PLATFORM)+'&page='+pg+'&limit='+PER;
+    fetch(url,{headers:{accept:'application/json'}})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(d){ render(d,pg); })
+      .catch(function(){
+        grid.innerHTML='';
+        grid.removeAttribute('aria-busy');
+        featSec.hidden=true;
+        count.hidden=true;
+        pager.hidden=true;
+        state.hidden=false;
+        state.innerHTML='Could not load the guides right now.<button type="button" id="bretry">Try again</button>';
+        var b=document.getElementById('bretry');
+        if(b) b.addEventListener('click',function(){ load(pg); });
+      });
+  }
+
+  load(pageFromUrl());
 })();
 </script>
 <booking-widget></booking-widget>

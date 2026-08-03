@@ -22,7 +22,7 @@
     --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
     --line:#e5e1d5; --line2:#d9d4c7;
     --taupe:#d5cfbf; --butter:#f6f3d9;
-    --lime:#C8FF00; --lime-deep:#AADC00; --lime-soft:rgba(200,255,0,0.15);
+    --lime:#C9C42B; --lime-deep:#ABA725; --lime-soft:rgba(201,196,43,0.15);
     --dark:#181611;
     --serif:'PP Editorial New',Georgia,'Times New Roman',serif;
     --sans:'Aileron',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -89,9 +89,25 @@
   .hero-inner{position:relative;z-index:2;width:100%;color:#fff;padding-block:clamp(32px,7vh,72px)}
   .hero-cap{font-family:var(--serif);font-style:italic;font-weight:200;font-size:clamp(15px,1.5vw,20px);
     opacity:.92;margin:0 0 20px;text-shadow:0 1px 14px rgba(0,0,0,.45)}
-  .hero-head{font-weight:400;font-size:clamp(29px,4.8vw,58px);line-height:1.2;margin:0;max-width:1080px;
+  /* Headline holds one line at >=1440px. The old max-width:1080px was the only thing forcing
+     a wrap there — measured, the text needs ~22.5x its font-size (58px -> ~1300px) and .wrap
+     offers 1297px of content at 1440. Cap removed; the vw coefficient is left at 4.8.
+     Lowering it was tried and reverted: below 1440 the clamp is capped at 58px anyway, so a
+     smaller coefficient shrank the type without removing the wrap, and reaching one line at
+     1280 would need ~3.94vw — under 1% of margin, which any font-metric shift would break.
+     Two balanced lines below 1440 is the honest outcome. */
+  .hero-head{font-weight:400;font-size:clamp(29px,4.8vw,58px);line-height:1.2;margin:0;
     letter-spacing:-.01em;text-shadow:0 2px 22px rgba(0,0,0,.4)}
-  .hero-head .fill{color:var(--lime);border-bottom:2px solid rgba(200,255,0,.5);padding-bottom:1px;white-space:nowrap}
+  /* When it does wrap, the second line must start at "every" — not wherever balance decides.
+     Holding the lead clause on one line leaves "every 1 week →" as the only break point.
+     Only applied >=901px: measured, the lead needs ~15.9x its font-size and the column offers
+     more than that at every width down to 901. Below that it wraps freely and balance evens it. */
+  @media (min-width:901px){
+    .hero-head .hh-lead{white-space:nowrap}
+    .hero-head .hh-tail{white-space:nowrap}
+  }
+  @media (max-width:900px){ .hero-head{text-wrap:balance} }
+  .hero-head .fill{color:var(--lime);border-bottom:2px solid rgba(201,196,43,.5);padding-bottom:1px;white-space:nowrap}
   .hero-go{display:inline-grid;place-items:center;width:clamp(38px,4vw,54px);height:clamp(38px,4vw,54px);
     border-radius:50%;border:1.5px solid rgba(255,255,255,.8);color:#fff;text-decoration:none;
     margin-left:12px;vertical-align:middle;font-size:.62em;transition:background .15s,color .15s}
@@ -187,32 +203,36 @@
   .phase-scene>img{transition:opacity .5s ease}
   .phase-scene.has-clip>video{opacity:1}
   .phase-scene.has-clip>img{opacity:0}
-  /* Lime plinth across the bottom of the stage — OPAQUE, which is the whole point. The old
-     bar was lime at 0.72->0.42 alpha, so legibility tracked whichever frame the scrub landed
-     on: 9.5:1 over a bright frame, 2.34:1 over a dark one, 1.26:1 once dimmed. Solid lime
-     measures ~14:1 for ink and ~6.6:1 for ink2 no matter what the film is doing. Do not
-     reintroduce alpha here. */
+  /* Timeline plinth across the bottom of the stage. The bar itself has no surface — each
+     cell carries its own, so the cell colour can encode state (see .prot-step below). */
   .prot-bar{position:absolute;left:0;right:0;bottom:0;z-index:2;
     display:grid;grid-template-columns:repeat(3,1fr);
     background:transparent;border-top:1px solid rgba(31,29,24,.14)}
   .prot-step{padding:clamp(16px,1.7vw,24px) clamp(18px,2vw,30px);
     border-right:1px solid rgba(31,29,24,.14);min-width:0}
   .prot-step:last-child{border-right:none}
-  .prot-step strong{display:block;font-family:var(--serif);font-style:italic;font-weight:400;
-    font-size:clamp(16px,1.3vw,19px);line-height:1.2;letter-spacing:0;text-transform:none;
+  /* Super-bold headers use the SANS at 800. PP Editorial New only ships 200 and 400 — asking
+     for 800 there would synthesise faux-bold and smear the strokes. Aileron has a real 800. */
+  .prot-step strong{display:block;font-family:var(--sans);font-style:normal;font-weight:800;
+    font-size:clamp(15px,1.2vw,18px);line-height:1.2;letter-spacing:-.005em;text-transform:none;
     color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:7px}
   .prot-step p{margin:0;font-size:clamp(13.5px,1.02vw,15.5px);line-height:1.45;color:var(--ink)}
-  /* Lime IS the active state, so the plinth cannot also be lime — an all-lime bar makes
-     every step look reached. Cells start neutral and turn lime as the scroll reaches them,
-     so the bar fills across and ends fully green with all three active.
-     Both states stay legible on their own — ink on lime 11.0:1, ink2 on the neutral
-     plinth ~7:1 — never opacity toward the video, which is how the old bar failed at 1.26:1. */
-  /* Inactive cells are translucent so the film reads through them; active cells are solid
-     lime. The alpha is chosen from measurement, not taste — too low and the inactive text
-     contrast starts tracking the footage again, which is exactly how the original bar
-     failed at 1.26:1. See the measured figures in the commit. */
+  /* Lime IS the active state, so no surface may also be lime — an all-lime bar makes every
+     step look reached. Inactive cells are translucent white (the film reads through them);
+     reaching a step turns its cell solid lime, so the bar fills left to right and ends
+     fully green with all three active.
+     Alpha and type colour are both set from measurement over the clip's DARKEST stretch,
+     not from a bright frame:
+       inactive cell + ink2  4.5:1 mean / 3.8:1 worst  FAILS AA
+       inactive cell + ink   9.7:1 mean / 8.2:1 worst  passes  <- shipped
+       active cell (lime)   11.0:1, frame-independent (opaque)
+     Never encode state as opacity on the TEXT; that is how the original 0.72->0.42 lime bar
+     ended up at 1.26:1. Lower this alpha and re-measure, or the floor drifts back under AA. */
   .prot-step{background:rgba(255,255,255,.66)}
-  .prot-step.on{background:var(--lime)}
+  /* Active cell is lime with transparency so the film reads through it. Alpha set from
+     measurement over the clip's darkest stretch, not by eye — a translucent lime surface is
+     exactly what put the original bar at 1.26:1. See the figures in the commit. */
+  .prot-step.on{background:rgba(201,196,43,.78)}
   /* Inactive type stays full ink, not ink2. Over a translucent cell ink2 measured 4.5:1
      mean / 3.8:1 worst against the clip's darkest stretch — failing AA and drifting with
      the footage. Ink holds 9.7:1 / 8.2:1 there. The lime cell already carries the state,
@@ -310,7 +330,7 @@
   .stat{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
   .track{height:8px;border-radius:999px;background:#e6e2d6;overflow:hidden;margin:4px 0 18px}
-  .track>i{display:block;height:100%;width:52%;border-radius:999px;background:linear-gradient(90deg,#c0cd3a,#dbe27a)}
+  .track>i{display:block;height:100%;width:52%;border-radius:999px;background:linear-gradient(90deg,var(--lime-deep),var(--lime))}
   .ticks{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:6px;margin-bottom:20px}
   .tk b{display:block;font-size:13px;font-weight:500}
   .tk span{font-size:11px;color:var(--muted)}
@@ -492,17 +512,15 @@
     .protect-veil{width:100%;background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,
       rgba(255,255,255,.9) 24%,rgba(255,255,255,.5) 44%,rgba(255,255,255,0) 62%)}
     .protect-copy .sec-intro{max-width:none}
-    /* Unpinned, --p is never updated, so the rail would sit permanently empty. Show the
-       timeline as complete and light every step — there is no scroll sequence to convey. */
+    /* Unpinned the plinth sits in flow at the stage's bottom edge — three stacked steps are
+       far too tall to overlay the film. */
     .protect-stage{display:flex;flex-direction:column;justify-content:flex-end}
     .prot-bar{position:relative;grid-template-columns:1fr;background:transparent}
     .prot-bar::after{width:100%}
     .prot-step{border-right:none;border-top:1px solid rgba(31,29,24,.14)}
     .prot-step:first-child{border-top:none}
-    /* No scroll sequence when unpinned: rail reads complete, every step at full ink, and
-       no current-step highlight — pTarget pins to 1 there, which would arbitrarily light the
-       last cell. */
-    .prot-step:not(.on) strong,.prot-step:not(.on) p{color:var(--ink)}
+    /* No scroll sequence when unpinned: --p is never updated, so the rail is held complete
+       by the width:100% above and every step renders active. */
 
     .phase-tl::before{transform:none}
     .tl-dot{transform:scale(1)}
@@ -523,6 +541,7 @@
       <a href="commercial-cleaning/">Commercial</a>
       <a href="event-cleaning/">Event</a>
       <a href="https://www.everneat.co/">Shop Products</a>
+      <a href="blog/">Cleaning Guides</a>
       <a href="login/">Login</a>
     </nav>
     <a class="btn btn--dark nav-book" href="book/">Book&nbsp;&nbsp;&rarr;</a>
@@ -535,6 +554,7 @@
         <a href="commercial-cleaning/">Commercial</a>
         <a href="event-cleaning/">Event</a>
         <a href="https://www.everneat.co/">Shop Products</a>
+        <a href="blog/">Cleaning Guides</a>
         <a href="login/">Login</a>
         <a class="btn btn--dark" href="book/">Book&nbsp;&nbsp;&rarr;</a>
       </div>
@@ -547,7 +567,7 @@
   <div class="hero-media" role="img" aria-label="A calm, minimal kitchen and dining room"></div>
   <div class="hero-inner wrap">
     <p class="hero-cap">A clean home you never have to check.</p>
-    <h1 class="hero-head">My <span class="fill">home</span> needs a <span class="fill">regular</span> cleaning every <span class="fill">1&nbsp;week</span><a class="hero-go" href="book/" aria-label="Get started">&rarr;</a></h1>
+    <h1 class="hero-head"><span class="hh-lead">My <span class="fill">home</span> needs a <span class="fill">regular</span> cleaning</span> <span class="hh-tail">every <span class="fill">1&nbsp;week</span><a class="hero-go" href="book/" aria-label="Get started">&rarr;</a></span></h1>
   </div>
   <div class="hero-ticker" aria-hidden="true">
     <div class="ticker-track">
@@ -811,8 +831,8 @@
             <div class="mock-head"><span class="mock-title">Photo report</span><span class="mock-tag">The Smith's Home</span></div>
             <hr class="mock-div">
             <div class="photos">
-              <div class="pho before"><img src="https://cdn.everneat.co/assets/services/airbnb-cleaning/airbnb-before.jpg" alt="A bedroom before the visit, bed unmade" loading="lazy"><span class="t">Before</span></div>
-              <div class="pho after"><img src="https://cdn.everneat.co/assets/services/airbnb-cleaning/airbnb-after.jpg" alt="The same bedroom after the visit, bed crisply made" loading="lazy"><span class="t">After</span></div>
+              <div class="pho before"><img src="assets/home-before.jpg" alt="A bathroom vanity before the visit — smeared mirror, towel left on the counter" loading="lazy"><span class="t">Before</span></div>
+              <div class="pho after"><img src="assets/home-after.jpg" alt="The same vanity after the visit — mirror clear, towels hung, surfaces tidy" loading="lazy"><span class="t">After</span></div>
             </div>
             <div class="approve">
               <span class="ok"><span class="chk">✓</span>Approved by you</span>
@@ -1044,10 +1064,7 @@
       // 0.30/0.62, not 0.45/0.9 — the old thresholds gave "72H+ · Maintain" (the only step
       // pointing at the retail line) the last 10% of the pin. Least dwell to the most sellable line.
       var step=pTarget>=0.62?2:pTarget>=0.30?1:0;
-      pSteps.forEach(function(s,i){
-        s.classList.toggle('on',i<=step);
-        s.classList.toggle('now',i===step);
-      });
+      pSteps.forEach(function(s,i){s.classList.toggle('on',i<=step);});
       // Drives the rail fill. Only meaningful while pinned; unpinned, CSS holds it full.
       if(pScrub)protectEl.style.setProperty('--p',pTarget.toFixed(4));
       if(pScrub&&!pAsked&&r.top<window.innerHeight*1.5&&r.bottom>0)loadProtectClip();
