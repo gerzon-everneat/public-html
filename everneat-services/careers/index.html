@@ -80,7 +80,7 @@
   .cr-invest{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
     padding:clamp(64px,8vw,112px) var(--edge)}
   .cr-invest-img{justify-self:center;width:min(574px,100%)}
-  .cr-invest-img img{border-radius:16px;width:100%;aspect-ratio:574/459;object-fit:cover}
+  .cr-invest-img img{border-radius:16px;width:100%;aspect-ratio:574/729;object-fit:cover}
   .cr-invest-copy{justify-self:center;max-width:469px}
   .cr-invest-copy>p{font-size:18px;line-height:28px;margin:0 0 56px;color:var(--ink)}
   .metrics{display:grid;grid-template-columns:1fr 1fr;gap:42px}
@@ -96,7 +96,8 @@
   .cr-ben-in .pg-h2{color:#fff;margin-bottom:42px}
   .feat{display:flex;gap:28px;align-items:flex-start}
   .feat+.feat{margin-top:28px}
-  .feat img{flex:none;margin-top:2px}
+  /* design draws every icon inside a fixed 49px box, so all three body texts start at the same x */
+  .feat img{flex:none;width:49px;height:auto;margin-top:2px}
   .feat p{margin:0;font-size:16px;line-height:24px;color:rgba(255,255,255,.92)}
   .cr-ben-img{min-height:480px}
   .cr-ben-img img{width:100%;height:100%;object-fit:cover}
@@ -104,7 +105,8 @@
   /* ---------- current openings ---------- */
   .cr-jobs{padding:clamp(64px,8vw,112px) 0}
   .cr-jobs .pg-h2{margin-bottom:clamp(36px,4vw,64px)}
-  .job-row{display:grid;grid-template-columns:1.28fr 1fr 1fr;gap:24px;align-items:baseline;padding:22px 0}
+  /* 1.28:1:1 over a 56px gutter resolves to the design's 469 / 365.5 / 365.5 at 1312 wide */
+  .job-row{display:grid;grid-template-columns:1.28fr 1fr 1fr;gap:56px;align-items:baseline;padding:22px 0}
   .job-head{padding-top:0;font-family:var(--serif);font-style:italic;text-transform:uppercase;
     font-size:16px;letter-spacing:.05em;color:var(--ink2)}
   .job-row+.job-row{border-top:1px solid rgba(0,0,0,.12)}
@@ -215,7 +217,7 @@
 <!-- ===================== WE INVEST ===================== -->
 <section class="cr-invest">
   <div class="cr-invest-img av-slideLeft">
-    <img src="../assets/careers-team.png" alt="Two Everneat cleaners at work in a bright office">
+    <img src="../assets/careers-bedroom.jpg" alt="An Everneat cleaner smoothing the duvet on a made bed">
   </div>
   <div class="cr-invest-copy">
     <h2 class="pg-h2 av-fadeUp">We invest in the people who clean.</h2>
@@ -234,21 +236,21 @@
       <p class="pg-sub av-fadeUp">benefits</p>
       <h2 class="pg-h2 av-fadeUp">We&rsquo;re a pretty amazing place to work.</h2>
       <div class="feat av-fadeUp">
-        <img src="../assets/careers-icon-1.svg" alt="" width="40" height="32">
+        <img src="../assets/careers-icon-1.svg" alt="" width="49" height="39">
         <p>W-2 employment: workers&rsquo; comp, disability, and paid family leave.</p>
       </div>
       <div class="feat av-fadeUp">
-        <img src="../assets/careers-icon-2.svg" alt="" width="40" height="38">
+        <img src="../assets/careers-icon-2.svg" alt="" width="47" height="45">
         <p>Weekly direct deposit, flexible schedules, overtime, and holiday pay.</p>
       </div>
       <div class="feat av-fadeUp">
-        <img src="../assets/careers-icon-3.svg" alt="" width="40" height="32">
+        <img src="../assets/careers-icon-3.svg" alt="" width="47" height="37">
         <p>Only natural, non-toxic products that work. No harsh chemicals on your hands or lungs.</p>
       </div>
     </div>
   </div>
   <div class="cr-ben-img">
-    <img src="../assets/careers-kitchen.png" alt="Everneat cleaners wiping down a marble kitchen counter and range">
+    <img src="../assets/careers-office.jpg" alt="An Everneat cleaner wiping down a row of office desks">
   </div>
 </section>
 
@@ -257,7 +259,7 @@
   <div class="wrap">
     <h2 class="pg-h2 av-fadeUp">Current Openings</h2>
     <div class="job-row job-head" aria-hidden="true">
-      <span></span><span>Type</span><span>Location</span>
+      <span>Role</span><span>Type</span><span>Location</span>
     </div>
     <div class="job-row av-slideLeft">
       <span class="job-role">Residential &amp; Office Cleaner</span>
