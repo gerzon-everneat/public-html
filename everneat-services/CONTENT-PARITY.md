@@ -9,10 +9,10 @@ from the design, nor wording that differs only slightly.
 
 | Page | Node | Design strings | Build strings | Missing |
 |---|---|---|---|---|
-| AIRBNB | `7991:6627` | 232 | 593 | **5** |
-| HOME CLEANING | `7756:454` | 197 | 395 | **2** |
-| OFFICE | `8007:10293` | 698 | 342 | **76** |
-| COMMERCIAL | `8068:163` | 276 | 361 | **25** |
+| AIRBNB | `7991:6627` | 232 | 734 | **5** |
+| HOME CLEANING | `7756:454` | 197 | 505 | **1** |
+| OFFICE | `8007:10293` | 698 | 582 | **12** |
+| COMMERCIAL | `8068:163` | 276 | 557 | **4** |
 
 EVENT `8068:1034` was checked by targeted string match rather than full diff: only
 `04 wrapped and reported` is absent (the build says `04 happiness checked`). Effectively in parity.
@@ -33,19 +33,17 @@ Park Ave #5E
 
 ## HOME CLEANING — `7756:454` → `home-cleaning/index.html`
 
-197 design strings, 2 unique not found in the build.
+197 design strings, 1 unique not found in the build.
 
 ```
-THE DIFFERENCE you’ll FEEL
 $104
 ```
 
 ## OFFICE — `8007:10293` → `office-cleaning/index.html`
 
-698 design strings, 76 unique not found in the build.
+698 design strings, 12 unique not found in the build.
 
 ```
-With Everneat
 tailor it to the turnover
 add to turnover
 Oven deeo clean
@@ -55,102 +53,70 @@ Organization
 Every 2 weeks
 $104
 Basic
-protocol points
-5 of 7
-Empty bins &amp; replace liners
-Wipe &amp; disinfect desks, phones &amp; shared surfaces
-Dust monitors, keyboards &amp; electronics
-Probiotic touch-point treatment
-Sanitize shared equipment (printers, copiers)
-Tidy &amp; align chairs and cables
-Detail vents, sills &amp; high surfaces
-7 of 8
-8 of 9
-4 of 6
-Add-ons · available with any tier
-Interior window cleaning
-Exterior window cleaning
-Carpet deep extraction
-Floor strip &amp; wax
-Inside refrigerator &amp; freezer
-Inside microwave (deep)
-High-dusting &amp; vents
-Post-construction detailing
-Upholstery &amp; partition cleaning
-Plant care &amp; watering
 Book Foundation →
-Wipe tables &amp; disinfect touch-points
-Clean glass walls &amp; partitions
-Reset chairs &amp; tidy cables
-Wipe AV remotes &amp; conference phones
-Whiteboard &amp; marker-tray clean
-Probiotic treatment application
-Detail vents &amp; high surfaces
-Dust &amp; wipe reception surfaces
-Clean glass doors &amp; mirrors
-Sanitize door handles &amp; switches
-Tidy magazines &amp; reset seating
-Spot-clean upholstery
-Detail baseboards &amp; sills
-Clean &amp; disinfect toilets &amp; urinals
-Wash sinks, counters &amp; fixtures
-Restock soap, paper &amp; towels
-Clean mirrors &amp; glass
-Empty &amp; disinfect bins
-Scrub tile &amp; grout
-Mop &amp; disinfect floors
-Wipe counters, tables &amp; backsplash
-Clean sink &amp; polish fixtures
-Wipe appliance fronts (fridge, microwave)
-Load/empty dishwasher &amp; tidy
-Restock supplies &amp; replace bin liners
-Disinfect handles &amp; switches
-Deep clean inside microwave &amp; fridge
-Mop floors
-Vacuum carpets &amp; rugs
-Sweep &amp; mop hard floors
-Spot-clean entry glass &amp; mats
-Disinfect entry handles &amp; rails
-Detail edges, corners &amp; baseboards
-Carpet extraction
-6 of 7
-7 of 7
-8 of 8
-5 of 6
 Book Essential →
-9 of 9
-6 of 6
 Book Signature →
 ```
 
 ## COMMERCIAL — `8068:163` → `commercial-cleaning/index.html`
 
-276 design strings, 25 unique not found in the build.
+276 design strings, 4 unique not found in the build.
 
 ```
-With Everneat
 Everneat guest amenities
 IN UNIT
 05 guest amenities
-The everyday protocol, run in full on every commercial space.
 9 of 12
-Clean &amp; disinfect toilet (bowl, seat, base &amp; surface)
-Wash sink &amp; countertops
-Clean &amp; polish fixtures
-Clean glass surfaces &amp; mirrors
-Refill soap &amp; paper goods
-Change trash liners
-Disinfect light switches &amp; door handles
-Sweep &amp; mop floors
-Wash wall tiles
-Scrub tiles &amp; grout
-Dust light fixtures &amp; vents
-Probiotic treatment application
-5 of 9
-2 of 10
-7 of 13
-Vertical modules · add to any plan
-Retail — sales floor &amp; fitting
-Wellness — studio &amp; locker areas
-Learning &amp; Training — activity spaces
 ```
+
+
+---
+
+# Triage of what remains (22 strings)
+
+The raw counts above are "design copy not found in the build". That is not the same as work to
+do — a good part of it is the design being wrong, and the build having deliberately diverged.
+
+## A · Design errors — do NOT sync
+
+**Typo at source.** `Oven deeo clean` (Airbnb, Office). Should read "deep". Fix in Figma.
+
+**Cross-page leaks.** The Office frame carries Airbnb and residential copy that does not belong on
+an office page:
+
+| String | Why it is a leak |
+|---|---|
+| `tailor it to the turnover` · `add to turnover` | "turnover" is short-let language; the build says "every visit" |
+| `2 bed · 1 bath` · `3 bed +` · `Every 2 weeks` | residential chat options inside an office page mock |
+| `$104` · `/ visit` | homepage quote value; Airbnb's own tiers start at $117 |
+
+The build already caught one of these independently. `commercial-cleaning/index.html` carries the
+comment *"05 · supply restock (renamed from Figma's 'guest amenities' Airbnb leak)"* — so
+`Everneat guest amenities`, `IN UNIT` and `05 guest amenities` on Commercial are the same class of
+design error, already handled correctly in the build.
+
+## B · Markup differences, not content differences
+
+`Basic`, `protocol points`, `Book Foundation →`, `Book Essential →`, `Book Signature →`, `9 of 12`
+and the room counts are produced by JS from `TIERS` / `ROOMS` / `ADDONS` and assembled at runtime
+(`'+t.counts[i]+'`), so no literal exists to match. Verified present by reading the data arrays.
+
+## C · Genuine build gaps
+
+| Page | String | Status |
+|---|---|---|
+| Home Cleaning | `THE DIFFERENCE you'll FEEL` | **fixed** — build said "The difference you feel" |
+| Airbnb | `Your quote · 2–4 hrs` (build: `3 hrs`) | open — part of the leaked mock above, confirm intent first |
+| Airbnb | `Park Ave #5E` | open — mock label, absent from build |
+
+## Method corrections made while producing this
+
+Three false-positive classes were found and fixed. Each had inflated the numbers reported earlier:
+
+1. **Component slot names** (`card-name`, `room-ct`) read as copy — 40 false positives on Home Cleaning.
+2. **Number-prefixed labels** — `01 book in chat` is built as `<span>01</span><h3>Book in chat</h3>`; 5 per page.
+3. **JS-embedded content** — `<script>` blocks were stripped, so the entire Office and Commercial
+   protocol drawers looked absent. This alone took Office from 76 to 14 and Commercial from 25 to 5.
+4. **Inline-tag splits** — `With<br>Everneat` matched neither fragment.
+
+Reported earlier: **159 missing**. Actual: **22**, of which most are design-side.
