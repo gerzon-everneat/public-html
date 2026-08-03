@@ -19,7 +19,7 @@ Method and node IDs come from `FIGMA-MAP.md`. Comparisons are perceptual-hash
 | Page | Node | Images | Content | State |
 |---|---|---|---|---|
 | HOME V2 | `7706:310` | audited, re-checked 08-03 | partial | **in progress** |
-| HOME CLEANING | `7756:454` | FAQ slot audited + **fixed** | — | **in progress** |
+| HOME CLEANING | `7756:454` | FAQ **fixed**, compare + tailor-strip verified | — | **in progress** |
 | AIRBNB | `7991:6627` | — | — | not started |
 | OFFICE | `8007:10293` | — | — | not started |
 | COMMERCIAL | `8068:163` | — | — | not started |
@@ -225,3 +225,48 @@ the design (trap 7) yet the page ships the Airbnb pair — **same decision as fi
 
 Note this page also carries five local `addon-*.jpg` files and `airbnb-avatar.jpg` /
 `cleaner-avatar.jpg` that have not been hashed against Figma yet.
+
+
+---
+
+# Re-check 2 — 2026-08-03 (second reported update)
+
+**HOME V2 unchanged again.** Frame export still **1,506,554 bytes** — byte-identical across all
+three checks now (08-02, and twice on 08-03). Findings 1–6 stand untouched.
+
+Blind probing has cost two rounds for no result, so frame-level export sizes are being recorded as
+baselines from here on. A frame whose export size is unchanged does not need its slots re-hashed.
+
+## HOME CLEANING — further slots
+
+### Verified matching — no action
+
+| Slot | Node | Prototype | Distance |
+|---|---|---|---|
+| compare-photo | `8007:9236` | `cdn…/home-cleaning/everneat-airbnb-cleaning-service-nyc.jpg` | **0** identical |
+| tailor-strip ×5 | `7963:2050` | `assets/addon-{fridge,oven,laundry,cabinets,windows}.jpg` | **0** identical (all five) |
+
+**Near-miss worth recording:** the compare slot first measured 109 (unrelated) because it was
+compared against `airbnb-compare.jpg`. That is not the file the page ships. The correct image is
+`everneat-airbnb-cleaning-service-nyc.jpg` — which lives under `home-cleaning/` but is *named*
+"airbnb". Finding 6's naming confusion very nearly produced a false positive; always resolve the
+`src` from the markup rather than from a plausible-looking filename.
+
+### 8 · Add-on thumbnails are stored three times each 🟢
+
+The five tailor-strip thumbs exist as byte-identical triplicates:
+
+| Image | Copies |
+|---|---|
+| cabinets · fridge · laundry · oven · windows | `addon-*.jpg`, `airbnb-addon-*.jpg`, `office-addon-*.jpg` |
+
+**5 unique images across 15 files — 10 redundant, ~35 KB.** All three sets are the same bytes, so
+the Airbnb and Office pages are shipping copies rather than sharing.
+
+Small in bytes, but it is three places to update when a thumbnail changes, and exactly the shape
+that produces a page still showing last season's artwork. **Action:** collapse to one set and
+repoint the Airbnb and Office pages. Low priority, zero visual risk.
+
+### Still to do on this page
+NAV-HERO-BANNER `7756:456`, feature panel `7778:1466`, testimonial bg/avatar `7814:1765` /
+`7814:1770`. Before/after `7953:1380` is EMPTY in the design — same decision as finding 1.
