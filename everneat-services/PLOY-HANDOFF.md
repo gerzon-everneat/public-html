@@ -65,6 +65,30 @@ photography. Now `assets/event-hero.jpg` (1920×1072), hash distance **1** to th
 
 Note this is a **CSS `background:url()`**, not an `<img>` — it is easy to miss when auditing.
 
+**Showcase panel** (`8068:1096`) was a flat sage canvas; the design now carries a real activation
+photo behind the pills. Added `assets/event-showcase.jpg`. Two pill labels changed and three moved:
+
+| | was | now |
+|---|---|---|
+| p2 | `2–20 specialists` | **`cleaning equipment`** |
+| p3 | `same-day under 72 hrs` @ 42.7%/14.1% | **`multi-day events`** @ 66.2%/9.1% |
+| p4 | COI in 24 hours @ 74.7%/39.8% | @ 82.2%/53.8% |
+| p5 | $2M insured & bonded @ 80%/78.9% | @ 72.3%/81.7% |
+
+### Photo report before/after — Office, Commercial, Event
+
+All three shipped **empty tiles**: `<div class="pho before">` with a flat background and no `<img>`.
+Figma had photographs in these slots the whole time (see trap 0).
+
+| Page | Figma nodes | Assets |
+|---|---|---|
+| Office | `8007:12762` / `8007:12765` | `office-before.jpg` / `office-after.jpg` |
+| Commercial | `8096:14266` / `8096:14269` | `commercial-before.jpg` / `commercial-after.jpg` |
+| Event | `8512:24677` / `8512:24680` | **byte-identical raws to Commercial's** — shares those two files |
+
+All three were also missing the `overflow:hidden` and `.pho img{object-fit:cover}` rules that
+`home-cleaning` already had, so the tiles would not have clipped to their rounded corners.
+
 ### `careers/index.html`  ·  Figma `8190:21109`
 
 Both photos had been replaced in the design and never synced — hash distance **79** and **127**.
@@ -150,6 +174,11 @@ Pages carrying **only** these site-wide changes (no content or image work of the
 | `assets/careers-office.jpg` (814×768) | **new** |
 | `assets/event-hero.jpg` (1920×1072) | **replaced** |
 | `assets/office-feature.jpg` | **replaced in place** — same filename, new photo |
+| `assets/office-before.jpg` (1000×558) | **new** — photo-report tile |
+| `assets/office-after.jpg` (1000×558) | **new** — photo-report tile |
+| `assets/commercial-before.jpg` (900×1009) | **new** — photo-report tile, shared with Event |
+| `assets/commercial-after.jpg` (900×1010) | **new** — photo-report tile, shared with Event |
+| `assets/event-showcase.jpg` (2000×1116) | **new** — showcase panel behind the pills |
 | `assets/protect-tech.mp4` (6.47 MB, 12.4 s) | scroll-scrub film, see `SCROLL-SCRUB-SPEC.md` |
 | `assets/careers-team.png` | **deleted** |
 | `assets/careers-kitchen.png` | **deleted** |
@@ -178,7 +207,13 @@ These are errors in the Figma file. Do not implement them.
 
 ---
 
-## Two traps worth repeating
+## Three traps worth repeating
+
+0. **An empty image slot has no `src`, so a `src`-driven image audit never sees it.** The Photo
+   report mock on Office, Commercial and Event shipped as `<div class="pho before">` with a flat
+   background and no `<img>`. Figma had photographs in all three the whole time. Hashing every
+   `src` against the design proves nothing about the slots that have none — enumerate the design's
+   image nodes and check each one is *filled*, not just that the filled ones are correct.
 
 1. **`download_assets` returns empty for a node that does not exist — it does not error.** I
    claimed the home before/after was invented three times off an empty result for node
