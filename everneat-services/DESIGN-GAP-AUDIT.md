@@ -20,9 +20,9 @@ Method and node IDs come from `FIGMA-MAP.md`. Comparisons are perceptual-hash
 |---|---|---|---|---|
 | HOME V2 | `7706:310` | audited, re-checked 08-03 | partial | **in progress** |
 | HOME CLEANING | `7756:454` | FAQ (finding 7 retracted), compare + tailor-strip verified | — | **in progress** |
-| AIRBNB | `7991:6627` | — | — | not started |
-| OFFICE | `8007:10293` | — | — | not started |
-| COMMERCIAL | `8068:163` | — | — | not started |
+| AIRBNB | `7991:6627` | before/after, compare, FAQ verified | — | **in progress** |
+| OFFICE | `8007:10293` | feature **fixed**, FAQ ok | — | **in progress** |
+| COMMERCIAL | `8068:163` | FAQ **fixed**, showcase ok | — | **in progress** |
 | EVENT | `8068:1034` | — | — | not started |
 | NYC template | `8079:163` | — | — | not started |
 | BLOG / ARTICLE | `8119:173` / `8112:173` | — | — | superseded, see note |
@@ -286,3 +286,77 @@ This page is the cleanest audited so far — every slot checked is correct.
 ### Still to do on this page
 NAV-HERO-BANNER `7991:6629`, testimonial bg/avatar `7991:6999` / `7991:7004`. Note the page ships
 both `airbnb-hero.jpg` and `airbnb-kitchen.jpg`; only one is in the hero, so the other needs placing.
+
+
+---
+
+# OFFICE — `8007:10293` → `office-cleaning/`
+
+| Slot | Node | Prototype | Distance |
+|---|---|---|---|
+| FAQ | `8007:12855` | `cdn…/office-cleaning/office-faq.jpg` | **1** same photo |
+| feature panel | `8007:12241` | `assets/office-feature.jpg` | **92 → 0 after fix** |
+
+### 9 · Feature panel was a different photo — **fixed** 🔴 → resolved
+
+Figma's feature panel is two cleaners in a bright white office with iMacs and a backpack vacuum.
+The prototype shipped a man with an upright vacuum in a different office. The alt text —
+*"An Everneat specialist vacuuming a modern office floor"* — fits both, which is how it went unseen.
+
+Verified before acting, after the retraction of finding 7: `src` resolved from markup (`.feature` →
+`assets/office-feature.jpg`), hashed against that exact file (**92, unrelated**), swept every local
+asset (closest 74, so the correct image was not in the repo), and confirmed visually side by side.
+Figma's node is 2752×1536 — exactly 2× the prototype's 1376×768, so it is the same slot.
+
+**Fix:** replaced `assets/office-feature.jpg` in place at 1376×768, JPEG q82 progressive, 117 KB.
+Now distance **0**. The reference and filename are unchanged — only the artwork.
+
+---
+
+# COMMERCIAL — `8068:163` → `commercial-cleaning/`
+
+| Slot | Node | Prototype | Distance |
+|---|---|---|---|
+| showcase | `8068:225` | `commercial-showcase.jpg` | **0** identical |
+| FAQ | `8096:14452` | `commercial-faq.jpg` → `commercial-compare.jpg` | **126 → 0 after fix** |
+
+### 10 · FAQ image was the wrong photo — **fixed** 🔴 → resolved
+
+The FAQ slot's design image is a cleaner at a wall of lockers. The page shipped
+`commercial-faq.jpg`, which matches **nothing** in the design (126 / 130 / 154 against all three
+Commercial nodes checked).
+
+Because finding 7 was retracted for exactly this shape of claim, the node was rendered before acting
+rather than trusted from the map's label. Node `8096:14452` unambiguously shows the FAQ accordion
+("How is commercial cleaning priced?" and seven more) with the locker photo beside it. It is the FAQ.
+
+The correct photo was already on the CDN — as **`commercial-compare.jpg`**. A misleading name, not a
+missing asset. This is the "reference points at the wrong existing file" class the map predicts.
+
+**Fix:** FAQ `src` repointed to `commercial-compare.jpg`. Distance now **0**.
+`commercial-faq.jpg` is no longer referenced by any page.
+
+### ⚠ Open question this creates
+`commercial-compare.jpg` is now used **twice on the page** — in the compare section and the FAQ.
+`FIGMA-MAP.md` lists **no compare slot for Commercial** (only hero, showcase-inner, before/after
+EMPTY, FAQ), so the compare section may be a prototype invention like the before/after in finding 1.
+
+Two photos are now unplaced: `commercial-faq.jpg` (matches no Commercial node) and whatever the
+compare section should hold. **Decision needed** — do not resolve by guessing:
+- **(a)** the compare section is intended → it needs its own photo, and `commercial-faq.jpg` may be it
+- **(b)** the compare section is not in the design → remove it, and the duplicate resolves itself
+
+---
+
+# EVENT — `8068:1034` → `event-cleaning/` — **flagged, not yet hashed**
+
+Markup extraction alone raises two questions before any Figma comparison:
+
+1. **One file fills three slots.** `cdn…/event-cleaning/img-1040.jpg` is the resolved `src` for the
+   showcase, feature and compare sections. A generic filename serving three slots is either a
+   placeholder that was never replaced, or my section patterns collapsing onto one element — it
+   needs checking against the design, not assuming.
+2. **The page uses an Office asset.** `assets/office-cleaner-avatar.jpg` appears on the Event page.
+
+Note the map says the Event showcase `8068:1096` has **no photo by design** (flat sage + pills), so
+a photo there would be an addition rather than a mismatch.
