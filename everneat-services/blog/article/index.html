@@ -77,8 +77,14 @@
   .by-e{width:28px;height:28px;border-radius:50%;background:var(--lime);display:grid;place-items:center;
     font-family:var(--serif);font-style:italic;font-weight:400;font-size:17px;color:var(--ink);flex:none}
   .byline span{font-size:14px;color:var(--ink2)}
-  .ahero-img{width:min(469px,33vw);flex:none}
-  .ahero-img img{width:100%;height:100%;object-fit:cover}
+  /* The API's blog images are TITLE CARDS with baked-in text, not photographs, and their
+     ratios vary (16:9, 1.75:1, and at least one 1:1). object-fit:cover slices the wording —
+     the hero rendered as "…athroom Deep Clean". Slots are 16/9 to match the dominant source
+     ratio so most fill exactly, with contain so an odd ratio letterboxes instead of losing
+     words. Revisit only if the CMS starts serving real photography. */
+  .ahero-img{width:min(469px,33vw);flex:none;background:var(--panel);
+    display:grid;place-items:center}
+  .ahero-img img{width:100%;height:100%;object-fit:contain}
 
   /* ---------- article body layout ---------- */
   .art-body{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,2fr) minmax(0,.75fr);
@@ -120,6 +126,8 @@
   .quote p{font-weight:400;font-size:clamp(22px,2vw,28px);line-height:36px;letter-spacing:0;margin:0}
 
   /* actions */
+  .astate{padding:8px 0 40px;color:var(--ink2);font-size:16px}
+  .astate a{color:var(--ink)}
   .art-actions{padding-top:16px;display:flex;flex-direction:column;gap:24px}
   .art-actions hr{border:none;border-top:1px solid rgba(31,29,24,.12);margin:0;width:100%}
   .crumbs{display:flex;gap:8px;font-size:12px;color:var(--ink2)}
@@ -155,8 +163,8 @@
     font-size:clamp(24px,2.2vw,30px);letter-spacing:.02em;margin:0;color:var(--ink)}
   .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:33px}
   .bcard{display:block;text-decoration:none;color:var(--ink)}
-  .bcard-img{border-radius:16px;overflow:hidden;aspect-ratio:415/291}
-  .bcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .bcard-img{border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:var(--panel)}
+  .bcard-img img{width:100%;height:100%;object-fit:contain;transition:transform .5s ease}
   .bcard:hover .bcard-img img{transform:scale(1.04)}
   .meta{display:flex;gap:14px;align-items:baseline;padding:21px 0 14px;font-size:16px;letter-spacing:-.01em}
   .meta b{font-weight:700}
@@ -216,7 +224,7 @@
     .nav-menu{display:block;margin-left:auto}
     .ahero{flex-direction:column}
     .ahero-img{width:100%}
-    .ahero-img img{aspect-ratio:16/10}
+    .ahero-img img{aspect-ratio:16/9}
     .art-body{grid-template-columns:1fr;gap:32px}
     .toc{position:static;width:100%}
     .rel-grid{grid-template-columns:1fr}
@@ -264,99 +272,43 @@
 <section class="ahero">
   <div class="ahero-copy">
     <div class="ahero-in">
-      <p class="ahero-cap av-fadeUp">Probiotic science</p>
-      <h1 class="ahero-title av-fadeUp">Why probiotic cleaning keeps working for 72 hours</h1>
-      <p class="ahero-dek av-fadeUp">Most cleaning masks odor. Probiotic cleaning removes its source, then keeps removing it for three more days. Here is what that means for the air in your home.</p>
-      <div class="byline av-fadeUp">
+      <p class="ahero-cap" id="a-cap" hidden></p>
+      <h1 class="ahero-title" id="a-title">&nbsp;</h1>
+      <div class="byline" id="a-byline" hidden>
         <span class="by-e" aria-hidden="true">e</span>
-        <span>By Everneat&nbsp;&nbsp;·&nbsp;&nbsp;Jul 17, 2026&nbsp;&nbsp;·&nbsp;&nbsp;4 min read</span>
+        <span id="a-byline-text"></span>
       </div>
     </div>
   </div>
-  <div class="ahero-img"><img src="../../assets/article-hero.jpg" alt="A hand spraying probiotic cleaner across a marble countertop"></div>
+  <div class="ahero-img" id="a-hero-img"></div>
 </section>
 
 <!-- ===================== ARTICLE BODY ===================== -->
 <div class="art-body">
 
-  <!-- On this page -->
-  <nav class="toc" aria-label="On this page">
+  <nav class="toc" id="a-toc" aria-label="On this page" hidden>
     <p class="toc-cap">On this page</p>
-    <a href="#what-it-is" class="on"><i></i>What probiotic cleaning is</a>
-    <a href="#window"><i></i>Why the 72-hour window matters</a>
-    <a href="#difference"><i></i>Where it makes the difference</a>
-    <a href="#after"><i></i>What to expect after we leave</a>
   </nav>
 
-  <!-- body column -->
   <div class="bodycol">
+    <div class="astate" id="a-state">Loading guide&hellip;</div>
+    <article class="prose" id="a-prose"></article>
 
-    <aside class="tldr av-fadeUp">
-      <p class="tldr-cap">Key takeaways</p>
-      <p class="tldr-item"><i></i>Probiotic cleaning removes odor at its source instead of masking it.</p>
-      <p class="tldr-item"><i></i>The microbes keep working for about 72 hours after we leave.</p>
-      <p class="tldr-item"><i></i>Biggest impact in bathrooms, kitchens, and fabric-heavy rooms.</p>
-    </aside>
-
-    <div class="tags av-fadeUp">
-      <span class="tags-cap">Tagged</span>
-      <span class="tag">Probiotic cleaning</span>
-      <span class="tag">Air quality</span>
-      <span class="tag">NYC</span>
-      <span class="tag">Home</span>
-    </div>
-
-    <article class="prose" id="what-it-is">
-      <p>Vitae sollicitudin consequat volutpat augue molestie orci, cursus ultricies. Elementum placerat tortor tristique habitant sed et non laoreet eleifend. Est cursus mattis lacus, viverra pharetra pellentesque suspendisse morbi. Sed iaculis neque auctor dui ut volutpat iaculis. Arcu, volutpat consequat faucibus accumsan. Velit interdum diam vel aliquam et. At feugiat ac massa congue suspendisse id. Mauris sit amet elementum lobortis condimentum integer. Tincidunt vel praesent rhoncus quisque amet, nibh penatibus sem. Elementum pretium, non id enim sit id.</p>
-      <p>No chemical smell. No sticky residue on the surfaces your skin touches. Just a space that stays fresher for longer, backed by the same published Protocol™ we follow on every visit.</p>
-
-      <h2 id="window">What probiotic cleaning actually is</h2>
-      <p>Nunc, quam blandit in vitae. Est lacus, diam enim in venenatis a etiam egestas. Scelerisque egestas imperdiet integer magna blandit egestas enim est a. Non in egestas lectus quis vestibulum dapibus viverra risus orci. Consectetur hac convallis in molestie ac arcu.</p>
-
-      <ul>
-        <li>List Item 1</li>
-        <li>List Item 2</li>
-        <li>List Item 3</li>
-      </ul>
-
-      <p>Felis morbi ut tristique pretium libero. Eget purus, enim, orci, quis tempor sed. Sed nec eget nibh et enim, at mi. Ut orci, sagittis tellus dui congue. Blandit laoreet nullam amet eget. Ut tincidunt diam tempor sed turpis odio vitae sem lobortis. Lobortis enim non eu a. Adipiscing accumsan urna eget pharetra. Elementum enim imperdiet a pellentesque. Aliquet varius proin turpis tristique faucibus ornare venenatis, amet massa. Eu sit nullam venenatis ultrices arcu arcu, id. Neque, sit orci in pellentesque suspendisse vitae pulvinar.</p>
-
-      <figure class="figure" id="difference">
-        <img src="../../assets/article-figure.jpg" alt="Yellow ceramic pots and plants arranged against a warm yellow wall">
-        <figcaption>Caption for the photo above.</figcaption>
-      </figure>
-
-      <p>At odio viverra est quisque dignissim. Risus amet accumsan eu tristique tortor, risus. Sed tincidunt velit facilisis nulla quam augue tempor. Eget odio viverra senectus potenti.</p>
-
-      <blockquote class="quote">
-        <i></i>
-        <p>&ldquo;The air in my apartment actually feels different, and it lasts for days. No chemical smell, just clean. I&rsquo;ve stopped thinking about cleaning day.&rdquo;</p>
-      </blockquote>
-
-      <p>Felis morbi ut tristique pretium libero. Eget purus, enim, orci, quis tempor sed. Sed nec eget nibh et enim, at mi. Ut orci, sagittis tellus dui congue. Blandit laoreet nullam amet eget. Ut tincidunt diam tempor sed turpis odio vitae sem lobortis. Lobortis enim non eu a. Adipiscing accumsan urna eget pharetra. Elementum enim imperdiet a pellentesque. Aliquet varius proin turpis tristique faucibus ornare venenatis, amet massa. Eu sit nullam venenatis ultrices arcu arcu, id. Neque, sit orci in pellentesque suspendisse vitae pulvinar.</p>
-
-      <h3 id="after">What to expect after we leave</h3>
-      <p>The microbes keep working long after we leave. For about 72 hours they compete with the bacteria that cause smells, reaching into grout, fabric, and the soft surfaces a wipe-down never touches. The result is cleaner indoor air, not a masking fragrance.</p>
-      <p>Conventional products strip a surface and evaporate. Probiotic formulas leave beneficial microbes behind, and those microbes digest the organic residue that odor-causing bacteria feed on. Nothing to feed on means nothing to smell.</p>
-    </article>
-
-    <div class="art-actions">
+    <div class="art-actions" id="a-actions" hidden>
       <hr>
       <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="../../">Home</a><span>/</span><a href="../">Journal</a><span>/</span><span>Probiotic science</span>
+        <a href="../../">Home</a><span>/</span><a href="../">Cleaning Guides</a><span>/</span><span id="a-crumb"></span>
       </nav>
       <div class="share">
         <span class="share-cap">Share</span>
         <button type="button" class="share-pill" id="copy-link">Copy link</button>
         <a class="share-pill" href="https://www.instagram.com/everneat" rel="noopener">Instagram</a>
         <a class="share-pill" href="https://www.linkedin.com/company/everneat" rel="noopener">LinkedIn</a>
-        <a class="share-pill" href="mailto:?subject=Why%20probiotic%20cleaning%20keeps%20working%20for%2072%20hours">Email</a>
+        <a class="share-pill" id="a-share-email" href="mailto:">Email</a>
       </div>
     </div>
-
   </div>
 
-  <!-- right spacer column (design leaves it empty) -->
   <div aria-hidden="true"></div>
 </div>
 
@@ -378,23 +330,7 @@
 <section class="related">
   <div class="rel-in">
     <h2 class="rel-title av-fadeUp">More from cleaning guides</h2>
-    <div class="rel-grid">
-      <a class="bcard av-fadeUp" href="../">
-        <div class="bcard-img"><img src="../../assets/blog-card-01.jpg" alt="A man carrying moving boxes outside a house"></div>
-        <div class="meta"><b>HOME</b><span>28th April, 2021</span></div>
-        <h3 class="bcard-title">How often should you deep clean a NYC apartment?</h3>
-      </a>
-      <a class="bcard av-fadeUp" href="../">
-        <div class="bcard-img"><img src="../../assets/blog-card-03.jpg" alt="Potted cacti and colorful objects on pastel pedestals"></div>
-        <div class="meta"><b>AIRBNB</b><span>28th April, 2021</span></div>
-        <h3 class="bcard-title">The 3-hour turnover: what guests notice first</h3>
-      </a>
-      <a class="bcard av-fadeUp" href="../">
-        <div class="bcard-img"><img src="../../assets/blog-card-02.jpg" alt="Three colleagues laughing together on an office sofa"></div>
-        <div class="meta"><b>OFFICE</b><span>28th April, 2021</span></div>
-        <h3 class="bcard-title">Why office air quality starts with the floor</h3>
-      </a>
-    </div>
+    <div class="rel-grid" id="a-related"></div>
     <div class="sub-card av-fadeUp">
       <p class="sub-title">Get the Cleaning Guides in your inbox.</p>
       <form class="sub-form" action="">
@@ -505,10 +441,194 @@
     });
   },{threshold:0.12});
   document.querySelectorAll('.av-fadeUp,.av-fadeIn').forEach(function(el){io.observe(el);});
+  // Article body and related cards arrive after fetch; let the renderer register them.
+  window.__revealNew=function(root){
+    root.querySelectorAll('.av-fadeUp,.av-fadeIn').forEach(function(el){io.observe(el);});
+  };
   // stagger related cards
   document.querySelectorAll('.rel-grid .bcard').forEach(function(el,i){
     el.style.animationDelay=(i*90)+'ms';
   });
+})();
+</script>
+<script>
+/* ---------------------------------------------------------------------------
+   Individual guide — reads ?id= and fetches the record from the landing API.
+
+   GET /v1/landing/blogs/{id}?platform=…
+     -> { id, name, creationDate, modificationDate, blogCategories, keywords,
+          createdBy:{name}, files:[{pathname}], content:{ html } }
+
+   The API exposes no slug, so the id is the URL key. It contains colons, hence
+   encodeURIComponent on the way out and decode on the way in.
+
+   content.html is first-party CMS output (Webflow) and is injected as HTML —
+   that is the point of the field. It is NOT sanitised here, so it is only as
+   trustworthy as the CMS authors. If that ever stops being true, sanitise
+   before this reaches innerHTML.
+--------------------------------------------------------------------------- */
+(function(){
+  var BASE='https://vriaxdtfduddjupiwiyx.supabase.co/functions/v1/landing-api/v1/landing/blogs';
+  var PLATFORM='clean_everneat_co';
+
+  var elTitle=document.getElementById('a-title'),
+      elCap=document.getElementById('a-cap'),
+      elByline=document.getElementById('a-byline'),
+      elBylineText=document.getElementById('a-byline-text'),
+      elHeroImg=document.getElementById('a-hero-img'),
+      elProse=document.getElementById('a-prose'),
+      elState=document.getElementById('a-state'),
+      elToc=document.getElementById('a-toc'),
+      elActions=document.getElementById('a-actions'),
+      elCrumb=document.getElementById('a-crumb'),
+      elShareEmail=document.getElementById('a-share-email'),
+      elRelated=document.getElementById('a-related');
+  if(!elProse) return;
+
+  var id=new URLSearchParams(location.search).get('id');
+
+  function esc(v){
+    return String(v==null?'':v).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function fmtDate(iso){
+    var d=new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }
+  function imgOf(b){
+    var f=(b&&b.files)||[];
+    return (f[0]&&f[0].pathname)||'';
+  }
+  function catOf(b){
+    var c=b&&b.blogCategories;
+    if(!c) return '';
+    if(Array.isArray(c)) c=c[0];
+    return typeof c==='string'?c:(c&&(c.name||c.title))||'';
+  }
+  /* ~200 wpm over the text content, floored at 1 minute. */
+  function readTime(html){
+    var t=document.createElement('div');
+    t.innerHTML=html||'';
+    var words=(t.textContent||'').trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1,Math.round(words/200));
+  }
+
+  function fail(msg){
+    elState.hidden=false;
+    elState.innerHTML=esc(msg)+' <a href="../">Back to all guides</a>';
+    elTitle.textContent='Guide unavailable';
+    document.title='Guide unavailable · Everneat';
+  }
+
+  /* Build the sidebar contents list from the h2s the CMS produced, giving each an
+     id to anchor to. Hidden entirely when the article has no headings. */
+  function buildToc(){
+    var hs=elProse.querySelectorAll('h2');
+    if(!hs.length){ elToc.hidden=true; return; }
+    var frag=document.createDocumentFragment();
+    Array.prototype.forEach.call(hs,function(h,i){
+      if(!h.id) h.id='s'+(i+1);
+      var a=document.createElement('a');
+      a.href='#'+h.id;
+      a.innerHTML='<i></i>'+esc(h.textContent.trim());
+      if(i===0) a.className='on';
+      frag.appendChild(a);
+    });
+    elToc.appendChild(frag);
+    elToc.hidden=false;
+
+    var links=elToc.querySelectorAll('a');
+    var spy=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        links.forEach(function(l){
+          l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id);
+        });
+      });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    Array.prototype.forEach.call(hs,function(h){ spy.observe(h); });
+  }
+
+  function renderRelated(list){
+    if(!elRelated) return;
+    var others=(list||[]).filter(function(b){ return b.id!==id; }).slice(0,3);
+    if(!others.length) return;
+    elRelated.innerHTML=others.map(function(b){
+      var img=imgOf(b), cat=catOf(b), date=fmtDate(b.creationDate);
+      return '<a class="bcard av-fadeUp" href="./?id='+encodeURIComponent(b.id)+'">'+
+        '<div class="bcard-img">'+(img?'<img loading="lazy" src="'+esc(img)+'" alt="">':'')+'</div>'+
+        '<div class="meta">'+(cat?'<b>'+esc(cat.toUpperCase())+'</b>':'')+
+          (date?'<span>'+esc(date)+'</span>':'')+'</div>'+
+        '<h3 class="bcard-title">'+esc(b.name)+'</h3>'+
+      '</a>';
+    }).join('');
+    if(window.__revealNew) window.__revealNew(elRelated);
+  }
+
+  function render(b){
+    var title=b.name||'Untitled';
+    document.title=title+' · Cleaning Guides · Everneat';
+    var meta=document.querySelector('meta[name="description"]');
+    if(meta){
+      var t=document.createElement('div');
+      t.innerHTML=(b.content&&b.content.html)||'';
+      meta.setAttribute('content',(t.textContent||'').trim().slice(0,155));
+    }
+
+    elTitle.textContent=title;
+    elCrumb.textContent=title;
+
+    var cat=catOf(b);
+    if(cat){ elCap.textContent=cat; elCap.hidden=false; }
+
+    var html=(b.content&&b.content.html)||'';
+    var bits=['By Everneat'];
+    var d=fmtDate(b.creationDate);
+    if(d) bits.push(d);
+    if(html) bits.push(readTime(html)+' min read');
+    elBylineText.innerHTML=bits.map(esc).join('&nbsp;&nbsp;·&nbsp;&nbsp;');
+    elByline.hidden=false;
+
+    var img=imgOf(b);
+    if(img) elHeroImg.innerHTML='<img src="'+esc(img)+'" alt="">';
+
+    /* First-party CMS HTML — see the note at the top of this file. */
+    elProse.innerHTML=html||'<p>This guide has no content yet.</p>';
+    elState.hidden=true;
+
+    elShareEmail.href='mailto:?subject='+encodeURIComponent(title)+
+                      '&body='+encodeURIComponent(location.href);
+    elActions.hidden=false;
+
+    buildToc();
+    if(window.__revealNew) window.__revealNew(document);
+  }
+
+  if(!id){ fail('No guide selected.'); return; }
+
+  fetch(BASE+'/'+encodeURIComponent(id)+'?platform='+encodeURIComponent(PLATFORM),
+        {headers:{accept:'application/json'}})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(render)
+    .catch(function(){ fail('Could not load this guide.'); });
+
+  /* Related list is independent — a failure here must not take the article down. */
+  fetch(BASE+'?platform='+encodeURIComponent(PLATFORM)+'&page=1&limit=6',
+        {headers:{accept:'application/json'}})
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(d){ if(d) renderRelated(d.list); })
+    .catch(function(){});
+
+  var copy=document.getElementById('copy-link');
+  if(copy){
+    copy.addEventListener('click',function(){
+      var done=function(){ copy.textContent='Copied'; setTimeout(function(){ copy.textContent='Copy link'; },1600); };
+      if(navigator.clipboard) navigator.clipboard.writeText(location.href).then(done,function(){});
+      else done();
+    });
+  }
 })();
 </script>
 <booking-widget></booking-widget>

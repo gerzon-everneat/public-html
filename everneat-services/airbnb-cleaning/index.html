@@ -24,7 +24,7 @@
     --ink:#1f1d18; --ink2:#57524a; --muted:#8b867a;
     --line:#e5e1d5; --line2:#d9d4c7;
     --taupe:#d5cfbf; --butter:#f6f3d9;
-    --lime:#C8FF00; --lime-deep:#AADC00; --lime-soft:rgba(200,255,0,0.15);
+    --lime:#C9C42B; --lime-deep:#ABA725; --lime-soft:rgba(201,196,43,0.15);
     --dark:#181611;
     --serif:'PP Editorial New',Georgia,'Times New Roman',serif;
     --sans:'Aileron',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
@@ -193,7 +193,7 @@
   .mtable thead .h-sub{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:3px}
   .mtable thead .h-rate{display:block;margin-top:7px;font-family:var(--serif);font-style:italic;font-size:21px;font-weight:400;color:var(--ink)}
   .mtable thead .h-rate small{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--muted)}
-  .mtable th.c-solo,.mtable td.c-solo{background:rgba(200,255,0,.10)}
+  .mtable th.c-solo,.mtable td.c-solo{background:rgba(201,196,43,.10)}
   .mtable thead th.c-solo{background:#eeeadb}
   .mtable td{font-size:16px;color:var(--ink)}
   .mtable tbody tr+tr td,.mtable tbody tr+tr th{border-top:1px solid var(--line)}
@@ -282,7 +282,7 @@
   .stat{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
   .track{height:8px;border-radius:999px;background:#e6e2d6;overflow:hidden;margin:4px 0 18px}
-  .track>i{display:block;height:100%;width:52%;border-radius:999px;background:linear-gradient(90deg,#C8FF00,#AADC00)}
+  .track>i{display:block;height:100%;width:52%;border-radius:999px;background:linear-gradient(90deg,#C9C42B,#ABA725)}
   .ticks{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:6px;margin-bottom:20px}
   .tk b{display:block;font-size:13px;font-weight:500}
   .tk span{font-size:11px;color:var(--muted)}
@@ -514,6 +514,7 @@
       <a href="../commercial-cleaning/">Commercial</a>
       <a href="../event-cleaning/">Event</a>
       <a href="https://www.everneat.co/">Shop Products</a>
+      <a href="../blog/">Cleaning Guides</a>
       <a href="../login/">Login</a>
     </nav>
     <a class="btn btn--dark nav-book" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
@@ -526,6 +527,7 @@
         <a href="../commercial-cleaning/">Commercial</a>
         <a href="../event-cleaning/">Event</a>
         <a href="https://www.everneat.co/">Shop Products</a>
+        <a href="../blog/">Cleaning Guides</a>
         <a href="../login/">Login</a>
         <a class="btn btn--dark" href="../book/">Book&nbsp;&nbsp;&rarr;</a>
       </div>
@@ -636,24 +638,25 @@
     <p class="sec-intro">Three ways to work with us with the same probiotic protocol, run in full on every turnover. Pick the plan; open the complete 84-point checklist behind each.</p>
 
     <div class="plan-grid">
-      <!-- Solo Host -->
+      <!-- Host -->
       <article class="plan">
         <div class="plan-top">
-          <h3 class="plan-name">Solo Host</h3>
-          <p class="plan-tag">1–2 units · frequent stays</p>
-          <p class="plan-desc">Recurring turnover slots for active short-stay hosts. Lower per-turnover, same dedicated team.</p>
+          <h3 class="plan-name">Host</h3>
+          <p class="plan-tag">1 unit · frequent stays</p>
+          <p class="plan-desc">Recurring turnover slots for active short-stay hosts. Lower rate, pay as you go.</p>
         </div>
         <div class="plan-hi">
           <p class="cap">What you get</p>
           <div class="plan-li"><span class="chk">✓</span><span>10% off every turnover, all sizes</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Priority same-day on peak weekends</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Dedicated team who knows your unit</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Monthly invoice, no per-visit checkout</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Auto-scheduling from your calendar</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Photo report + next-day fix guarantee</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Pay per visit, no commitment</span></div>
         </div>
         <div class="plan-foot">
-          <div class="plan-price"><span class="p">from $99</span><small>/ turnover</small></div>
+          <div class="plan-price"><span class="p">from $117</span><small>/ turnover</small></div>
+          <p class="plan-rate">$58.50/hr · extra time billed at this rate</p>
           <a class="btn btn--ghost" href="../book/">Start host plan&nbsp;&nbsp;&rarr;</a>
-          <button class="plan-proto" type="button" data-plan="solo">See the 84-point protocol</button>
+          <button class="plan-proto" type="button" data-plan="host">See the 84-point protocol</button>
         </div>
       </article>
 
@@ -662,46 +665,47 @@
         <span class="plan-badge">Most popular</span>
         <div class="plan-top">
           <h3 class="plan-name">Property Manager</h3>
-          <p class="plan-tag">6–30 units · portfolio</p>
-          <p class="plan-desc">Built for property managers. Dispatch, dashboard, PMS sync, and a portfolio-level SLA.</p>
+          <p class="plan-tag">2–9 units · portfolio</p>
+          <p class="plan-desc">Run your whole portfolio hands-off. One calendar, auto-scheduled at a better rate.</p>
         </div>
         <div class="plan-hi">
           <p class="cap">What you get</p>
-          <div class="plan-li"><span class="chk">✓</span><span>iCal &amp; PMS sync for auto-scheduling</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Dedicated account manager</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Guaranteed SLA across the portfolio</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Consolidated billing &amp; monthly reporting</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Volume rate across your portfolio</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Multi-unit auto-scheduling (iCal)</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>One dashboard: every turnover, photo &amp; issue</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>One monthly statement across all units</span></div>
         </div>
         <div class="plan-foot">
-          <div class="plan-price"><span class="p">Custom</span><small>/ portfolio</small></div>
+          <div class="plan-price"><span class="p">from $113</span><small>/ turnover</small></div>
+          <p class="plan-rate">$56.50/hr · extra time billed at this rate</p>
           <a class="btn btn--dark" href="../contact/">Talk to ops&nbsp;&nbsp;&rarr;</a>
           <button class="plan-proto" type="button" data-plan="pm">See the 84-point protocol</button>
         </div>
       </article>
 
-      <!-- One-off -->
+      <!-- Enterprise -->
       <article class="plan">
         <div class="plan-top">
-          <h3 class="plan-name">One-off</h3>
-          <p class="plan-tag">Single booking · no commitment</p>
-          <p class="plan-desc">A single turnover at standard pricing. Same protocol, same team, no plan.</p>
+          <h3 class="plan-name">Enterprise</h3>
+          <p class="plan-tag">10+ units · contract</p>
+          <p class="plan-desc">For operators with 10+ units. Priority capacity, guaranteed SLA, PMS wired in.</p>
         </div>
         <div class="plan-hi">
           <p class="cap">What you get</p>
-          <div class="plan-li"><span class="chk">✓</span><span>Full 84-point turnover protocol</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Photo report after every clean</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>Issue &amp; damage alerts</span></div>
-          <div class="plan-li"><span class="chk">✓</span><span>All unit sizes, see matrix below</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Priority same-day on peak weekends</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Guaranteed turnaround SLA</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>PMS / API integration</span></div>
+          <div class="plan-li"><span class="chk">✓</span><span>Consolidated monthly invoicing &amp; net terms</span></div>
         </div>
         <div class="plan-foot">
           <div class="plan-price"><span class="p">from $110</span><small>/ turnover</small></div>
-          <a class="btn btn--ghost" href="../book/">Book turnover&nbsp;&nbsp;&rarr;</a>
-          <button class="plan-proto" type="button" data-plan="oneoff">See the 84-point protocol</button>
+          <p class="plan-rate">$55/hr · extra time billed at this rate</p>
+          <a class="btn btn--ghost" href="../contact/">Talk to ops&nbsp;&nbsp;&rarr;</a>
+          <button class="plan-proto" type="button" data-plan="ent">See the 84-point protocol</button>
         </div>
       </article>
     </div>
-  </div>
-</section>
+  </section>
 
 <!-- ===================== PRICING MATRIX ===================== -->
 <section class="matrix" id="pricing">
@@ -714,18 +718,36 @@
         <thead>
           <tr>
             <th scope="col" style="text-align:left"><span class="h-name">Unit size</span><span class="h-sub">Time on site</span></th>
-            <th scope="col" class="c-solo"><span class="h-name">Solo Host</span><span class="h-sub">1–3 properties</span><span class="h-rate">from $65<small>/hr</small></span></th>
-            <th scope="col"><span class="h-name">Property Managers</span><span class="h-sub">4+ properties</span><span class="h-rate">from $58.50<small>/hr</small></span></th>
-            <th scope="col"><span class="h-name">Enterprise</span><span class="h-sub">10+ properties</span><span class="h-rate">from $52<small>/hr</small></span></th>
+            <th scope="col" class="c-solo"><span class="h-name">Host</span><span class="h-sub">1 unit</span><span class="h-rate">from $58.50<small>/hr</small></span></th>
+            <th scope="col"><span class="h-name">Property Manager</span><span class="h-sub">2–9 units</span><span class="h-rate">from $56.50<small>/hr</small></span></th>
+            <th scope="col"><span class="h-name">Enterprise</span><span class="h-sub">10+ units</span><span class="h-rate">from $55<small>/hr</small></span></th>
           </tr>
         </thead>
         <tbody>
-          <tr><th scope="row">Studio<small>2 hrs</small></th><td class="c-solo">$130</td><td>$117</td><td>$104</td></tr>
-          <tr><th scope="row">1BR / 1BA<small>2.5 hrs</small></th><td class="c-solo">$162.50</td><td>$146.25</td><td>$130</td></tr>
-          <tr><th scope="row">2BR / 1BA<small>3 hrs</small></th><td class="c-solo">$195</td><td>$175.50</td><td>$156</td></tr>
-          <tr><th scope="row">2BR / 2BA<small>3.5 hrs</small></th><td class="c-solo">$227.50</td><td>$204.75</td><td>$182</td></tr>
-          <tr><th scope="row">3BR / 2BA<small>4 hrs</small></th><td class="c-solo">$260</td><td>$234</td><td>$208</td></tr>
-          <tr><th scope="row">4BR+<small>custom</small></th><td class="c-solo">Custom</td><td>Custom</td><td>Custom</td></tr>
+          <tr>
+            <th scope="row">Studio<small>2 hrs</small></th>
+            <td class="c-solo">$117</td><td>$113</td><td>$110</td>
+          </tr>
+          <tr>
+            <th scope="row">1BR / 1BA<small>2.5 hrs</small></th>
+            <td class="c-solo">$146.25</td><td>$141.25</td><td>$137.50</td>
+          </tr>
+          <tr>
+            <th scope="row">2BR / 1BA<small>3 hrs</small></th>
+            <td class="c-solo">$175.50</td><td>$169.50</td><td>$165</td>
+          </tr>
+          <tr>
+            <th scope="row">2BR / 2BA<small>3.5 hrs</small></th>
+            <td class="c-solo">$204.75</td><td>$197.75</td><td>$192.50</td>
+          </tr>
+          <tr>
+            <th scope="row">3BR / 2BA<small>4 hrs</small></th>
+            <td class="c-solo">$234</td><td>$226</td><td>$220</td>
+          </tr>
+          <tr>
+            <th scope="row">4BR+<small>custom</small></th>
+            <td class="c-solo">Custom</td><td>Custom</td><td>Custom</td>
+          </tr>
         </tbody>
       </table>
     </div>
