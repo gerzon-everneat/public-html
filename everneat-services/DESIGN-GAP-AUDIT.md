@@ -18,7 +18,7 @@ Method and node IDs come from `FIGMA-MAP.md`. Comparisons are perceptual-hash
 ## Status
 | Page | Node | Images | Content | State |
 |---|---|---|---|---|
-| HOME V2 | `7706:310` | audited, re-checked 08-03 | partial | **in progress** |
+| HOME V2 | `7706:310` | before/after **fixed**; finding 1 retracted | partial | **in progress** |
 | HOME CLEANING | `7756:454` | FAQ (finding 7 retracted), compare + tailor-strip verified | — | **in progress** |
 | AIRBNB | `7991:6627` | before/after, compare, FAQ verified | — | **in progress** |
 | OFFICE | `8007:10293` | feature **fixed**, FAQ ok | — | **in progress** |
@@ -51,29 +51,45 @@ distance 1. The prototype matches the one that renders on top.
 
 ## Findings
 
-### 1 · Before/after section is invented — the design has nothing there 🔴
+### 1 · ~~Before/after section is invented~~ — **RETRACTED, and the design now has new artwork** ⛔
 
-`8142:16310` returns `export: null`, `rawImages: []`. Not "an empty frame with a fill" — the node
-renders to nothing at all. Trap 7 already recorded that Home V2, Home Cleaning, Office, Commercial
-and Event all have an empty before/after report and **only Airbnb has real artwork**.
+**This finding was wrong.** It claimed node `8142:16310` proved the design had no before/after,
+because `download_assets` returned `export: null, rawImages: []`.
 
-The prototype nevertheless ships a working before/after on the homepage, borrowing Airbnb's photos:
+`8142:16310` **does not exist in the file.** `get_metadata` errors on it outright — the node was
+deleted at some point. `download_assets` returns an empty result for a missing node rather than
+failing, and that empty result was read as evidence of an empty design. It was evidence of nothing.
 
-```
-cdn.everneat.co/assets/services/airbnb-cleaning/airbnb-before.jpg
-cdn.everneat.co/assets/services/airbnb-cleaning/airbnb-after.jpg
-```
+**Method rule, now mandatory:** an empty `download_assets` result proves nothing on its own. Confirm
+the node exists with `get_metadata` before concluding anything about the design's intent.
 
-So the homepage presents an Airbnb bedroom turnover as its own before/after. **Decision needed** —
-this is a content question, not a bug to silently fix:
+The before/after is real and lives at **`8465:24668` "g-photos"** — inside *04 · happiness checked
+— Photo report*, children `8465:24669` (before) and `8465:24672`. The node range (`8465:xxxxx`,
+against `8142:xxxxx` for everything around it) shows it was added well after the map was written,
+which is why `FIGMA-MAP.md` has no entry for it.
 
-- **(a)** Source real homepage before/after photography → then this becomes a Drive/S3 task.
-- **(b)** Keep the Airbnb pair deliberately, and caption it honestly as a short-let turnover.
-- **(c)** Drop the section from the homepage to match the design.
+Trap 7 in the map — "before/after photo report is empty in the design on Home V2, Home Cleaning,
+Office, Commercial and Event" — is therefore **stale for Home V2** and should be re-checked for the
+other four pages before being trusted again.
 
-Same question applies to Home Cleaning, Office, Commercial and Event when those pages are audited.
+**Fix applied.** The design's pair is a genuine matched set: the same bathroom vanity, before with a
+smeared mirror and a towel dumped on the counter, after with it cleared, towels hung and product
+placed. The homepage was shipping the **Airbnb bedroom pair** instead — a different room entirely,
+unrelated at distances 75 and 119.
 
----
+| | |
+|---|---|
+| Added | `assets/home-before.jpg` 744×900 · `assets/home-after.jpg` 745×900, JPEG q82 progressive, ~78 KB each |
+| Match | distance **0** both |
+| Alt text | rewritten — it described a bedroom and a bed |
+
+Verified in-browser: both load at their natural sizes inside the Photo report mock.
+
+### Why four frame-export checks missed this
+`7706:310` reported **1,506,554 bytes on every check**. Two possibilities remain open: Figma may be
+serving a cached export, or the addition genuinely does not alter the rendered frame at that scale.
+Either way the conclusion stands — **frame export size is not a reliable change detector**, and the
+baseline table recorded on 08-03 should not be relied on for that purpose.
 
 ### 2 · Hero has a Drive original but ships as a local Figma export 🟡
 
