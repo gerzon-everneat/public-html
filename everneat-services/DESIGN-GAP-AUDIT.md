@@ -23,7 +23,7 @@ Method and node IDs come from `FIGMA-MAP.md`. Comparisons are perceptual-hash
 | AIRBNB | `7991:6627` | before/after, compare, FAQ verified | — | **in progress** |
 | OFFICE | `8007:10293` | feature **fixed**, FAQ ok | — | **in progress** |
 | COMMERCIAL | `8068:163` | FAQ **fixed**, showcase ok | — | **in progress** |
-| EVENT | `8068:1034` | — | — | not started |
+| EVENT | `8068:1034` | hero **fixed**, compare + FAQ ok | — | **in progress** |
 | NYC template | `8079:163` | — | — | not started |
 | BLOG / ARTICLE | `8119:173` / `8112:173` | — | — | superseded, see note |
 | PRESS | `8190:20920` | — | — | blocked (trap 6) |
@@ -360,3 +360,45 @@ Markup extraction alone raises two questions before any Figma comparison:
 
 Note the map says the Event showcase `8068:1096` has **no photo by design** (flat sage + pills), so
 a photo there would be an addition rather than a mismatch.
+
+
+---
+
+# EVENT — `8068:1034` → `event-cleaning/`
+
+| Slot | Node | Prototype | Distance |
+|---|---|---|---|
+| compare | `8068:1113` | `cdn…/event-cleaning/img-1040.jpg` | **0** identical |
+| FAQ | `8118:14960` | `cdn…/everneat-event-cleaning-duolingo-nyc.jpg` | **4** same photo |
+| hero | `8068:1036` | CSS bg → `modern-art-gallery-stockcake.jpg` | **134 → 1 after fix** |
+
+### Both earlier Event flags retract
+- *"One file fills three slots"* — wrong. `img-1040.jpg` appears **once**, in the compare section,
+  and is correct at distance 0. My section patterns had collapsed onto the same element.
+- *"Uses an Office asset"* — `office-cleaner-avatar.jpg` is the shared "Jazmin, lead cleaner"
+  portrait in the *how* section. A naming quirk, not a wrong image.
+
+### 11 · Event hero was a stock placeholder — **fixed**, and this is the Figma update 🔴 → resolved
+
+**This is the change that could not be found from HOME V2.** The prototype carried a comment
+explaining itself:
+
+> *"Figma's event hero is modern-art-gallery-stockcake.jpg — stock, and the handoff lists stock
+> under ASSETS TO REPLACE. Matched to design; swap when real event photography lands."*
+
+The prototype was faithfully matching Figma at a time when Figma held a stock placeholder. **Figma
+has since been updated**: node `8068:1036` now holds real Everneat event photography — two cleaners
+sweeping and vacuuming a live event space with florals and brand booths. That is the update; it was
+never on the homepage, which is why three byte-identical checks of `7706:310` found nothing.
+
+Trap 5 applies here: the hero is a **CSS background**, not an `<img>`. The first comparison used
+`assets/event-hero.jpg` — an orphan referenced nowhere — and only resolving `.hero-media`'s
+`background:url(...)` found what actually ships.
+
+**Fix:** exported node `8068:1036` at 1920×1072 (matching the home-hero convention, inside the
+2560px cap), JPEG q82 progressive, 319 KB. Written over the orphaned `assets/event-hero.jpg`, which
+retires the orphan and reuses the intended name. `.hero-media` repointed from the CDN stock file to
+`../assets/event-hero.jpg`. Distance **1**.
+
+The stale comment was rewritten — left as-is it asserted the design still held stock, which would
+have led the next audit to "correct" this back to the placeholder.

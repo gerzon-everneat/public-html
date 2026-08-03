@@ -84,8 +84,11 @@
   /* ---------- hero ---------- */
   .hero{position:relative;overflow:hidden;display:flex;align-items:center;
     min-height:min(90vh,880px);padding-bottom:56px;background:#cbc8c0}
-  /* ponytail: Figma's event hero is modern-art-gallery-stockcake.jpg — stock, and the handoff lists stock under ASSETS TO REPLACE. Matched to design; swap when real event photography lands. */
-  .hero-media{position:absolute;inset:0;background:url(https://cdn.everneat.co/assets/services/event-cleaning/modern-art-gallery-stockcake.jpg) center 45%/cover no-repeat}
+  /* The stock placeholder this used to match (modern-art-gallery-stockcake.jpg, flagged in the
+     handoff under ASSETS TO REPLACE) is gone — Figma node 8068:1036 now holds real Everneat event
+     photography: cleaners sweeping a live event space. Exported and matched, distance 1. This is a
+     Figma export with no Drive original yet, hence the local path; move it to the CDN if one lands. */
+  .hero-media{position:absolute;inset:0;background:url(../assets/event-hero.jpg) center 45%/cover no-repeat}
   .hero-media::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.25) 50%,rgba(0,0,0,.34))}
   .hero-inner{position:relative;z-index:2;width:100%;color:#fff;padding-block:clamp(32px,7vh,72px);text-align:center}
