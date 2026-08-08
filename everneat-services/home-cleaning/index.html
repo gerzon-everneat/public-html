@@ -202,11 +202,41 @@
   .drawer-close:hover{background:var(--ink);color:#fff}
   .drawer-sub{font-size:14px;color:var(--ink2);margin:0 0 22px}
   .drawer .cap{margin-top:22px}
-  .drawer .room{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:8px}
-  .drawer .room+.room{border-top:1px solid var(--line)}
-  .drawer-foot{border-top:1px solid var(--line2);margin-top:24px;padding-top:20px}
-  .drawer-foot .tier-price{font-size:24px}
-  .drawer-foot .btn{width:100%;justify-content:center;margin-top:14px}
+  /* tier tabs — the design switches tier inside one drawer rather than opening three */
+  .dr-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 20px}
+  .dr-tab{border:1px solid var(--line2);background:var(--card);border-radius:11px;padding:9px 6px;
+    cursor:pointer;font-family:var(--sans);text-align:center;color:var(--ink2);line-height:1.25}
+  .dr-tab b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+  .dr-tab span{font-size:11px;letter-spacing:.04em}
+  .dr-tab[aria-selected="true"]{background:#15171a;border-color:#15171a;color:rgba(255,255,255,.6)}
+  .dr-tab[aria-selected="true"] b{color:#fff}
+  .dr-pts{display:flex;align-items:baseline;gap:7px;margin:0 0 4px}
+  .dr-pts b{font-size:26px;font-weight:500;letter-spacing:-.02em;line-height:1}
+  .dr-pts span{font-size:12px;color:var(--ink2)}
+  .dr-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 20px;font-size:11.5px;color:var(--ink2)}
+  .dr-legend i{display:inline-flex;align-items:center;gap:6px;font-style:normal}
+  .cellg{width:22px;height:22px;border-radius:6px;display:inline-grid;place-items:center;
+    font-size:11px;line-height:1;flex:none;border:1px solid var(--line2);background:var(--card);color:var(--ink2)}
+  /* greyscale, matching office/commercial/airbnb — depth reads as tone, not hue */
+  .cellg.l1{background:#e5e8e3;color:#565a56}
+  .cellg.l2{background:#e5e8e3;color:#15171a}
+  .cellg.l3{background:#15171a;border-color:#15171a;color:#fff;font-weight:700}
+  .cellg.l0{color:var(--muted)}
+  .cellg.add{background:#15171a;border-color:#15171a;color:#fff}
+  .acc-room{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+  .acc-q{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;cursor:pointer;
+    font-family:var(--sans);padding:14px 16px;text-align:left}
+  .acc-q .an{flex:1;font-size:14px;font-weight:600;color:var(--ink)}
+  .acc-q .ac{font-size:12px;font-weight:600;color:#64686a;letter-spacing:.03em}
+  .acc-q .ax{width:14px;text-align:center;color:var(--ink2);font-size:15px}
+  .acc-room[open] .acc-q .ax::before{content:"\2013"}
+  .acc-room:not([open]) .acc-q .ax::before{content:"+"}
+  .acc-body{border-top:1px solid var(--line);padding:6px 0}
+  .acc-task{display:flex;align-items:center;gap:12px;padding:7px 16px}
+  .acc-task p{margin:0;font-size:13.5px;line-height:1.4;color:#464a48}
+  .acc-task.off p{color:var(--muted)}
+  .dr-addhead{font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+    color:#64686a;margin:22px 0 8px}
   .drawer-note{font-size:12.5px;color:var(--muted);margin:14px 0 0;line-height:1.5}
 
   /* ---------- tailor strip ---------- */
@@ -605,7 +635,7 @@
         </div>
         <div class="tier-foot">
           <span class="tier-price">from $130<small>/ visit</small></span>
-          <a class="tier-cta tier-cta--dark" href="../book/" data-drawer="d-standard">See standard checklist&nbsp;&nbsp;&rarr;</a>
+          <a class="tier-cta tier-cta--dark" href="../book/" data-tier="standard">See standard checklist&nbsp;&nbsp;&rarr;</a>
         </div>
       </article>
 
@@ -634,7 +664,7 @@
         </div>
         <div class="tier-foot">
           <span class="tier-price">from $260<small>/ visit</small></span>
-          <a class="tier-cta tier-cta--ghost" href="../book/" data-drawer="d-deep">See deep checklist&nbsp;&nbsp;&rarr;</a>
+          <a class="tier-cta tier-cta--ghost" href="../book/" data-tier="deep">See deep checklist&nbsp;&nbsp;&rarr;</a>
         </div>
       </article>
 
@@ -663,84 +693,42 @@
         </div>
         <div class="tier-foot">
           <span class="tier-price">from $260<small>/ visit</small></span>
-          <a class="tier-cta tier-cta--ghost" href="../book/" data-drawer="d-moving">See moving checklist&nbsp;&nbsp;&rarr;</a>
+          <a class="tier-cta tier-cta--ghost" href="../book/" data-tier="moving">See moving checklist&nbsp;&nbsp;&rarr;</a>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ===================== CHECKLIST DRAWERS ===================== -->
-<!-- ponytail: drawer bodies carry the tier summary (rooms, counts, signatures) — the full per-task
-     protocol lives on ../the-protocol/, linked below, rather than duplicating 40+ rows here -->
+<!-- ===================== CHECKLIST DRAWER ===================== -->
+<!-- Full per-task protocol, all three tiers, from Figma 7992:7775 / 8118 / 8461. Rows are rendered
+     from one shared table in the script below so a task label lives in exactly one place. -->
 <div class="drawer-veil" id="drawer-veil"></div>
 
-<aside class="drawer" id="d-standard" aria-hidden="true">
-  <div class="drawer-head"><h3 class="drawer-title">Standard</h3><button class="drawer-close" aria-label="Close">✕</button></div>
-  <p class="drawer-sub">Regular upkeep on a recurring plan · 42 points</p>
-  <p class="cap">Room by room</p>
-  <div class="room"><span class="rn">Living spaces</span><span class="meter"><i style="width:75%"></i></span><span class="rc">9/12 points</span></div>
-  <div class="room"><span class="rn">Bedrooms</span><span class="meter"><i style="width:71%"></i></span><span class="rc">10/14 points</span></div>
-  <div class="room"><span class="rn">Bathrooms</span><span class="meter"><i style="width:71%"></i></span><span class="rc">12/17 points</span></div>
-  <div class="room"><span class="rn">Kitchen</span><span class="meter"><i style="width:73%"></i></span><span class="rc">11/15 points</span></div>
-  <p class="cap">Signature to this tier</p>
-  <ul>
-    <li>All rooms, top to bottom</li>
-    <li>Probiotic high-touch treatment</li>
-    <li>Same cleaner every visit</li>
-    <li>72-hour probiotic shield on every surface</li>
-    <li>Photo report after every visit</li>
-  </ul>
-  <div class="drawer-foot">
-    <span class="tier-price">from $130<small>/ visit</small></span>
-    <a class="btn btn--lime" href="../book/">Book my Home Cleaning&nbsp;&nbsp;&rarr;</a>
-    <p class="drawer-note">Every task is numbered and published in <a href="../the-protocol/">The Protocol™</a>. Read the full room-by-room checklist before we arrive.</p>
+<aside class="drawer" id="d-proto" aria-hidden="true" aria-label="Protocol checklist">
+  <div class="drawer-head">
+    <h3 class="drawer-title" id="dr-name">Standard</h3>
+    <button class="drawer-close" aria-label="Close">&#10005;</button>
   </div>
-</aside>
-
-<aside class="drawer" id="d-deep" aria-hidden="true">
-  <div class="drawer-head"><h3 class="drawer-title">Deep</h3><button class="drawer-close" aria-label="Close">✕</button></div>
-  <p class="drawer-sub">A top-to-bottom reset most members start with · 55 points</p>
-  <p class="cap">Room by room</p>
-  <div class="room"><span class="rn">Living spaces</span><span class="meter"><i style="width:100%"></i></span><span class="rc">12/12 points</span></div>
-  <div class="room"><span class="rn">Bedrooms</span><span class="meter"><i style="width:93%"></i></span><span class="rc">13/14 points</span></div>
-  <div class="room"><span class="rn">Bathrooms</span><span class="meter"><i style="width:94%"></i></span><span class="rc">16/17 points</span></div>
-  <div class="room"><span class="rn">Kitchen</span><span class="meter"><i style="width:93%"></i></span><span class="rc">14/15 points</span></div>
-  <p class="cap">Signature to this tier</p>
-  <ul>
-    <li>Everything in Standard, more intensely</li>
-    <li>Grout, fixtures &amp; appliance fronts scrubbed</li>
-    <li>Under-furniture &amp; light-fixture detail</li>
-    <li>Baseboards, vents &amp; door frames detailed</li>
-    <li>72-hour probiotic shield on every surface</li>
-  </ul>
-  <div class="drawer-foot">
-    <span class="tier-price">from $260<small>/ visit</small></span>
-    <a class="btn btn--lime" href="../book/">Book my Home Cleaning&nbsp;&nbsp;&rarr;</a>
-    <p class="drawer-note">Every task is numbered and published in <a href="../the-protocol/">The Protocol™</a>. Read the full room-by-room checklist before we arrive.</p>
+  <div class="dr-tabs" role="tablist">
+      <button class="dr-tab" type="button" role="tab" data-tier="standard" aria-selected="false"><b>Standard</b><span>42 pts</span></button>
+      <button class="dr-tab" type="button" role="tab" data-tier="deep" aria-selected="false"><b>Deep</b><span>55 pts</span></button>
+      <button class="dr-tab" type="button" role="tab" data-tier="moving" aria-selected="false"><b>Moving</b><span>45 pts</span></button>
   </div>
-</aside>
-
-<aside class="drawer" id="d-moving" aria-hidden="true">
-  <div class="drawer-head"><h3 class="drawer-title">Moving</h3><button class="drawer-close" aria-label="Close">✕</button></div>
-  <p class="drawer-sub">Empty-home prep for move-in or move-out · 45 points</p>
-  <p class="cap">Room by room</p>
-  <div class="room"><span class="rn">Living spaces</span><span class="meter"><i style="width:67%"></i></span><span class="rc">8/12 points</span></div>
-  <div class="room"><span class="rn">Bedrooms</span><span class="meter"><i style="width:71%"></i></span><span class="rc">10/14 points</span></div>
-  <div class="room"><span class="rn">Bathrooms</span><span class="meter"><i style="width:88%"></i></span><span class="rc">15/17 points</span></div>
-  <div class="room"><span class="rn">Kitchen</span><span class="meter"><i style="width:80%"></i></span><span class="rc">12/15 points</span></div>
-  <p class="cap">Signature to this tier</p>
-  <ul>
-    <li>Full deep-clean of every surface</li>
-    <li>Tops of cabinets, closets &amp; high shelves</li>
-    <li>Before / after photo report</li>
-    <li>Inside cabinets &amp; drawers, emptied spaces</li>
-    <li>Landlord / broker-ready finish</li>
-  </ul>
+  <div class="dr-pts"><b id="dr-pts">42</b><span>protocol points</span></div>
+  <p class="drawer-sub" id="dr-sub">Regular upkeep on a recurring plan.</p>
+  <div class="dr-legend">
+    <i><span class="cellg l1">&#8226;</span>Standard pass</i>
+    <i><span class="cellg l2">&#10003;</span>Thorough</i>
+    <i><span class="cellg l3">&#10003;&#10003;</span>Deep</i>
+    <i><span class="cellg l0">&#8212;</span>Not included</i>
+  </div>
+  <div id="dr-rooms"></div>
+  <p class="dr-addhead">Add-ons &middot; available with any tier</p>
+  <div id="dr-addons"></div>
   <div class="drawer-foot">
-    <span class="tier-price">from $260<small>/ visit</small></span>
-    <a class="btn btn--lime" href="../book/">Book my Home Cleaning&nbsp;&nbsp;&rarr;</a>
-    <p class="drawer-note">Every task is numbered and published in <a href="../the-protocol/">The Protocol™</a>. Read the full room-by-room checklist before we arrive.</p>
+    <span class="tier-price" id="dr-price">from $130<small>/ visit</small></span>
+    <a class="btn btn--lime" id="dr-cta" href="../book/">Book Standard&nbsp;&nbsp;&rarr;</a>
   </div>
 </aside>
 
@@ -1035,27 +1023,6 @@
 <script>
 /* ---------- checklist drawers (work regardless of motion preference) ---------- */
 (function(){
-  var veil=document.getElementById('drawer-veil');
-  var open=null;
-  function close(){
-    if(!open) return;
-    open.classList.remove('open');open.setAttribute('aria-hidden','true');
-    veil.classList.remove('open');open=null;
-    document.body.style.overflow='';
-  }
-  document.querySelectorAll('[data-drawer]').forEach(function(cta){
-    cta.addEventListener('click',function(e){
-      var d=document.getElementById(cta.dataset.drawer);
-      if(!d) return; /* no drawer → link falls through to ../book/ */
-      e.preventDefault();
-      close();
-      d.classList.add('open');d.setAttribute('aria-hidden','false');
-      veil.classList.add('open');open=d;
-      document.body.style.overflow='hidden';
-    });
-  });
-  veil.addEventListener('click',close);
-  document.querySelectorAll('.drawer-close').forEach(function(b){b.addEventListener('click',close);});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 })();
 
@@ -1267,6 +1234,76 @@
       if(plus) plus.textContent=on?'✓':'+';
     });
   });
+})();
+</script>
+<script>
+/* ---- protocol drawer: one table, three tiers (Figma 7992:7775 / 8118 / 8461) ---- */
+(function(){
+  var D = {"rooms": [["Living spaces", [["Dust corners, baseboards &amp; window sills", 1, 3, 3], ["Dust &amp; wipe electronics", 2, 2, 0], ["Dust &amp; wipe furniture, surfaces &amp; accessories", 2, 3, 0], ["Tidy &amp; reset surfaces (light organization)", 2, 2, 0], ["Clean glass surfaces &amp; mirrors", 2, 2, 2], ["Clean &amp; disinfect light switches &amp; doorknobs", 2, 2, 2], ["Vacuum all floors &amp; rugs", 1, 3, 3], ["Mop all floors", 1, 3, 3], ["Dust light fixtures, blinds &amp; vents", 0, 3, 3], ["Spot clean floors, baseboards &amp; doors", 0, 3, 3], ["Deep vacuum under furniture, sofa &amp; cushions", 0, 3, 0], ["Probiotic treatment application", 2, 2, 2]]], ["Bedrooms", [["Make the bed (optional: change linens)", 1, 2, 0], ["Dust corners, baseboards &amp; window sills", 1, 3, 3], ["Dust &amp; wipe furniture &amp; accessories", 2, 3, 0], ["Tidy &amp; reset surfaces (light organization)", 2, 2, 0], ["Dust closet doors", 1, 2, 2], ["Clean glass surfaces &amp; mirrors", 2, 2, 2], ["Clean &amp; disinfect light switches &amp; doorknobs", 2, 2, 2], ["Vacuum all floors &amp; rugs", 1, 3, 3], ["Mop all floors", 1, 3, 3], ["Dust light fixtures, blinds &amp; vents", 0, 3, 3], ["Spot clean floors &amp; baseboards", 0, 3, 3], ["Deep vacuum under furniture", 0, 3, 0], ["Top of closets, shelves &amp; high surfaces", 0, 0, 3], ["Probiotic treatment application", 2, 2, 2]]], ["Bathrooms", [["Wash tub &amp; shower", 1, 3, 3], ["Scrub tiles &amp; grout", 0, 3, 3], ["Wash wall tiles outside shower area", 0, 3, 3], ["Clean &amp; disinfect toilet (bowl, seat, base)", 2, 3, 3], ["Clean glass surfaces &amp; mirrors", 2, 2, 2], ["Clean outside cabinets &amp; shelves", 1, 3, 3], ["Top of cabinets &amp; high surfaces", 0, 0, 3], ["Wash sink &amp; countertops", 2, 3, 3], ["Clean &amp; polish fixtures &amp; accessories", 2, 3, 3], ["Tidy &amp; reset surfaces (light organization)", 2, 2, 0], ["Empty &amp; disinfect trashcan", 2, 2, 0], ["Vacuum floors", 1, 3, 3], ["Mop floors", 1, 3, 3], ["Dust light fixtures, blinds &amp; vents", 0, 3, 3], ["Spot clean floors, baseboards &amp; doors", 0, 3, 3], ["Clean &amp; disinfect light switches &amp; doorknobs", 2, 2, 2], ["Probiotic treatment application", 2, 2, 2]]], ["Kitchen", [["Wash dishes or load &amp; empty dishwasher", 2, 2, 0], ["Organize &amp; tidy items on surfaces", 2, 2, 0], ["Clean countertops, backsplash &amp; shelves", 2, 3, 3], ["Clean stovetop &amp; burners", 2, 3, 3], ["Clean microwave, hood &amp; appliance fronts", 2, 3, 3], ["Clean outside cabinets", 1, 3, 3], ["Top of cabinets &amp; high surfaces", 0, 0, 3], ["Clean &amp; polish faucet &amp; sink", 2, 3, 3], ["Change trash bags &amp; disinfect trashcan", 2, 2, 0], ["Clean &amp; disinfect light switches &amp; doorknobs", 2, 2, 2], ["Deep clean all surfaces", 0, 3, 3], ["Dust light fixtures, blinds &amp; vents", 0, 3, 3], ["Spot clean floors, baseboards &amp; doors", 0, 3, 3], ["Sweep, vacuum &amp; mop all floors", 1, 3, 3], ["Probiotic treatment application", 2, 2, 2]]]], "addons": ["Inside refrigerator &amp; freezer", "Inside oven", "Inside dishwasher", "Inside microwave (deep)", "Interior window cleaning", "Window tracks &amp; frame deep clean", "Exterior window cleaning", "Inside kitchen cabinets &amp; drawers", "Inside bathroom cabinets &amp; drawers", "Inside closets &amp; dressers"], "tiers": [["standard", "Standard", "Regular upkeep on a recurring plan.", "from $130", 42], ["deep", "Deep", "A top-to-bottom reset most members start with.", "from $260", 55], ["moving", "Moving", "Empty-home prep for move-in or move-out.", "from $260", 45]]};
+  var COL = {standard:0, deep:1, moving:2};
+  var MARK = ['&#8212;','&#8226;','&#10003;','&#10003;&#10003;'];
+  var veil = document.getElementById('drawer-veil');
+  var drawer = document.getElementById('d-proto');
+  if(!drawer || !veil) return;
+  var rooms = document.getElementById('dr-rooms');
+  var addons = document.getElementById('dr-addons');
+
+  addons.innerHTML = D.addons.map(function(a){
+    return '<div class="acc-task"><span class="cellg add">+</span><p>'+a+'</p></div>';
+  }).join('');
+
+  function render(tier){
+    var col = COL[tier];
+    var meta = D.tiers.filter(function(t){ return t[0]===tier; })[0];
+    document.getElementById('dr-name').textContent = meta[1];
+    document.getElementById('dr-sub').textContent = meta[2];
+    document.getElementById('dr-pts').textContent = meta[4];
+    document.getElementById('dr-price').innerHTML = meta[3]+'<small>/ visit</small>';
+    document.getElementById('dr-cta').innerHTML = 'Book '+meta[1]+'&nbsp;&nbsp;&rarr;';
+    drawer.querySelectorAll('.dr-tab').forEach(function(b){
+      b.setAttribute('aria-selected', String(b.dataset.tier===tier));
+    });
+    rooms.innerHTML = D.rooms.map(function(r, ri){
+      var tasks = r[1];
+      var inc = tasks.filter(function(t){ return t[1+col] !== 0; }).length;
+      var body = tasks.map(function(t){
+        var lv = t[1+col];
+        return '<div class="acc-task'+(lv===0?' off':'')+'">'+
+               '<span class="cellg l'+lv+'">'+MARK[lv]+'</span><p>'+t[0]+'</p></div>';
+      }).join('');
+      return '<details class="acc-room"'+(ri===0?' open':'')+'>'+
+             '<summary class="acc-q"><span class="an">'+r[0]+'</span>'+
+             '<span class="ac">'+inc+' of '+tasks.length+'</span><span class="ax"></span></summary>'+
+             '<div class="acc-body">'+body+'</div></details>';
+    }).join('');
+  }
+
+  function open(tier){
+    render(tier);
+    drawer.classList.add('open'); veil.classList.add('open');
+    drawer.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    drawer.scrollTop = 0;
+  }
+  function close(){
+    drawer.classList.remove('open'); veil.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-tier]').forEach(function(el){
+    if(el.classList.contains('dr-tab')) return;
+    el.addEventListener('click', function(e){ e.preventDefault(); open(el.dataset.tier); });
+  });
+  drawer.querySelectorAll('.dr-tab').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = drawer.scrollTop; render(b.dataset.tier); drawer.scrollTop = t;
+    });
+  });
+  drawer.querySelector('.drawer-close').addEventListener('click', close);
+  veil.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+  render('standard');
 })();
 </script>
 <booking-widget></booking-widget>
