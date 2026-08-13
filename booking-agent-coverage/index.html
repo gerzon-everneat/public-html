@@ -332,9 +332,8 @@
       database with the actual tool handlers, no mocks, no LLM required for the checks below.
     </p>
     <div class="stat-row">
-      <div class="stat good"><b>13</b> satisfied</div>
-      <div class="stat warn"><b>1</b> flagged — needs a decision</div>
-      <div class="stat neutral"><b>7</b> not yet built</div>
+      <div class="stat good"><b>14</b> satisfied</div>
+      <div class="stat neutral"><b>8</b> not yet built</div>
     </div>
   </header>
 
@@ -420,7 +419,7 @@
   <section id="satisfied">
     <div class="section-head">
       <h2>Satisfied use cases</h2>
-      <span class="section-count">13 verified</span>
+      <span class="section-count">14 verified</span>
     </div>
     <p class="section-intro">
       Each one shown here was exercised against the real dev database through the actual tool handlers —
@@ -532,33 +531,17 @@
         holder, and last 4 onto the job — and the tool's own response never carries a raw payment token.</p>
         <div class="tags"><span class="tag">sim verified</span><span class="tag">PAY-01/06 guard</span></div>
       </div>
-    </div>
-  </section>
 
-  <section id="flagged">
-    <div class="section-head">
-      <h2>Flagged — needs a decision before it's touched</h2>
-    </div>
-
-    <div class="flag">
-      <div class="cat">Security · identity</div>
-      <h3>The guest chat trusts whatever email a visitor types</h3>
-      <p>
-        Booking as a guest resolves the customer by email alone, with no proof of who's actually typing —
-        by design, so a visitor never has to sign up just to get a quote. That means anyone who knows a
-        real customer's email can chat anonymously, book a job at an address of their own choosing, and
-        have it attributed to that customer's real account — inheriting their saved payment preference and
-        denormalized ACH details onto a job they never asked for.
-      </p>
-      <p>
-        This is the same class of issue already tracked for the public booking form
-        (<code>security_public_booking_email_impersonation.md</code>), where an earlier fix attempt was
-        reverted for breaking legitimate signed-in customers on a route that served both anonymous and
-        authenticated traffic. The chat path is different — a guest embed session is <em>always</em>
-        anonymous, so that specific failure mode may not apply — but the tradeoff (how to verify a returning
-        guest without adding signup friction) is a product decision, not a mechanical bug fix.
-      </p>
-      <span class="status-line">● Not fixed — awaiting a decision on the right mitigation</span>
+      <div class="card">
+        <div class="cat">Security · identity</div>
+        <h3>An anonymous guest can no longer inherit a real customer's saved payment method</h3>
+        <p>Booking as a guest resolves the customer by email alone, with no proof of who's actually typing —
+        anyone who knew a real customer's email could chat anonymously and have a booking silently carry
+        that customer's saved ACH bank name, account holder, and last 4. The booking still books against the
+        matched account (so a genuinely returning guest's history stays intact), but an unverified match no
+        longer inherits the sensitive payment fields, and the booking is flagged for staff review.</p>
+        <div class="tags"><span class="tag merged">PR #580</span><span class="tag">sim verified</span></div>
+      </div>
     </div>
   </section>
 
@@ -599,6 +582,10 @@
       <div class="open-row">
         <div class="name">No returning-customer memory</div>
         <div class="why">No <code>read_customer_history</code> tool yet — the agent can't say "same as your March booking?" from past jobs on file.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">No guest identity verification</div>
+        <div class="why">PR #580 closed the payment-metadata leak from an unverified email match, but a booking can still land under a real customer's name/account from anyone who knows their email — an OTP or similar verification step remains a deliberate, unbuilt decision.</div>
       </div>
     </div>
   </section>
