@@ -331,11 +331,11 @@
       widget and the admin sandbox share the same conversation engine. Verified against the real dev
       database with the actual tool handlers, no mocks, no LLM required for the checks below. Every route
       in both routers (<code>customer-booking-agent.ts</code>, <code>public-booking-agent.ts</code>) now
-      has test coverage — 89 tests passing across 13 files.
+      has test coverage — 130+ tests passing across 14 files.
     </p>
     <div class="stat-row">
-      <div class="stat good"><b>14</b> satisfied</div>
-      <div class="stat neutral"><b>8</b> not yet built</div>
+      <div class="stat good"><b>15</b> satisfied</div>
+      <div class="stat neutral"><b>7</b> not yet built</div>
     </div>
   </header>
 
@@ -421,7 +421,7 @@
   <section id="satisfied">
     <div class="section-head">
       <h2>Satisfied use cases</h2>
-      <span class="section-count">14 verified</span>
+      <span class="section-count">15 verified</span>
     </div>
     <p class="section-intro">
       Each one shown here was exercised against the real dev database through the actual tool handlers —
@@ -544,6 +544,17 @@
         longer inherits the sensitive payment fields, and the booking is flagged for staff review.</p>
         <div class="tags"><span class="tag merged">PR #580</span><span class="tag">sim verified</span></div>
       </div>
+
+      <div class="card">
+        <div class="cat">Security · identity</div>
+        <h3>A guest can prove they own an email that already has an account</h3>
+        <p>The remaining half of the impersonation gap: a booking could still land under a real customer's
+        name from anyone who typed their email. An emailed 6-digit code now gates only that case — a
+        brand-new email still books with zero friction. If the code can't be completed, the booking is held
+        as <code>pending</code> instead of <code>confirmed</code>, so an impersonator can no longer produce a
+        live job on someone else's account.</p>
+        <div class="tags"><span class="tag merged">PR #583</span><span class="tag">sim: 22/22 checks</span></div>
+      </div>
     </div>
   </section>
 
@@ -585,22 +596,17 @@
         <div class="name">No returning-customer memory</div>
         <div class="why">No <code>read_customer_history</code> tool yet — the agent can't say "same as your March booking?" from past jobs on file.</div>
       </div>
-      <div class="open-row">
-        <div class="name">No guest identity verification</div>
-        <div class="why">PR #580 closed the payment-metadata leak from an unverified email match, but a booking can still land under a real customer's name/account from anyone who knows their email — an OTP or similar verification step remains a deliberate, unbuilt decision.</div>
-      </div>
     </div>
   </section>
 
   <footer class="foot">
     Snapshot of the customer-booking-agent chat (public embed + admin sandbox), booking-fe repo, main
-    branch (PRs #574–582, merged). Verification evidence: <code>scripts/sim/multi-quote-flow-verify.ts</code>,
+    branch (PRs #574–583, merged). Verification evidence: <code>scripts/sim/multi-quote-flow-verify.ts</code>,
     <code>scripts/sim/ach-preferred-payment-verify.ts</code>, <code>scripts/sim/guest-impersonation-fix-verify.ts</code>,
-    and 89 unit tests across every route and tool handler in <code>customer-booking-agent.ts</code>,
-    <code>public-booking-agent.ts</code>, and <code>customer-booking-tools.ts</code>. No pricing or
-    discount-formula code was changed to produce any of the above. Guest identity verification (an OTP or
-    similar step before trusting a returning-guest email match) remains a deliberate, unbuilt product
-    decision, out of scope for this audit.
+    <code>scripts/sim/guest-verification-verify.ts</code>, and 130+ unit tests across every route and tool
+    handler in <code>customer-booking-agent.ts</code>, <code>public-booking-agent.ts</code>, and
+    <code>customer-booking-tools.ts</code>. No pricing or discount-formula code was changed to produce any
+    of the above.
   </footer>
 
 </div>
