@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booking Agent Coverage</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #fafafa;
+    --surface-2: #f4f4f5;
+    --border: #e4e4e7;
+    --border-soft: #ececee;
+    --text: #171717;
+    --text-muted: #6b6b71;
+    --text-faint: #a1a1aa;
+    --accent: #4338ca;
+    --accent-soft: #eef2ff;
+    --accent-border: #c7d2fe;
+    --good: #15803d;
+    --good-bg: #f0fdf4;
+    --good-border: #bbf7d0;
+    --warn: #b45309;
+    --warn-bg: #fffbeb;
+    --warn-border: #fde68a;
+    --danger: #b91c1c;
+    --danger-bg: #fef2f2;
+    --danger-border: #fecaca;
+    --shadow: 0 1px 2px rgba(23,23,23,0.04), 0 1px 1px rgba(23,23,23,0.03);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0b0d;
+      --surface: #141416;
+      --surface-2: #1b1b1e;
+      --border: #2a2a2e;
+      --border-soft: #232326;
+      --text: #f1f1f2;
+      --text-muted: #a3a3aa;
+      --text-faint: #6f6f76;
+      --accent: #a5b4fc;
+      --accent-soft: #1e1e35;
+      --accent-border: #35356a;
+      --good: #4ade80;
+      --good-bg: #0f2417;
+      --good-border: #1f4d2e;
+      --warn: #fbbf24;
+      --warn-bg: #2b2108;
+      --warn-border: #5a4213;
+      --danger: #f87171;
+      --danger-bg: #2b1414;
+      --danger-border: #5a2323;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0b0d;
+    --surface: #141416;
+    --surface-2: #1b1b1e;
+    --border: #2a2a2e;
+    --border-soft: #232326;
+    --text: #f1f1f2;
+    --text-muted: #a3a3aa;
+    --text-faint: #6f6f76;
+    --accent: #a5b4fc;
+    --accent-soft: #1e1e35;
+    --accent-border: #35356a;
+    --good: #4ade80;
+    --good-bg: #0f2417;
+    --good-border: #1f4d2e;
+    --warn: #fbbf24;
+    --warn-bg: #2b2108;
+    --warn-border: #5a4213;
+    --danger: #f87171;
+    --danger-bg: #2b1414;
+    --danger-border: #5a2323;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+  code, .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 0.86em;
+  }
+
+  /* ---------- header ---------- */
+  header.top {
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 30px;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+  .lede {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 62ch;
+    margin: 0 0 24px;
+  }
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .stat {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 13px;
+  }
+  .stat b { font-size: 17px; font-variant-numeric: tabular-nums; }
+  .stat.good b { color: var(--good); }
+  .stat.warn b { color: var(--warn); }
+  .stat.neutral b { color: var(--text); }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 52px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+  }
+  h2 {
+    font-size: 19px;
+    font-weight: 650;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .section-count {
+    font-size: 12px;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+  .section-intro {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 68ch;
+    margin: 14px 0 20px;
+  }
+
+  /* ---------- diagram figure ---------- */
+  figure.diagram {
+    margin: 24px 0 8px;
+    padding: 20px 16px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  figure.diagram svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  figure.diagram text { fill: currentColor; }
+  figcaption {
+    font-size: 12.5px;
+    color: var(--text-faint);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ---------- cards ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .card .cat {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .card h3 {
+    font-size: 14.5px;
+    font-weight: 620;
+    margin: 0;
+    line-height: 1.35;
+  }
+  .card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 2px;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .tag.merged { background: var(--good-bg); border-color: var(--good-border); color: var(--good); }
+  .tag.openpr { background: var(--accent-soft); border-color: var(--accent-border); color: var(--accent); }
+
+  /* ---------- flagged callout ---------- */
+  .flag {
+    border: 1px solid var(--danger-border);
+    background: var(--danger-bg);
+    border-radius: 10px;
+    padding: 20px 20px 18px;
+  }
+  .flag .cat {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--danger);
+    margin-bottom: 6px;
+  }
+  .flag h3 { margin: 0 0 10px; font-size: 16px; }
+  .flag p { margin: 0 0 10px; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+  .flag p:last-child { margin-bottom: 0; }
+  .flag .status-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--danger);
+    margin-top: 4px;
+  }
+
+  /* ---------- open list ---------- */
+  .open-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .open-row {
+    display: flex;
+    gap: 14px;
+    padding: 13px 16px;
+    border-top: 1px solid var(--border-soft);
+    align-items: baseline;
+  }
+  .open-row:first-child { border-top: none; }
+  .open-row .name {
+    font-size: 13.5px;
+    font-weight: 560;
+    flex: 0 0 220px;
+  }
+  .open-row .why {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  footer.foot {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 560px) {
+    .open-row { flex-direction: column; gap: 4px; }
+    .open-row .name { flex: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="top">
+    <div class="eyebrow">Customer Booking Agent · Chat coverage snapshot</div>
+    <h1>What the booking chat can actually do</h1>
+    <p class="lede">
+      A working record of what's been tested and shipped in the AI quote/booking chat — the public embed
+      widget and the admin sandbox share the same conversation engine. Verified against the real dev
+      database with the actual tool handlers, no mocks, no LLM required for the checks below.
+    </p>
+    <div class="stat-row">
+      <div class="stat good"><b>13</b> satisfied</div>
+      <div class="stat warn"><b>1</b> flagged — needs a decision</div>
+      <div class="stat neutral"><b>7</b> not yet built</div>
+    </div>
+  </header>
+
+  <section id="lifecycle">
+    <div class="section-head">
+      <h2>How a conversation moves through the chat</h2>
+    </div>
+    <p class="section-intro">
+      The shape that changed most: booking used to seal the conversation shut. Now it stays open, a
+      customer can book more than one job in it, and the whole thing survives long, actively-used sessions
+      instead of expiring underneath them.
+    </p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 920 400" role="img" aria-label="Conversation flow: a guest opens the chat, gets a quote, confirms a booking, and the chat stays open so they can start a new quote for another job, up to three confirmed bookings, after which a fourth attempt is refused. The whole active loop sits inside a sliding 24-hour idle timeout.">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+          </marker>
+        </defs>
+
+        <!-- dashed TTL boundary -->
+        <rect x="196" y="14" width="700" height="230" rx="14" fill="none" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.2" stroke-dasharray="4 4" />
+        <text x="214" y="32" font-size="11" font-weight="600" letter-spacing="0.02em" fill-opacity="0.55">TTL refreshed every turn — sliding 24h idle timeout, never expires mid-session</text>
+
+        <!-- Node A: guest opens chat -->
+        <rect x="20" y="60" width="150" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="1.4" />
+        <text x="95" y="84" font-size="12.5" font-weight="600" text-anchor="middle">Guest opens</text>
+        <text x="95" y="100" font-size="12.5" font-weight="600" text-anchor="middle">the embed chat</text>
+
+        <line x1="170" y1="88" x2="216" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow)" />
+
+        <!-- Node B: compute_quote -->
+        <rect x="220" y="60" width="150" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="1.4" />
+        <text x="295" y="84" font-size="12.5" font-weight="600" text-anchor="middle" font-family="ui-monospace, monospace">compute_quote</text>
+        <text x="295" y="100" font-size="11" text-anchor="middle" fill-opacity="0.6">prices the job</text>
+
+        <line x1="370" y1="88" x2="416" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow)" />
+
+        <!-- Node C: confirm_booking (accent) -->
+        <rect x="420" y="58" width="164" height="60" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.6" />
+        <text x="502" y="83" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--accent)" font-family="ui-monospace, monospace">confirm_booking</text>
+        <text x="502" y="100" font-size="11" text-anchor="middle" fill="var(--accent)" fill-opacity="0.8">customer says yes</text>
+
+        <line x1="584" y1="88" x2="630" y2="88" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow)" />
+
+        <!-- Node D: Booking created -->
+        <rect x="634" y="52" width="250" height="72" rx="8" fill="var(--good-bg)" stroke="var(--good)" stroke-width="1.4" />
+        <text x="759" y="76" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--good)">Booking created</text>
+        <text x="759" y="93" font-size="10.8" text-anchor="middle" fill="var(--good)" fill-opacity="0.85" font-family="ui-monospace, monospace">status: confirmed</text>
+        <text x="759" y="108" font-size="10.8" text-anchor="middle" fill="var(--good)" fill-opacity="0.85" font-family="ui-monospace, monospace">paymentStatus: none</text>
+
+        <!-- down arrow: chat stays open -->
+        <line x1="759" y1="124" x2="759" y2="164" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow)" />
+        <text x="773" y="148" font-size="11" fill-opacity="0.65">chat stays open — no auto-close</text>
+
+        <!-- Node E: start_new_quote -->
+        <rect x="634" y="168" width="250" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="1.4" />
+        <text x="759" y="192" font-size="12.5" font-weight="600" text-anchor="middle" font-family="ui-monospace, monospace">start_new_quote</text>
+        <text x="759" y="207" font-size="10.3" text-anchor="middle" fill-opacity="0.6">customer types more, or taps "New quote"</text>
+        <text x="759" y="221" font-size="10.3" text-anchor="middle" fill-opacity="0.6">keeps identity + address by default</text>
+
+        <!-- loop arrow back to compute_quote -->
+        <path d="M 634 200 C 470 200, 340 160, 295 118" fill="none" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#arrow)" />
+        <text x="430" y="176" font-size="11" fill="var(--accent)">re-quote job N+1 (up to 3 total)</text>
+
+        <!-- branch to limit reached -->
+        <line x1="759" y1="232" x2="759" y2="272" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 3" marker-end="url(#arrow)" />
+        <text x="773" y="256" font-size="11" fill="var(--danger)">4th confirm attempt</text>
+
+        <rect x="634" y="276" width="250" height="56" rx="8" fill="var(--danger-bg)" stroke="var(--danger)" stroke-width="1.4" />
+        <text x="759" y="299" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--danger)" font-family="ui-monospace, monospace">booking_limit_reached</text>
+        <text x="759" y="315" font-size="10.5" text-anchor="middle" fill="var(--danger)" fill-opacity="0.85">refused — max 3 per conversation</text>
+      </svg>
+      <figcaption>
+        The full loop — quote, confirm, stay open, start a new quote, confirm again — sits inside a
+        conversation document whose 24h expiry now resets on every turn, so it only ever purges once the
+        conversation goes idle, not on a fixed clock from when it began.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section id="satisfied">
+    <div class="section-head">
+      <h2>Satisfied use cases</h2>
+      <span class="section-count">13 verified</span>
+    </div>
+    <p class="section-intro">
+      Each one shown here was exercised against the real dev database through the actual tool handlers —
+      not a mock — or covered by a unit test in the same commit.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="cat">Booking lifecycle</div>
+        <h3>A confirmed job actually persists correctly</h3>
+        <p>Creates a real Booking with the right tenant, service, status, and pre-tax price — the same
+        path the admin and public form use.</p>
+        <div class="tags"><span class="tag">PAY-04 tests</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Booking lifecycle</div>
+        <h3>Retrying a confirm never double-books</h3>
+        <p>A second <code>confirm_booking</code> call for the same unchanged job returns the existing
+        booking instead of creating a duplicate.</p>
+        <div class="tags"><span class="tag">PAY-05</span><span class="tag">sim: multi-quote-flow-verify</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Booking lifecycle</div>
+        <h3>A genuinely different job still books for real</h3>
+        <p>If the model skips <code>start_new_quote</code> and confirms again for a job whose service,
+        price, or date changed, the idempotency check detects the mismatch and books it — instead of
+        silently replaying the first job's id.</p>
+        <div class="tags"><span class="tag merged">PR #575</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Multi-job conversations</div>
+        <h3>The chat no longer seals shut after booking</h3>
+        <p>Confirming a job used to close the conversation outright. It now stays active — a customer can
+        keep talking, ask a follow-up, or book something else.</p>
+        <div class="tags"><span class="tag merged">PR #574</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Multi-job conversations</div>
+        <h3>A second and third job in one conversation</h3>
+        <p><code>start_new_quote</code> resets everything job-specific while keeping the customer's
+        identity, so the next job prices clean and books as its own row.</p>
+        <div class="tags"><span class="tag merged">PR #575</span><span class="tag">sim: 27/27 checks</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Multi-job conversations</div>
+        <h3>The property carries over — or doesn't, on request</h3>
+        <p>By default the second job keeps the same address. Calling <code>start_new_quote</code> with
+        <code>samePropertyAsBefore: false</code> clears it for a genuinely different location.</p>
+        <div class="tags"><span class="tag merged">PR #575</span><span class="tag">sim verified</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Multi-job conversations</div>
+        <h3>The conversation stops cleanly at 3 bookings</h3>
+        <p>A 4th confirm attempt is refused with <code>booking_limit_reached</code> — an abuse ceiling, not
+        a feature limit, since nothing else bounded how many unpaid bookings one guest chat could create.</p>
+        <div class="tags"><span class="tag merged">PR #575</span><span class="tag">sim verified</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Multi-job conversations</div>
+        <h3>Switching jobs before ever confirming clears the stale price</h3>
+        <p>Changing the service mid-quote — before <code>start_new_quote</code> even applies — now clears
+        the old quote instead of leaving the widget showing the previous job's price.</p>
+        <div class="tags"><span class="tag merged">PR #578</span><span class="tag">sim verified</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Guest experience</div>
+        <h3>A stuck chat isn't a dead end</h3>
+        <p>The embed widget now has a "New quote" button so a guest can abandon a stale conversation and
+        start over without refreshing the page.</p>
+        <div class="tags"><span class="tag merged">PR #576</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Guest experience</div>
+        <h3>Error and limit banners don't bleed across conversations</h3>
+        <p>Found while building the button above: switching conversations wasn't resetting streaming
+        state, so a stale error could show up in a brand-new chat.</p>
+        <div class="tags"><span class="tag merged">PR #576</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Rendering</div>
+        <h3>Pick-one option lists render as tappable buttons</h3>
+        <p>An attribute's helper text was folding into the option bullets and tripping the widget's
+        currency/length guards, so the list silently fell back to dead plain text.</p>
+        <div class="tags"><span class="tag merged">PR #577</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Reliability</div>
+        <h3>Long, active conversations don't get deleted mid-session</h3>
+        <p>The 24h conversation TTL used to be fixed from creation. It's now refreshed every turn, so an
+        actively-chatting guest never gets cut off — only a genuinely abandoned chat expires.</p>
+        <div class="tags"><span class="tag merged">PR #579</span><span class="tag">sim: 27/27 checks</span></div>
+      </div>
+
+      <div class="card">
+        <div class="cat">Payments (metadata only)</div>
+        <h3>A returning customer's saved payment method carries over correctly</h3>
+        <p>A booking from a customer with a saved ACH preference correctly denormalizes bank name, account
+        holder, and last 4 onto the job — and the tool's own response never carries a raw payment token.</p>
+        <div class="tags"><span class="tag">sim verified</span><span class="tag">PAY-01/06 guard</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="flagged">
+    <div class="section-head">
+      <h2>Flagged — needs a decision before it's touched</h2>
+    </div>
+
+    <div class="flag">
+      <div class="cat">Security · identity</div>
+      <h3>The guest chat trusts whatever email a visitor types</h3>
+      <p>
+        Booking as a guest resolves the customer by email alone, with no proof of who's actually typing —
+        by design, so a visitor never has to sign up just to get a quote. That means anyone who knows a
+        real customer's email can chat anonymously, book a job at an address of their own choosing, and
+        have it attributed to that customer's real account — inheriting their saved payment preference and
+        denormalized ACH details onto a job they never asked for.
+      </p>
+      <p>
+        This is the same class of issue already tracked for the public booking form
+        (<code>security_public_booking_email_impersonation.md</code>), where an earlier fix attempt was
+        reverted for breaking legitimate signed-in customers on a route that served both anonymous and
+        authenticated traffic. The chat path is different — a guest embed session is <em>always</em>
+        anonymous, so that specific failure mode may not apply — but the tradeoff (how to verify a returning
+        guest without adding signup friction) is a product decision, not a mechanical bug fix.
+      </p>
+      <span class="status-line">● Not fixed — awaiting a decision on the right mitigation</span>
+    </div>
+  </section>
+
+  <section id="open">
+    <div class="section-head">
+      <h2>Known gaps — not yet built</h2>
+      <span class="section-count">lower priority</span>
+    </div>
+    <p class="section-intro">
+      Nothing here is broken so much as missing. Listed for visibility, not urgency.
+    </p>
+
+    <div class="open-list">
+      <div class="open-row">
+        <div class="name">Resume shows only 30 messages</div>
+        <div class="why"><code>GET /conversations/:id</code> truncates to the last 30 for display. The model still has the full history — this only reads as amnesia in the UI.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">Hard 30-turn cap</div>
+        <div class="why">Stops a conversation at 30 turns regardless of how many tokens were actually used — an abuse ceiling that could stand to be a memory-aware limit instead.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">No modify or cancel via chat</div>
+        <div class="why">Once a job is confirmed, changing or cancelling it has to happen outside the conversation.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">No provider preference</div>
+        <div class="why">A customer can't ask for (or avoid) a specific provider through the chat.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">No discount codes</div>
+        <div class="why">The agent has no tool for applying a promo code to a quote.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">No general human handoff</div>
+        <div class="why">Only a narrow, rate-limited zip-check path exists — nothing for "let me talk to a person" more broadly.</div>
+      </div>
+      <div class="open-row">
+        <div class="name">No returning-customer memory</div>
+        <div class="why">No <code>read_customer_history</code> tool yet — the agent can't say "same as your March booking?" from past jobs on file.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Snapshot of the customer-booking-agent chat (public embed + admin sandbox), booking-fe repo, main
+    branch. Verification evidence: <code>scripts/sim/multi-quote-flow-verify.ts</code>,
+    <code>scripts/sim/ach-preferred-payment-verify.ts</code>, and the unit test suites for
+    <code>customer-booking-tools.ts</code> and <code>customer-booking-agent.ts</code>. No pricing or
+    discount-formula code was changed to produce any of the above.
+  </footer>
+
+</div>
+</body>
+</html>
