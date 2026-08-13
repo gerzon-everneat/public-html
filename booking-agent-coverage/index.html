@@ -329,7 +329,9 @@
     <p class="lede">
       A working record of what's been tested and shipped in the AI quote/booking chat — the public embed
       widget and the admin sandbox share the same conversation engine. Verified against the real dev
-      database with the actual tool handlers, no mocks, no LLM required for the checks below.
+      database with the actual tool handlers, no mocks, no LLM required for the checks below. Every route
+      in both routers (<code>customer-booking-agent.ts</code>, <code>public-booking-agent.ts</code>) now
+      has test coverage — 89 tests passing across 13 files.
     </p>
     <div class="stat-row">
       <div class="stat good"><b>14</b> satisfied</div>
@@ -592,10 +594,13 @@
 
   <footer class="foot">
     Snapshot of the customer-booking-agent chat (public embed + admin sandbox), booking-fe repo, main
-    branch. Verification evidence: <code>scripts/sim/multi-quote-flow-verify.ts</code>,
-    <code>scripts/sim/ach-preferred-payment-verify.ts</code>, and the unit test suites for
-    <code>customer-booking-tools.ts</code> and <code>customer-booking-agent.ts</code>. No pricing or
-    discount-formula code was changed to produce any of the above.
+    branch (PRs #574–582, merged). Verification evidence: <code>scripts/sim/multi-quote-flow-verify.ts</code>,
+    <code>scripts/sim/ach-preferred-payment-verify.ts</code>, <code>scripts/sim/guest-impersonation-fix-verify.ts</code>,
+    and 89 unit tests across every route and tool handler in <code>customer-booking-agent.ts</code>,
+    <code>public-booking-agent.ts</code>, and <code>customer-booking-tools.ts</code>. No pricing or
+    discount-formula code was changed to produce any of the above. Guest identity verification (an OTP or
+    similar step before trusting a returning-guest email match) remains a deliberate, unbuilt product
+    decision, out of scope for this audit.
   </footer>
 
 </div>
